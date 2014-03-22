@@ -1,0 +1,20 @@
+[cider-ci-server]
+Ci2 ansible_ssh=ci2.zhdk.ch
+
+[cider-ci-executors]
+BigMac2 ansible_ssh=172.31.2.155
+Cislave1 ansible_ssh=172.31.6.78
+
+[cider-ci-server:vars]
+ntp_server=ntp.zhdk.ch
+polyglot_xmx=10G
+# polyglot_force_restart=True
+
+[cider-ci-executors:vars]
+ntp_server=ntp.zhdk.ch
+
+[zhdk]
+Ci2
+BigMac2
+Cislave1
+

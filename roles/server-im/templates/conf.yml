@@ -1,0 +1,13 @@
+# {{ansible_managed}}
+# 
+persistence:
+  db: 
+    adapter: postgresql
+    classname: org.postgresl.Driver
+    database: {{database.database}}
+    host: localhost
+    password: {{database.password}}
+    pool: {{database.im_pool}}
+    subname: localhost:{{database.port}}
+    subprotocol: postgresql
+    username: {{database.username}}

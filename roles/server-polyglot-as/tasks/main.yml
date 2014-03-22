@@ -1,0 +1,46 @@
+- name: Add the group "polyglot"
+  group:  name=polyglot
+          system=true
+
+- name: Add the user "polyglot"
+  user: name=polyglot
+        generate_ssh_key=yes
+        group=polyglot
+        system=yes
+        shell=/bin/bash
+
+- name: Copy the init script
+  template: src=polyglot-as.conf.init 
+            dest=/etc/init/polyglot-as.conf 
+  register: copy_init_script
+
+- name: Copy the logrotate definition
+  copy: src=polyglot-as.logrotate dest=/etc/logrotate.d/polyglot-as
+
+- name: Make sure starting point is there
+  file: path=/opt/polyglot-as
+        owner=polyglot
+        group=polyglot
+        state=directory
+        mode=0755
+
+- current_git_sha: git_dir='/opt/polyglot-as'
+  register: polyglot_as_current_git_sha
+
+- name: clone polyglot-as
+  sudo: True
+  sudo_user: polyglot
+  git:  repo=https://github.com/DrTom/polyglot-application-server.git 
+        dest=/opt/polyglot-as
+        version={{polyglot_as_git_sha}}
+  register: clone_polyglot_as
+  when: '"{{polyglot_as_current_git_sha.value}}" != "{{polyglot_as_git_sha}}"'
+
+
+- name: Restart polyglot-as
+  service: name=polyglot-as state=restarted
+  when: clone_polyglot_as.changed or copy_init_script.changed
+
+- name: Enable polyglot-as to be started at boot
+  service: name=polyglot-as enabled=yes state=started 
+

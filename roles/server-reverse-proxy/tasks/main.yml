@@ -1,0 +1,16 @@
+- template: src=site.apache.conf
+            dest=/etc/apache2/sites-available/{{web_sub_path}}.conf 
+            mode=0755
+  register: reverse_proxy_template
+
+- name: Enable site
+  command: a2ensite {{web_sub_path}}
+  when: reverse_proxy_template.changed
+
+- name: Reload
+  service: name=apache2
+           state=reloaded
+  when: reverse_proxy_template.changed
+
+
+

@@ -1,0 +1,26 @@
+- name: Install apache2
+  apt: pkg=apache2 state=latest update_cache=yes cache_valid_time=3600
+  register: apache2_install
+
+
+- name: Disable default site
+  command:  a2dissite 000-default
+            removes=/etc/apache2/sites-enabled/000-default.conf
+  register: apache2_disable_default_site
+
+- name: Note modules
+  template: src=enabled_default_modules.yml
+            dest=/etc/apache2/enabled_default_modules.yml mode=755
+  register: apache2_modules_note
+
+- name: Enable modules
+  shell:  a2enmod {{item}}
+  with_items: apache2_default_modules
+  register: enable_modules
+  when: apache2_modules_note.changed
+
+- name: Restart
+  service: name=apache2
+           state=restarted
+  when: enable_modules.changed or apache2_disable_default_site.changed or apache2_install.changed
+

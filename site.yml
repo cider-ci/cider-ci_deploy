@@ -1,0 +1,170 @@
+
+- hosts: zhdk
+  roles:
+  - role: add-ssh-keys
+
+- hosts: cider-ci-executors
+
+  vars: 
+
+    pgs: 
+
+    rubies:
+      jruby:
+        version: jruby-1.7.8
+        alias: jruby-1.7
+        present: True
+      mri:
+        version: 2.1.1
+        alias: 2.1
+        present: True
+        default: True
+
+    executor_service_app_dir: /var/local/{{executor_service_name}}/app
+    executor_service_app_sha: 14b48dc9915f34fb1b1e054ac78a6f437958b85c
+
+    executor_service_user: ciderex
+    executor_service_name: ciderex
+    executor_service_working_dir: /tmp/{{executor_service_name}}_working_dir
+    executor_service_repository_dir: /var/local/{{executor_service_name}}/repositories
+
+    pgs: 
+      - port: 5433
+        name: 'PG93'
+
+
+  roles: 
+
+
+    - role: debuntu-setup
+
+    - role: executor-packages 
+    - role: executor-chromedriver
+    - role: executor-phantomjs
+
+    - role: postgresql
+      version: 9.3
+      port: 5433
+
+    - role: executor-mariadb
+
+    - role: jdk-leiningen
+
+    - role: executor-user
+      user: '{{executor_service_user}}'
+      pgs: '{{pgs}}'
+
+    - role: executor-service
+
+    - role: rbenv
+      user: '{{executor_service_user}}'
+
+    - role: rbenv-ruby 
+      user: '{{executor_service_user}}'
+      ruby: '{{rubies.mri}}'
+
+    - role: rbenv-ruby 
+      user: '{{executor_service_user}}'
+      ruby: '{{rubies.jruby}}'
+
+#    - role: postgresql
+#      version: 9.2
+#      port: 5432
+
+
+#############################################################
+
+- hosts: cider-ci-server
+  vars:
+
+    # remove this after upgrading polyglot
+    polyglot_force_restart: True
+
+    # web
+    web_host_names: []
+    web_sub_path: cider-ci
+    rails_env: production
+
+    repositories_path: /var/local/repositories
+
+    polyglot_server_root: /opt/polyglot-as/server/
+    jboss_home: "{{polyglot_server_root}}jboss/"
+    polyglot_as_git_sha: 05ff41d85935172e35724f7e62e2748fa6111864 
+
+    # torquebox server part 
+    server_tb_root: /home/polyglot/cider-ci_server-tb
+    server_tb_sha: 8079498cfa64c9d4be167c4a7b5fcdffd16c881a 
+
+    # immutant server part 
+    server_im_root: /home/polyglot/cider-ci_server-im
+    server_im_git_sha: deddfdfc2fd73331cc03d239f31a36c09caae198 
+
+    # database
+    database:
+      username: polyglot
+      password: polyglot
+      hostname: localhost
+      port: 5433
+      database: cider_ci_{{rails_env}}
+      tb_pool: 50
+      im_pool: 25
+
+    rubies:
+      jruby:
+        version: jruby-1.7.8
+        alias: jruby-1.7
+        present: True
+      mri:
+        version: 2.1.1
+        alias: 2.1
+        present: True
+        default: True
+
+
+    traits:
+      - firefox
+      - imagemagick
+      - jdk
+      - lein
+      - libimage-exiftool-perl
+      - linux
+      - mysql
+      - nodejs
+      - pg93
+      - phantomjs
+      - rbenv
+      - ruby
+      - tightvnc
+
+  roles: 
+
+    - role: debuntu-setup
+
+    - role: postgresql
+      version: 9.3
+      port: 5433
+
+    - role: jdk-leiningen
+
+    - role: rbenv
+      user: polyglot
+
+    - role: rbenv-ruby 
+      user: polyglot 
+      ruby: '{{rubies.mri}}'
+
+    - role: rbenv-ruby 
+      user: polyglot
+      ruby: '{{rubies.jruby}}'
+
+    - role: server-apache2
+    - role: server-reverse-proxy
+
+    - role: server-polyglot-as 
+    - role: server-tb
+    - role: server-im
+    - role: server-polyglot-as-restart
+
+
+
+

@@ -1,0 +1,22 @@
+#!/bin/bash
+
+set -e
+
+source ${1}
+
+REPO_DIR=${git_dir}/.git
+
+if [[ ! -d ${REPO_DIR} ]]; then
+  SHA=null
+else
+  SHA=$(cd ${git_dir}; git rev-parse HEAD)
+fi
+
+cat <<HEREDOC 
+{ 
+  "changed": false,
+  "value": "${SHA}" 
+}
+HEREDOC
+
+exit 0

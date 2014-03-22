@@ -1,0 +1,2 @@
+[test-server]
+test-server ansible_ssh_user=root

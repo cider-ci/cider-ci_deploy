@@ -1,0 +1,48 @@
+- name: Create target dir 
+  file: path={{executor_service_app_dir}}
+        state=directory
+        mode=0755
+
+- current_git_sha: git_dir={{executor_service_app_dir}}
+  register: executor_service_app_current_sha
+
+- name: Update ciderex
+  git:  repo=https://github.com/DrTom/cider-ci_executor.git
+        dest={{executor_service_app_dir}}
+        version={{executor_service_app_sha}}
+        accept_hostkey=True
+  register: update_executor_service
+  when: '"{{executor_service_app_current_sha.value}}" != "{{executor_service_app_sha}}"'
+
+- name: create target dir
+  file: path={{executor_service_app_dir}}/target
+        state=directory
+        mode=0755
+        owner={{executor_service_user}}
+  when: update_executor_service.changed
+
+- template: src=logrotate
+            dest=/etc/logrotate.d/{{executor_service_name}}
+
+- file: path={{executor_service_working_dir}}
+        state=directory
+        mode=0755
+        owner={{executor_service_user}}
+
+- file: path={{executor_service_repository_dir}}
+        state=directory
+        mode=0755
+        owner={{executor_service_user}}
+
+- template: src=cider-ci_conf.yml
+            dest={{executor_service_app_dir}}/cider-ci_conf.yml
+  register: executor_service_config
+
+- template: src=init.conf
+            dest=/etc/init/{{executor_service_name}}.conf
+  register: executor_service_init
+
+- service: name={{executor_service_name}} state=restarted
+  when: executor_service_config.changed or executor_service_init.changed
+
+- copy: src=reboot dest=/etc/cron.daily/ZZZ-reboot mode=0755

@@ -1,0 +1,21 @@
+[submodule "roles/debuntu-setup"]
+	path = roles/debuntu-setup
+	url = https://github.com/DrTom/ansible-role-debuntu-setup
+[submodule "roles/rbenv"]
+	path = roles/rbenv
+	url = https://github.com/DrTom/ansible-role-rbenv.git
+[submodule "postgresql-role"]
+	path = roles/postgresql
+	url = https://github.com/DrTom/ansible-role-postgresql.git
+[submodule "rbenv-ruby"]
+	path = roles/rbenv-ruby
+	url = https://github.com/DrTom/ansible-role-rbenv-ruby.git
+[submodule "jdk-leiningen"]
+	path = roles/jdk-leiningen
+	url = https://github.com/DrTom/ansible-role-jdk-leiningen.git
+[submodule "chromedriver"]
+	path = roles/executor-chromedriver
+	url = https://github.com/DrTom/ansible-role-chromedriver.git
+[submodule "phantomjs"]
+	path = roles/executor-phantomjs
+	url = https://github.com/DrTom/ansible-role-phantomjs.git

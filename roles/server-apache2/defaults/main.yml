@@ -1,0 +1,6 @@
+apache2_default_modules: 
+  - expires
+  - headers
+  - proxy
+  - proxy_http
+  - rewrite

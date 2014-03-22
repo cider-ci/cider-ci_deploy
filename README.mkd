@@ -1,0 +1,44 @@
+Cider-CI Ansible Setup
+======================
+
+This is an ansible playbook to set up and maintain a complete
+[Cider-CI](https://github.com/DrTom/cider-ci) environment. This usually
+means one _Cider-CI Server_ and a number of _Cider-CI Executors_.
+
+
+
+Usage
+-----
+
+We use it like this: 
+
+    ansible-playbook -i hosts-zhdk site.yml
+
+Create your own `hosts` file and use that one it in lieu of
+`hosts-zhdk`.
+
+This playbook contains a number of git submodules. Do not forget to initialize
+those. 
+
+### Forcefully restarting the Application Server
+
+There is a known bug which will cause memory leaks during redeploys to the
+application server. The `polyglot_force_restart` variable might come handy: 
+
+    ansible-playbook -i hosts-zhdk site.yml --extra-vars "polyglot_force_restart=True"
+
+
+
+Supported Ansible Versions
+--------------------------
+
+This role was tested with ansible => 1.5.
+
+Supported Operating Systems
+---------------------------
+
+Ubuntu 14.04 Trusty. 
+
+The Debian Jessie will be supported in the future. 
+
+

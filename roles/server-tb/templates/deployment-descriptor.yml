@@ -1,0 +1,17 @@
+---
+#
+# {{ansible_managed}}
+#
+# This is the TorqueBox configuration file. Refer to the TorqueBox
+# documentation at http://torquebox.org/documentation/current/ 
+# for all configuration options.
+web:
+  root: {{web_host_names}}
+  context: "/{{web_sub_path}}"
+
+application: 
+  root: "/home/polyglot/cider-ci_server-tb"
+
+environment:  
+  RACK_ENV: {{rails_env}}
+  RAILS_RELATIVE_URL_ROOT: "/{{web_sub_path}}"

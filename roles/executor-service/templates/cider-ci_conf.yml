@@ -1,0 +1,14 @@
+shared:
+  "working-dir": "{{executor_service_working_dir}}"
+  "git-repos-dir": "{{executor_service_repository_dir}}"
+reporter: 
+  "max-retries": 10 
+  "retry-ms-factor": 1000
+nrepl: 
+  port: {{executor_service_nrepl_port}}
+  bind: "127.0.0.1"
+  enabled: true
+web: 
+  host: "0.0.0.0"
+  port: {{executor_service_http_port}}
+  "ssl-port": {{executor_service_https_port}}
