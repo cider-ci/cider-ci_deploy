@@ -27,6 +27,29 @@
 - current_git_sha: git_dir='/opt/polyglot-as'
   register: polyglot_as_current_git_sha
 
+- service:  name=polyglot-as 
+            state=stopped
+  register: polyglot_as_stopped
+  when: polyglot_force_restart
+        or ('"{{polyglot_as_current_git_sha.value}}" != "{{polyglot_as_git_sha}}"')
+
+
+- name: Forcefully kill process
+  shell:  > 
+          if pgrep -u polyglot -c; then
+            echo "some polyglot processes are running, ... sending SIGTERM" 
+            pkill -SIGTERM -u polyglot 
+            sleep 10
+            if pgrep -u polyglot -c; then
+              echo "some polyglot processes are still running, ... sending SIGKILL" 
+              pkill -SIGKILL -u polyglot 
+              sleep 2
+            fi
+          fi
+  when: polyglot_force_restart and polyglot_as_stopped.changed
+        or ('"{{polyglot_as_current_git_sha.value}}" != "{{polyglot_as_git_sha}}"')
+
+
 - name: clone polyglot-as
   sudo: True
   sudo_user: polyglot
@@ -37,10 +60,4 @@
   when: '"{{polyglot_as_current_git_sha.value}}" != "{{polyglot_as_git_sha}}"'
 
 
-- name: Restart polyglot-as
-  service: name=polyglot-as state=restarted
-  when: clone_polyglot_as.changed or copy_init_script.changed
-
-- name: Enable polyglot-as to be started at boot
-  service: name=polyglot-as enabled=yes state=started 
 

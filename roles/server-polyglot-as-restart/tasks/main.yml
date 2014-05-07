@@ -1,33 +1,21 @@
-- service:  name=polyglot-as 
-            state=stopped
-  register: polyglot_as_stopped
+- name: (Re)-Deploy Server TB
+  command:  touch {{server_tb_descriptor_full_path}}.dodeploy
+  sudo: True
+  sudo_user: polyglot
   when: polyglot_force_restart
 
-- name: Forcefully kill process
-  shell:  > 
-          if ! pgrep -u polyglot -c; then
-            pkill -SIGTERM -u polyglot 
-            sleep 10
-            if ! pgrep -u polyglot -c; then
-              pkill -SIGKILL -u polyglot 
-              sleep 2
-            fi
-          fi
-  when: polyglot_force_restart and polyglot_as_stopped.changed
+- name: (Re)-Deploy Server IM
+  command:  touch {{server_im_descriptor_full_path}}.dodeploy
+  sudo: True
+  sudo_user: polyglot
+  when: polyglot_force_restart
 
-- name: Start polyglot as
+- name: Restart polyglot-as
+  service: name=polyglot-as state=restarted
+  when: clone_polyglot_as.changed or copy_init_script.changed
+
+- name: polyglot-as started
   service: name=polyglot-as 
-            state=started
-
-- command:  touch {{server_tb_descriptor_full_path}}.dodeploy
-  sudo: True
-  sudo_user: polyglot
-  when: polyglot_force_restart
-
-- command:  touch {{server_im_descriptor_full_path}}.dodeploy
-  sudo: True
-  sudo_user: polyglot
-  when: polyglot_force_restart
-
+           state=started
 
 
