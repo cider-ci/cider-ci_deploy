@@ -89,15 +89,15 @@
 
     polyglot_server_root: /opt/polyglot-as/server/
     jboss_home: "{{polyglot_server_root}}jboss/"
-    polyglot_as_git_sha: 05ff41d85935172e35724f7e62e2748fa6111864 
+    polyglot_as_git_sha: fcc7deb8ff4c3707d453a13bf1c83f15d99c55bd
 
     # torquebox server part 
     server_tb_root: /home/polyglot/cider-ci_server-tb
-    server_tb_sha: 8079498cfa64c9d4be167c4a7b5fcdffd16c881a 
+    server_tb_sha: d8ae357b4a26bb4ee1c433690823082208b0e226 
 
     # immutant server part 
     server_im_root: /home/polyglot/cider-ci_server-im
-    server_im_git_sha: deddfdfc2fd73331cc03d239f31a36c09caae198 
+    server_im_git_sha: 57b45841da1016d957492472a1d60802264ffa7c 
 
     # database
     database:
@@ -111,7 +111,7 @@
 
     rubies:
       jruby:
-        version: jruby-1.7.8
+        version: jruby-1.7.11
         alias: jruby-1.7
         present: True
       mri:
