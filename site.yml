@@ -93,7 +93,7 @@
 
     # torquebox server part 
     server_tb_root: /home/polyglot/cider-ci_server-tb
-    server_tb_sha: d8ae357b4a26bb4ee1c433690823082208b0e226 
+    server_tb_sha: 11aa6a9a1244b5e57e415968a90e3ed1819d2d9f 
 
     # immutant server part 
     server_im_root: /home/polyglot/cider-ci_server-im
