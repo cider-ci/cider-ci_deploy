@@ -78,7 +78,7 @@
   vars:
 
     # remove this after upgrading polyglot
-    polyglot_force_restart: True
+    # polyglot_force_restart: True
 
     # web
     web_host_names: []

@@ -1,14 +1,16 @@
 [zhdk]
-Ci2
+Ci2 ansible_ssh=ci2.zhdk.ch
 #BigMac2
-#Cislave1
+Cislave1 ansible_ssh=172.31.6.78
+Cislave3 ansible_ssh=172.31.6.74
+
 
 [cider-ci-server]
-Ci2 ansible_ssh=ci2.zhdk.ch
+Ci2 
 
 [cider-ci-executors]
 #BigMac2 ansible_ssh=172.31.2.155
-#Cislave1 ansible_ssh=172.31.6.78
+Cislave1 
 
 
 [cider-ci-server:vars]
