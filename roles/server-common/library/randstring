@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -e
+
+source ${1}
+
+cat <<HEREDOC 
+{ 
+  "changed": false,
+  "value": "`head -c 32 /dev/urandom | base64`" 
+}
+HEREDOC
+
+exit 0

@@ -24,13 +24,15 @@
   register: update_server_tb
   when: '"{{server_tb_root_git_sha.value}}" != "{{server_tb_sha}}"'
 
+- template: src=secrets.yml
+            dest={{server_tb_root}}/config/secrets.yml
 
 ### 
 
 - name: Create postgresql user
   postgresql_user:  name={{database.username}}
                     password={{database.password}}
-                    role_attr_flags=CREATEDB,NOSUPERUSER
+                    role_attr_flags=CREATEDB,SUPERUSER
                     login_user=root
                     port={{database.port}}
 
@@ -49,7 +51,6 @@
   register: configure_database
 
 ###
-
 
 - name: Bundle
   shell: su -l -s /bin/bash -c 'source /etc/profile.d/rbenv-load.sh 

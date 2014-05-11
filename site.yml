@@ -80,6 +80,8 @@
     # remove this after upgrading polyglot
     # polyglot_force_restart: True
 
+    cider_ci_local_facts_file:  /etc/ansible/facts.d/cider_ci.fact
+
     # web
     web_host_names: []
     web_sub_path: cider-ci
@@ -89,15 +91,15 @@
 
     polyglot_server_root: /opt/polyglot-as/server/
     jboss_home: "{{polyglot_server_root}}jboss/"
-    polyglot_as_git_sha: fcc7deb8ff4c3707d453a13bf1c83f15d99c55bd
+    polyglot_as_git_sha: 8d2f64a79b69155f3022ce6b52f671cf5b609d8b 
 
     # torquebox server part 
     server_tb_root: /home/polyglot/cider-ci_server-tb
-    server_tb_sha: 11aa6a9a1244b5e57e415968a90e3ed1819d2d9f 
+    server_tb_sha: 35372200028a809270f2634561b968ca65f92fa9
 
     # immutant server part 
     server_im_root: /home/polyglot/cider-ci_server-im
-    server_im_git_sha: 57b45841da1016d957492472a1d60802264ffa7c 
+    server_im_git_sha: e7ed11a1409c4549bd8da3f6ba15ef7a34a7a62c
 
     # database
     database:
@@ -160,6 +162,7 @@
     - role: server-apache2
     - role: server-reverse-proxy
 
+    - role: server-common
     - role: server-polyglot-as 
     - role: server-tb
     - role: server-im

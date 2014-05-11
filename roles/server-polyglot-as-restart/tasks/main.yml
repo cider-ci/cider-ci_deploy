@@ -10,6 +10,10 @@
   sudo_user: polyglot
   when: polyglot_force_restart
 
+- name: Force logrotation
+  shell: logrotate -f /etc/logrotate.d/polyglot-as
+  when: polyglot_force_restart
+
 - name: Restart polyglot-as
   service: name=polyglot-as state=restarted
   when: clone_polyglot_as.changed or copy_init_script.changed

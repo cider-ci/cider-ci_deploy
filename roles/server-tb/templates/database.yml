@@ -5,5 +5,6 @@
   encoding: unicode
   port: {{database.port}}
   pool: {{database.tb_pool}}
-  username: {{database.username}}
-  password: {{database.password}}
+  host: 127.0.0.1
+  username: '{{database.username}}'
+  password: '{{database.password}}'

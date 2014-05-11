@@ -5,7 +5,7 @@ persistence:
     adapter: postgresql
     classname: org.postgresl.Driver
     database: {{database.database}}
-    host: localhost
+    host: 127.0.0.1
     password: {{database.password}}
     pool: {{database.im_pool}}
     subname: localhost:{{database.port}}
