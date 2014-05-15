@@ -27,6 +27,9 @@
 - template: src=secrets.yml
             dest={{server_tb_root}}/config/secrets.yml
 
+- template: src=release.yml
+            dest={{server_tb_root}}/config/release.yml
+
 ### 
 
 - name: Create postgresql user

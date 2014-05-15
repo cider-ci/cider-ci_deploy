@@ -6,9 +6,11 @@
 - hosts: cider-ci-executors
 
   vars_files: 
-    - release.yml
+    - releases.yml
 
   vars: 
+
+    release: "{{releases[0]}}"
 
     rubies:
       jruby:
@@ -81,9 +83,11 @@
 - hosts: cider-ci-server
 
   vars_files: 
-    - release.yml
+    - releases.yml
 
   vars:
+
+    release: "{{releases[0]}}"
 
     # remove this after upgrading polyglot
     # polyglot_force_restart: True
