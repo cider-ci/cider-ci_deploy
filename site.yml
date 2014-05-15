@@ -5,9 +5,10 @@
 
 - hosts: cider-ci-executors
 
-  vars: 
+  vars_files: 
+    - release.yml
 
-    pgs: 
+  vars: 
 
     rubies:
       jruby:
@@ -21,7 +22,7 @@
         default: True
 
     executor_service_app_dir: /var/local/{{executor_service_name}}/app
-    executor_service_app_sha: 14b48dc9915f34fb1b1e054ac78a6f437958b85c
+    executor_service_app_sha: "{{release.executor_sha}}"
 
     executor_service_user: ciderex
     executor_service_name: ciderex
@@ -32,6 +33,9 @@
       - port: 5433
         name: 'PG93'
 
+  tasks: 
+    - debug: msg="'{{release}}'"
+      tags: [debug]
 
   roles: 
 
@@ -75,6 +79,10 @@
 #############################################################
 
 - hosts: cider-ci-server
+
+  vars_files: 
+    - release.yml
+
   vars:
 
     # remove this after upgrading polyglot
@@ -91,15 +99,15 @@
 
     polyglot_server_root: /opt/polyglot-as/server/
     jboss_home: "{{polyglot_server_root}}jboss/"
-    polyglot_as_git_sha: 8d2f64a79b69155f3022ce6b52f671cf5b609d8b 
+    polyglot_as_git_sha: "{{release.polyglot_as_sha}}"
 
     # torquebox server part 
     server_tb_root: /home/polyglot/cider-ci_server-tb
-    server_tb_sha: 35372200028a809270f2634561b968ca65f92fa9
+    server_tb_sha: "{{release.server_tb_sha}}"
 
     # immutant server part 
     server_im_root: /home/polyglot/cider-ci_server-im
-    server_im_git_sha: e7ed11a1409c4549bd8da3f6ba15ef7a34a7a62c
+    server_im_sha: "{{release.server_im_sha}}"
 
     # database
     database:

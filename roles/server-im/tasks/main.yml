@@ -6,16 +6,16 @@
         mode=0755
 
 - current_git_sha: git_dir={{server_im_root}}
-  register: server_im_current_git_sha
+  register: server_im_current_sha
 
 - name: Update server-im
   sudo: True
   sudo_user: polyglot
   git:  repo=https://github.com/DrTom/cider-ci_server-im.git
         dest={{server_im_root}}
-        version={{server_im_git_sha}}
+        version={{server_im_sha}}
   register: update_server_im
-  when: '"{{server_im_current_git_sha.value}}" != "{{server_im_git_sha}"'
+  when: '"{{server_im_current_sha.value}}" != "{{server_im_sha}"'
 
 
 
