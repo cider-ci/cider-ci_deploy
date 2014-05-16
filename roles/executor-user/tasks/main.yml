@@ -7,36 +7,52 @@
         shell=/bin/bash
 
 
-# ~/.bashrc.d gets sourced
+# ~/.bash_login.d gets sourced
 
-- file: path="~{{user}}/.bashrc.d" 
+- file: path="~{{user}}/.bash_login.d" 
         state=directory
         owner={{user}}
         group={{user}}
         mode=0755
 
 - template: src=keep
-            dest="~{{user}}/.bashrc.d/keep" 
+            dest="~{{user}}/.bash_login.d/keep" 
             owner={{user}} group={{user}} mode=0644
 
-- lineinfile: line='if [[ -d ~/.bashrc.d ]]; then for file in ~/.bashrc.d/* ;do source "$file"; done; fi'
+- lineinfile: line='if [[ -d ~/.bash_login.d ]]; then for file in ~/.bash_login.d/* ;do source "$file"; done; fi'
               state=present
               create=yes
               owner={{user}}
               mode=0644
-              dest=~{{user}}/.bashrc
+              dest=~{{user}}/.bash_login
 
 ### load rbenv 
 
 - template: src=load_rbenv
-            dest="~{{user}}/.bashrc.d/load_rbenv" 
+            dest="~{{user}}/.bash_login.d/load_rbenv" 
             owner={{user}} group={{user}} mode=0755
 
-### .bash_profile sources .bashrc
+### .bash_profile sources .bash_login
 
-- lineinfile: line='if [[ -f ~/.bashrc ]]; then source ~/.bashrc ; fi'
+- lineinfile: line='if [[ -f ~/.bash_login ]]; then source ~/.bash_login; fi'
               state=present
               dest=~{{user}}/.bash_profile
+              owner={{user}}
+              mode=0644
+              create=yes
+
+- lineinfile: line='if [[ -d ~/.bash_login.d ]]; then for file in ~/.bash_login.d/* ;do source "$file"; done; fi'
+              state=absent
+              dest=~{{user}}/.bash_profile
+              owner={{user}}
+              mode=0644
+              create=yes
+
+### .bash_login 
+
+- lineinfile: line='if [[ -d ~/.bash_login.d ]]; then for file in ~/.bash_login.d/* ;do source "$file"; done; fi'
+              state=present
+              dest=~{{user}}/.bash_login
               owner={{user}}
               mode=0644
               create=yes
@@ -80,7 +96,7 @@
 
 - name: Env for pgs
   template: src=pgenv
-            dest=~{{user}}/.bashrc.d/pgenv
+            dest=~{{user}}/.bash_login.d/pgenv
             owner={{user}}
             mode=0755
   with_items: pgs
@@ -94,7 +110,7 @@
               state=present
 
 - template: src=mysql_env
-            dest=~{{executor_service_user}}/.bashrc.d/mysql_env
+            dest=~{{executor_service_user}}/.bash_login.d/mysql_env
             owner={{executor_service_user}}
             mode=0755
 

@@ -2,6 +2,18 @@ releases:
 
 - version_major: 1
   version_minor: 3
+  version_patch: 2
+  description:  >
+                Executor inherits HOME and USER to shell.  Revamped 
+                sourcing and layout wrt local login, rc and profile files.
+  executor_sha: 28ef1fb99a12bc1b5ff5c6ad6b4cd459ab3f1d8a
+  server_im_sha: f72f93a6d7994a1f971118b00cb3646d846c43a7
+  server_tb_sha: e7347847565a78d64d901f63140dd893586d45f1 
+  polyglot_as_sha: 8d2f64a79b69155f3022ce6b52f671cf5b609d8b 
+
+
+- version_major: 1
+  version_minor: 3
   version_patch: 1
   description: >
                Ascertain lost trials and revamp dispatching.  Send trial

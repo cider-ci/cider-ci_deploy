@@ -35,9 +35,9 @@
       - port: 5433
         name: 'PG93'
 
-  tasks: 
-    - debug: msg="'{{release}}'"
-      tags: [debug]
+#  tasks: 
+#    - debug: msg="'{{release}}'"
+#      tags: [debug]
 
   roles: 
 

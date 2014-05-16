@@ -1,24 +1,17 @@
 - file: state=directory recurse=yes path=/etc/ansible/facts.d mode=0600
-  tags: [debug]
 
 - stat: path={{cider_ci_local_facts_file}}
   register: cider_ci_secrets_file_stats
-  tags: [debug]
 
 - randstring:
   register: secret 
   when: not cider_ci_secrets_file_stats.stat.exists
-  tags: [debug]
 
 - template: src=cider_ci.json
             dest={{cider_ci_local_facts_file}}
   when: not cider_ci_secrets_file_stats.stat.exists
-  tags: [debug]
 
 - setup: filter=ansible_local
   when: not cider_ci_secrets_file_stats.stat.exists
-  tags: [debug]
 
 - debug: msg='{{ansible_local}}'
-  tags: [debug]
-
