@@ -2,17 +2,17 @@
 Ci2 ansible_ssh=ci2.zhdk.ch ansible_user=root
 Cislave1 ansible_ssh=172.31.6.78 ansible_user=root
 Cislave3 ansible_ssh=172.31.6.74 ansible_user=root
-Cislave4 ansible_ssh=172.31.2.120 ansible_user=root
-Cislave5 ansible_ssh=172.31.2.234 ansible_user=root
+Cislave4 ansible_ssh=172.31.6.24 ansible_user=root
+Cislave5 ansible_ssh=172.31.6.25 ansible_user=root
 
 [cider-ci-server]
 Ci2 
 
 [cider-ci-executors]
-Cislave1 
-Cislave3
-Cislave4
-Cislave5
+#Cislave1 
+#Cislave3
+#Cislave4
+#Cislave5
 
 
 [cider-ci-server:vars]
