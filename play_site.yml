@@ -1,0 +1,85 @@
+
+- hosts: zhdk
+  roles:
+  - role: add-ssh-keys
+
+- hosts: cider-ci-executors
+  vars_files: 
+    - releases.yml
+    - vars-executors.yml
+#  tasks: 
+#    - debug: msg="'{{release}}'"
+#      tags: [debug]
+  roles: 
+    - role: debuntu-setup
+    - role: executor-packages 
+    - role: executor-chromedriver
+    - role: executor-phantomjs
+
+    - role: postgresql
+      version: 9.3
+      port: 5433
+
+    - role: executor-mariadb
+    - role: jdk-leiningen
+
+    - role: executor-user
+      user: '{{executor_service_user}}'
+      pgs: '{{pgs}}'
+
+    - role: executor-service
+
+    - role: rbenv
+      user: '{{executor_service_user}}'
+
+    - role: rbenv-ruby 
+      user: '{{executor_service_user}}'
+      ruby: '{{rubies.mri}}'
+
+    - role: rbenv-ruby 
+      user: '{{executor_service_user}}'
+      ruby: '{{rubies.jruby}}'
+
+#    - role: postgresql
+#      version: 9.2
+#      port: 5432
+
+
+#############################################################
+
+- hosts: cider-ci-server
+
+  vars_files: 
+    - releases.yml
+    - vars-server.yml
+
+  roles: 
+
+    - role: debuntu-setup
+
+    - role: postgresql
+      version: 9.3
+      port: 5433
+
+    - role: jdk-leiningen
+
+    - role: rbenv
+      user: polyglot
+
+    - role: rbenv-ruby 
+      user: polyglot 
+      ruby: '{{rubies.mri}}'
+
+    - role: rbenv-ruby 
+      user: polyglot
+      ruby: '{{rubies.jruby}}'
+
+    - role: server-apache2
+    - role: server-reverse-proxy
+
+    - role: server-common
+    - role: server-polyglot-as 
+    - role: server-tb
+    - role: server-im
+    - role: server-polyglot-as-restart
+

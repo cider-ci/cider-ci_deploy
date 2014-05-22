@@ -1,0 +1,66 @@
+release: "{{releases[0]}}"
+
+# remove this after upgrading polyglot
+# polyglot_force_restart: True
+
+cider_ci_local_facts_file:  /etc/ansible/facts.d/cider_ci.fact
+
+# web
+web_host_names: []
+web_sub_path: cider-ci
+rails_env: production
+
+repositories_path: /var/local/repositories
+
+polyglot_server_root: /opt/polyglot-as/server/
+jboss_home: "{{polyglot_server_root}}jboss/"
+polyglot_as_git_sha: "{{release.polyglot_as_sha}}"
+
+# torquebox server part 
+server_tb_root: /home/polyglot/cider-ci_server-tb
+server_tb_sha: "{{release.server_tb_sha}}"
+
+# immutant server part 
+server_im_root: /home/polyglot/cider-ci_server-im
+server_im_sha: "{{release.server_im_sha}}"
+
+database_name: cider_ci_{{rails_env}}
+
+# database
+database:
+  username: polyglot
+  password: polyglot
+  hostname: localhost
+  port: 5433
+  database: "{{database_name}}"
+  tb_pool: 50
+  im_pool: 25
+
+rubies:
+  jruby:
+    version: jruby-1.7.11
+    alias: jruby-1.7
+    present: True
+  mri:
+    version: 2.1.1
+    alias: 2.1
+    present: True
+    default: True
+
+
+traits:
+  - firefox
+  - imagemagick
+  - jdk
+  - lein
+  - libimage-exiftool-perl
+  - linux
+  - mysql
+  - nodejs
+  - pg93
+  - phantomjs
+  - rbenv
+  - ruby
+  - tightvnc
+
+

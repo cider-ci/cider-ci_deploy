@@ -1,0 +1,17 @@
+- hosts: cider-ci-server
+
+  vars_files: 
+    - releases.yml
+    - vars-server.yml
+
+  tasks: 
+
+  - name: Dump database
+    shell: 'pg_dump -v -x -F c 
+            --exclude-table-data attachments 
+            -f /tmp/cider_ci_production_dump.pgbin 
+            {{database_name}}'
+
+  - fetch: src=/tmp/cider_ci_production_dump.pgbin 
+           dest=tmp
+

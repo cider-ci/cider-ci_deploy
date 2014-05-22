@@ -63,7 +63,7 @@
           && export RBENV_VERSION={{item.version}} 
           && bundle install --deployment' polyglot
          executable=/bin/bash
-  when: update_server_tb.changed and item.present
+  when: true or update_server_tb.changed and item.present
   with_items: ['{{rubies.jruby}}','{{rubies.mri}}']
 
 - name: Migrate
@@ -74,7 +74,7 @@
             && export RBENV_VERSION={{rubies.mri.version}} 
             && bundle exec rake db:create db:migrate' polyglot
           executable=/bin/bash
-  when: update_server_tb.changed
+  when: true or update_server_tb.changed
 
 - name: Precompile assets 
   shell:  su -l -s /bin/bash -c 'source /etc/profile.d/rbenv-load.sh 

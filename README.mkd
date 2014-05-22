@@ -12,7 +12,7 @@ Usage
 
 We use it like this: 
 
-    ansible-playbook -i hosts-zhdk site.yml
+    ansible-playbook -i hosts-zhdk play_site.yml
 
 Create your own `hosts` file and use that one it in lieu of
 `hosts-zhdk`.
@@ -25,7 +25,7 @@ those.
 There is a known bug which will cause memory leaks during redeploys to the
 application server. The `polyglot_force_restart` variable might come handy: 
 
-    ansible-playbook -i hosts-zhdk site.yml --extra-vars "polyglot_force_restart=True"
+    ansible-playbook -i hosts-zhdk play_site.yml --extra-vars "polyglot_force_restart=True"
 
 
 
