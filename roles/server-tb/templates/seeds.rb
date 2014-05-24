@@ -27,9 +27,4 @@ executor.update_attributes!(
 )
 {% endfor %}
 
-ServerSettings.find.update_attributes! \
-  ui_context: '/{{web_sub_path}}',
-  api_context: '/{{web_sub_path}}',
-  repositories_path: '{{repositories_path}}',
-  server_host: '{{ansible_default_ipv4['address']}}'
 

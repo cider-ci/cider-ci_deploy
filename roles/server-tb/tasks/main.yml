@@ -26,9 +26,22 @@
 
 - template: src=secrets.yml
             dest={{server_tb_root}}/config/secrets.yml
+  register: secrets
+
+- template: src=settings.yml
+            dest={{server_tb_root}}/config/settings.yml
+  register: settings
 
 - template: src=release.yml
             dest={{server_tb_root}}/config/release.yml
+  register: release
+
+
+### 
+- template: src=logrotate dest=/etc/logrotate.d/server-tb
+
+- shell: logrotate -f /etc/logrotate.d/server-tb
+  when: polyglot_force_restart
 
 ### 
 
@@ -133,5 +146,7 @@
         or create_deployment_descriptor.changed 
         or configure_database.changed
         or server_configuration.changed
-
+        or secrets.changed
+        or settings.changed
+        or release.changed
 

@@ -9,10 +9,10 @@ Cislave5 ansible_ssh=172.31.6.25 ansible_user=root
 Ci2 
 
 [cider-ci-executors]
-#Cislave1 
-#Cislave3
-#Cislave4
-#Cislave5
+Cislave1 
+Cislave3
+Cislave4
+Cislave5
 
 
 [cider-ci-server:vars]

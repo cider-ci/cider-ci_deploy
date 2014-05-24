@@ -1,9 +1,0 @@
-/var/log/polyglot-as/*.log  /opt/polyglot-as/jboss/standalone/log/*/*.log {
-daily
-missingok
-size 1M
-rotate 21
-compress
-delaycompress
-copytruncate
-}

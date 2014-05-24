@@ -1,0 +1,9 @@
+# {{ansible_managed}}
+{{server_tb_root}}/log/*.log {
+daily
+missingok
+rotate 21
+compress
+delaycompress
+copytruncate
+}

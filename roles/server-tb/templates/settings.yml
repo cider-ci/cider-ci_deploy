@@ -1,0 +1,10 @@
+# {{ansible_managed}}
+
+git:
+  repositories_path: "{{repositories_path}}"
+
+http_server:
+  host: "{{web_host_ip}}"
+  port: 80
+  ssl: false
+

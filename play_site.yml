@@ -53,6 +53,17 @@
     - releases.yml
     - vars-server.yml
 
+#  tasks: 
+#    - debug: msg="'{{release}}'"
+#      tags: [debug]
+#
+#    - debug: msg="'{{server_tb_sha}}'"
+#      tags: [debug]
+#
+#    - debug: msg="'{{server_im_sha}}'"
+#      tags: [debug]
+#
+
   roles: 
 
     - role: debuntu-setup
@@ -79,7 +90,8 @@
 
     - role: server-common
     - role: server-polyglot-as 
-    - role: server-tb
     - role: server-im
+    - role: server-tb
     - role: server-polyglot-as-restart
+
 

@@ -1,0 +1,10 @@
+# {{ansible_managed}}
+
+/var/log/polyglot-as/*.log  {{jboss_home}}/standalone/log/*/*.log {
+daily
+missingok
+rotate 21
+compress
+delaycompress
+copytruncate
+}

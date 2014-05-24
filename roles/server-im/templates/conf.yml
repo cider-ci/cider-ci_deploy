@@ -1,5 +1,5 @@
 # {{ansible_managed}}
-# 
+  
 persistence:
   db: 
     adapter: postgresql
@@ -11,3 +11,12 @@ persistence:
     subname: localhost:{{database.port}}
     subprotocol: postgresql
     username: {{database.username}}
+
+http_server: 
+  host: "{{web_host_ip}}"
+  port: 80
+  ssl: false
+  tb_context: "/{{web_sub_path}}" 
+
+git: 
+  repositories_path: "{{repositories_path}}"

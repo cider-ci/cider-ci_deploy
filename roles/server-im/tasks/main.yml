@@ -15,9 +15,7 @@
         dest={{server_im_root}}
         version={{server_im_sha}}
   register: update_server_im
-  when: '"{{server_im_current_sha.value}}" != "{{server_im_sha}"'
-
-
+  when: '"{{server_im_current_sha.value}}" != "{{server_im_sha}}"'
 
 - name: Configure sever-im
   template: src=conf.yml
@@ -41,6 +39,5 @@
   when: update_server_im.changed
         or configure_server_im.changed
         or update_deployment_server_im_descriptor_server_im.changed
-        or server_configuration.changed
 
 
