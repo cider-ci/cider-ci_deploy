@@ -2,15 +2,10 @@
 #
  
 all_spec= Specification.find_or_create_by_data! 'substitute_with_path: cider-ci/all_tests.yml'
-Definition.find_by(name: "All Tests").try(&:destroy)
-Definition.find_or_create_by(name: "All tests").update_attributes! \
+Definition.find_by(name: "All tests").try(&:destroy)
+Definition.create name: "All tests" ,
   description: "Loads the specification from the repository path 'cider-ci/all_tests.yml'.",
   specification: all_spec
-
-hotspots_spec= Specification.find_or_create_by_data! 'substitute_with_path: cider-ci/hotspots.yml'
-Definition.find_or_create_by(name: "Hotspots", specification_id: hotspots_spec.id).update_attributes! \
-  description: "Loads the specification from the repository path 'cider-ci/hotspots.yml'."
-
 
 
 {% for executor in groups['cider-ci-executors'] %}

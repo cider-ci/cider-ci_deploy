@@ -15,3 +15,17 @@
   when: not cider_ci_secrets_file_stats.stat.exists
 
 - debug: msg='{{ansible_local}}'
+
+
+- name: Add the group "polyglot"
+  group:  name=polyglot
+          system=true
+
+- name: Add the user "polyglot"
+  user: name=polyglot
+        generate_ssh_key=yes
+        group=polyglot
+        system=yes
+        shell=/bin/bash
+
+

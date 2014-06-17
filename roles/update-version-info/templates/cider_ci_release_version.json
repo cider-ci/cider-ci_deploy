@@ -1,0 +1,7 @@
+{
+   "release" : {
+      "version_major" : {{released.version_major}},
+      "version_minor" : {{released.version_minor}},
+      "version_patch" : "{{released.version_patch}}"
+   }
+}

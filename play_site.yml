@@ -3,6 +3,15 @@
   roles:
   - role: add-ssh-keys
 
+- hosts: all
+  vars_files: 
+    - releases.yml
+  vars:
+    target_release: "{{releases[0]}}"
+  roles:
+    - role: compatibility
+  tags: [debug] 
+
 - hosts: cider-ci-executors
   vars_files: 
     - releases.yml
@@ -45,6 +54,8 @@
 #      port: 5432
 
 
+
+
 #############################################################
 
 - hosts: cider-ci-server
@@ -74,6 +85,8 @@
 
     - role: jdk-leiningen
 
+    - role: server-polyglot-user
+
     - role: rbenv
       user: polyglot
 
@@ -95,3 +108,15 @@
     - role: server-polyglot-as-restart
 
 
+- hosts: all
+  tags: [debug]
+
+  vars_files: 
+    - releases.yml
+
+  vars: 
+    released: "{{releases[0]}}"
+
+  roles:
+    - role: update-version-info
+    

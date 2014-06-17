@@ -126,10 +126,9 @@
             && export RAILS_RELATIVE_URL_ROOT={{web_sub_path}}
             && bundle exec rake db:seed' polyglot
           executable=/bin/bash
-  register: server_configuration
+  register: server_seed
   when: seedfile.changed
 
-### 
 
 - name: Create deployment descriptor
   template: src=deployment-descriptor.yml
@@ -145,7 +144,7 @@
   when: update_server_tb.changed 
         or create_deployment_descriptor.changed 
         or configure_database.changed
-        or server_configuration.changed
+        or server_seed.changed
         or secrets.changed
         or settings.changed
         or release.changed

@@ -2,6 +2,22 @@ releases:
 
 - version_major: 1
   version_minor: 4
+  version_patch: 4
+  description:  >
+                Welcome page with custom section and radiator.
+                Result bars in execution overview. 
+                Per page filter on executions and tasks.
+                Css and icon fixes. Improved reloader.
+                Blacklist some env vars on the executors.
+                Tags are links.
+  executor_sha: 206e77626fe1d7b3cb3dfb7fe1441f152c6205d9 
+  server_im_sha: 5358037722c9d9f7899b2cc4062bbf0ef0a3f373 
+  server_tb_sha: 44184c7f50a610dba44e6dd6a9e0da6f13d23d33
+  polyglot_as_sha: 8d2f64a79b69155f3022ce6b52f671cf5b609d8b 
+
+
+- version_major: 1
+  version_minor: 4
   version_patch: 3
   description:  >
                 Move server-settings from database to config file.

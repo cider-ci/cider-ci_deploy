@@ -1,4 +1,5 @@
 [zhdk]
+Radiator ansible_ssh=172.31.2.189 ansible_user=root
 Ci2 ansible_ssh=ci2.zhdk.ch ansible_user=root
 Cislave1 ansible_ssh=172.31.6.78 ansible_user=root
 Cislave3 ansible_ssh=172.31.6.74 ansible_user=root
@@ -22,5 +23,4 @@ polyglot_xmx=10G
 
 [cider-ci-executors:vars]
 ntp_server=ntp.zhdk.ch
-
 
