@@ -7,7 +7,7 @@
   register: executor_service_app_current_sha
 
 - name: Update ciderex
-  git:  repo=https://github.com/DrTom/cider-ci_executor.git
+  git:  repo={{repositories.executor}}
         dest={{executor_service_app_dir}}
         version={{executor_service_app_sha}}
         accept_hostkey=True

@@ -2,6 +2,17 @@ releases:
 
 - version_major: 1
   version_minor: 4
+  version_patch: 5
+  description:  >
+                  Change repo locations. Minor fixes.
+  executor_sha: 206e77626fe1d7b3cb3dfb7fe1441f152c6205d9 
+  server_im_sha: 5358037722c9d9f7899b2cc4062bbf0ef0a3f373 
+  server_tb_sha: 05dbabd8014f98bc4df933c596eeeb3f637bd4a2
+  polyglot_as_sha: 8d2f64a79b69155f3022ce6b52f671cf5b609d8b 
+
+
+- version_major: 1
+  version_minor: 4
   version_patch: 4
   description:  >
                 Welcome page with custom section and radiator.
@@ -98,4 +109,10 @@ releases:
   server_im_sha: f72f93a6d7994a1f971118b00cb3646d846c43a7
   server_tb_sha: 2c02d4bc6a00cd97e23e4be67e68d7cc7c15bf99
   polyglot_as_sha: 8d2f64a79b69155f3022ce6b52f671cf5b609d8b 
+
+repositories: 
+  server_im: https://github.com/cider-ci/cider-ci_server-im.git  
+  server_tb: https://github.com/cider-ci/cider-ci_server-tb.git
+  executor: https://github.com/cider-ci/cider-ci_executor.git
+
 

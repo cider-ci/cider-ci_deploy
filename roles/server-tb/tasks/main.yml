@@ -18,7 +18,7 @@
 - name: Update server-tb
   sudo: True
   sudo_user: polyglot
-  git:  repo=https://github.com/DrTom/cider-ci_server-tb.git
+  git:  repo={{repositories.server_tb}}
         dest={{server_tb_root}}
         version={{server_tb_sha}}
   register: update_server_tb
@@ -128,7 +128,6 @@
           executable=/bin/bash
   register: server_seed
   when: seedfile.changed
-
 
 - name: Create deployment descriptor
   template: src=deployment-descriptor.yml

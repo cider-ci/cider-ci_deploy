@@ -1,12 +1,12 @@
 [cider-ci]
-Trusty4 ansible_ssh=192.168.205.147 ansible_user=root
-Trusty3 ansible_ssh=192.168.205.146 ansible_user=root
-
-[cider-ci-server]
-Trusty4 
+Cider-CI-Server ansible_ssh=Cider-CI-Server ansible_user=root
+Cider-CI-Executor ansible_ssh=Cider-CI-Executor ansible_user=root
 
 [cider-ci-executors]
-Trusty3
+Cider-CI-Executor
+
+[cider-ci-server]
+Cider-CI-Server
 
 [cider-ci-server:vars]
 polyglot_xmx=2G

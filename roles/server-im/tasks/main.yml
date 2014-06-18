@@ -11,7 +11,7 @@
 - name: Update server-im
   sudo: True
   sudo_user: polyglot
-  git:  repo=https://github.com/DrTom/cider-ci_server-im.git
+  git:  repo={{repositories.server_im}}
         dest={{server_im_root}}
         version={{server_im_sha}}
   register: update_server_im
