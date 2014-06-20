@@ -136,6 +136,9 @@
             mode=755
   register: create_deployment_descriptor
 
+- stat:  path={{server_tb_descriptor_full_path}}.deployed
+  register: tb_descriptor_deployed
+
 - name: Deploy
   sudo: True
   sudo_user: polyglot
@@ -147,4 +150,5 @@
         or secrets.changed
         or settings.changed
         or release.changed
+        or tb_descriptor_deployed.stat.exists == False
 

@@ -31,6 +31,9 @@
             mode=755
   register: update_deployment_server_im_descriptor_server_im
 
+- stat:  path={{server_im_descriptor_full_path}}.deployed
+  register: im_descriptor_deployed
+
 
 - name: Deploy
   sudo: True
@@ -39,5 +42,6 @@
   when: update_server_im.changed
         or configure_server_im.changed
         or update_deployment_server_im_descriptor_server_im.changed
+        or im_descriptor_deployed.stat.exists == False
 
 
