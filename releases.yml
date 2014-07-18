@@ -1,6 +1,16 @@
 releases:
 
 - version_major: 1
+  version_minor: 5
+  version_patch: 0 
+  version_pre: "-rc.1"
+  version_build: "" 
+  description:  >
+                  Disect into services. 
+                  Do not run within and remove dependency on Jboss/Polyglot.
+  git_ref: master
+
+- version_major: 1
   version_minor: 4
   version_patch: 5
   description:  >
@@ -111,8 +121,6 @@ releases:
   polyglot_as_sha: 8d2f64a79b69155f3022ce6b52f671cf5b609d8b 
 
 repositories: 
-  server_im: https://github.com/cider-ci/cider-ci_server-im.git  
-  server_tb: https://github.com/cider-ci/cider-ci_server-tb.git
   executor: https://github.com/cider-ci/cider-ci_executor.git
 
 

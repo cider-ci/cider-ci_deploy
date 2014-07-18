@@ -14,18 +14,92 @@
 - setup: filter=ansible_local
   when: not cider_ci_secrets_file_stats.stat.exists
 
-- debug: msg='{{ansible_local}}'
+#- debug: msg='{{ansible_local}}'
 
 
-- name: Add the group "polyglot"
-  group:  name=polyglot
+
+### UI-user ###################################################################
+
+- name: Add the group "user-interface"
+  group:  name=user-interface
           system=true
 
-- name: Add the user "polyglot"
-  user: name=polyglot
+- name: Add the user "user-interface"
+  user: name=user-interface
         generate_ssh_key=yes
-        group=polyglot
+        group=user-interface
         system=yes
         shell=/bin/bash
 
 
+### Repositories ##############################################################
+
+
+- group:  name=repository-manager
+          system=true
+
+- user: name=repository-manager
+        generate_ssh_key=yes
+        group=repository-manager
+        system=yes
+        shell=/bin/bash
+
+- file: path={{repositories_path}}
+        owner=repository-manager
+        group=repository-manager
+        state=directory
+        recurse=yes
+        mode=0755
+  changed_when: false
+
+### Attachments ###############################################################
+
+- group:  name=storage-manager
+          system=true
+
+- user: name=storage-manager
+        generate_ssh_key=yes
+        group=storage-manager
+        system=yes
+        shell=/bin/bash
+
+- file: path={{attachments_path}}
+        owner=storage-manager
+        group=storage-manager
+        state=absent
+        mode=0755
+  changed_when: false
+
+- file: path={{trial_attachments_path}}
+        owner=storage-manager
+        group=storage-manager
+        state=directory
+        recurse=yes
+        mode=0755
+  changed_when: false
+
+
+
+
+### Database ##################################################################
+
+- name: Create postgresql user
+  postgresql_user:  name={{database.user}}
+                    password={{database.password}}
+                    role_attr_flags=CREATEDB,SUPERUSER
+                    login_user=root
+                    port={{database.port}}
+
+- name: Create database
+  postgresql_db:  name={{database.name}}
+                  owner={{database.user}}
+                  login_user=root
+                  port={{database.port}}
+
+- postgresql_privs: >
+    login_user=root
+    port={{database.port}}
+    db={{database.name}}
+    privs=ALL
+    type=database
+    role={{database.user}}

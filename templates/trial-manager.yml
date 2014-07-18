@@ -1,0 +1,68 @@
+repositories:
+  path: "{{repositories_path}}"
+
+repositories_path: "{{repositories_path}}"
+
+repositories_server: "http://127.0.0.1:8881/cider-ci"
+
+repository_manager_server: 
+  host: "{{ansible_default_ipv4.address}}"
+  port: 80
+  context: '/cider-ci'
+  ssl: false
+
+
+trial_manager_server: 
+  host: "{{ansible_default_ipv4.address}}"
+  port: 80
+  context: '/cider-ci'
+  ssl: false
+
+# see above
+storage_manager_server: 
+  host: "{{ansible_default_ipv4.address}}"
+  port: 80
+  context: '/cider-ci'
+  ssl: false
+
+
+web: 
+  host: "127.0.0.1"
+  port: 8882
+  context: '/cider-ci'
+
+nrepl:
+  port: 7882
+  bind: "{{nrepl_bind_address | default('127.0.0.1')}}"
+  enabled: true
+
+database:
+  db_spec: 
+    adapter: postgresql
+    classname: org.postgresl.Driver
+    subname: '//localhost:{{database.port}}/{{database.name}}'
+    subprotocol: postgresql
+    max_pool_size: 30
+    user: "{{database.user}}"
+    password: "{{database.password}}"
+
+
+messaging: 
+
+  connection: 
+    vhost: cider-ci
+    host: 127.0.0.1
+    username: guest
+    password: guest
+
+
+  exchanges:
+
+    - name: branch_event_topic
+      type: topic
+      durable: true
+
+    - name: trial_event_topic
+      type: topic
+      durable: true
+

@@ -1,0 +1,181 @@
+- set_fact: restart=False
+
+- name: Install dependencies
+  apt: pkg={{item}} state=present update_cache=yes cache_valid_time=3600
+  with_items: 
+    - nodejs
+
+- name: Create target dir 
+  file: path={{ui_root_path}}
+        owner=user-interface
+        group=user-interface
+        state=directory
+        mode=0755
+
+
+- name: Git clone or update project
+  sudo: True
+  sudo_user: user-interface
+  git:  repo=https://github.com/cider-ci/cider-ci_user-interface.git
+        dest={{ui_root_path}}
+        version={{git_ref}}
+        update=yes
+  register: git_clone_or_update
+  changed_when: git_clone_or_update.before != git_clone_or_update.after
+
+- set_fact: restart=True
+  when: git_clone_or_update.changed 
+
+### Bundle #####################################################################
+
+- name: Bundle Jruby
+  shell: su -l -s /bin/bash -c 'source /etc/profile.d/rbenv-load.sh 
+          && rbenv-load 
+          && cd {{ui_root_path}}
+          && export RAILS_ENV={{rails_env}} 
+          && export RBENV_VERSION={{rubies.jruby.version}} 
+          && bundle install --deployment' user-interface 
+         executable=/bin/bash
+  register: bundle_jruby
+  changed_when: bundle_jruby.stdout | match(".*Installing.*")
+
+
+- name: Bundle MRI
+  shell: su -l -s /bin/bash -c 'source /etc/profile.d/rbenv-load.sh 
+          && rbenv-load 
+          && cd {{ui_root_path}}
+          && export RAILS_ENV={{rails_env}} 
+          && export RBENV_VERSION={{rubies.mri.version}} 
+          && bundle install --deployment' user-interface 
+         executable=/bin/bash
+  register: bundle_mri
+  changed_when: bundle_mri.stdout | match(".*Installing.*")
+
+
+### Settings ##################################################################
+
+- template: src=settings.yml
+            dest={{ui_root_path}}/config/settings.local.yml
+  register: settings
+
+- set_fact: restart=True
+  when: settings.changed 
+
+
+### Secret ####################################################################
+
+- name: Create target dir 
+  file: path=/etc/cider-ci 
+        state=directory
+        mode=0755
+
+- shell:  head -c 64 /dev/urandom | base64 --wrap=0 > /etc/cider-ci/random.txt
+          creates=/etc/cider-ci/random.txt
+
+- shell : "cat /etc/cider-ci/random.txt"
+  register: random_base
+  changed_when: False
+
+
+- template: src=secrets.yml
+            dest={{ui_root_path}}/config/secrets.yml
+            owner=user-interface
+            group=user-interface
+            mode=0600
+  register: secrete
+
+- set_fact: restart=True
+  when: secrete.changed 
+
+
+### Database ##################################################################
+
+- name: Configure database
+  template: src=database.yml
+            dest={{ui_root_path}}/config/database.yml
+            owner=user-interface
+            mode=0755
+  register: database_config 
+
+- name: Migrate
+  shell:  su -l -s /bin/bash -c 'source /etc/profile.d/rbenv-load.sh 
+            && rbenv-load 
+            && cd {{ui_root_path}}
+            && export RAILS_ENV={{rails_env}} 
+            && export RBENV_VERSION={{rubies.mri.version}} 
+            && bundle exec rake db:create db:migrate' user-interface
+          executable=/bin/bash
+  register: migrate
+  changed_when: not migrate.stdout | match("")
+
+- set_fact: restart=True
+  when: database_config.changed 
+
+### Seed 
+
+- template: src=seeds.rb
+             dest={{ui_root_path}}/db/seeds.rb
+             owner=user-interface
+  register: seedfile
+
+- shell:  su -l -s /bin/bash -c 'source /etc/profile.d/rbenv-load.sh 
+            && rbenv-load 
+            && cd {{ui_root_path}}
+            && export RAILS_ENV={{rails_env}} 
+            && export RBENV_VERSION={{rubies.mri.version}} 
+            && export RAILS_RELATIVE_URL_ROOT={{web_sub_path}}
+            && bundle exec rake db:seed' user-interface 
+          executable=/bin/bash
+  register: seed
+
+#- debug: var=seed
+
+
+### Assets ####################################################################
+
+- name: Precompile assets 
+  shell:  su -l -s /bin/bash -c 'source /etc/profile.d/rbenv-load.sh 
+            && rbenv-load 
+            && cd {{ui_root_path}}
+            && export RAILS_ENV={{rails_env}} 
+            && export RBENV_VERSION={{rubies.mri.version}} 
+            && rm -rf public/assets/*
+            && rm -rf tmp/cache/*
+            && bundle exec rake assets:precompile' user-interface
+          executable=/bin/bash
+  register: precompile_assets
+  changed_when: not precompile_assets.stderr | match("")
+
+### Service ###################################################################
+
+
+- template: src=user-interface.conf
+            dest=/etc/init/user-interface.conf 
+  register: init_script
+
+- set_fact: restart=True
+  when: init_script.changed 
+
+
+- template: src=background-processor.conf
+            dest=/etc/init/background-processor.conf 
+  register: init_script
+
+- set_fact: restart=True
+  when: init_script.changed 
+
+
+- service:  name=user-interface
+            state=restarted
+  when: restart
+
+- service:  name=user-interface
+            state=started
+
+- service:  name=background-processor
+            state=restarted
+  when: restart
+
+- service:  name=background-processor
+            state=started
+

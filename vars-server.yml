@@ -3,7 +3,12 @@ release: "{{releases[0]}}"
 # remove this after upgrading polyglot
 # polyglot_force_restart: True
 
+force_restart: True
+
+lazy: False
+
 cider_ci_local_facts_file:  /etc/ansible/facts.d/cider_ci.fact
+
 
 # web
 web_host_names: []
@@ -11,39 +16,47 @@ web_host_ip: "{{ansible_default_ipv4.address}}"
 web_sub_path: cider-ci
 rails_env: production
 
+
 repositories_path: /var/local/repositories
 
-polyglot_server_root: /opt/polyglot-as/server/
-jboss_home: "{{polyglot_server_root}}jboss/"
-polyglot_as_git_sha: "{{release.polyglot_as_sha}}"
+attachments_path: /var/local/attachments
+trial_attachments_path: /var/local/storage/trial-attachments
 
-# torquebox server part 
-server_tb_root: /home/polyglot/cider-ci_server-tb
-server_tb_sha: "{{release.server_tb_sha}}"
 
-# immutant server part 
-server_im_root: /home/polyglot/cider-ci_server-im
-server_im_sha: "{{release.server_im_sha}}"
+ui_root_path: /var/local/user-interface
 
-database_name: cider_ci_{{rails_env}}
+database:
+  name: cider_ci_{{rails_env}}
+  port: 5432
+  user: cider-ci
+  password: cider-ci
+
+db_spec: 
+  adapter: postgresql
+  classname: org.postgresl.Driver
+  subname: //localhost:{{database.port}}/{{database.name}}
+  subprotocol: postgresql
+  max_pool_size: 15 
+  user: cider-ci
+  password: cider-ci
 
 # database
-database:
+database_old:
   username: polyglot
   password: polyglot
   hostname: localhost
-  port: 5433
-  database: "{{database_name}}"
+  port: "{{database.port}}"
+  database: "{{database.name}}"
   tb_pool: 50
   im_pool: 25
 
 rubies:
   jruby:
-    version: jruby-1.7.11
+    version: jruby-1.7.13
     alias: jruby-1.7
     present: True
   mri:
-    version: 2.1.1
+    version: 2.1.2
     alias: 2.1
     present: True
     default: True

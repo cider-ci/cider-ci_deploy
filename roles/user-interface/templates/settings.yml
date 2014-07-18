@@ -1,0 +1,35 @@
+# Ansible managed 
+
+release: 
+  version_major: "{{release.version_major}}"
+  version_minor: 5
+  version_patch: 0 
+  version_pre:  "{{release.version_pre}}"
+  version_build: ""
+
+git:
+  repositories_path: "{{repositories_path}}"
+
+trial_attachments_http_prefix: http://{{web_host_ip}}/cider-ci/storage/trial-attachments
+
+http_server:
+  host: "{{web_host_ip}}"
+  port: 80
+  ssl: false
+
+messaging: 
+
+  connection: 
+    vhost: cider-ci
+    username: guest
+    password: guest
+    host: 127.0.0.1
+
+  default_message_expiration: 1
+
+  exchanges:
+    - name: branch_event_topic
+      type: topic
+      durable: true
+
+

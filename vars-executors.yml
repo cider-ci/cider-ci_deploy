@@ -12,13 +12,14 @@ rubies:
     default: True
 
 executor_service_app_dir: /var/local/{{executor_service_name}}/app
-executor_service_app_sha: "{{release.executor_sha}}"
+executor_service_app_sha: "{{release.git_ref}}"
 
 executor_service_user: ciderex
 executor_service_name: ciderex
 executor_service_working_dir: /tmp/{{executor_service_name}}_working_dir
 executor_service_repository_dir: /var/local/{{executor_service_name}}/repositories
 
+
 pgs: 
-  - port: 5433
+  - port: 5432
     name: 'PG93'

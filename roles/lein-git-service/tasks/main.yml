@@ -1,0 +1,62 @@
+- name: Add service group
+  group:  name={{lein_git_service_user}}
+          system=true
+  when: lein_git_service_user != 'root'
+
+- name: Add service user
+  user: name={{lein_git_service_user}}
+        generate_ssh_key=yes
+        group={{lein_git_service_user}}
+        system=yes
+        shell=/bin/bash
+  when: lein_git_service_user != 'root'
+
+- file: path=/etc/{{lein_git_service_name}}
+        state=directory
+        mode=0755
+
+- template: src=../../../templates/{{lein_git_service_name}}.yml
+            dest=/etc/{{lein_git_service_name}}/conf.yml
+            mode=0755
+  register: lein_git_service_conf
+
+- set_fact: lein_git_service_restart=True
+  when: lein_git_service_conf.changed
+
+- name: Create target dir 
+  file: path={{lein_git_service_app_dir}}
+        owner={{lein_git_service_user}}
+        group={{lein_git_service_user}}
+        state=directory
+        mode=0755
+
+- name: Git clone or update project
+  sudo: True
+  sudo_user: "{{lein_git_service_user}}"
+  git:  repo={{lein_git_service_git_repo}}
+        dest={{lein_git_service_app_dir}}
+        version={{lein_git_service_git_ref}}
+        update=yes
+  register: lein_git_service_app
+  changed_when: lein_git_service_app.before != lein_git_service_app.after
+
+- template: src=logrotate
+            dest=/etc/logrotate.d/{{lein_git_service_name}}
+
+- template: src=init.conf
+            dest=/etc/init/{{lein_git_service_name}}.conf
+  register: lein_git_service_init
+
+- set_fact: lein_git_service_restart=True
+  when: lein_git_service_app.changed
+        or lein_git_service_init.changed
+
+- command: logrotate -f /etc/logrotate.d/{{lein_git_service_name}}
+  when: lein_git_service_restart
+
+- service: name={{lein_git_service_name}} state=restarted
+  when: lein_git_service_restart
+
+- service: name={{lein_git_service_name}} state=started
+
+

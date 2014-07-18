@@ -4,18 +4,37 @@
   - role: add-ssh-keys
 
 - hosts: all
+
+
   vars_files: 
     - releases.yml
+
   vars:
-    target_release: "{{releases[0]}}"
+    release: "{{releases[0]}}"
+    git_ref: "{{release.git_ref}}"
+
+
   roles:
     - role: compatibility
-  tags: [debug] 
+
+
+
+###############################################################################
+### Executors #################################################################
+###############################################################################
+
 
 - hosts: cider-ci-executors
   vars_files: 
     - releases.yml
     - vars-executors.yml
+
+  vars:
+    release: "{{releases[0]}}"
+    git_ref: "{{release.git_ref}}"
+
+
+
 #  tasks: 
 #    - debug: msg="'{{release}}'"
 #      tags: [debug]
@@ -26,17 +45,16 @@
     - role: executor-phantomjs
 
     - role: postgresql
-      version: 9.3
-      port: 5433
 
     - role: executor-mariadb
     - role: jdk-leiningen
 
     - role: executor-user
       user: '{{executor_service_user}}'
-      pgs: '{{pgs}}'
+      tags: [executor-user]
 
     - role: executor-service
+      tags: [executor-service]
 
     - role: rbenv
       user: '{{executor_service_user}}'
@@ -56,7 +74,11 @@
 
 
 
-#############################################################
+###############################################################################
+### Server ####################################################################
+###############################################################################
+
+
 
 - hosts: cider-ci-server
 
@@ -64,16 +86,13 @@
     - releases.yml
     - vars-server.yml
 
+  vars:
+    release: "{{releases[0]}}"
+    git_ref: "{{release.git_ref}}"
+
 #  tasks: 
-#    - debug: msg="'{{release}}'"
-#      tags: [debug]
-#
-#    - debug: msg="'{{server_tb_sha}}'"
-#      tags: [debug]
-#
-#    - debug: msg="'{{server_im_sha}}'"
-#      tags: [debug]
-#
+#   - debug: msg="'{{release}}'"
+#     tags: [debug]
 
   roles: 
 
@@ -83,29 +102,55 @@
       version: 9.3
       port: 5433
 
+    - role: message-broker
+
     - role: jdk-leiningen
 
-    - role: server-polyglot-user
+    - role: server-polyglot-remove
 
-    - role: rbenv
-      user: polyglot
 
-    - role: rbenv-ruby 
-      user: polyglot 
-      ruby: '{{rubies.mri}}'
+#    - role: server-polyglot-user
 
-    - role: rbenv-ruby 
-      user: polyglot
       ruby: '{{rubies.jruby}}'
 
     - role: server-apache2
+
     - role: server-reverse-proxy
+      tags: [reverse-proxy]
 
     - role: server-common
-    - role: server-polyglot-as 
-    - role: server-im
-    - role: server-tb
-    - role: server-polyglot-as-restart
+      tags: [server-common]
+
+    - role: user-interface
+      tags: [user-interface]
+
+
+#    - role: server-polyglot-as 
+#    - role: server-im
+#    - role: server-tb
+#    - role: server-polyglot-as-restart
+
+    - role: lein-git-service
+      lein_git_service_name: repository-manager
+      lein_git_service_git_repo: "https://github.com/cider-ci/cider-ci_repository-manager.git"
+      tags: [repository-manager]
+
+    - role: lein-git-service
+      lein_git_service_name: trial-manager
+      lein_git_service_git_repo: "https://github.com/cider-ci/cider-ci_trial-manager.git"
+      tags: [trial-manager]
+
+    - role: lein-git-service
+      lein_git_service_name: storage-manager
+      lein_git_service_git_repo: "https://github.com/cider-ci/cider-ci_storage-manager.git"
+      tags: [storage-manager]
+
+
+###############################################################################
+###############################################################################
+###############################################################################
+
+
 
 
 - hosts: all
@@ -114,8 +159,9 @@
   vars_files: 
     - releases.yml
 
-  vars: 
-    released: "{{releases[0]}}"
+  vars:
+    release: "{{releases[0]}}"
+    git_ref: "{{release.git_ref}}"
 
   roles:
     - role: update-version-info

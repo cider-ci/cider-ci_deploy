@@ -1,0 +1,20 @@
+[cider-ci]
+ci-server  ansible_ssh_host=192.168.0.105 ansible_ssh_user=root
+ci-executor ansible_ssh_host=192.168.0.106 ansible_ssh_user=root
+
+[cider-ci-executors]
+ci-executor 
+#Cider-CI-Executor
+
+[cider-ci-server]
+ci-server  
+
+[cider-ci-server:vars]
+nrepl_bind_address=0.0.0.0
+lein_git_service_xmx_value=256m
+background_processor_xmx_value=256m
+user_interface_xmx_value=512m
+
+[cider-ci-executors:vars]
+nrepl_bind_address=0.0.0.0
+

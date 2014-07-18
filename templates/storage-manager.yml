@@ -1,0 +1,34 @@
+stores: 
+  - url_path_prefix: "/storage/trial-attachments"
+    retention_time_days: 10
+    file_path: "{{trial_attachments_path}}"
+    db_table: trial_attachments
+
+
+database:
+  db_spec: 
+    adapter: postgresql
+    classname: org.postgresl.Driver
+    subname: '//localhost:{{database.port}}/{{database.name}}'
+    subprotocol: postgresql
+    max_pool_size: 5
+    user: "{{database.user}}"
+    password: "{{database.password}}"
+
+web:
+  host: "127.0.0.1"
+  port: 8883
+  context: "/cider-ci"
+
+nrepl:
+  port: 7883
+  bind: "{{nrepl_bind_address | default('127.0.0.1')}}"
+  enabled: true
+
+messaging: 
+
+  connection: 
+    vhost: cider-ci
+    host: 127.0.0.1
+    username: guest
+    password: guest

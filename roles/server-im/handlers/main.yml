@@ -1,4 +1,0 @@
-- name: Deploy
-  sudo: True
-  sudo_user: polyglot
-  command:  touch {{descriptor_full_path}}.dodeploy

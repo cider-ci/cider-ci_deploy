@@ -1,0 +1,9 @@
+# {{ansible_managed}}
+{{lein_git_service_log_dir}}/*.log {
+daily
+missingok
+rotate 99
+compress
+delaycompress
+copytruncate
+}

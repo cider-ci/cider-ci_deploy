@@ -1,0 +1,12 @@
+# Ansible managed
+{{rails_env}}:
+  adapter: postgresql
+  database: {{database.name}}
+  encoding: unicode
+  port: {{database.port}}
+  pool: 20
+  host: 127.0.0.1
+  username: '{{database.user}}'
+  password: '{{database.password}}'
+
+

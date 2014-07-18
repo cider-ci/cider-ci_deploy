@@ -1,0 +1,16 @@
+allow_duplicates: yes
+
+dependencies:
+
+  - role: rbenv
+    user: user-interface
+
+  - role: rbenv-ruby
+    user: user-interface
+    ruby: '{{rubies.jruby}}'
+
+  - role: rbenv-ruby
+    user: user-interface
+    ruby: '{{rubies.mri}}'
+
+

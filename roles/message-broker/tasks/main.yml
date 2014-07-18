@@ -1,0 +1,14 @@
+- apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
+  with_items: [rabbitmq-server, amqp-tools]
+
+- rabbitmq_vhost: name=cider-ci
+                  state=present
+
+- rabbitmq_user: user=guest
+                 password=guest
+                 vhost=cider-ci
+                 configure_priv=.*
+                 read_priv=.*
+                 write_priv=.*
+                 state=present
+

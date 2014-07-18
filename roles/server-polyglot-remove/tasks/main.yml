@@ -1,0 +1,27 @@
+
+- stat: path=/etc/init/polyglot-as.conf
+  register: polyglot_as_service
+
+- service:  name=polyglot-as
+            state=stopped 
+  when: polyglot_as_service.stat.exists
+
+- command: pkill -SIGKILL -u polyglot 
+  when: polyglot_as_service.stat.exists
+
+- command: rm -f /etc/init/polyglot-as.conf
+  changed_when: false
+
+- user: name=polyglot
+        remove=true
+        state=absent
+
+- group: name=polyglot
+         state=absent
+
+- command: rm -rf /opt/polyglot-as
+  changed_when: false
+
+- command: rm -rf /home/polyglot
+  changed_when: false
+
