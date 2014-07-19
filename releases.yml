@@ -3,12 +3,12 @@ releases:
 - version_major: 1
   version_minor: 5
   version_patch: 0 
-  version_pre: "-rc.1"
+  version_pre: ""
   version_build: "" 
   description:  >
                   Disect into services. 
                   Do not run within and remove dependency on Jboss/Polyglot.
-  git_ref: master
+  git_ref: "1.5.0"
 
 - version_major: 1
   version_minor: 4
