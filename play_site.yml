@@ -3,8 +3,12 @@
   roles:
   - role: add-ssh-keys
 
-- hosts: all
+###############################################################################
+### Release Compat Check ######################################################
+###############################################################################
 
+
+- hosts: all
 
   vars_files: 
     - releases.yml
@@ -17,6 +21,51 @@
   roles:
     - role: compatibility
 
+
+###############################################################################
+### Http Basic Auth Shared Secret #############################################
+###############################################################################
+
+
+- hosts: cider-ci-server
+
+  tags: [basic-auth-secret,user-interface,trial-manager,respository-manager,storage-manager,executor-service]
+
+  tasks: 
+
+    - file: path=/etc/cider-ci 
+            state=directory
+            mode=0700
+
+    - shell:  head -c 20 /dev/urandom | hexdump -e '"%x"' > /etc/cider-ci/basic-auth-secret.txt
+              creates=/etc/cider-ci/basic-auth-secret.txt
+
+    - shell : "cat /etc/cider-ci/basic-auth-secret.txt"
+      register: basic_auth_secret_task
+      changed_when: False
+
+    - file: path=/etc/cider-ci/basic-auth-secret.txt
+            mode=0700
+
+#   - debug: var=basic_auth_secret_task
+
+    - set_fact: basic_auth_secret={{basic_auth_secret_task.stdout}}
+
+    - debug: var=basic_auth_secret
+
+
+- hosts: cider-ci-executors
+  tags: [basic-auth-secret]
+  tasks: 
+    #  - debug: msg={{hostvars['ci-server']['basic_auth_secret']}}
+
+
+- hosts: all
+
+  tasks: 
+  - apt:  upgrade=dist
+          update_cache=yes 
+          cache_valid_time=3600
 
 
 ###############################################################################
@@ -50,21 +99,30 @@
     - role: jdk-leiningen
 
     - role: executor-user
-      user: '{{executor_service_user}}'
+      user: '{{executor_execution_user}}'
       tags: [executor-user]
 
-    - role: executor-service
+    - role: executor-service-remove-pre-1.5
+      tags: [remove-old]
+
+    - role: lein-git-service
+      lein_git_service_name: executor
+      lein_git_service_git_repo: "https://github.com/cider-ci/cider-ci_executor.git"
+      lein_git_service_user: root
       tags: [executor-service]
 
+#   - role: executor-service
+#     tags: [executor-service]
+
     - role: rbenv
-      user: '{{executor_service_user}}'
+      user: '{{executor_execution_user}}'
 
     - role: rbenv-ruby 
-      user: '{{executor_service_user}}'
+      user: '{{executor_execution_user}}'
       ruby: '{{rubies.mri}}'
 
     - role: rbenv-ruby 
-      user: '{{executor_service_user}}'
+      user: '{{executor_execution_user}}'
       ruby: '{{rubies.jruby}}'
 
 #    - role: postgresql
@@ -114,6 +172,7 @@
       ruby: '{{rubies.jruby}}'
 
     - role: server-apache2
+      tags: [apache2,apache]
 
     - role: server-reverse-proxy
       tags: [reverse-proxy]

@@ -5,26 +5,32 @@ repositories_path: "{{repositories_path}}"
 
 repositories_server: "http://127.0.0.1:8881/cider-ci"
 
+
+# repository_manager_server as seen from the 'outside'
 repository_manager_server: 
   host: "{{ansible_default_ipv4.address}}"
-  port: 80
-  context: '/cider-ci'
-  ssl: false
+  port: null
+  context: '{{web_sub_path}}'
+  ssl: true
 
-
+# see repository_manager_server
 trial_manager_server: 
   host: "{{ansible_default_ipv4.address}}"
-  port: 80
-  context: '/cider-ci'
-  ssl: false
+  port: null
+  context: '{{web_sub_path}}'
+  ssl: true
 
-# see above
+# see repository_manager_server
 storage_manager_server: 
   host: "{{ansible_default_ipv4.address}}"
-  port: 80
-  context: '/cider-ci'
-  ssl: false
+  port: null
+  context: '{{web_sub_path}}'
+  ssl: true
 
+
+basic_auth:
+  user: trial-manager
+  secret: "{{basic_auth_secret}}"
 
 web: 
   host: "127.0.0.1"

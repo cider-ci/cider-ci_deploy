@@ -1,7 +1,0 @@
-# {{ansible_managed}}
-# a note (to keep ansible lazy) on which apache2 modules are enabled by default
-#
-enabled_modules: 
-{% for module in apache2_default_modules %}
-  - {{ module }}
-{% endfor %}

@@ -17,7 +17,8 @@
 
 - template: src=../../../templates/{{lein_git_service_name}}.yml
             dest=/etc/{{lein_git_service_name}}/conf.yml
-            mode=0755
+            mode=0640
+            group={{lein_git_service_user}}
   register: lein_git_service_conf
 
 - set_fact: lein_git_service_restart=True

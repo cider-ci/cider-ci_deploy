@@ -79,16 +79,16 @@
 ### Postgresql
 
 - name: Create postgresql user
-  postgresql_user:  name={{executor_service_user}}
-                    password={{executor_service_user}}
+  postgresql_user:  name={{executor_execution_user}}
+                    password={{executor_execution_user}}
                     role_attr_flags=CREATEDB,SUPERUSER
                     login_user=root
                     port={{item.port}}
   with_items: pgs
 
 - name: Create database
-  postgresql_db:  name={{executor_service_user}}
-                  owner={{executor_service_user}}
+  postgresql_db:  name={{executor_execution_user}}
+                  owner={{executor_execution_user}}
                   login_user=root
                   port={{item.port}}
   with_items: pgs
@@ -104,13 +104,13 @@
 
 ### Maria db
 
-- mysql_user: name={{executor_service_user}}
-              password={{executor_service_user}}
+- mysql_user: name={{executor_execution_user}}
+              password={{executor_execution_user}}
               priv=*.*:ALL 
               state=present
 
 - template: src=mysql_env
-            dest=~{{executor_service_user}}/.bash_login.d/mysql_env
-            owner={{executor_service_user}}
+            dest=~{{executor_execution_user}}/.bash_login.d/mysql_env
+            owner={{executor_execution_user}}
             mode=0755
 

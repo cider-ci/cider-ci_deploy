@@ -1,16 +1,55 @@
-- template: src=site.apache.conf
-            dest=/etc/apache2/sites-available/{{web_sub_path}}.conf 
-            mode=0755
-  register: reverse_proxy_template
+- set_fact: reverse_proxy_reload=False
 
-- name: Enable site
-  command: a2ensite {{web_sub_path}}
-  when: reverse_proxy_template.changed
 
-- name: Reload
-  service: name=apache2
+### shared site  ##############################################################
+
+- file: path=/etc/apache2/shared
+        state=directory
+        mode=0755
+
+- template: >
+    src=shared-site.apache.conf
+    dest=/etc/apache2/shared/cider-ci_site.conf 
+    mode=0644
+  register: reverse_proxy_shared_site
+
+- set_fact: reverse_proxy_reload=True
+  when: reverse_proxy_shared_site.changed
+
+
+### http site #################################################################
+
+- template: >
+    src=site.apache.conf
+    dest=/etc/apache2/sites-available/cider-ci.conf 
+    mode=0755
+  register: reverse_proxy_http_site
+
+- command: a2ensite cider-ci
+  when: reverse_proxy_http_site.changed 
+
+- set_fact: reverse_proxy_reload=True
+  when: reverse_proxy_http_site.changed
+
+
+### https site ################################################################
+
+- template: >
+    src=site_https.apache.conf
+    dest=/etc/apache2/sites-available/cider-ci_https.conf 
+    mode=0755
+  register: reverse_proxy_https_site
+
+- command: a2ensite cider-ci_https
+  when: reverse_proxy_https_site.changed 
+
+- set_fact: reverse_proxy_reload=True
+  when: reverse_proxy_https_site.changed
+
+
+### reload ####################################################################
+
+- service: name=apache2
            state=reloaded
-  when: reverse_proxy_template.changed
-
-
+  when: reverse_proxy_reload
 

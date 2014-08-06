@@ -19,3 +19,6 @@
 [submodule "phantomjs"]
 	path = roles/executor-phantomjs
 	url = https://github.com/DrTom/ansible-role-phantomjs.git
+[submodule "apache2"]
+	path = roles/server-apache2
+	url = https://github.com/DrTom/ansible-role-apache-httpd.git

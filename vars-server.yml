@@ -13,7 +13,8 @@ cider_ci_local_facts_file:  /etc/ansible/facts.d/cider_ci.fact
 # web
 web_host_names: []
 web_host_ip: "{{ansible_default_ipv4.address}}"
-web_sub_path: cider-ci
+web_sub_path: "/cider-ci"
+web_ui_prefix: "/ui"
 rails_env: production
 
 
