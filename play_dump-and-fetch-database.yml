@@ -9,7 +9,7 @@
   - name: Dump database
     shell: 'pg_dump -v -x -F c 
             -f /tmp/cider_ci_production_dump.pgbin 
-            {{database_name}}'
+            {{database.name}}'
 
   - fetch: src=/tmp/cider_ci_production_dump.pgbin 
            dest=tmp

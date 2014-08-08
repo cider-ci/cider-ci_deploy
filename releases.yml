@@ -2,6 +2,15 @@ releases:
 
 - version_major: 1
   version_minor: 6
+  version_patch: 1 
+  version_pre: ""
+  version_build: ""
+  description:  >
+    Fix git fetch on executor.
+  git_ref: "1.6.1"
+
+- version_major: 1
+  version_minor: 6
   version_patch: 0 
   version_pre: ""
   version_build: ""
