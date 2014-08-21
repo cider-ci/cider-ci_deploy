@@ -12,16 +12,27 @@
         state=directory
         mode=0755
 
+- debug: var=user_interface_git_repo
 
 - name: Git clone or update project
-  sudo: True
-  sudo_user: user-interface
-  git:  repo=https://github.com/cider-ci/cider-ci_user-interface.git
+  git:  repo={{user_interface_git_repo}}
+        accept_hostkey=yes
         dest={{ui_root_path}}
         version={{git_ref}}
         update=yes
   register: git_clone_or_update
-  changed_when: git_clone_or_update.before != git_clone_or_update.after
+
+- shell: cd {{ui_root_path}} && git submodule init && git submodule update
+  when: git_clone_or_update.changed
+  # somehow submodules get not set properly on update 
+
+- debug: var=git_clone_or_update
+
+- file: path={{ui_root_path}} 
+        owner=user-interface 
+        group=user-interface 
+        recurse=true
+  changed_when: false
 
 - set_fact: restart=True
   when: git_clone_or_update.changed 
@@ -63,22 +74,6 @@
 
 
 ### Secret ####################################################################
-
-- name: Create target dir 
-  file: path=/etc/cider-ci 
-        state=directory
-        mode=0700
-
-- shell:  head -c 64 /dev/urandom | base64 --wrap=0 > /etc/cider-ci/random.txt
-          creates=/etc/cider-ci/random.txt
-
-- file: path=/etc/cider-ci/random.txt
-        mode=0700
-
-- shell : "cat /etc/cider-ci/random.txt"
-  register: random_base
-  changed_when: False
-
 
 - template: src=secrets.yml
             dest={{ui_root_path}}/config/secrets.yml
@@ -129,6 +124,7 @@
             && bundle exec rake db:seed' user-interface 
           executable=/bin/bash
   register: seed
+  changed_when: false
 
 #- debug: var=seed
 

@@ -3,53 +3,31 @@ release: "{{releases[0]}}"
 # remove this after upgrading polyglot
 # polyglot_force_restart: True
 
-force_restart: True
-
-lazy: False
 
 cider_ci_local_facts_file:  /etc/ansible/facts.d/cider_ci.fact
 
-
 # web
-web_host_names: []
+#web_host_name: "{{ansible_default_ipv4.address}}"
 web_host_ip: "{{ansible_default_ipv4.address}}"
 web_sub_path: "/cider-ci"
 web_ui_prefix: "/ui"
 rails_env: production
-
+force_ssl: False
 
 repositories_path: /var/local/repositories
 
-attachments_path: /var/local/attachments
 trial_attachments_path: /var/local/storage/trial-attachments
-
+tree_attachments_path: /var/local/storage/tree-attachments
 
 ui_root_path: /var/local/user-interface
+
+database_cider_ci_secret_path: "{{secrets_dir_path}}/database_cider_ci_secret.txt"
 
 database:
   name: cider_ci_{{rails_env}}
   port: 5432
   user: cider-ci
-  password: cider-ci
-
-db_spec: 
-  adapter: postgresql
-  classname: org.postgresl.Driver
-  subname: //localhost:{{database.port}}/{{database.name}}
-  subprotocol: postgresql
-  max_pool_size: 15 
-  user: cider-ci
-  password: cider-ci
-
-# database
-database_old:
-  username: polyglot
-  password: polyglot
-  hostname: localhost
-  port: "{{database.port}}"
-  database: "{{database.name}}"
-  tb_pool: 50
-  im_pool: 25
+  password: "{{database_cider_ci_secret}}"
 
 rubies:
   jruby:

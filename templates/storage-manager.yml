@@ -1,8 +1,14 @@
 stores: 
+
   - url_path_prefix: "/storage/trial-attachments"
     retention_time_days: 10
     file_path: "{{trial_attachments_path}}"
     db_table: trial_attachments
+
+  - url_path_prefix: "/storage/tree-attachments"
+    retention_time_days: 90
+    file_path: "{{tree_attachments_path}}"
+    db_table: tree_attachments
 
 
 database:
@@ -17,8 +23,10 @@ database:
 
 basic_auth:
   user: storage-manager
-  secret: "{{basic_auth_secret}}"
+  secret: "{{services_basic_auth_secret}}"
 
+session:
+  secret: "{{secret_key_base}}"
 
 web:
   host: "127.0.0.1"

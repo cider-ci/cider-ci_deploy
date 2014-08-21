@@ -1,9 +1,6 @@
 repositories:
   path: "{{repositories_path}}"
 
-database: 
-  db_spec: "{{db_spec}}"
-
 database:
   db_spec: 
     adapter: postgresql
@@ -16,7 +13,7 @@ database:
 
 basic_auth:
   user: repository-manager
-  secret: "{{basic_auth_secret}}"
+  secret: "{{services_basic_auth_secret}}"
 
 web:
   host: "127.0.0.1"

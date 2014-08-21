@@ -31,15 +31,28 @@
         state=directory
         mode=0755
 
+- debug: var=lein_git_service_git_repo
+
 - name: Git clone or update project
-  sudo: True
-  sudo_user: "{{lein_git_service_user}}"
   git:  repo={{lein_git_service_git_repo}}
         dest={{lein_git_service_app_dir}}
         version={{lein_git_service_git_ref}}
         update=yes
   register: lein_git_service_app
-  changed_when: lein_git_service_app.before != lein_git_service_app.after
+  #changed_when: lein_git_service_app.before != lein_git_service_app.after
+
+  
+- shell: cd {{lein_git_service_app_dir}} && git submodule init && git submodule update
+  when: lein_git_service_app.changed
+  # somehow submodules get not set properly on update 
+
+- debug: var=lein_git_service_app
+
+- file: path={{lein_git_service_app_dir}}
+        owner={{lein_git_service_user}}
+        group={{lein_git_service_user}}
+        recurse=yes
+  changed_when: false
 
 - template: src=logrotate
             dest=/etc/logrotate.d/{{lein_git_service_name}}

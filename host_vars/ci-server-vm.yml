@@ -1,0 +1,4 @@
+nrepl_bind_address: 0.0.0.0
+lein_git_service_xmx_value: 256m
+background_processor_xmx_value: 256m
+user_interface_xmx_value: 512m

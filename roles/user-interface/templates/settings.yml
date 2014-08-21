@@ -10,7 +10,11 @@ release:
 git:
   repositories_path: "{{repositories_path}}"
 
-trial_attachments_http_prefix: /cider-ci/storage/trial-attachments
+storage_http_prefix: /cider-ci/storage
+
+
+api_http_prefix: "//{{web_host_name | default(ansible_default_ipv4.address) }}" 
+api_path: "{{web_sub_path}}/api/v1"
 
 http_server:
   host: "{{web_host_ip}}"

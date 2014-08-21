@@ -1,0 +1,14 @@
+release: "{{releases[0]}}"
+git_ref: "{{release.git_ref}}"
+
+secrets_dir_path: /etc/cider-ci/secrets
+secret_key_base_path: "{{secrets_dir_path}}/secret_key_base.txt"
+services_basic_auth_secret_path: "{{secrets_dir_path}}/services_basic_auth_secret.txt"
+
+api_git_repo: "https://github.com/cider-ci/cider-ci_api.git"
+executor_git_repo: "https://github.com/cider-ci/cider-ci_executor.git"
+repository_manager_git_repo: "https://github.com/cider-ci/cider-ci_repository-manager.git"
+storage_manager_git_repo: "https://github.com/cider-ci/cider-ci_storage-manager.git"
+trial_manager_git_repo: "https://github.com/cider-ci/cider-ci_trial-manager.git"
+user_interface_git_repo: "https://github.com/cider-ci/cider-ci_user-interface.git"
+

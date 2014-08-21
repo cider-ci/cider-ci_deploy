@@ -63,14 +63,15 @@
         system=yes
         shell=/bin/bash
 
-- file: path={{attachments_path}}
+- file: path={{trial_attachments_path}}
         owner=storage-manager
         group=storage-manager
-        state=absent
+        state=directory
+        recurse=yes
         mode=0755
   changed_when: false
 
-- file: path={{trial_attachments_path}}
+- file: path={{tree_attachments_path}}
         owner=storage-manager
         group=storage-manager
         state=directory
@@ -86,7 +87,6 @@
 - name: Create postgresql user
   postgresql_user:  name={{database.user}}
                     password={{database.password}}
-                    role_attr_flags=CREATEDB,SUPERUSER
                     login_user=root
                     port={{database.port}}
 

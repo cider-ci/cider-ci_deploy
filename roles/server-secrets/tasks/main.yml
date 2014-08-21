@@ -1,0 +1,34 @@
+- apt: pkg=apg state=present update_cache=yes cache_valid_time=3600
+
+- file: path={{secrets_dir_path}}
+        state=directory
+        mode=0700
+
+### secret_key_base ###########################################################
+
+- shell: >  
+    umask -S u=rw,g=,o= && apg -M NLC -x 40 -m 40 -n 1  > {{secret_key_base_path}}
+    creates={{secret_key_base_path}}
+
+
+- shell: cat {{secret_key_base_path}}
+  register: secret_key_base_task
+  changed_when: False
+
+- set_fact: secret_key_base={{secret_key_base_task.stdout}}
+
+
+### database #################################################################
+
+- shell: >  
+    umask -S u=rw,g=,o= && apg -M NLC -x 40 -m 40 -n 1  > {{database_cider_ci_secret_path}}
+    creates={{database_cider_ci_secret_path}}
+
+
+- shell: cat {{database_cider_ci_secret_path}}
+  register: database_cider_ci_secret_task
+  changed_when: False
+
+- set_fact: database_cider_ci_secret={{database_cider_ci_secret_task.stdout}}
+
+
