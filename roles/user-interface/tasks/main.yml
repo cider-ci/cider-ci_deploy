@@ -12,7 +12,8 @@
         state=directory
         mode=0755
 
-- debug: var=user_interface_git_repo
+- shell: cd {{ui_root_path}} && git remote set-url origin {{user_interface_git_repo}}
+  changed_when: False
 
 - name: Git clone or update project
   git:  repo={{user_interface_git_repo}}

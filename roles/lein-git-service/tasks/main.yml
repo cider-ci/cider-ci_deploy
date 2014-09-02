@@ -33,11 +33,15 @@
 
 - debug: var=lein_git_service_git_repo
 
+
+- shell: cd {{lein_git_service_app_dir}} && git remote set-url origin {{lein_git_service_git_repo}}
+  changed_when: False
+
 - name: Git clone or update project
   git:  repo={{lein_git_service_git_repo}}
+        accept_hostkey=true
         dest={{lein_git_service_app_dir}}
         version={{lein_git_service_git_ref}}
-        update=yes
   register: lein_git_service_app
   #changed_when: lein_git_service_app.before != lein_git_service_app.after
 
