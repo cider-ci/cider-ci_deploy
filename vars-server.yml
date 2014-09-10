@@ -43,6 +43,7 @@ rubies:
 
 traits:
   - firefox
+  - google
   - imagemagick
   - jdk
   - lein
@@ -55,5 +56,3 @@ traits:
   - rbenv
   - ruby
   - tightvnc
-
-

@@ -43,6 +43,8 @@
 
   roles: 
     - role: executor-packages 
+    - role: executor-chrome
+      tags: "chrome"
     - role: executor-chromedriver
     - role: executor-phantomjs
 
