@@ -2,6 +2,15 @@ releases:
 
 - version_major: 1
   version_minor: 7
+  version_patch: 2  
+  version_pre: ""
+  version_build: ""
+  description:  >
+    Fix link to trial_attachments in API.
+  git_ref: "1.7.2"
+
+- version_major: 1
+  version_minor: 7
   version_patch: 1  
   version_pre: ""
   version_build: ""

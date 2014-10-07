@@ -47,7 +47,6 @@
 
   
 - shell: cd {{lein_git_service_app_dir}} && git submodule init && git submodule update
-  when: lein_git_service_app.changed
   # somehow submodules get not set properly on update 
 
 - debug: var=lein_git_service_app
