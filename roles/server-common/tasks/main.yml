@@ -20,14 +20,12 @@
 
 ### UI-user ###################################################################
 
-- name: Add the group "user-interface"
-  group:  name=user-interface
+- group:  name={{user_interface_user}}
           system=true
 
-- name: Add the user "user-interface"
-  user: name=user-interface
+- user: name={{user_interface_user}}
         generate_ssh_key=yes
-        group=user-interface
+        group={{user_interface_user}}
         system=yes
         shell=/bin/bash
 
@@ -35,18 +33,18 @@
 ### Repositories ##############################################################
 
 
-- group:  name=repository-manager
+- group:  name=cider-ci_repository
           system=true
 
-- user: name=repository-manager
+- user: name=cider-ci_repository
         generate_ssh_key=yes
-        group=repository-manager
+        group=cider-ci_repository
         system=yes
         shell=/bin/bash
 
 - file: path={{repositories_path}}
-        owner=repository-manager
-        group=repository-manager
+        owner=cider-ci_repository
+        group=cider-ci_repository
         state=directory
         recurse=yes
         mode=0755
@@ -54,26 +52,26 @@
 
 ### Attachments ###############################################################
 
-- group:  name=storage-manager
+- group:  name=cider-ci_storage
           system=true
 
-- user: name=storage-manager
+- user: name=cider-ci_storage
         generate_ssh_key=yes
-        group=storage-manager
+        group=cider-ci_storage
         system=yes
         shell=/bin/bash
 
 - file: path={{trial_attachments_path}}
-        owner=storage-manager
-        group=storage-manager
+        owner=cider-ci_storage
+        group=cider-ci_storage
         state=directory
         recurse=yes
         mode=0755
   changed_when: false
 
 - file: path={{tree_attachments_path}}
-        owner=storage-manager
-        group=storage-manager
+        owner=cider-ci_storage
+        group=cider-ci_storage
         state=directory
         recurse=yes
         mode=0755

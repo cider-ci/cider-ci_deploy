@@ -1,0 +1,55 @@
+database:
+  db_spec: 
+    adapter: postgresql
+    classname: org.postgresl.Driver
+    subname: '//localhost:{{database.port}}/{{database.name}}'
+    subprotocol: postgresql
+    max_pool_size: 30
+    user: "{{database.user}}"
+    password: "{{database.password}}"
+
+messaging: 
+  connection: 
+    vhost: cider-ci
+    host: 127.0.0.1
+    username: cider-ci
+    password: "{{cider_ci_rabbitmq_secret}}" 
+
+nrepl:
+  port: 7882
+  bind: "{{nrepl_bind_address | default('127.0.0.1')}}"
+  enabled: true
+
+basic_auth:
+  username: dispatcher
+  password: "{{services_basic_auth_secret}}"
+
+http_server: 
+  host: "127.0.0.1"
+  port: 8882
+  context: '/cider-ci'
+  sub_context: '/dispatcher'
+  ssl: false
+
+dispatcher_service: 
+  host: "{{web_host_name | default(ansible_default_ipv4.address) }}" 
+  port: 443
+  context: '/cider-ci'
+  sub_context: '/dispatcher'
+  ssl: true
+
+repository_service: 
+  host: "{{web_host_name | default(ansible_default_ipv4.address) }}" 
+  port: 443
+  context: '/cider-ci'
+  sub_context: '/repositories'
+  ssl: true
+
+storage_service: 
+  host: "{{web_host_name | default(ansible_default_ipv4.address) }}" 
+  port: 443
+  context: '/cider-ci'
+  sub_context: '/storage'
+  ssl: true
+
+

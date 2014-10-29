@@ -1,2 +1,7 @@
+user_interface_restart: False
 user_interface_xmx_value: 1G
 background_processor_xmx_value: 512m
+user_interface_log_dir: /var/log/cider-ci_user-interface
+user_interface_service_name: cider-ci_user-interface
+user_interface_service_bin: /usr/local/bin/{{user_interface_service_name}}
+user_interface_wrapper_bin: /usr/local/bin/{{user_interface_service_name}}_wrapper

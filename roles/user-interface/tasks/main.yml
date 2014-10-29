@@ -1,5 +1,3 @@
-- set_fact: restart=False
-
 - name: Install dependencies
   apt: pkg={{item}} state=present update_cache=yes cache_valid_time=3600
   with_items: 
@@ -7,16 +5,21 @@
 
 - name: Create target dir 
   file: path={{ui_root_path}}
-        owner=user-interface
-        group=user-interface
+        owner={{user_interface_user}}
+        group={{user_interface_user}}
         state=directory
         mode=0755
 
-- shell: cd {{ui_root_path}} && git remote set-url origin {{user_interface_git_repo}}
+- stat: path="{{cider_ci_user_interface_git_repo}}/.git"
+  register: cider_ci_user_interface_git_dir_stat
+
+
+- shell: cd {{ui_root_path}} && git remote set-url origin {{cider_ci_user_interface_git_repo}}
+  when: cider_ci_user_interface_git_dir_stat.stat.isdir is defined and cider_ci_user_interface_git_dir_stat.stat.isdir == true
   changed_when: False
 
 - name: Git clone or update project
-  git:  repo={{user_interface_git_repo}}
+  git:  repo={{cider_ci_user_interface_git_repo}}
         accept_hostkey=yes
         dest={{ui_root_path}}
         version={{git_ref}}
@@ -30,12 +33,12 @@
 - debug: var=git_clone_or_update
 
 - file: path={{ui_root_path}} 
-        owner=user-interface 
-        group=user-interface 
+        owner={{user_interface_user}}
+        group={{user_interface_user}}
         recurse=true
   changed_when: false
 
-- set_fact: restart=True
+- set_fact: user_interface_restart=True
   when: git_clone_or_update.changed 
 
 ### Bundle #####################################################################
@@ -46,7 +49,7 @@
           && cd {{ui_root_path}}
           && export RAILS_ENV={{rails_env}} 
           && export RBENV_VERSION={{rubies.jruby.version}} 
-          && bundle install --deployment' user-interface 
+          && bundle install --deployment' {{user_interface_user}}
          executable=/bin/bash
   register: bundle_jruby
   changed_when: bundle_jruby.stdout | match(".*Installing.*")
@@ -58,7 +61,7 @@
           && cd {{ui_root_path}}
           && export RAILS_ENV={{rails_env}} 
           && export RBENV_VERSION={{rubies.mri.version}} 
-          && bundle install --deployment' user-interface 
+          && bundle install --deployment' {{user_interface_user}} 
          executable=/bin/bash
   register: bundle_mri
   changed_when: bundle_mri.stdout | match(".*Installing.*")
@@ -70,7 +73,7 @@
             dest={{ui_root_path}}/config/settings.local.yml
   register: settings
 
-- set_fact: restart=True
+- set_fact: user_interface_restart=True
   when: settings.changed 
 
 
@@ -78,12 +81,12 @@
 
 - template: src=secrets.yml
             dest={{ui_root_path}}/config/secrets.yml
-            owner=user-interface
-            group=user-interface
+            owner={{user_interface_user}}
+            group={{user_interface_user}}
             mode=0600
   register: secret
 
-- set_fact: restart=True
+- set_fact: user_interface_restart=True
   when: secret.changed 
 
 
@@ -92,7 +95,7 @@
 - name: Configure database
   template: src=database.yml
             dest={{ui_root_path}}/config/database.yml
-            owner=user-interface
+            owner={{user_interface_user}}
             mode=0755
   register: database_config 
 
@@ -102,19 +105,19 @@
             && cd {{ui_root_path}}
             && export RAILS_ENV={{rails_env}} 
             && export RBENV_VERSION={{rubies.mri.version}} 
-            && bundle exec rake db:create db:migrate' user-interface
+            && bundle exec rake db:create db:migrate' {{user_interface_user}}
           executable=/bin/bash
   register: migrate
   changed_when: not migrate.stdout | match("")
 
-- set_fact: restart=True
+- set_fact: user_interface_restart=True
   when: database_config.changed 
 
 ### Seed 
 
 - template: src=seeds.rb
              dest={{ui_root_path}}/db/seeds.rb
-             owner=user-interface
+             owner={{user_interface_user}}
   register: seedfile
 
 - shell:  su -l -s /bin/bash -c 'source /etc/profile.d/rbenv-load.sh 
@@ -122,7 +125,7 @@
             && cd {{ui_root_path}}
             && export RAILS_ENV={{rails_env}} 
             && export RBENV_VERSION={{rubies.mri.version}} 
-            && bundle exec rake db:seed' user-interface 
+            && bundle exec rake db:seed' {{user_interface_user}} 
           executable=/bin/bash
   register: seed
   changed_when: false
@@ -140,41 +143,72 @@
             && export RBENV_VERSION={{rubies.mri.version}} 
             && rm -rf public/assets/*
             && rm -rf tmp/cache/*
-            && bundle exec rake assets:precompile' user-interface
+            && bundle exec rake assets:precompile' {{user_interface_user}} 
           executable=/bin/bash
   register: precompile_assets
   changed_when: not precompile_assets.stderr | match("")
 
-### Service ###################################################################
+### logrotation ################################################################
+
+- template: src=logrotate
+            dest=/etc/logrotate.d/{{user_interface_service_name}}
+
+### Shared Service #############################################################
+
+- template: src=wrapper.sh
+            dest={{user_interface_wrapper_bin}}
+            mode=755
+  register: user_interface_wrapper
+
+- set_fact: user_interface_restart=True
+  when: user_interface_wrapper.changed
+
+- template: src=start.sh
+            dest={{user_interface_service_bin}}
+            mode=755
+  register: user_interface_start
+
+- set_fact: user_interface_restart=True
+  when: user_interface_start.changed
 
 
-- template: src=user-interface.conf
-            dest=/etc/init/user-interface.conf 
+
+### Upstart Service ############################################################
+
+- template: src=init.conf
+            dest=/etc/init/cider-ci_user-interface.conf 
   register: init_script
+  when: ansible_distribution_release == 'trusty'
 
-- set_fact: restart=True
-  when: init_script.changed 
-
-
-- template: src=background-processor.conf
-            dest=/etc/init/background-processor.conf 
-  register: init_script
-
-- set_fact: restart=True
-  when: init_script.changed 
+- set_fact: user_interface_restart=True
+  when: ansible_distribution_release == 'trusty' and init_script.changed 
 
 
-- service:  name=user-interface
+### Systemd Service ############################################################
+
+- template: src=service.conf
+            dest=/etc/systemd/system/{{user_interface_service_name}}.service
+  register: user_interface_systemd_service
+  when: ansible_distribution_release == 'wheezy'
+
+- set_fact: user_interface_restart=True
+  when: ansible_distribution_release == 'wheezy' and user_interface_systemd_service.changed
+
+### enable
+
+- service: name={{user_interface_service_name}} enabled=yes
+
+
+### (re-) start service #######################################################
+
+- command: logrotate -f /etc/logrotate.d/{{user_interface_service_name}}
+  when: lein_git_service_restart
+
+
+- service:  name={{user_interface_service_name}}
             state=restarted
-  when: restart
+  when: user_interface_restart
 
-- service:  name=user-interface
-            state=started
-
-- service:  name=background-processor
-            state=restarted
-  when: restart
-
-- service:  name=background-processor
+- service:  name={{user_interface_service_name}}
             state=started
 

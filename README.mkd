@@ -24,13 +24,26 @@ those.
 Supported Ansible Versions
 --------------------------
 
-This role was tested with ansible => 1.6.x
+This role was tested with ansible => 1.8.x
 
 Supported Operating Systems
 ---------------------------
 
-Ubuntu 14.04 Trusty. 
+Ubuntu 14.04 Trusty (recommended). 
+Debian 7 Wheezy (see notes below).
 
 The Debian Jessie will be supported in the future. 
 
+
+### Using Debian Wheezy
+
+
+Cider-CI supports Debian/Wheezy. There are a few gotchas and therefore it is
+recommended to use Ubuntu 14.04 whenever possible. 
+
+Wheezy must be reconfigured to use `systemd`. This can achieved by installing
+`apt-get install systemd-sysv` and rebooting. 
+
+Wheezy also requires the backports archive. The ansible setup will take care of
+that. 
 

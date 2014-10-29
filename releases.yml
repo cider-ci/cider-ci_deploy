@@ -1,5 +1,15 @@
 releases:
 
+- version_major: 2
+  version_minor: 0
+  version_patch: 0  
+  version_pre: "rc.1"
+  version_build: ""
+  description:  >
+    Add builder. New specification format. 
+  git_ref: "master"
+
+
 - version_major: 1
   version_minor: 7
   version_patch: 2  

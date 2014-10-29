@@ -6,13 +6,22 @@
     - "{{ vars_local | default('vars.yml') }}"
 
   tasks: 
-    - apt:  upgrade=dist update_cache=yes cache_valid_time=3600
 
-    - debug: var=vars_local
-      tags: [debug]
+    - shell: pidof /bin/systemd
+      register: has_systemd
+      ignore_errors: yes
 
-    - debug: var=executor_git_repo
-      tags: [debug]
+    - fail: msg="Debian/Wheezy must use systemd" 
+      when: ansible_distribution_release == 'wheezy' and has_systemd.stdout != "1"
+
+    - apt_repository: repo='deb http://ftp.debian.org/debian wheezy-backports main' state=present update_cache=yes
+      #apt_repository: repo='deb http://ftp.debian.org/debian wheezy-backports main contrib non-free' state=present update_cache=yes
+      when: ansible_distribution_release == 'wheezy'
+
+    - apt: upgrade=yes update_cache=yes cache_valid_time=3600
+
+#    - debug: var=vars_local
+#      tags: [debug]
 
 
   roles:
@@ -20,12 +29,14 @@
     - role: debuntu-setup
     - role: shared-secrets
       tags: 
-        - api-v1
+        - api-v2
         - basic-auth-secret
+        - builder
+        - dispatcher
         - executor-service
-        - repository-manager
-        - storage-manager
-        - trial-manager
+        - rabbitmq
+        - repository
+        - storage
         - user-interface
 
 ### Executors #################################################################
@@ -61,10 +72,10 @@
       tags: [remove-old]
 
     - role: lein-git-service
-      lein_git_service_name: executor
-      lein_git_service_git_repo: "{{executor_git_repo}}"
-      lein_git_service_user: root
-      tags: [executor-service, debug]
+      lein_git_service_user: "{{executor_service_user}}"
+      lein_git_service_name: cider-ci_executor
+      lein_git_service_git_repo: "{{cider_ci_executor_git_repo}}" 
+      tags: [executor-service]
 
     - role: rbenv
       user: '{{executor_execution_user}}'
@@ -95,18 +106,19 @@
 
     - role: server-secrets
       tags: 
-        - api-v1
+        - api-v2
         - basic-auth-secret
-        - repository-manager
-        - storage-manager
-        - trial-manager
+        - repository
+        - storage
+        - dispatcher
         - user-interface
 
     - role: postgresql
       version: 9.3
       port: 5433
 
-    - role: message-broker
+    - role: rabbitmq
+      tags: [rabbitmq]
 
     - role: jdk-leiningen
 
@@ -127,24 +139,29 @@
       tags: [user-interface]
 
     - role: lein-git-service
-      lein_git_service_name: repository-manager
-      lein_git_service_git_repo: "{{repository_manager_git_repo}}" 
-      tags: [repository-manager]
+      lein_git_service_name: cider-ci_repository
+      lein_git_service_git_repo: "{{cider_ci_repository_git_repo}}" 
+      tags: [repository]
 
     - role: lein-git-service
-      lein_git_service_name: trial-manager
-      lein_git_service_git_repo: "{{trial_manager_git_repo}}"
-      tags: [trial-manager]
+      lein_git_service_name: cider-ci_dispatcher
+      lein_git_service_git_repo: "{{cider_ci_dispatcher_git_repo}}"
+      tags: [dispatcher]
 
     - role: lein-git-service
-      lein_git_service_name: storage-manager
-      lein_git_service_git_repo: "{{storage_manager_git_repo}}"
-      tags: [storage-manager]
+      lein_git_service_name: cider-ci_builder
+      lein_git_service_git_repo: "{{cider_ci_builder_git_repo}}"
+      tags: [builder]
 
     - role: lein-git-service
-      lein_git_service_name: api-v1
-      lein_git_service_git_repo: "{{api_git_repo}}"
-      tags: [api-v1]
+      lein_git_service_name: cider-ci_storage
+      lein_git_service_git_repo: "{{cider_ci_storage_git_repo}}"
+      tags: [storage]
+
+    - role: lein-git-service
+      lein_git_service_name: cider-ci_api-v2
+      lein_git_service_git_repo: "{{cider_ci_api_git_repo}}"
+      tags: [api-v2]
 
 
 #### update version info ######################################################

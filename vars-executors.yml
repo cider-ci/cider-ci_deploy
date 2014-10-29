@@ -13,7 +13,7 @@ rubies:
 
 executor_execution_user: ciderex
 
-executor_service_name: executor-service
+executor_service_name: cider-ci_executor
 
 executor_service_app_dir: /var/local/{{executor_service_name}}
 executor_service_app_sha: "{{release.git_ref}}"

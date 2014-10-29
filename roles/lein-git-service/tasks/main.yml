@@ -15,7 +15,7 @@
         state=directory
         mode=0755
 
-- template: src=../../../templates/{{lein_git_service_name}}.yml
+- template: src=../../../templates/{{lein_git_service_name}}.conf.yml
             dest=/etc/{{lein_git_service_name}}/conf.yml
             mode=0640
             group={{lein_git_service_user}}
@@ -23,6 +23,17 @@
 
 - set_fact: lein_git_service_restart=True
   when: lein_git_service_conf.changed
+
+
+- template: src=../../../templates/log4j.properties
+            dest=/etc/{{lein_git_service_name}}/log4j.properties
+            mode=0640
+            group={{lein_git_service_user}}
+  register: lein_git_service_log_rotation_conf
+
+- set_fact: lein_git_service_restart=True
+  when: lein_git_service_log_rotation_conf.changed
+
 
 - name: Create target dir 
   file: path={{lein_git_service_app_dir}}
@@ -33,9 +44,12 @@
 
 - debug: var=lein_git_service_git_repo
 
+- stat: path="{{lein_git_service_app_dir}}/.git"
+  register: lein_git_service_git_dir_stat
 
 - shell: cd {{lein_git_service_app_dir}} && git remote set-url origin {{lein_git_service_git_repo}}
   changed_when: False
+  when: lein_git_service_git_dir_stat.stat.isdir is defined and lein_git_service_git_dir_stat.stat.isdir == true
 
 - name: Git clone or update project
   git:  repo={{lein_git_service_git_repo}}
@@ -45,7 +59,6 @@
   register: lein_git_service_app
   #changed_when: lein_git_service_app.before != lein_git_service_app.after
 
-  
 - shell: cd {{lein_git_service_app_dir}} && git submodule init && git submodule update
   # somehow submodules get not set properly on update 
 
@@ -57,16 +70,43 @@
         recurse=yes
   changed_when: false
 
+- command: rm -rf {{lein_git_service_app_dir}}/target/*
+  when: lein_git_service_app.changed
+
+- shell: cd {{lein_git_service_app_dir}} && JVM_OPTS=-Xmx512m lein clean
+  when: lein_git_service_app.changed
+
 - template: src=logrotate
             dest=/etc/logrotate.d/{{lein_git_service_name}}
 
 - template: src=init.conf
             dest=/etc/init/{{lein_git_service_name}}.conf
   register: lein_git_service_init
+  when: ansible_distribution_release == 'trusty'
 
+- template: src=wrapper.sh
+            dest={{lein_git_service_wrapper_bin}}
+            mode=755
+
+- template: src=start.sh
+            dest={{lein_git_service_bin}}
+            mode=755
+
+- template: src=service.conf
+            dest=/etc/systemd/system/{{lein_git_service_name}}.service
+  register: lein_git_service_init
+  when: ansible_distribution_release == 'wheezy'
+ 
 - set_fact: lein_git_service_restart=True
   when: lein_git_service_app.changed
         or lein_git_service_init.changed
+
+
+### enable
+
+- service: name={{lein_git_service_name}} enabled=yes
+
+### start
 
 - command: logrotate -f /etc/logrotate.d/{{lein_git_service_name}}
   when: lein_git_service_restart
@@ -75,5 +115,4 @@
   when: lein_git_service_restart
 
 - service: name={{lein_git_service_name}} state=started
-
 

@@ -3,14 +3,14 @@ allow_duplicates: yes
 dependencies:
 
   - role: rbenv
-    user: user-interface
+    user: "{{user_interface_user}}"
 
   - role: rbenv-ruby
-    user: user-interface
+    user: "{{user_interface_user}}"
     ruby: '{{rubies.jruby}}'
 
   - role: rbenv-ruby
-    user: user-interface
+    user: '{{user_interface_user}}'
     ruby: '{{rubies.mri}}'
 
 

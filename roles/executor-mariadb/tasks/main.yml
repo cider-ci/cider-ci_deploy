@@ -6,4 +6,14 @@
     - libmariadbclient-dev
     - python-mysqldb
     - python-configparser
+  when: ansible_distribution_release != 'wheezy'
+
+- apt: pkg={{item}} state=present update_cache=yes cache_valid_time=3600
+  with_items: 
+    - mysql-client-5.5
+    - mysql-server-5.5
+    - libmysqlclient-dev
+    - python-mysqldb
+    - python-configparser
+  when: ansible_distribution_release == 'wheezy'
 

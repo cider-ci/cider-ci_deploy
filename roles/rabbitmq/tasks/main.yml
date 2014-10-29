@@ -1,0 +1,25 @@
+- apt_key: url=http://www.rabbitmq.com/rabbitmq-signing-key-public.asc
+
+- apt_repository:  repo="deb http://www.rabbitmq.com/debian/ testing main"
+
+- apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
+  with_items: [rabbitmq-server, amqp-tools]
+
+- rabbitmq_plugin: names=rabbitmq_management state=enabled
+  register: rabbitmq_plugin
+
+- rabbitmq_vhost: name=cider-ci
+                  state=present
+
+- rabbitmq_user: user=cider-ci
+                 password="{{cider_ci_rabbitmq_secret}}"
+                 vhost=cider-ci
+                 configure_priv=.*
+                 read_priv=.*
+                 write_priv=.*
+                 state=present
+                 tags=management
+
+- service: name=rabbitmq-server
+           state=restarted
+  when: rabbitmq_plugin.changed

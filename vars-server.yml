@@ -19,15 +19,17 @@ repositories_path: /var/local/repositories
 trial_attachments_path: /var/local/storage/trial-attachments
 tree_attachments_path: /var/local/storage/tree-attachments
 
-ui_root_path: /var/local/user-interface
+ui_root_path: /var/local/cider-ci_user-interface
 
-database_cider_ci_secret_path: "{{secrets_dir_path}}/database_cider_ci_secret.txt"
+cider_ci_database_secret_path: "{{secrets_dir_path}}/cider_ci_database_secret.txt"
+cider_ci_rabbitmq_secret_path: "{{secrets_dir_path}}/cider_ci_rabbitmq_secret.txt"
+
 
 database:
   name: cider_ci_{{rails_env}}
   port: 5432
   user: cider-ci
-  password: "{{database_cider_ci_secret}}"
+  password: "{{cider_ci_database_secret}}"
 
 rubies:
   jruby:

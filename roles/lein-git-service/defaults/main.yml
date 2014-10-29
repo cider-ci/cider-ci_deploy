@@ -4,3 +4,6 @@ lein_git_service_app_dir: "/var/local/{{lein_git_service_name}}"
 lein_git_service_restart: false
 lein_git_service_xmx_value: 512m
 lein_git_service_log_dir: /var/log/{{lein_git_service_name}}
+lein_git_service_bin: /usr/local/bin/{{lein_git_service_name}}
+lein_git_service_wrapper_bin: /usr/local/bin/{{lein_git_service_name}}_wrapper
+

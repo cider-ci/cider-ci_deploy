@@ -26,7 +26,9 @@
   register: reverse_proxy_http_site
 
 - command: a2ensite cider-ci
-  when: reverse_proxy_http_site.changed 
+  when:  reverse_proxy_http_site.changed and ansible_distribution_release != 'wheezy'
+- command: a2ensite cider-ci.conf
+  when: reverse_proxy_http_site.changed and ansible_distribution_release == 'wheezy'
 
 - set_fact: reverse_proxy_reload=True
   when: reverse_proxy_http_site.changed
@@ -41,7 +43,9 @@
   register: reverse_proxy_https_site
 
 - command: a2ensite cider-ci_https
-  when: reverse_proxy_https_site.changed 
+  when: reverse_proxy_https_site.changed and ansible_distribution_release != 'wheezy'
+- command: a2ensite cider-ci_https.conf
+  when: reverse_proxy_https_site.changed and ansible_distribution_release == 'wheezy'
 
 - set_fact: reverse_proxy_reload=True
   when: reverse_proxy_https_site.changed

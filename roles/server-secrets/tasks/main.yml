@@ -21,14 +21,29 @@
 ### database #################################################################
 
 - shell: >  
-    umask -S u=rw,g=,o= && apg -M NLC -x 40 -m 40 -n 1  > {{database_cider_ci_secret_path}}
-    creates={{database_cider_ci_secret_path}}
+    umask -S u=rw,g=,o= && apg -M NLC -x 40 -m 40 -n 1  > {{cider_ci_database_secret_path}}
+    creates={{cider_ci_database_secret_path}}
 
 
-- shell: cat {{database_cider_ci_secret_path}}
-  register: database_cider_ci_secret_task
+- shell: cat {{cider_ci_database_secret_path}}
+  register: cider_ci_database_secret_task
   changed_when: False
 
-- set_fact: database_cider_ci_secret={{database_cider_ci_secret_task.stdout}}
+- set_fact: cider_ci_database_secret={{cider_ci_database_secret_task.stdout}}
+
+
+
+### rabbitmq #################################################################
+
+- shell: >  
+    umask -S u=rw,g=,o= && apg -M NLC -x 40 -m 40 -n 1  > {{cider_ci_rabbitmq_secret_path}}
+    creates={{cider_ci_rabbitmq_secret_path}}
+
+
+- shell: cat {{cider_ci_rabbitmq_secret_path}}
+  register: cider_ci_rabbitmq_secret_task
+  changed_when: False
+
+- set_fact: cider_ci_rabbitmq_secret={{cider_ci_rabbitmq_secret_task.stdout}}
 
 

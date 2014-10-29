@@ -13,8 +13,48 @@ git:
 storage_http_prefix: /cider-ci/storage
 
 
+basic_auth:
+  user: ui
+  secret: "{{services_basic_auth_secret}}"
+
+
+# TODO change this to use the real ip and ssl
+
+api_service: 
+  host: 127.0.0.1 
+  port: 8885
+  path: '/cider-ci/api/v2' 
+  ssl: false
+
+builder_service: 
+  host: 127.0.0.1 
+  port: 8884
+  path: '/cider-ci/builder' 
+  ssl: false
+
+dispatcher_service: 
+  host: 127.0.0.1 
+  port: 8882
+  path: '/cider-ci/dispatcher' 
+  ssl: false
+
+repository_service: 
+  host: 127.0.0.1 
+  port: 8881
+  path: '/cider-ci/repositories' 
+  ssl: false
+
+storage_service: 
+  host: 127.0.0.1 
+  port: 8883
+  path: '/cider-ci/storage' 
+  ssl: false
+
+
 api_http_prefix: "//{{web_host_name | default(ansible_default_ipv4.address) }}" 
-api_path: "{{web_sub_path}}/api/v1"
+api_path: "{{web_sub_path}}/api/v2"
+
+hostname: "{{web_host_name | default(ansible_default_ipv4.address) }}"
 
 http_server:
   host: "{{web_host_ip}}"
@@ -22,18 +62,9 @@ http_server:
   ssl: false
 
 messaging: 
-
   connection: 
     vhost: cider-ci
-    username: guest
-    password: guest
     host: 127.0.0.1
-
-  default_message_expiration: 1
-
-  exchanges:
-    - name: branch_event_topic
-      type: topic
-      durable: true
-
+    username: cider-ci
+    password: "{{cider_ci_rabbitmq_secret}}" 
 
