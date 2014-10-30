@@ -62,6 +62,8 @@
     - role: postgresql
 
     - role: executor-mariadb
+      tags: [ mysql ]
+
     - role: jdk-leiningen
 
     - role: executor-user

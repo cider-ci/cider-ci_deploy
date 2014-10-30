@@ -3,12 +3,13 @@ releases:
 - version_major: 2
   version_minor: 0
   version_patch: 0  
-  version_pre: "rc.1"
+  version_pre: "-rc.3"
   version_build: ""
   description:  >
-    Add builder. New specification format. 
-  git_ref: "master"
-
+    Add builder. Introduce new specification format. 
+    Change PUT on Storage-API to true REST sematics (no conflict).
+    Add support for Debian Wheezy (requires systemd).
+  git_ref: "cider-ci_2.0.0-rc.3"
 
 - version_major: 1
   version_minor: 7
@@ -73,12 +74,7 @@ releases:
   version_patch: 5
   description:  >
                   Change repo locations. Minor fixes.
-  executor_sha: 206e77626fe1d7b3cb3dfb7fe1441f152c6205d9 
-  server_im_sha: 5358037722c9d9f7899b2cc4062bbf0ef0a3f373 
-  server_tb_sha: 05dbabd8014f98bc4df933c596eeeb3f637bd4a2
-  polyglot_as_sha: 8d2f64a79b69155f3022ce6b52f671cf5b609d8b 
-
-
+  
 - version_major: 1
   version_minor: 4
   version_patch: 4
@@ -89,33 +85,18 @@ releases:
                 Css and icon fixes. Improved reloader.
                 Blacklist some env vars on the executors.
                 Tags are links.
-  executor_sha: 206e77626fe1d7b3cb3dfb7fe1441f152c6205d9 
-  server_im_sha: 5358037722c9d9f7899b2cc4062bbf0ef0a3f373 
-  server_tb_sha: 44184c7f50a610dba44e6dd6a9e0da6f13d23d33
-  polyglot_as_sha: 8d2f64a79b69155f3022ce6b52f671cf5b609d8b 
-
-
+ 
 - version_major: 1
   version_minor: 4
   version_patch: 3
   description:  >
                 Move server-settings from database to config file.
-  executor_sha: 28ef1fb99a12bc1b5ff5c6ad6b4cd459ab3f1d8a
-  server_im_sha: 5358037722c9d9f7899b2cc4062bbf0ef0a3f373 
-  server_tb_sha: 88e67564b786cdb50b6890b4784ad3005bc25c1a 
-  polyglot_as_sha: 8d2f64a79b69155f3022ce6b52f671cf5b609d8b 
-
 
 - version_major: 1
   version_minor: 4
   version_patch: 2
   description:  >
                 Delete scrips of a trial after a configurable retention time. 
-  executor_sha: 28ef1fb99a12bc1b5ff5c6ad6b4cd459ab3f1d8a
-  server_im_sha: fa6cd4ebc2a0cce91561f0d1e9993df5c92edf74 
-  server_tb_sha: dfbaa9f41d994e70e4ba59c8c5711058214528cd 
-  polyglot_as_sha: 8d2f64a79b69155f3022ce6b52f671cf5b609d8b 
-
 
 - version_major: 1
   version_minor: 4
@@ -123,11 +104,6 @@ releases:
   description:  >
                 Auto tag executions with branch and repo. Minor UI improvements.
                 Timeout ping requests. Reinitialize repo when not present.
-  executor_sha: 28ef1fb99a12bc1b5ff5c6ad6b4cd459ab3f1d8a
-  server_im_sha: fa6cd4ebc2a0cce91561f0d1e9993df5c92edf74 
-  server_tb_sha: f0e99d4265dfb0a9b4fa3b34d818d45a9c5de376  
-  polyglot_as_sha: 8d2f64a79b69155f3022ce6b52f671cf5b609d8b 
-
 
 - version_major: 1
   version_minor: 4
@@ -135,12 +111,6 @@ releases:
   description:  > 
                 UI and some UX overhaul. Simplify reloader and 
                 involved javascript.
-  executor_sha: 28ef1fb99a12bc1b5ff5c6ad6b4cd459ab3f1d8a
-  server_im_sha: f72f93a6d7994a1f971118b00cb3646d846c43a7
-  server_tb_sha: d0224c6af6dfc387f633e04d3e2a4b2070fedc88 
-  polyglot_as_sha: 8d2f64a79b69155f3022ce6b52f671cf5b609d8b 
-
-
 
 - version_major: 1
   version_minor: 3
@@ -148,11 +118,6 @@ releases:
   description:  >
                 Executor inherits HOME and USER to shell.  Revamped 
                 sourcing and layout wrt local login, rc and profile files.
-  executor_sha: 28ef1fb99a12bc1b5ff5c6ad6b4cd459ab3f1d8a
-  server_im_sha: f72f93a6d7994a1f971118b00cb3646d846c43a7
-  server_tb_sha: e7347847565a78d64d901f63140dd893586d45f1 
-  polyglot_as_sha: 8d2f64a79b69155f3022ce6b52f671cf5b609d8b 
-
 
 - version_major: 1
   version_minor: 3
@@ -161,10 +126,6 @@ releases:
                Ascertain lost trials and revamp dispatching.  Send trial
                status on request; revert to non interactive shell by default. 
                Revamp of welcome/about page.
-  executor_sha: 0273a11c794c071a4d40d1525eb21ffc366845db
-  server_im_sha: f72f93a6d7994a1f971118b00cb3646d846c43a7
-  server_tb_sha: e7347847565a78d64d901f63140dd893586d45f1 
-  polyglot_as_sha: 8d2f64a79b69155f3022ce6b52f671cf5b609d8b 
 
 - version_major: 1
   version_minor: 3
@@ -173,12 +134,3 @@ releases:
                Ascertain lost trials and revamped dispatching on server-im.
                Send trial status on request; revert to non interactive shell 
                by default on executor.
-  executor_sha: 0273a11c794c071a4d40d1525eb21ffc366845db
-  server_im_sha: f72f93a6d7994a1f971118b00cb3646d846c43a7
-  server_tb_sha: 2c02d4bc6a00cd97e23e4be67e68d7cc7c15bf99
-  polyglot_as_sha: 8d2f64a79b69155f3022ce6b52f671cf5b609d8b 
-
-repositories: 
-  executor: https://github.com/cider-ci/cider-ci_executor.git
-
-

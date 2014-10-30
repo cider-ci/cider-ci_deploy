@@ -1,9 +1,5 @@
 release: "{{releases[0]}}"
 
-# remove this after upgrading polyglot
-# polyglot_force_restart: True
-
-
 cider_ci_local_facts_file:  /etc/ansible/facts.d/cider_ci.fact
 
 # web
@@ -44,8 +40,8 @@ rubies:
 
 
 traits:
+  - chrome
   - firefox
-  - google
   - imagemagick
   - jdk
   - lein
