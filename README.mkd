@@ -1,7 +1,7 @@
 Cider-CI Ansible Setup
 ======================
 
-This is an ansible playbook to set up and maintain a complete
+This is an Ansible playbook to set up and maintain a complete
 [Cider-CI](https://github.com/cider-ci/cider-ci) environment. This usually
 means one _Cider-CI Server_ and a number of _Cider-CI Executors_.
 
@@ -10,40 +10,39 @@ means one _Cider-CI Server_ and a number of _Cider-CI Executors_.
 Usage
 -----
 
-We use it like this: 
+We use it like this:
 
     ansible-playbook -i hosts_zhdk play_site.yml
 
 Create your own `hosts` file and use that one it in lieu of
-`hosts-zhdk`.
+`hosts_zhdk`.
 
-This playbook contains a number of git submodules. Do not forget to initialize
-those. 
+This playbook contains a number of git submodules. Do not forget to [initialize
+those](http://www.git-scm.com/book/en/v2/Git-Tools-Submodules). 
 
 
 Supported Ansible Versions
 --------------------------
 
-This role was tested with ansible => 1.8.x
+This role was tested with Ansible => 1.8.x
 
 Supported Operating Systems
 ---------------------------
 
-Ubuntu 14.04 Trusty (recommended). 
+Ubuntu 14.04 Trusty (recommended).
 Debian 7 Wheezy (see notes below).
 
-The Debian Jessie will be supported in the future. 
+Debian Jessie will be supported in the future.
 
 
 ### Using Debian Wheezy
 
 
-Cider-CI supports Debian/Wheezy. There are a few gotchas and therefore it is
-recommended to use Ubuntu 14.04 whenever possible. 
+Cider-CI supports Debian Wheezy. There are a few gotchas and therefore it is
+recommended to use Ubuntu 14.04 whenever possible.
 
-Wheezy must be reconfigured to use `systemd`. This can achieved by installing
-`apt-get install systemd-sysv` and rebooting. 
+Wheezy must be reconfigured to use `systemd`. This can be achieved by installing
+`apt-get install systemd-sysv` and rebooting.
 
-Wheezy also requires the backports archive. The ansible setup will take care of
-that. 
-
+Wheezy also requires the backports repository. The Ansible setup will take care of
+that.
