@@ -41,7 +41,7 @@ Debian Jessie will be supported in the future.
 Cider-CI supports Debian Wheezy. There are a few gotchas and therefore it is
 recommended to use Ubuntu 14.04 whenever possible.
 
-Wheezy must be reconfigured to use `systemd`. This can be achieved by installing
+Wheezy must be reconfigured to use `systemd`. This can be achieved by performing
 `apt-get install systemd-sysv` and rebooting.
 
 Wheezy also requires the backports repository. The Ansible setup will take care of
