@@ -3,12 +3,12 @@
 #
 
 test_spec= Specification.find_or_create_by_data!({
-  "_cider-ci_include" =>  "cider-ci_v2/test_spec.yml"
+  "_cider-ci_include" =>  "cider-ci/test_spec.yml"
   })
-Definition.find_by(name: "Tests").try(&:destroy)
+Definition.find_by(name: "Test").try(&:destroy)
 Definition.create name: "Test" ,
-  description: "Loads the specification from the repository path 'cider-ci_v2/test_spec.yml'.",
-  specification: test_spec
+  description: "Loads the specification from the repository path 'cider-ci/test_spec.yml'.",
+  specification: test_spec, is_default: true
 
 show_info_spec= Specification.find_or_create_by_data!(
   YAML.load_file Rails.root.join("spec","data","execution-spec-v2_show-info-example.yml"))

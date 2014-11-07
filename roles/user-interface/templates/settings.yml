@@ -7,54 +7,57 @@ release:
   version_pre:  "{{release.version_pre}}"
   version_build: "{{release.version_build}}"
 
-git:
-  repositories_path: "{{repositories_path}}"
 
-storage_http_prefix: /cider-ci/storage
-
+hostname: "{{web_host_name | default(ansible_default_ipv4.address) }}"
 
 basic_auth:
   user: ui
   secret: "{{services_basic_auth_secret}}"
 
 
-# TODO change this to use the real ip and ssl
-
 api_service: 
-  host: 127.0.0.1 
+  host: false
+  port: false
+  path: '/cider-ci/api/v2' 
+  ssl: NULL
+
+storage_service: 
+  host: false
+  port: false
+  path: '/cider-ci/storage' 
+  ssl: NULL
+
+
+internal_api_service: 
+  host: localhost
   port: 8885
   path: '/cider-ci/api/v2' 
   ssl: false
 
-builder_service: 
+internal_builder_service: 
   host: 127.0.0.1 
   port: 8884
   path: '/cider-ci/builder' 
   ssl: false
 
-dispatcher_service: 
+internal_dispatcher_service: 
   host: 127.0.0.1 
   port: 8882
   path: '/cider-ci/dispatcher' 
   ssl: false
 
-repository_service: 
+internal_repository_service: 
   host: 127.0.0.1 
   port: 8881
   path: '/cider-ci/repositories' 
   ssl: false
 
-storage_service: 
-  host: 127.0.0.1 
+internal_storage_service: 
+  host: localhost
   port: 8883
   path: '/cider-ci/storage' 
   ssl: false
 
-
-api_http_prefix: "//{{web_host_name | default(ansible_default_ipv4.address) }}" 
-api_path: "{{web_sub_path}}/api/v2"
-
-hostname: "{{web_host_name | default(ansible_default_ipv4.address) }}"
 
 http_server:
   host: "{{web_host_ip}}"

@@ -32,18 +32,18 @@ http_server:
   ssl: false
 
 api_service: 
-  host: "{{web_host_name | default(ansible_default_ipv4.address) }}" 
-  port: 80
+  host: NULL
+  port: NULL
   context: /cider-ci
   sub_context: /api/v2
-  ssl: false
+  ssl: NULL
 
 storage_service: 
-  host: "{{web_host_name | default(ansible_default_ipv4.address) }}" 
-  port: 80
+  host: NULL
+  port: NULL
   context: '/cider-ci'
   sub_context: '/storage'
-  ssl: false
+  ssl: NULL
 
 session:
   secret: "{{secret_key_base}}"
