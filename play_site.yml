@@ -29,7 +29,7 @@
     - role: debuntu-setup
     - role: shared-secrets
       tags: 
-        - api-v2
+        - api
         - basic-auth-secret
         - builder
         - dispatcher
@@ -50,7 +50,7 @@
   vars:
     release: "{{releases[0]}}"
     git_ref: "{{release.git_ref}}"
-
+    lein_git_service_restart: true
 
   roles: 
     - role: executor-packages 
@@ -102,13 +102,13 @@
   vars:
     release: "{{releases[0]}}"
     git_ref: "{{release.git_ref}}"
-
+    lein_git_service_restart: true
 
   roles: 
 
     - role: server-secrets
       tags: 
-        - api-v2
+        - api
         - basic-auth-secret
         - repository
         - storage
@@ -163,7 +163,7 @@
     - role: lein-git-service
       lein_git_service_name: cider-ci_api-v2
       lein_git_service_git_repo: "{{cider_ci_api_git_repo}}"
-      tags: [api-v2]
+      tags: [api]
 
 
 #### update version info ######################################################
