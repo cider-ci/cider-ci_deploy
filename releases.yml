@@ -3,13 +3,13 @@ releases:
 - version_major: 2
   version_minor: 0
   version_patch: 0  
-  version_pre: "-rc.14"
+  version_pre: ""
   version_build: ""
   description:  >
     Add builder. Introduce new specification format. 
     Move API from HAL to JSON-ROA.
     Change PUT on Storage-API to REST sematics (no conflict).
-    Add support for Debian Wheezy.
+    Support Debian Wheezy.
   git_ref: "master"
 
 - version_major: 1

@@ -1,12 +1,9 @@
 [vms]
-#ci-server-vm ansible_ssh_host=192.168.0.105 ansible_ssh_user=root
-ci-server-vm ansible_ssh_host=192.168.0.151 ansible_ssh_user=root
-ci-executor-vm2 ansible_ssh_host=192.168.0.106 ansible_ssh_user=root
-ci-executor-vm1 ansible_ssh_host=192.168.0.152 ansible_ssh_user=root
+ci-server-vm ansible_ssh_host=192.168.0.10 ansible_ssh_user=root
+ci-executor-vm1 ansible_ssh_host=192.168.0.11 ansible_ssh_user=root
 
 [cider-ci-executors]
 ci-executor-vm1
-ci-executor-vm2
 
 [cider-ci-server]
 ci-server-vm  
