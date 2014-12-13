@@ -29,11 +29,11 @@ database:
 
 rubies:
   jruby:
-    version: jruby-1.7.13
+    version: jruby-1.7.16
     alias: jruby-1.7
     present: True
   mri:
-    version: 2.1.2
+    version: 2.1.5
     alias: 2.1
     present: True
     default: True

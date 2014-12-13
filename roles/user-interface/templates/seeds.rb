@@ -5,8 +5,8 @@
 test_spec= Specification.find_or_create_by_data!({
   "_cider-ci_include" =>  "cider-ci/test_spec.yml"
   })
-Definition.find_by(name: "Test").try(&:destroy)
-Definition.create name: "Test" ,
+Definition.find_by(name: "Tests").try(&:destroy)
+Definition.create name: "Tests" ,
   description: "Loads the specification from the repository path 'cider-ci/test_spec.yml'.",
   specification: test_spec, is_default: true
 
