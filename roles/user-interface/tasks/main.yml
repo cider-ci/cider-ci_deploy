@@ -113,6 +113,12 @@
 - set_fact: user_interface_restart=True
   when: database_config.changed 
 
+
+### Admin 
+
+- set_fact: system_admin_login=system_admin
+  when: system_admin_login is not defined
+
 ### Seed 
 
 - template: src=seeds.rb

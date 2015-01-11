@@ -6,7 +6,6 @@ This is an Ansible playbook to set up and maintain a complete
 means one _Cider-CI Server_ and a number of _Cider-CI Executors_.
 
 
-
 Usage
 -----
 
@@ -14,12 +13,15 @@ We use it like this:
 
     ansible-playbook -i hosts_zhdk play_site.yml
 
-Create your own `hosts` file and use that one it in lieu of
-`hosts_zhdk`.
+The recommended way is to create your own `hosts` file on the basis of
+[`./hosts_vms`][]. 
 
 This playbook contains a number of git submodules. Do not forget to [initialize
 those](http://www.git-scm.com/book/en/v2/Git-Tools-Submodules). 
 
+
+  [`./hosts_vms`]: ./hosts_vms
+  [host-variables]: http://docs.ansible.com/intro_inventory.html#host-variables
 
 Supported Ansible Versions
 --------------------------

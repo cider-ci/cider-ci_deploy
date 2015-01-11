@@ -5,8 +5,12 @@ secrets_dir_path: /etc/cider-ci/secrets
 secret_key_base_path: "{{secrets_dir_path}}/secret_key_base.txt"
 services_basic_auth_secret_path: "{{secrets_dir_path}}/services_basic_auth_secret.txt"
 
-user_interface_user: cider-ci_user-interface
+web_host_ip: "{{hostvars[groups['cider-ci-server'][0]]['ansible_default_ipv4']['address']}}"
+web_sub_path: "/cider-ci"
+web_ui_prefix: "/ui"
+api_uri: "https://{{web_host_ip}}{{web_sub_path}}/api/v2/"
 
+user_interface_user: cider-ci_user-interface
 
 cider_ci_api_git_repo: "https://github.com/cider-ci/cider-ci_api.git"
 cider_ci_builder_git_repo: "https://github.com/cider-ci/cider-ci_builder.git"
@@ -15,3 +19,5 @@ cider_ci_executor_git_repo: "https://github.com/cider-ci/cider-ci_executor.git"
 cider_ci_repository_git_repo: "https://github.com/cider-ci/cider-ci_repository.git"
 cider_ci_storage_git_repo: "https://github.com/cider-ci/cider-ci_storage.git"
 cider_ci_user_interface_git_repo: "https://github.com/cider-ci/cider-ci_user-interface.git"
+
+

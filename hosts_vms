@@ -1,9 +1,11 @@
 [vms]
 ci-server-vm ansible_ssh_host=192.168.0.10 ansible_ssh_user=root
 ci-executor-vm1 ansible_ssh_host=192.168.0.11 ansible_ssh_user=root
+# ci-executor-aws1 ansible_ssh_host=54.93.32.39 ansible_ssh_user=root
 
 [cider-ci-executors]
 ci-executor-vm1
+#ci-executor-aws1
 
 [cider-ci-server]
 ci-server-vm  
@@ -11,4 +13,4 @@ ci-server-vm
 [cider-ci-server-vm:vars]
 
 [cider-ci-executors-vm:vars]
-nrepl_bind_address=0.0.0.0
+# nrepl_bind_address=0.0.0.0

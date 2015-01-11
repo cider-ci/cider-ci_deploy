@@ -1,4 +1,4 @@
-user_interface_restart: False
+user_interface_restart: True
 user_interface_xmx_value: 1G
 background_processor_xmx_value: 512m
 user_interface_log_dir: /var/log/cider-ci_user-interface

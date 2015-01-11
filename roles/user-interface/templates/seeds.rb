@@ -17,6 +17,14 @@ Definition.create name: "Show info" ,
   description: "Information about project, machine and os",
   specification: show_info_spec
 
+if User.where(is_admin: true).count == 0
+  User.create!(login: '{{system_admin_login}}', is_admin: true) 
+end
+
+{% if system_admin_password is defined %}
+User.find_or_create_by!({ login: '{{system_admin_login}}'}) \
+  .update_attributes(is_admin: true, password: '{{system_admin_password}}')
+{% endif %}
 
 {% for executor in groups['cider-ci-executors'] %}
 executor=Executor.find_or_initialize_by(name: "{{executor}}")
@@ -37,6 +45,9 @@ traits= (executor.traits || []).concat([
 
 executor.reload.update_attributes! traits: traits
 
+User.find_or_create_by(login: '{{hostvars[executor]['api_username']}}') \
+  .update_attributes!(password: '{{hostvars[executor]['api_password']}}')
+  
 {% endfor %}
 
 

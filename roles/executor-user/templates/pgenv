@@ -1,3 +1,4 @@
-export '{{item.name}}_USER'='{{user}}'
-export '{{item.name}}_PORT'='{{item.port}}'
-export '{{item.name}}_PASSWORD'='{{user}}'
+export 'PGUSER'='{{user}}'
+export 'PGPORT'='{{postgresql_port}}'
+export 'PGPASSWORD'='{{user}}'
+export 'PGDATABASE'='{{user}}'

@@ -5,6 +5,8 @@
     - imagemagick
     - libimage-exiftool-perl
     - nodejs
+    - nodejs-legacy
+    - npm
     - tightvncserver
     - x11vnc 
 

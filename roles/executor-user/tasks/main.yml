@@ -83,23 +83,30 @@
                     password={{executor_execution_user}}
                     role_attr_flags=CREATEDB,SUPERUSER
                     login_user=root
-                    port={{item.port}}
-  with_items: pgs
+                    port={{postgresql_port}}
 
 - name: Create database
   postgresql_db:  name={{executor_execution_user}}
                   owner={{executor_execution_user}}
                   login_user=root
-                  port={{item.port}}
-  with_items: pgs
-
+                  port={{postgresql_port}}
 
 - name: Env for pgs
   template: src=pgenv
             dest=~{{user}}/.bash_login.d/pgenv
             owner={{user}}
             mode=0755
-  with_items: pgs
+
+### env for cider ci_api
+
+- set_fact: api_password={{api_password}}
+- set_fact: api_username={{api_username}}
+
+- template: >
+    src=cider_ci_api
+    dest=~{{user}}/.bash_login.d/cider_ci_api
+    owner={{user}}
+    mode=0755
 
 
 ### Maria db

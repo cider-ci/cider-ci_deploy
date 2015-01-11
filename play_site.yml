@@ -34,6 +34,7 @@
         - builder
         - dispatcher
         - executor-service
+        - executor-user
         - rabbitmq
         - repository
         - storage
@@ -60,6 +61,11 @@
     - role: executor-phantomjs
 
     - role: postgresql
+      postgresql_version: 9.3
+      present: false
+      
+    - role: postgresql
+      postgresql_version: 9.4
 
     - role: executor-mariadb
       tags: [ mysql ]
@@ -68,7 +74,7 @@
 
     - role: executor-user
       user: '{{executor_execution_user}}'
-      tags: [executor-user]
+      tags: [executor-user, user-interface]
 
     - role: lein-git-service
       lein_git_service_user: "{{executor_service_user}}"
@@ -113,8 +119,12 @@
         - user-interface
 
     - role: postgresql
-      version: 9.3
-      port: 5433
+      postgresql_version: 9.3
+      present: false
+      
+    - role: postgresql
+      postgresql_version: 9.4
+      port: 5432
 
     - role: rabbitmq
       tags: [rabbitmq]
