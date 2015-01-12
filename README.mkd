@@ -9,9 +9,14 @@ means one _Cider-CI Server_ and a number of _Cider-CI Executors_.
 Usage
 -----
 
-We use it like this:
+The general form for installing or upgrading is: 
 
     ansible-playbook -i hosts_zhdk play_site.yml
+
+To set the password for the initial `system_admin` user use: 
+
+    ansible-playbook -i hosts_vms play_site.yml -e 'system_admin_password=********'
+
 
 The recommended way is to create your own `hosts` file on the basis of
 [`./hosts_vms`][]. 
