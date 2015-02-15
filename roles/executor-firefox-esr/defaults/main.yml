@@ -1,0 +1,4 @@
+firefox_esr_version: 31.4.0esr
+firefox_esr_dir: "/opt/firefox_{{firefox_esr_version}}"
+firefox_esr_dl_path: "/tmp/firefox_{{firefox_esr_version}}.tar.bz2"
+firefox_esr_bin_path: "{{firefox_esr_dir}}/firefox"

@@ -1,0 +1,9 @@
+# prefere some packages from the ppa
+Package: iceweasel 
+Pin: release o=LP-PPA-dirk-computer42-c42-backport
+Pin-Priority: 600
+
+# default is to use only otherwise unavailable packages from the ppa
+Package: *
+Pin: release o=LP-PPA-dirk-computer42-c42-backport
+Pin-Priority: 90

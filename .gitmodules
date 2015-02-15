@@ -22,3 +22,6 @@
 [submodule "apache2"]
 	path = roles/server-apache2
 	url = https://github.com/DrTom/ansible-role-apache-httpd.git
+[submodule "roles/install-ansible"]
+	path = roles/install-ansible
+	url = https://github.com/DrTom/ansible-role-install-ansible.git

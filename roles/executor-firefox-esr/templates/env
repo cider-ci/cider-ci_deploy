@@ -1,0 +1,1 @@
+export FIREFOX_ESR_PATH={{firefox_esr_bin_path}}

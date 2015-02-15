@@ -1,0 +1,20 @@
+
+- stat: path={{firefox_esr_bin_path}}
+  register: firefox_esr_bin_path_stats
+
+- get_url: url=http://ftp.mozilla.org/pub/mozilla.org/firefox/releases/{{firefox_esr_version}}/linux-x86_{{ ansible_userspace_bits }}/en-US/firefox-{{firefox_esr_version}}.tar.bz2
+           dest={{firefox_esr_dl_path}}
+  when: not firefox_esr_bin_path_stats.stat.exists
+
+- shell: cd /tmp && tar xf {{firefox_esr_dl_path}}
+  when: not firefox_esr_bin_path_stats.stat.exists
+
+- shell: mv /tmp/firefox {{firefox_esr_dir}}
+  when: not firefox_esr_bin_path_stats.stat.exists
+
+- template: src=env
+            dest=~{{executor_execution_user}}/.bash_login.d/firefox-esr-env
+            owner={{executor_execution_user}}
+            mode=0755
+  when: not firefox_esr_bin_path_stats.stat.exists
+

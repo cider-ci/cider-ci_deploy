@@ -40,8 +40,11 @@ rubies:
 
 
 traits:
-  - chrome
+  - chrome-browser
+  - chromedriver
   - firefox
+  - firefox-esr
+  - iceweasel
   - imagemagick
   - jdk
   - lein
@@ -49,8 +52,9 @@ traits:
   - linux
   - mysql
   - nodejs
-  - pg93
   - phantomjs
+  - postgresql
   - rbenv
-  - ruby
+  - ruby 
   - tightvnc
+

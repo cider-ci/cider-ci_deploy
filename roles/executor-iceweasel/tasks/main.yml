@@ -1,0 +1,15 @@
+
+- template: src=c42-pinning
+            dest=/etc/apt/preferences.d/c42-pinning
+  when: ansible_lsb.id == "Ubuntu"
+
+- apt_repository: repo='ppa:dirk-computer42/c42-backport'
+  when: ansible_lsb.id == "Ubuntu"
+
+- apt: pkg=iceweasel state=present update_cache=yes cache_valid_time=3600
+
+- template: src=env
+            dest=~{{executor_execution_user}}/.bash_login.d/iceweasel-env
+            owner={{executor_execution_user}}
+            mode=0755
+

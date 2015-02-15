@@ -59,6 +59,7 @@
       tags: "chrome"
     - role: executor-chromedriver
     - role: executor-phantomjs
+    - role: executor-nightly-reboot
 
     - role: postgresql
       postgresql_version: 9.3
@@ -75,6 +76,14 @@
     - role: executor-user
       user: '{{executor_execution_user}}'
       tags: [executor-user, user-interface]
+
+
+    - role: executor-iceweasel
+      tags: [executor-iceweasel]
+
+    - role: executor-firefox-esr
+      tags: [executor-firefox-esr]
+
 
     - role: lein-git-service
       lein_git_service_user: "{{executor_service_user}}"
@@ -147,6 +156,9 @@
     - role: user-interface
       tags: [user-interface]
 
+    - role: db-backups
+      tags: [db-backups]
+
     - role: lein-git-service
       lein_git_service_name: cider-ci_repository
       lein_git_service_git_repo: "{{cider_ci_repository_git_repo}}" 
@@ -186,3 +198,11 @@
   roles:
     - role: update-version-info
     
+
+#### orchestrator ##############################################################
+
+- hosts: ansible-orchestrators
+  roles:
+    - role: install-ansible
+      tags: orchestrator
+
