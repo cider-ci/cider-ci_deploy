@@ -2,16 +2,16 @@ releases:
 
 - version_major: 2
   version_minor: 3
-  version_patch: 1  
-  version_pre: ¡DELETE!
-  version_build: ¡DELETE!
+  version_patch: 2  
+  version_pre: NULL
+  version_build: NULL
   description:  |
     Add cider-ci dotfile and honor execution definitions. 
     Accept maps for tasks and subcontexts. 
     Randomize and improve dispatching.  
     Honor exclusive_resources.
     Support git sumodules.
-  git_ref: "cider-ci_2.3.1"
+  git_ref: "cider-ci_2.3.2"
 
 
 - version_major: 2
