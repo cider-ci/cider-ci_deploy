@@ -1,0 +1,2 @@
+lein_service_xmx_value: 100m
+user_interface_xmx_value: 400m

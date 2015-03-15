@@ -1,5 +1,7 @@
 # user with bash shell
 
+
+
 - name: Add the user {{user}}
   user: name={{user}}
         generate_ssh_key=yes
@@ -26,12 +28,6 @@
               mode=0644
               dest=~{{user}}/.bash_login
 
-### load rbenv 
-
-- template: src=load_rbenv
-            dest="~{{user}}/.bash_login.d/load_rbenv" 
-            owner={{user}} group={{user}} mode=0755
-
 ### .bash_profile sources .bash_login
 
 - lineinfile: line='if [[ -f ~/.bash_login ]]; then source ~/.bash_login; fi'
@@ -57,67 +53,4 @@
               mode=0644
               create=yes
 
-### xvnc
-
-- file: path="~{{user}}/.vnc" 
-        state=directory
-        owner={{user}}
-        group={{user}}
-        mode=0755
-
-- template: src=vnc_xstartup
-            dest={{user_home}}/.vnc/xstartup
-            owner={{user}}
-            mode=0755
-
-- copy: src=vnc_passwd
-        dest={{user_home}}/.vnc/passwd
-        owner={{user}}
-        group={{user}}
-        mode=0600
-
-### Postgresql
-
-- name: Create postgresql user
-  postgresql_user:  name={{executor_execution_user}}
-                    password={{executor_execution_user}}
-                    role_attr_flags=CREATEDB,SUPERUSER
-                    login_user=root
-                    port={{postgresql_port}}
-
-- name: Create database
-  postgresql_db:  name={{executor_execution_user}}
-                  owner={{executor_execution_user}}
-                  login_user=root
-                  port={{postgresql_port}}
-
-- name: Env for pgs
-  template: src=pgenv
-            dest=~{{user}}/.bash_login.d/pgenv
-            owner={{user}}
-            mode=0755
-
-### env for cider ci_api
-
-- set_fact: api_password={{api_password}}
-- set_fact: api_username={{api_username}}
-
-- template: >
-    src=cider_ci_api
-    dest=~{{user}}/.bash_login.d/cider_ci_api
-    owner={{user}}
-    mode=0755
-
-
-### Maria db
-
-- mysql_user: name={{executor_execution_user}}
-              password={{executor_execution_user}}
-              priv=*.*:ALL 
-              state=present
-
-- template: src=mysql_env
-            dest=~{{executor_execution_user}}/.bash_login.d/mysql_env
-            owner={{executor_execution_user}}
-            mode=0755
 

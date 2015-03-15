@@ -1,0 +1,76 @@
+- name: Add service group
+  group:  name={{lein_service_user}}
+          system=true
+  when: lein_service_user != 'root'
+
+- name: Add service user
+  user: name={{lein_service_user}}
+        generate_ssh_key=yes
+        group={{lein_service_user}}
+        system=yes
+        shell=/bin/bash
+  when: lein_service_user != 'root'
+
+- file: path=/etc/{{lein_service_name}}
+        state=directory
+        mode=0755
+
+### clone repo ################################################################
+
+
+- file: path={{lein_service_app_dir}}
+        owner={{lein_service_user}}
+        group={{lein_service_user}}
+        recurse=yes
+  changed_when: false
+
+- shell: cd {{lein_service_app_dir}} && JVM_OPTS=-Xmx128m lein clean
+  changed_when: false
+
+- template: src={{ lein_service_config_template_src }}
+            dest={{lein_service_app_dir}}/config/config.yml
+            mode=0640
+            group={{lein_service_user}}
+  when: lein_service_config_template_src is defined
+
+- template: src=../../../templates/log4j.properties
+            dest={{lein_service_app_dir}}/config/log4j.properties
+            mode=0640
+            group={{lein_service_user}}
+  register: lein_service_log_rotation_conf
+  when: FALSE
+
+- template: src=logrotate
+            dest=/etc/logrotate.d/{{lein_service_name}}
+
+- template: src=init.conf
+            dest=/etc/init/{{lein_service_name}}.conf
+  register: lein_service_init
+  when: ansible_distribution_release == 'trusty'
+
+- template: src=wrapper.sh
+            dest={{lein_service_wrapper_bin}}
+            mode=755
+
+- template: src=start.sh
+            dest={{lein_service_bin}}
+            mode=755
+
+- template: src=service.conf
+            dest=/etc/systemd/system/{{lein_service_name}}.service
+  register: lein_service_init
+  when: ansible_distribution_release == 'wheezy'
+ 
+
+### enable
+
+- service: name={{lein_service_name}} enabled=yes
+
+### start
+
+- command: logrotate -f /etc/logrotate.d/{{lein_service_name}}
+
+- service: name={{lein_service_name}} state=restarted
+
+- service: name={{lein_service_name}} state=started
+

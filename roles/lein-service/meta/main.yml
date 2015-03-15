@@ -1,0 +1,3 @@
+dependencies: 
+- role: install_openjdk-7
+- role: install_leiningen

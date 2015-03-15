@@ -1,0 +1,18 @@
+- apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
+  with_items:
+  - python-pip
+  - python-dev
+
+- pip: name=ansible extra_args='--upgrade'
+
+- file: 
+    path: /etc/cider-ci
+    state: directory
+    mode: "0755"
+
+- lineinfile:
+    line: "ansible,"
+    dest: /etc/cider-ci/traits.txt
+    create: yes
+    state: present
+

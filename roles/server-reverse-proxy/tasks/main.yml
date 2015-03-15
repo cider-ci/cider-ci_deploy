@@ -1,4 +1,27 @@
-- set_fact: reverse_proxy_reload=False
+### offline ###################################################################
+
+- template: >
+    src=offline.apache.conf
+    dest=/etc/apache2/sites-available/offline.conf 
+    mode=0755
+
+- command: a2ensite offline
+  when: not reverse_proxy_enabled
+
+- command: a2dissite offline
+  when: reverse_proxy_enabled
+
+- template: >
+    src=offline_https.apache.conf
+    dest=/etc/apache2/sites-available/offline_https.conf 
+    mode=0755
+
+- command: a2ensite offline_https
+  when: not reverse_proxy_enabled
+
+- command: a2dissite offline_https
+  when: reverse_proxy_enabled
+
 
 
 ### shared site  ##############################################################
@@ -11,10 +34,6 @@
     src=shared-site.apache.conf
     dest=/etc/apache2/shared/cider-ci_site.conf 
     mode=0644
-  register: reverse_proxy_shared_site
-
-- set_fact: reverse_proxy_reload=True
-  when: reverse_proxy_shared_site.changed
 
 
 ### http site #################################################################
@@ -23,15 +42,12 @@
     src=site.apache.conf
     dest=/etc/apache2/sites-available/cider-ci.conf 
     mode=0755
-  register: reverse_proxy_http_site
 
 - command: a2ensite cider-ci
-  when:  reverse_proxy_http_site.changed and ansible_distribution_release != 'wheezy'
-- command: a2ensite cider-ci.conf
-  when: reverse_proxy_http_site.changed and ansible_distribution_release == 'wheezy'
+  when: reverse_proxy_enabled
 
-- set_fact: reverse_proxy_reload=True
-  when: reverse_proxy_http_site.changed
+- command: a2dissite cider-ci
+  when: not reverse_proxy_enabled
 
 
 ### https site ################################################################
@@ -43,17 +59,13 @@
   register: reverse_proxy_https_site
 
 - command: a2ensite cider-ci_https
-  when: reverse_proxy_https_site.changed and ansible_distribution_release != 'wheezy'
-- command: a2ensite cider-ci_https.conf
-  when: reverse_proxy_https_site.changed and ansible_distribution_release == 'wheezy'
+  when: reverse_proxy_enabled
 
-- set_fact: reverse_proxy_reload=True
-  when: reverse_proxy_https_site.changed
-
+- command: a2dissite cider-ci_https
+  when: not reverse_proxy_enabled
 
 ### reload ####################################################################
 
 - service: name=apache2
            state=reloaded
-  when: reverse_proxy_reload
 

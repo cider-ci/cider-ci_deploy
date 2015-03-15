@@ -1,0 +1,3 @@
+user: '{{executor_execution_user}}'
+api_password: "{{ [ansible_hostname,hostvars[groups['cider-ci-server'][0]]['services_basic_auth_secret']] | join('-') | sha1 }}"
+api_username: "{{ansible_hostname}}"

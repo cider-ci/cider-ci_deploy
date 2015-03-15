@@ -1,0 +1,15 @@
+- name: download leiningen
+  get_url:  url=https://raw.github.com/technomancy/leiningen/{{leiningen_version}}/bin/lein 
+            dest=/usr/local/bin/lein-{{leiningen_version}}
+            mode=0755
+
+- name: link to main version of leinigen
+  file: dest=/usr/local/bin/lein
+        src=/usr/local/bin/lein-{{leiningen_version}}
+        state=link
+
+- name: root may execute leiningen 
+  lineinfile: line='export LEIN_ROOT=True'
+              state=present
+              dest=~root/.bashrc
+

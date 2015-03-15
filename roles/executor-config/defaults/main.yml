@@ -1,0 +1,4 @@
+cider_ci_database_secret: UNUSED_DUMMY_VALUE
+secret_key_base: UNUSED_DUMMY_VALUE
+services_basic_auth_secret: UNUSED_DUMMY_VALUE
+cider_ci_rabbitmq_secret: UNUSED_DUMMY_VALUE

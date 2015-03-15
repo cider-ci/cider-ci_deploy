@@ -1,208 +1,126 @@
-### Release compat check, upgrade, shared secrets #############################
+### Prepare machines ##########################################################
 - hosts: all
   vars_files: 
-    - releases.yml
     - vars.yml
     - "{{ vars_local | default('vars.yml') }}"
 
-  tasks: 
-
-    - shell: pidof /bin/systemd
-      register: has_systemd
-      ignore_errors: yes
-
-    - fail: msg="Debian/Wheezy must use systemd" 
-      when: ansible_distribution_release == 'wheezy' and has_systemd.stdout != "1"
-
-    - apt_repository: repo='deb http://ftp.debian.org/debian wheezy-backports main' state=present update_cache=yes
-      #apt_repository: repo='deb http://ftp.debian.org/debian wheezy-backports main contrib non-free' state=present update_cache=yes
-      when: ansible_distribution_release == 'wheezy'
-
-    - apt: upgrade=yes update_cache=yes cache_valid_time=3600
-
-#    - debug: var=vars_local
-#      tags: [debug]
-
-
   roles:
-    - role: compatibility
-    - role: debuntu-setup
-    - role: shared-secrets
-      tags: 
-        - api
-        - basic-auth-secret
-        - builder
-        - dispatcher
-        - executor-service
-        - executor-user
-        - rabbitmq
-        - repository
-        - storage
-        - user-interface
+    - role: prepare-all 
 
-### Executors #################################################################
-- hosts: cider-ci-executors
+###############################################################################
+### Clean slate ###############################################################
+###############################################################################
+
+- hosts: all
   vars_files: 
-    - releases.yml
     - vars.yml
+  roles:
+    - role: clean-slate
+      when: clean_slate
+
+
+###############################################################################
+### Server phase 1 ############################################################
+###############################################################################
+
+- hosts: cider-ci-server
+  vars_files: 
+    - vars.yml
+    - vars-server.yml
+    - "{{ vars_local | default('vars.yml') }}"
+  roles: 
+    - role: server-secrets
+    - role: server-apache2
+    - role: server-reverse-proxy
+      reverse_proxy_enabled: False
+
+
+###############################################################################
+### executors #################################################################
+###############################################################################
+
+- hosts: cider-ci-executors
+
+  vars_files: 
+    - vars.yml
+    - vars-server.yml
     - vars-executors.yml
     - "{{ vars_local | default('vars.yml') }}"
 
-  vars:
-    release: "{{releases[0]}}"
-    git_ref: "{{release.git_ref}}"
-    lein_git_service_restart: true
-
   roles: 
-    - role: executor-packages 
-    - role: executor-chrome
-      tags: "chrome"
-    - role: executor-chromedriver
-    - role: executor-phantomjs
-    - role: executor-nightly-reboot
 
-    - role: postgresql
-      postgresql_version: 9.3
-      present: false
-      
-    - role: postgresql
-      postgresql_version: 9.4
+    - role: project-checkout
+      cider_ci_git_ref: "{{ lookup('pipe','cd  ./../. && git log -n 1 --format=%H') }}"
 
-    - role: executor-mariadb
-      tags: [ mysql ]
-
-    - role: jdk-leiningen
+    - role: executor-secrets
 
     - role: executor-user
       user: '{{executor_execution_user}}'
-      tags: [executor-user, user-interface]
+
+    - role: executor-config
+
+    - role: lein-service
+      lein_service_name: cider-ci_executor
+      lein_service_app_dir: /var/local/cider-ci/executor
+      lein_service_user: "{{executor_service_user}}"
+
+    - role: nightly-reboot
 
 
-    - role: executor-iceweasel
-      tags: [executor-iceweasel]
-
-    - role: executor-firefox-esr
-      tags: [executor-firefox-esr]
+###############################################################################
+### server phase 2 ############################################################
+###############################################################################
 
 
-    - role: lein-git-service
-      lein_git_service_user: "{{executor_service_user}}"
-      lein_git_service_name: cider-ci_executor
-      lein_git_service_git_repo: "{{cider_ci_executor_git_repo}}" 
-      tags: [executor-service]
-
-    - role: rbenv
-      user: '{{executor_execution_user}}'
-
-    - role: rbenv-ruby 
-      user: '{{executor_execution_user}}'
-      ruby: '{{rubies.mri}}'
-
-    - role: rbenv-ruby 
-      user: '{{executor_execution_user}}'
-      ruby: '{{rubies.jruby}}'
-
-
-### Server ####################################################################
 - hosts: cider-ci-server
   vars_files: 
-    - releases.yml
     - vars.yml
     - vars-server.yml
     - "{{ vars_local | default('vars.yml') }}"
 
-  vars:
-    release: "{{releases[0]}}"
-    git_ref: "{{release.git_ref}}"
-    lein_git_service_restart: true
-
   roles: 
 
-    - role: server-secrets
-      tags: 
-        - api
-        - basic-auth-secret
-        - repository
-        - storage
-        - dispatcher
-        - user-interface
+    - role: project-checkout
+      cider_ci_git_ref: "{{ lookup('pipe','cd  ./../. && git log -n 1 --format=%H') }}"
 
-    - role: postgresql
-      postgresql_version: 9.3
-      present: false
-      
     - role: postgresql
       postgresql_version: 9.4
       port: 5432
 
     - role: rabbitmq
-      tags: [rabbitmq]
-
-    - role: jdk-leiningen
-
-    - role: server-polyglot-remove
-
-      ruby: '{{rubies.jruby}}'
-
-    - role: server-apache2
-      tags: [apache2,apache]
-
-    - role: server-reverse-proxy
-      tags: [reverse-proxy]
 
     - role: server-common
-      tags: [server-common]
 
     - role: user-interface
-      tags: [user-interface]
+
+    - role: lein-service
+      lein_service_name: cider-ci_api
+      lein_service_app_dir: /var/local/cider-ci/api
+      lein_service_user: cider-ci_api
+
+    - role: lein-service
+      lein_service_name: cider-ci_builder
+      lein_service_app_dir: /var/local/cider-ci/builder
+      lein_service_user: cider-ci_builder
+
+    - role: lein-service
+      lein_service_name: cider-ci_dispatcher
+      lein_service_app_dir: /var/local/cider-ci/dispatcher
+      lein_service_user: cider-ci_dispatcher
+
+    - role: lein-service
+      lein_service_name: cider-ci_repository
+      lein_service_app_dir: /var/local/cider-ci/repository
+      lein_service_user: cider-ci_repository
+
+    - role: lein-service
+      lein_service_name: cider-ci_storage
+      lein_service_app_dir: /var/local/cider-ci/storage
+      lein_service_user: cider-ci_storage
 
     - role: db-backups
-      tags: [db-backups]
 
-    - role: lein-git-service
-      lein_git_service_name: cider-ci_repository
-      lein_git_service_git_repo: "{{cider_ci_repository_git_repo}}" 
-      tags: [repository]
+    - role: server-set-data
 
-    - role: lein-git-service
-      lein_git_service_name: cider-ci_dispatcher
-      lein_git_service_git_repo: "{{cider_ci_dispatcher_git_repo}}"
-      tags: [dispatcher]
-
-    - role: lein-git-service
-      lein_git_service_name: cider-ci_builder
-      lein_git_service_git_repo: "{{cider_ci_builder_git_repo}}"
-      tags: [builder]
-
-    - role: lein-git-service
-      lein_git_service_name: cider-ci_storage
-      lein_git_service_git_repo: "{{cider_ci_storage_git_repo}}"
-      tags: [storage]
-
-    - role: lein-git-service
-      lein_git_service_name: cider-ci_api-v2
-      lein_git_service_git_repo: "{{cider_ci_api_git_repo}}"
-      tags: [api]
-
-
-#### update version info ######################################################
-- hosts: all
-
-  vars_files: 
-    - releases.yml
-
-  vars:
-    release: "{{releases[0]}}"
-    git_ref: "{{release.git_ref}}"
-
-  roles:
-    - role: update-version-info
-    
-
-#### orchestrator ##############################################################
-
-- hosts: ansible-orchestrators
-  roles:
-    - role: install-ansible
-      tags: orchestrator
+    - role: server-reverse-proxy
 

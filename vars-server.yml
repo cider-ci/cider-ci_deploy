@@ -1,5 +1,3 @@
-release: "{{releases[0]}}"
-
 cider_ci_local_facts_file:  /etc/ansible/facts.d/cider_ci.fact
 
 # web
@@ -15,7 +13,7 @@ repositories_path: /var/local/repositories
 trial_attachments_path: /var/local/storage/trial-attachments
 tree_attachments_path: /var/local/storage/tree-attachments
 
-ui_root_path: /var/local/cider-ci_user-interface
+ui_root_path: /var/local/cider-ci/user-interface
 
 cider_ci_database_secret_path: "{{secrets_dir_path}}/cider_ci_database_secret.txt"
 cider_ci_rabbitmq_secret_path: "{{secrets_dir_path}}/cider_ci_rabbitmq_secret.txt"
@@ -37,24 +35,4 @@ rubies:
     alias: 2.1
     present: True
     default: True
-
-
-traits:
-  - chrome-browser
-  - chromedriver
-  - firefox
-  - firefox-esr
-  - iceweasel
-  - imagemagick
-  - jdk
-  - lein
-  - libimage-exiftool-perl
-  - linux
-  - mysql
-  - nodejs
-  - phantomjs
-  - postgresql
-  - rbenv
-  - ruby 
-  - tightvnc
 

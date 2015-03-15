@@ -1,0 +1,82 @@
+- set_fact: 
+   server_host: "{{ansible_default_ipv4.address}}"
+  when: server_host is not defined
+
+- set_fact: 
+    system_admin_login: system_admin
+  when: system_admin_login is not defined
+
+- uri: 
+    url: http://localhost:8880/cider-ci/ui/configuration_management/invoke
+    user: system_admin
+    password: "{{secret_key_base}}"
+    force_basic_auth: yes
+    method: POST
+    HEADER_Content-Type: application/ruby
+    register: previous_uri
+    body: > 
+      if User.where(is_admin: true).count == 0; 
+      User.create!(login: "{{system_admin_login}}", is_admin: true); 
+      end 
+
+- uri: 
+    url: http://localhost:8880/cider-ci/ui/configuration_management/invoke
+    user: system_admin
+    password: "{{secret_key_base}}"
+    force_basic_auth: yes
+    method: POST
+    HEADER_Content-Type: application/ruby
+    register: previous_uri
+    body: > 
+      User.find_or_create_by!({ login: "{{system_admin_login}}"})
+      .update_attributes(is_admin: true, password: "{{system_admin_password}}")
+  when: system_admin_password is defined
+
+- uri: 
+    url: http://localhost:8880/cider-ci/ui/configuration_management/invoke
+    user: system_admin
+    password: "{{secret_key_base}}"
+    force_basic_auth: yes
+    method: POST
+    HEADER_Content-Type: application/ruby
+    register: previous_uri
+    body: > 
+      executor=Executor.find_or_initialize_by(name: "{{item}}");
+      executor.update_attributes!(
+      base_url: "https://{{hostvars[item]['ansible_default_ipv4']['address']}}:{{executor_service_https_port}}"
+      );
+      executor.reload
+  with_items: groups['cider-ci-executors']
+
+
+- uri: 
+    url: http://localhost:8880/cider-ci/ui/configuration_management/invoke
+    user: system_admin
+    password: "{{secret_key_base}}"
+    force_basic_auth: yes
+    method: POST
+    HEADER_Content-Type: application/ruby
+    register: previous_uri
+    body: > 
+      if Repository.count == 0; 
+      repo= Repository.find_or_initialize_by name:("Cider-CI Bash Demo Project");
+      repo.update_attributes!(origin_uri: 'https://github.com/cider-ci/cider-ci_demo-project-bash.git', public_view_permission: true );
+      end
+
+- uri: 
+    url: http://localhost:8880/cider-ci/ui/configuration_management/invoke
+    user: system_admin
+    password: "{{secret_key_base}}"
+    force_basic_auth: yes
+    method: POST
+    HEADER_Content-Type: application/ruby
+    register: previous_uri
+    body: > 
+      welcome_page_settings= WelcomePageSettings.find;
+      if welcome_page_settings.welcome_message.blank?;
+      welcome_page_settings.update_attributes!(welcome_message: "# Welcome to your installation of Cider-CI");
+      end;
+      if welcome_page_settings.radiator_config.blank?;
+      radiator_config= YAML.load_file(Rails.root.join("db", "initial_radiator_config.yml"));
+      welcome_page_settings.update_attributes!(radiator_config: radiator_config);
+      end;

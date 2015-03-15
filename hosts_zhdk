@@ -1,24 +1,19 @@
 [zhdk]
-#Radiator ansible_ssh_host=172.31.2.189 ansible_ssh_user=root
-ci2.zhdk.ch ansible_ssh_host=195.176.247.161 ansible_ssh_user=root
+zhdk-ci2 ansible_ssh_host=195.176.247.161 ansible_ssh_user=root
  
-Cislave1 ansible_ssh_host=10.157.2.51 ansible_ssh_user=root
-Cislave2 ansible_ssh_host=10.157.2.52 ansible_ssh_user=root
-Cislave3 ansible_ssh_host=10.157.2.53 ansible_ssh_user=root
-Cislave4 ansible_ssh_host=10.157.2.54 ansible_ssh_user=root
-Cislave5 ansible_ssh_host=10.157.2.55 ansible_ssh_user=root
+zhdk-cislave1 ansible_ssh_host=10.157.2.51 ansible_ssh_user=root
+zhdk-cislave2 ansible_ssh_host=10.157.2.52 ansible_ssh_user=root
+zhdk-cislave3 ansible_ssh_host=10.157.2.53 ansible_ssh_user=root
+zhdk-cislave4 ansible_ssh_host=10.157.2.54 ansible_ssh_user=root
+zhdk-cislave5 ansible_ssh_host=10.157.2.55 ansible_ssh_user=root
 
 [cider-ci-server]
-ci2.zhdk.ch
+zhdk-ci2
 
 [cider-ci-executors]
-Cislave1 
-Cislave2
-Cislave3
-Cislave4
-Cislave5
+zhdk-cislave1 
+zhdk-cislave2 
+zhdk-cislave3 
+zhdk-cislave4 
+zhdk-cislave5 
 
-
-[ansible-orchestrators]
-ci2.zhdk.ch
-Cislave5

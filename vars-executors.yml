@@ -1,26 +1,10 @@
-release: "{{releases[0]}}"
-
-rubies:
-  jruby:
-    version: jruby-1.7.16
-    alias: jruby-1.7
-    present: True
-  mri:
-    version: 2.1.5
-    alias: 2.1
-    present: True
-    default: True
-
 executor_execution_user: ciderex
 
 executor_service_name: cider-ci_executor
 
 executor_service_app_dir: /var/local/{{executor_service_name}}
-executor_service_app_sha: "{{release.git_ref}}"
 
 executor_service_user: root
 executor_service_working_dir: /tmp/{{executor_service_name}}_working-dir
 executor_service_repository_dir: /var/local/repositories
 
-api_password: "{{ [ansible_hostname,hostvars[groups['cider-ci-server'][0]]['services_basic_auth_secret']] | join('-') | sha1 }}"
-api_username: "{{ansible_hostname}}"

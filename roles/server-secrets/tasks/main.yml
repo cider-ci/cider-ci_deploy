@@ -47,3 +47,16 @@
 - set_fact: cider_ci_rabbitmq_secret={{cider_ci_rabbitmq_secret_task.stdout}}
 
 
+### services auth secret #####################################################
+
+- shell: >
+    umask -S u=rw,g=,o=  && apg -M NLC -x 40 -m 40 -n 1  > {{services_basic_auth_secret_path}}
+    creates={{services_basic_auth_secret_path}}
+
+- shell: cat {{services_basic_auth_secret_path}}
+  register: services_basic_auth_secret_task
+  changed_when: False
+
+- set_fact: services_basic_auth_secret={{services_basic_auth_secret_task.stdout}}
+
+

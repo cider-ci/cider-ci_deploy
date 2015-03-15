@@ -1,0 +1,48 @@
+- hosts: cider-ci-server
+  vars_files: 
+    - vars.yml
+    - vars-server.yml
+    - "{{ vars_local | default('vars.yml') }}"
+  tasks:
+    - set_fact: 
+       server_host: "{{ansible_default_ipv4.address}}"
+  roles:
+    - role: server-secrets
+
+
+- hosts: cider-ci-executors
+
+  tags: [traits]
+
+  vars_files: 
+    - vars.yml
+    - vars-executors.yml
+    - "{{ vars_local | default('vars.yml') }}"
+
+  roles:
+
+    - role: trait_nodejs
+    - role: trait_exiftool
+    - role: trait_imagemagick
+
+    - role: trait_chrome-and-chromedriver
+    - role: trait_firefox
+    - role: trait_firefox-esr
+    - role: trait_phantomjs
+    - role: trait_tightvnc
+
+    - role: trait_openjdk
+    - role: trait_maven
+    - role: trait_leiningen
+
+    - role: trait_postgresql
+    - role: trait_mariadb
+
+    - role: trait_rbenv
+    - role: trait_jruby-1.7
+    - role: trait_ruby-2.1
+
+    - role: trait_ansible
+    - role: trait_mkdocs 
+
+    - role: trait_cider-ci_api-access

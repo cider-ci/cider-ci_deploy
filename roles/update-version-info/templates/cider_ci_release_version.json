@@ -1,9 +1,0 @@
-{
-   "release" : {
-      "version_major" : {{release.version_major}},
-      "version_minor" : {{release.version_minor}},
-      "version_patch" : {{release.version_patch}},
-      "version_pre" : "{{release.version_pre}}",
-      "version_patch" : "{{release.version_patch}}"
-   }
-}

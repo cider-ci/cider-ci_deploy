@@ -1,8 +1,0 @@
-- file: state=directory recurse=yes path=/etc/ansible/facts.d mode=0600
-
-- template: src='cider_ci_release_version.json'
-            dest='/etc/ansible/facts.d/cider_ci_release_version.json'
-
-
-
-
