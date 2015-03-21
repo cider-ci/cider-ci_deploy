@@ -20,4 +20,4 @@
         dest=/var/local/cider-ci
         version={{cider_ci_git_ref}}
 
-- shell: cd /var/local/cider-ci && git submodule init && git submodule update
+- shell: cd /var/local/cider-ci && git submodule sync --recursive && git submodule update --init --recursive

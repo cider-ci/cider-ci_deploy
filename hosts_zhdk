@@ -17,3 +17,7 @@ zhdk-cislave3
 zhdk-cislave4 
 zhdk-cislave5 
 
+[zhdk-secrets:children]
+cider-ci-server
+cider-ci-executors
+

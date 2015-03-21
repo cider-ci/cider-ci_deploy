@@ -6,9 +6,6 @@
   tasks:
     - set_fact: 
        server_host: "{{ansible_default_ipv4.address}}"
-  roles:
-    - role: server-secrets
-
 
 - hosts: cider-ci-executors
 

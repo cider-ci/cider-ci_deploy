@@ -8,4 +8,6 @@ example-server
 [cider-ci-executors]
 example-executor1
 
-
+[example-secrets:children]
+cider-ci-server
+cider-ci-executors

@@ -29,7 +29,6 @@
     - vars-server.yml
     - "{{ vars_local | default('vars.yml') }}"
   roles: 
-    - role: server-secrets
     - role: server-apache2
     - role: server-reverse-proxy
       reverse_proxy_enabled: False

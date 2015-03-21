@@ -1,5 +1,5 @@
 - shell: >
-    echo -n "{{inventory_hostname}}" | openssl sha1 -hmac "{{hostvars[groups['cider-ci-server'][0]]['secret_key_base']}}" | cut -f2 -d ' '
+    echo -n "{{inventory_hostname}}" | openssl sha1 -hmac "{{secret_key_base}}" | cut -f2 -d ' '
   register: executor_password_task
   changed_when: false
 
