@@ -9,50 +9,6 @@ Server_ and any number of _Cider-CI Executors_.
 Usage
 -----
 
-The general form for installing or upgrading is: 
-
-    ansible-playbook -i hosts_example play_site.yml
-
-To set the password for the initial `system_admin` user use: 
-
-    ansible-playbook -i hosts_example play_site.yml -e 'system_admin_password=********'
+Please see <http://ci2.zhdk.ch/cider-ci/docs/install/>.
 
 
-It is recommended to create a custom `hosts` file on the basis of 
-[`./hosts_example`][]. 
-
-This playbook contains a number of git submodules. Do not forget to [initialize
-those](http://www.git-scm.com/book/en/v2/Git-Tools-Submodules). 
-
-
-The ZHdK site uses the [ansible vault](https://docs.ansible.com/playbooks_vault.html):
-
-    ansible-playbook -i hosts_zhdk play_site.yml  --vault-password-file bin/zhdk-vault-pass
-
-  [`./hosts_exaple`]: ./hosts_example
-
-Supported Ansible Versions
---------------------------
-
-This playbook is frequently used with Ansible ≥ 1.8
-
-Supported Operating Systems
----------------------------
-
-Ubuntu 14.04 Trusty (recommended).
-Debian 7 Wheezy (partially, see notes below).
-
-Debian Jessie will be fully supported in the future.
-
-
-### Using Debian Wheezy
-
-The server requires Ubuntu 14.04 Trusty. It is possible to use Debian Wheezy on
-the executor. There are a few gotchas and therefore it is recommended to use
-Ubuntu 14.04 whenever possible.
-
-Wheezy must be reconfigured to use `systemd`. This can be achieved by performing
-`apt-get install systemd-sysv` and rebooting.
-
-Wheezy also requires the backports repository. The Ansible setup will take care
-of that.
