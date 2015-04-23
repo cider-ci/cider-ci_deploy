@@ -1,6 +1,6 @@
 cider_ci_repo: https://github.com/cider-ci/cider-ci.git
 
-clean_slate: True
+clean_slate: False
 
 secrets_dir_path: /etc/cider-ci/secrets
 secret_key_base_path: "{{secrets_dir_path}}/secret_key_base.txt"
