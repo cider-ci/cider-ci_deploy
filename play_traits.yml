@@ -33,7 +33,7 @@
     - role: trait_leiningen
 
     - role: trait_postgresql
-    - role: trait_mariadb
+    - role: trait_mysql
 
     - role: trait_rbenv
     - role: trait_jruby-1.7

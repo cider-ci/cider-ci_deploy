@@ -11,4 +11,12 @@ Usage
 
 Please see <http://ci2.zhdk.ch/cider-ci/docs/install/>.
 
+### ZHdK Specifics 
+
+The ZHdK site uses the [ansible vault](https://docs.ansible.com/playbooks_vault.html):
+
+    ansible-playbook -i hosts_zhdk play_site.yml --vault-password-file bin/zhdk-vault-pass
+
+
+
 

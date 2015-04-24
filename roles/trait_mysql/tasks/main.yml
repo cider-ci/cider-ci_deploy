@@ -1,0 +1,56 @@
+### MySQL
+
+
+- apt: 
+    pkg: "{{item}}" 
+    state: absent
+    update_cache: yes 
+    cache_valid_time: 3600
+    force: yes
+
+  with_items: 
+    - mariadb-client-5.5
+    - mariadb-server-5.5
+    - mariadb-common
+    - libmariadbclient-dev
+
+- apt_repository: 
+    repo: 'deb http://mirror2.hs-esslingen.de/mariadb/repo/5.5/ubuntu trusty main'
+    state: absent 
+  when: ansible_distribution_release != 'wheezy'
+
+- apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
+  with_items: 
+    - libmysqlclient-dev
+    - mysql-client-5.5
+    - mysql-server-5.5
+    - python-configparser
+    - python-mysqldb
+
+- mysql_user: name={{executor_execution_user}}
+              password={{executor_execution_user}}
+              priv=*.*:ALL 
+              state=present
+
+- template: src=mysql_env
+            dest=~{{executor_execution_user}}/.bash_login.d/mysql_env
+            owner={{executor_execution_user}}
+            mode=0755
+
+- lineinfile:
+    line: "{{item}},"
+    dest: /etc/cider-ci/traits.txt
+    create: yes
+    state: absent
+  with_items:
+    - mariadb
+
+- lineinfile:
+    line: "{{item}},"
+    dest: /etc/cider-ci/traits.txt
+    create: yes
+    state: present
+  with_items:
+    - mysql
+    - mysql-5.5
+
