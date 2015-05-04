@@ -24,7 +24,7 @@
         recurse=yes
   changed_when: false
 
-- shell: cd {{lein_service_app_dir}} && JVM_OPTS=-Xmx128m lein clean
+- shell: cd {{lein_service_app_dir}} && LEIN_ROOT=1 JVM_OPTS=-Xmx256m lein clean
   changed_when: false
 
 - template: src={{ lein_service_config_template_src }}

@@ -1,0 +1,12 @@
+[zhdk]
+jessie  ansible_ssh_host=jessie.zhdk.ch ansible_ssh_user=root
+
+[cider-ci-server]
+jessie
+
+[cider-ci-executors]
+jessie
+
+[zhdk-secrets:children]
+cider-ci-server
+cider-ci-executors
