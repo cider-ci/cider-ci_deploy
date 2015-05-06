@@ -1,0 +1,3 @@
+# prevent port conflicts when we run an executor on the serer 
+executor_service_http_port: 8480
+executor_service_https_port: 8443

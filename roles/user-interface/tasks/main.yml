@@ -2,6 +2,8 @@
   apt: pkg={{item}} state=present update_cache=yes cache_valid_time=3600
   with_items: 
     - nodejs
+    - npm
+    - nodejs-legacy
 
 - file: path={{ui_root_path}}
         owner={{user_interface_user}}
@@ -67,6 +69,10 @@
 
 ### Assets ####################################################################
 
+- name: package bundle.js
+  shell:  su -l -s /bin/bash -c 'cd {{ui_root_path}}
+            && npm run build' {{user_interface_user}} 
+
 - name: Precompile assets 
   shell:  su -l -s /bin/bash -c 'source /etc/profile.d/rbenv-load.sh 
             && rbenv-load 
@@ -103,7 +109,7 @@
 - template: src=init.conf
             dest=/etc/init/cider-ci_user-interface.conf 
   register: init_script
-  when: ansible_distribution_release == 'trusty'
+  when: ansible_distribution_release == 'jessie'
 
 
 ### Systemd Service ############################################################
@@ -111,7 +117,7 @@
 - template: src=service.conf
             dest=/etc/systemd/system/{{user_interface_service_name}}.service
   register: user_interface_systemd_service
-  when: ansible_distribution_release == 'wheezy'
+  when: ansible_distribution_release == 'jessie'
 
 ### enable
 

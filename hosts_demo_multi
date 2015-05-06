@@ -1,0 +1,13 @@
+[demo]
+demo-server ansible_ssh_host=192.168.0.10 ansible_ssh_user=root
+demo-executor01 ansible_ssh_host=192.168.0.11 ansible_ssh_user=root
+
+[cider-ci-server]
+demo-server
+
+[cider-ci-executors]
+demo-executor01
+
+[demo-secrets:children]
+cider-ci-server
+cider-ci-executors

@@ -8,5 +8,6 @@ ntp_enabled: False
 # comes handy, however can be a big security hole 
 nrepl_bind_address: 0.0.0.0
 
-# better yet disable this, certainly for production systems
+# comes handy, however it is a security problem
 executor_nrepl_enabled: True
+

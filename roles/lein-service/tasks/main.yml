@@ -59,7 +59,7 @@
 - template: src=service.conf
             dest=/etc/systemd/system/{{lein_service_name}}.service
   register: lein_service_init
-  when: ansible_distribution_release == 'wheezy'
+  when: ansible_distribution_release == 'jessie'
  
 
 ### enable

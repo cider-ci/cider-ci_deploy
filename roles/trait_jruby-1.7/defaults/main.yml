@@ -1,5 +1,5 @@
 jruby_1_7:
-  version: jruby-1.7.16
+  version: jruby-1.7.19
   alias: jruby-1.7
   present: True
 

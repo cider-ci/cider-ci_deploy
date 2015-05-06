@@ -22,7 +22,7 @@ reporter:
   retry_ms_factor: 1000
 
 sudo:
-  user: 'ciderex'
+  user: "{{executor_execution_user}}"
 
 working_dir: "{{executor_service_working_dir}}"
 

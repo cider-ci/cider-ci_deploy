@@ -1,24 +1,5 @@
 ### MySQL
 
-
-- apt: 
-    pkg: "{{item}}" 
-    state: absent
-    update_cache: yes 
-    cache_valid_time: 3600
-    force: yes
-
-  with_items: 
-    - mariadb-client-5.5
-    - mariadb-server-5.5
-    - mariadb-common
-    - libmariadbclient-dev
-
-- apt_repository: 
-    repo: 'deb http://mirror2.hs-esslingen.de/mariadb/repo/5.5/ubuntu trusty main'
-    state: absent 
-  when: ansible_distribution_release != 'wheezy'
-
 - apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
   with_items: 
     - libmysqlclient-dev

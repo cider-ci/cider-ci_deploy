@@ -9,6 +9,5 @@ services_basic_auth_secret_path: "{{secrets_dir_path}}/services_basic_auth_secre
 web_host_ip: "{{hostvars[groups['cider-ci-server'][0]]['ansible_default_ipv4']['address']}}"
 web_sub_path: "/cider-ci"
 web_ui_prefix: "/ui"
-api_uri: "https://{{web_host_ip}}{{web_sub_path}}/api/v2/"
 
 user_interface_user: cider-ci_user-interface

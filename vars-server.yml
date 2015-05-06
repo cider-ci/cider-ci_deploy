@@ -20,14 +20,14 @@ cider_ci_rabbitmq_secret_path: "{{secrets_dir_path}}/cider_ci_rabbitmq_secret.tx
 
 
 database:
-  name: cider_ci_{{rails_env}}
+  name: cider-ci_v3_{{rails_env}}
   port: 5432
   user: cider-ci
   password: "{{cider_ci_database_secret}}"
 
 rubies:
   jruby:
-    version: jruby-1.7.16
+    version: jruby-1.7.19
     alias: jruby-1.7
     present: True
   mri:

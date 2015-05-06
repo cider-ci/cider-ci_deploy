@@ -61,7 +61,7 @@
     - role: lein-service
       lein_service_name: cider-ci_executor
       lein_service_app_dir: /var/local/cider-ci/executor
-      lein_service_user: "{{executor_service_user}}"
+      lein_service_user: root 
 
     - role: nightly-reboot
 
