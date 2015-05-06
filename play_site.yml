@@ -29,9 +29,15 @@
     - vars-server.yml
     - "{{ vars_local | default('vars.yml') }}"
   roles: 
+
     - role: server-apache2
+
     - role: server-reverse-proxy
       reverse_proxy_enabled: False
+
+    - role: server-monitoring
+      monitoring_state: unmonitored
+      tags: [monit]
 
 
 ###############################################################################
@@ -122,4 +128,8 @@
     - role: server-set-data
 
     - role: server-reverse-proxy
+
+    - role: server-monitoring
+      monitoring_state: monitored
+
 

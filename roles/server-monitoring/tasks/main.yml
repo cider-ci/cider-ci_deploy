@@ -1,0 +1,22 @@
+
+- template: 
+    src: "{{item}}"
+    dest: /etc/monit/conf.d/{{item}}
+    mode: "0700"
+  with_items: monitored_services
+ 
+- monit: 
+    name: monit
+    state: reloaded
+
+- monit: 
+    name: "{{item}}"
+    state: present 
+  with_items: monitored_services
+
+
+- monit: 
+    name: "{{item}}"
+    state: "{{monitoring_state}}"
+  with_items: monitored_services
+

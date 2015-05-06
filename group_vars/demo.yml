@@ -11,3 +11,6 @@ nrepl_bind_address: 0.0.0.0
 # comes handy, however it is a security problem
 executor_nrepl_enabled: True
 
+lein_service_xmx_value: 256M
+user_interface_xmx_value: 500M
+

@@ -1,0 +1,8 @@
+check process cider-ci_dispatcher
+        matching "cider-ci_dispatcher"
+        start program = "/usr/sbin/service cider-ci_dispatcher start" with timeout 60 seconds
+        stop program  = "/usr/sbin/service cider-ci_dispatcher stop"
+        if failed
+                url http://monit:{{services_basic_auth_secret}}@localhost:8882/cider-ci/dispatcher/status
+                with timeout 30 seconds
+        then restart

@@ -1,0 +1,8 @@
+check process cider-ci_storage
+        matching "cider-ci_storage"
+        start program = "/usr/sbin/service cider-ci_storage start" with timeout 60 seconds
+        stop program  = "/usr/sbin/service cider-ci_storage stop"
+        if failed
+                url http://monit:{{services_basic_auth_secret}}@localhost:8886/cider-ci/storage/status
+                with timeout 30 seconds
+        then restart
