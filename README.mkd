@@ -20,7 +20,12 @@ Please see <http://ci2.zhdk.ch/cider-ci/docs/install/>.
 
 The ZHdK site uses the [ansible vault](https://docs.ansible.com/playbooks_vault.html):
 
-    ansible-playbook -i hosts_zhdk play_site.yml --vault-password-file bin/zhdk-vault-pass
+    ansible-playbook -i hosts_zhdk_ci2 play_site.yml --vault-password-file bin/zhdk-vault-pass
+
+resp. 
+
+    ansible-playbook -i hosts_zhdk_ci3 play_site.yml --vault-password-file bin/zhdk-vault-pass
+
 
 
 
