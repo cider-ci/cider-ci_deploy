@@ -87,6 +87,7 @@
 
     - role: project-checkout
       cider_ci_git_ref: "{{ lookup('pipe','cd  ./../. && git log -n 1 --format=%H') }}"
+      tags: [debug]
 
     - role: postgresql
       postgresql_version: 9.4
