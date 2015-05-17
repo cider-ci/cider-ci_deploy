@@ -24,6 +24,7 @@
 
     - role: trait_chrome-and-chromedriver
     - role: trait_firefox
+      when: ansible_distribution != 'Debian'
     - role: trait_firefox-esr
     - role: trait_phantomjs
     - role: trait_tightvnc
