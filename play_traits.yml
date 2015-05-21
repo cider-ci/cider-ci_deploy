@@ -36,6 +36,8 @@
     - role: trait_postgresql
     - role: trait_mysql
 
+    - role: trait_rabbitmq
+
     - role: trait_rbenv
     - role: trait_jruby-1.7
     - role: trait_ruby-2.1
