@@ -26,6 +26,8 @@ sudo:
 
 working_dir: "{{executor_service_working_dir}}"
 
+working_dir_trial_retention_time_minutes: 60
+
 git_repos_dir: "{{executor_service_repository_dir}}"
 
 exec: {}

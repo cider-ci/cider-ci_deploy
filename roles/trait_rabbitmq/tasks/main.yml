@@ -20,7 +20,7 @@
     read_priv: .*
     write_priv: .*
     state: present
-    tags: management
+    tags: administrator
 
 - name: rabbitmq env vars
   template: 
