@@ -20,6 +20,7 @@
 
     - role: trait_nodejs
     - role: trait_exiftool
+    - role: trait_curl
     - role: trait_imagemagick
 
     - role: trait_chrome-and-chromedriver
