@@ -1,5 +1,5 @@
 [zhdk]
-zhdk-ci3 ansible_ssh_host=195.176.247.59 ansible_ssh_user=root
+zhdk-ci3 ansible_ssh_host=ci3.zhdk.ch ansible_ssh_user=root
  
 [cider-ci-server]
 zhdk-ci3
