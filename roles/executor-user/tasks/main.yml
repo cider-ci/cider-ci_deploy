@@ -1,13 +1,16 @@
 # user with bash shell
 
 
-
 - name: Add the user {{user}}
   user: name={{user}}
         generate_ssh_key=yes
         system=no
         shell=/bin/bash
 
+- name: Allow the exec-user to sudo itself
+  template: 
+    src: sudo
+    dest: "/etc/sudoers.d/{{user}}"
 
 # ~/.bash_login.d gets sourced
 
