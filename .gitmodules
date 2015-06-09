@@ -19,3 +19,6 @@
 [submodule "roles/install_phantomjs"]
 	path = roles/install_phantomjs
 	url = https://github.com/DrTom/ansible-role-phantomjs.git
+[submodule "roles/git-checkout"]
+	path = roles/git-checkout
+	url = https://github.com/DrTom/ansible-role_git-checkout.git

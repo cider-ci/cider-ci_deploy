@@ -1,11 +1,13 @@
 [zhdk]
 zhdk-ci3 ansible_ssh_host=ci3.zhdk.ch ansible_ssh_user=root
+zhdk-cislave4 ansible_ssh_host=10.157.2.54 ansible_ssh_user=root
+
  
 [cider-ci-server]
 zhdk-ci3
 
 [cider-ci-executors]
-zhdk-ci3
+zhdk-cislave4 
 
 [zhdk-secrets:children]
 cider-ci-server

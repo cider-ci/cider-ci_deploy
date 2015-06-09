@@ -109,7 +109,7 @@
 - template: src=init.conf
             dest=/etc/init/cider-ci_user-interface.conf 
   register: init_script
-  when: ansible_distribution_release == 'jessie'
+  when: ansible_distribution_release == 'trusty'
 
 
 ### Systemd Service ############################################################
