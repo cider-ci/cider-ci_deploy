@@ -71,10 +71,12 @@
 ### Database ##################################################################
 
 - name: Create postgresql user
-  postgresql_user:  name={{database.user}}
-                    password={{database.password}}
-                    login_user=root
-                    port={{database.port}}
+  postgresql_user:  
+    name: "{{database.user}}"
+    password: "{{database.password}}"
+    login_user: root
+    port: "{{database.port}}"
+    role_attr_flags: CREATEDB,SUPERUSER
 
 - name: Create database
   postgresql_db:  name={{database.name}}

@@ -1,0 +1,1 @@
+{{executor_execution_user}} ALL=({{executor_execution_user}}) NOPASSWD: ALL
