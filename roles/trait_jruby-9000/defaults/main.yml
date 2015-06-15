@@ -1,0 +1,5 @@
+jruby_9000:
+  version: jruby-9.0.0.0.rc1
+  alias: jruby-9000
+  present: True
+

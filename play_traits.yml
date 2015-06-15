@@ -40,8 +40,10 @@
     - role: trait_rabbitmq
 
     - role: trait_rbenv
+    - role: trait_jruby-9000
     - role: trait_jruby-1.7
     - role: trait_ruby-2.1
+    - role: trait_ruby-2.2
 
     - role: trait_ansible
     - role: trait_mkdocs 

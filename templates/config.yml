@@ -45,7 +45,7 @@ services:
       enabled: true
 
     database: 
-      max_pool_size: 10
+      max_pool_size: 20
 
   builder: 
 
