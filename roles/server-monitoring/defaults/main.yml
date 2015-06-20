@@ -1,6 +1,6 @@
 monitoring_state: monitored
 
-monitored_services: 
+monitored_services:
   - cider-ci_api
   - cider-ci_builder
   - cider-ci_dispatcher

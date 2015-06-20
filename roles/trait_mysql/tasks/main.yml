@@ -1,7 +1,7 @@
 ### MySQL
 
 - apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
-  with_items: 
+  with_items:
     - libmysqlclient-dev
     - mysql-client-5.5
     - mysql-server-5.5
@@ -10,7 +10,7 @@
 
 - mysql_user: name={{executor_execution_user | truncate(16,'') }}
               password={{executor_execution_user}}
-              priv=*.*:ALL 
+              priv=*.*:ALL
               state=present
 
 - template: src=mysql_env

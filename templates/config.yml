@@ -1,5 +1,5 @@
-database: 
-  adapter: "postgresql" 
+database:
+  adapter: "postgresql"
   classname: "org.postgresl.Driver"
   subname: '//localhost:{{database.port}}/{{database.name}}'
   subprotocol: "postgresql"
@@ -18,21 +18,21 @@ basic_auth:
 session:
   secret: "{{secret_key_base}}"
 
-messaging: 
-  connection: 
+messaging:
+  connection:
     vhost: cider-ci
     host: 127.0.0.1
     username: cider-ci
-    password: "{{cider_ci_rabbitmq_secret}}" 
+    password: "{{cider_ci_rabbitmq_secret}}"
 
 
 server_base_url: "https://{{web_host_name | default(hostvars[groups['cider-ci-server'][0]]['ansible_default_ipv4']['address']) }}"
 
-services: 
+services:
 
-  api: 
+  api:
 
-    http: 
+    http:
       host: localhost
       port: 8885
       context: /cider-ci
@@ -44,30 +44,30 @@ services:
       bind: "{{nrepl_bind_address | default('127.0.0.1')}}"
       enabled: true
 
-    database: 
+    database:
       max_pool_size: 20
 
-  builder: 
+  builder:
 
-    http: 
+    http:
       host: 127.0.0.1
       port: 8884
       context: /cider-ci
       sub_context: /builder
       ssl: false
 
-    nrepl: 
+    nrepl:
       port: 7884
       bind: "{{nrepl_bind_address | default('127.0.0.1')}}"
       enabled: true
 
-    database: 
+    database:
       max_pool_size: 10
 
 
-  dispatcher: 
+  dispatcher:
 
-    http: 
+    http:
       host: "127.0.0.1"
       port: 8882
       context: '/cider-ci'
@@ -79,12 +79,12 @@ services:
       bind: "{{nrepl_bind_address | default('127.0.0.1')}}"
       enabled: true
 
-    database: 
+    database:
       max_pool_size: 30
 
-  repository: 
+  repository:
 
-    http: 
+    http:
       host: 127.0.0.1
       port: 8881
       context: /cider-ci
@@ -96,16 +96,16 @@ services:
       bind: "{{nrepl_bind_address | default('127.0.0.1')}}"
       enabled: true
 
-    database: 
+    database:
       max_pool_size: 20
 
-    repositories: 
-      path: "/tmp/cider-ci_repositories" 
+    repositories:
+      path: "/tmp/cider-ci_repositories"
 
 
-  storage: 
+  storage:
 
-    http: 
+    http:
       host: localhost
       port: 8886
       context: /cider-ci
@@ -117,10 +117,10 @@ services:
       bind: "{{nrepl_bind_address | default('127.0.0.1')}}"
       enabled: true
 
-    database: 
+    database:
       max_pool_size: 10
 
-    stores: 
+    stores:
 
       - url_path_prefix: "/trial-attachments"
         retention_time_days: 10
@@ -133,9 +133,9 @@ services:
         db_table: tree_attachments
 
 
-  ui: 
+  ui:
 
-    http: 
+    http:
       host: localhost
       port: 8880
       context: /cider-ci
@@ -146,7 +146,7 @@ services:
 # configuration for the reverse proxy for dev and test, not used in production
 reverse_proxy:
 
-  http: 
+  http:
     host: localhost
     port: 8888
     ssl: false

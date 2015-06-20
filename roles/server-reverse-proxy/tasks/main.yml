@@ -2,7 +2,7 @@
 
 - template: >
     src=offline.apache.conf
-    dest=/etc/apache2/sites-available/offline.conf 
+    dest=/etc/apache2/sites-available/offline.conf
     mode=0755
 
 - command: a2ensite offline
@@ -13,7 +13,7 @@
 
 - template: >
     src=offline_https.apache.conf
-    dest=/etc/apache2/sites-available/offline_https.conf 
+    dest=/etc/apache2/sites-available/offline_https.conf
     mode=0755
 
 - command: a2ensite offline_https
@@ -32,7 +32,7 @@
 
 - template: >
     src=shared-site.apache.conf
-    dest=/etc/apache2/shared/cider-ci_site.conf 
+    dest=/etc/apache2/shared/cider-ci_site.conf
     mode=0644
 
 
@@ -40,7 +40,7 @@
 
 - template: >
     src=site.apache.conf
-    dest=/etc/apache2/sites-available/cider-ci.conf 
+    dest=/etc/apache2/sites-available/cider-ci.conf
     mode=0755
 
 - command: a2ensite cider-ci
@@ -54,7 +54,7 @@
 
 - template: >
     src=site_https.apache.conf
-    dest=/etc/apache2/sites-available/cider-ci_https.conf 
+    dest=/etc/apache2/sites-available/cider-ci_https.conf
     mode=0755
   register: reverse_proxy_https_site
 

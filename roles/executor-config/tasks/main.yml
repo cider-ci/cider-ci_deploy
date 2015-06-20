@@ -1,13 +1,13 @@
 ### Config ####################################################################
 
-# general service config 
-- template: 
+# general service config
+- template:
     src: ../../../templates/config.yml
     dest: /var/local/cider-ci/config/config.yml
     mode: 0644
 
 # executor specific config
-- template: 
+- template:
     src: executor_config.yml
     dest: /var/local/cider-ci/executor/config/config.yml
     mode: 0640

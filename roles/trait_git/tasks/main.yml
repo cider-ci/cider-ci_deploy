@@ -1,6 +1,6 @@
 - apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
-  with_items: 
-    - git 
+  with_items:
+    - git
 
 - shell: git config --global user.name "{{executor_execution_user}}"
   become: yes

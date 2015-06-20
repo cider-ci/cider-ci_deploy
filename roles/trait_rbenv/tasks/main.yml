@@ -1,7 +1,7 @@
-### load rbenv 
+### load rbenv
 
 - template: src=load_rbenv
-            dest="~{{user}}/.bash_login.d/load_rbenv" 
+            dest="~{{user}}/.bash_login.d/load_rbenv"
             owner={{user}} group={{user}} mode=0755
 
 - lineinfile:

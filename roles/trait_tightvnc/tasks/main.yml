@@ -1,10 +1,10 @@
 -  apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
-   with_items: 
+   with_items:
     - tightvncserver
-    - x11vnc 
-    - fluxbox 
+    - x11vnc
+    - fluxbox
 
-- file: path="~{{user}}/.vnc" 
+- file: path="~{{user}}/.vnc"
         state=directory
         owner={{user}}
         group={{user}}

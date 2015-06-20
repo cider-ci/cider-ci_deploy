@@ -1,4 +1,4 @@
-# clean services and configuration 
+# clean services and configuration
 
 - shell: |
     rm -rf /etc/ansible
@@ -23,9 +23,9 @@
   ignore_errors: true
   sudo: false
 
-# clean all the rest: logfiles, code 
+# clean all the rest: logfiles, code
 
 - shell: |
-    rm -rf /var/local/cider-ci* 
+    rm -rf /var/local/cider-ci*
     rm -rf /var/log/cider-ci/*
 

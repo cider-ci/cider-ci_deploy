@@ -1,4 +1,4 @@
-ssh_keys: 
+ssh_keys:
 - "{{lookup('file', './ssh_keys/drtom')}}"
 - "{{lookup('file', './ssh_keys/mfa')}}"
 - "{{lookup('file', './ssh_keys/nimaai')}}"
@@ -7,6 +7,6 @@ ssh_keys:
 removed_ssh_keys: []
 
 ntp_server: ntp.zhdk.ch
-lein_service_xmx_value: 1G 
+lein_service_xmx_value: 1G
 user_interface_xmx_value: 4G
 

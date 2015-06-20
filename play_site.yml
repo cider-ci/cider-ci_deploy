@@ -1,18 +1,18 @@
 ### Prepare machines ##########################################################
 - hosts: all
-  vars_files: 
+  vars_files:
     - vars.yml
     - "{{ vars_local | default('vars.yml') }}"
 
   roles:
-    - role: prepare-all 
+    - role: prepare-all
 
 ###############################################################################
 ### Clean slate ###############################################################
 ###############################################################################
 
 - hosts: all
-  vars_files: 
+  vars_files:
     - vars.yml
   roles:
     - role: clean-slate
@@ -24,11 +24,11 @@
 ###############################################################################
 
 - hosts: cider-ci-server
-  vars_files: 
+  vars_files:
     - vars.yml
     - vars-server.yml
     - "{{ vars_local | default('vars.yml') }}"
-  roles: 
+  roles:
 
     - role: server-apache2
 
@@ -46,13 +46,13 @@
 
 - hosts: cider-ci-executors
 
-  vars_files: 
+  vars_files:
     - vars.yml
     - vars-server.yml
     - vars-executors.yml
     - "{{ vars_local | default('vars.yml') }}"
 
-  roles: 
+  roles:
 
 
     - role: git-checkout
@@ -70,7 +70,7 @@
     - role: lein-service
       lein_service_name: cider-ci_executor
       lein_service_app_dir: /var/local/cider-ci/executor
-      lein_service_user: root 
+      lein_service_user: root
 
     - role: nightly-reboot
 
@@ -81,12 +81,12 @@
 
 
 - hosts: cider-ci-server
-  vars_files: 
+  vars_files:
     - vars.yml
     - vars-server.yml
     - "{{ vars_local | default('vars.yml') }}"
 
-  roles: 
+  roles:
 
     - role: git-checkout
       git_checkout_target_path: '/var/local/cider-ci'

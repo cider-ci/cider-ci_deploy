@@ -2,7 +2,7 @@ dependencies:
 
 - role: install_openjdk-7
 
-- role: rbenv-ruby 
+- role: rbenv-ruby
   user: '{{executor_execution_user}}'
   ruby: '{{jruby_9000}}'
 

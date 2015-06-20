@@ -7,11 +7,11 @@
 
 - rabbitmq_plugin: names=rabbitmq_management state=enabled
 
-- rabbitmq_vhost: 
+- rabbitmq_vhost:
     name: "{{user}}"
     state: present
 
-- rabbitmq_user: 
+- rabbitmq_user:
     user: "{{user}}"
     force: yes
     password: "{{user}}"
@@ -23,13 +23,13 @@
     tags: administrator
 
 - name: rabbitmq env vars
-  template: 
+  template:
     src: rabbitmq-env
     dest: ~{{user}}/.bash_login.d/rabbitmq-env
     owner: "{{user}}"
     mode: 0755
 
-- service: 
+- service:
     name: rabbitmq-server
     state: started
 

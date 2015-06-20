@@ -3,6 +3,6 @@
   register: executor_password_task
   changed_when: false
 
-- set_fact: 
+- set_fact:
     executor_password: "{{executor_password_task.stdout}}"
 

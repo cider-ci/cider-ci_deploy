@@ -11,18 +11,18 @@ Usage
 
 Please see <http://ci2.zhdk.ch/cider-ci/docs/install/>.
 
-### Single Machine Demo Setup: 
+### Single Machine Demo Setup:
 
     ansible-playbook -i hosts_demo_single play_site.yml -e 'system_admin_password=secret system_admin_login=admin'
 
 
-### ZHdK Specifics 
+### ZHdK Specifics
 
 The ZHdK site uses the [ansible vault](https://docs.ansible.com/playbooks_vault.html):
 
     ansible-playbook -i hosts_zhdk-ci2 play_site.yml --vault-password-file bin/zhdk-vault-pass
 
-resp. 
+resp.
 
     ansible-playbook -i hosts_zhdk-ci3 play_site.yml --vault-password-file bin/zhdk-vault-pass
 

@@ -1,23 +1,23 @@
-nrepl: 
+nrepl:
   port: {{executor_service_nrepl_port}}
   bind: "{{nrepl_bind_address | default('127.0.0.1')}}"
   enabled: {{executor_nrepl_enabled}}
 
 
-http: 
+http:
   host: "0.0.0.0"
-  port: {{executor_service_http_port}} 
-  ssl-port: {{executor_service_https_port}} 
+  port: {{executor_service_http_port}}
+  ssl-port: {{executor_service_https_port}}
 
 max_load: {{executor_max_load | default(ansible_processor_cores * ansible_processor_count) }}
 
 name: {{inventory_hostname}}
 
-basic_auth: 
+basic_auth:
   username: {{inventory_hostname}}
   password: {{executor_password}}
 
-reporter: 
+reporter:
   max_retries: 10
   retry_ms_factor: 1000
 

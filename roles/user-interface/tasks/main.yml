@@ -1,6 +1,6 @@
 - name: Install dependencies
   apt: pkg={{item}} state=present update_cache=yes cache_valid_time=3600
-  with_items: 
+  with_items:
     - nodejs
     - npm
     - nodejs-legacy
@@ -14,11 +14,11 @@
 ### Bundle #####################################################################
 
 - name: Bundle Jruby
-  shell: su -l -s /bin/bash -c 'source /etc/profile.d/rbenv-load.sh 
-          && rbenv-load 
+  shell: su -l -s /bin/bash -c 'source /etc/profile.d/rbenv-load.sh
+          && rbenv-load
           && cd {{ui_root_path}}
-          && export RAILS_ENV={{rails_env}} 
-          && export RBENV_VERSION={{rubies.jruby.version}} 
+          && export RAILS_ENV={{rails_env}}
+          && export RBENV_VERSION={{rubies.jruby.version}}
           && bundle install --deployment' {{user_interface_user}}
          executable=/bin/bash
   register: bundle_jruby
@@ -26,12 +26,12 @@
 
 
 - name: Bundle MRI
-  shell: su -l -s /bin/bash -c 'source /etc/profile.d/rbenv-load.sh 
-          && rbenv-load 
+  shell: su -l -s /bin/bash -c 'source /etc/profile.d/rbenv-load.sh
+          && rbenv-load
           && cd {{ui_root_path}}
-          && export RAILS_ENV={{rails_env}} 
-          && export RBENV_VERSION={{rubies.mri.version}} 
-          && bundle install --deployment' {{user_interface_user}} 
+          && export RAILS_ENV={{rails_env}}
+          && export RBENV_VERSION={{rubies.mri.version}}
+          && bundle install --deployment' {{user_interface_user}}
          executable=/bin/bash
   register: bundle_mri
   changed_when: bundle_mri.stdout | match(".*Installing.*")
@@ -53,14 +53,14 @@
             dest={{ui_root_path}}/config/database.yml
             owner={{user_interface_user}}
             mode=0755
-  register: database_config 
+  register: database_config
 
 - name: Migrate
-  shell:  su -l -s /bin/bash -c 'source /etc/profile.d/rbenv-load.sh 
-            && rbenv-load 
+  shell:  su -l -s /bin/bash -c 'source /etc/profile.d/rbenv-load.sh
+            && rbenv-load
             && cd {{ui_root_path}}
-            && export RAILS_ENV={{rails_env}} 
-            && export RBENV_VERSION={{rubies.mri.version}} 
+            && export RAILS_ENV={{rails_env}}
+            && export RBENV_VERSION={{rubies.mri.version}}
             && bundle exec rake db:create db:migrate' {{user_interface_user}}
           executable=/bin/bash
   register: migrate
@@ -69,7 +69,7 @@
 
 ### Assets ####################################################################
 
-- template: 
+- template:
     src: theme-selector.sass
     dest: "{{ui_root_path}}/app/assets/stylesheets/theme-selector.sass"
     owner: "{{user_interface_user}}"
@@ -77,17 +77,17 @@
 
 - name: package bundle.js
   shell:  su -l -s /bin/bash -c 'cd {{ui_root_path}}
-            && npm run build' {{user_interface_user}} 
+            && npm run build' {{user_interface_user}}
 
-- name: Precompile assets 
-  shell:  su -l -s /bin/bash -c 'source /etc/profile.d/rbenv-load.sh 
-            && rbenv-load 
+- name: Precompile assets
+  shell:  su -l -s /bin/bash -c 'source /etc/profile.d/rbenv-load.sh
+            && rbenv-load
             && cd {{ui_root_path}}
-            && export RAILS_ENV={{rails_env}} 
-            && export RBENV_VERSION={{rubies.mri.version}} 
+            && export RAILS_ENV={{rails_env}}
+            && export RBENV_VERSION={{rubies.mri.version}}
             && rm -rf public/assets/*
             && rm -rf tmp/cache/*
-            && bundle exec rake assets:precompile' {{user_interface_user}} 
+            && bundle exec rake assets:precompile' {{user_interface_user}}
           executable=/bin/bash
   register: precompile_assets
   changed_when: not precompile_assets.stderr | match("")
@@ -113,7 +113,7 @@
 ### Upstart Service ############################################################
 
 - template: src=init.conf
-            dest=/etc/init/cider-ci_user-interface.conf 
+            dest=/etc/init/cider-ci_user-interface.conf
   register: init_script
   when: ansible_distribution_release == 'trusty'
 

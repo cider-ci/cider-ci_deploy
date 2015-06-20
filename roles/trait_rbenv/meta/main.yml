@@ -1,3 +1,3 @@
 dependencies:
 - role: rbenv
-  user: '{{executor_execution_user}}' 
+  user: '{{executor_execution_user}}'

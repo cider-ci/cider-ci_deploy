@@ -1,7 +1,7 @@
 - name: install jdk
   apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
-  with_items: 
-    - openjdk-7-jre-headless 
+  with_items:
+    - openjdk-7-jre-headless
     - openjdk-7-jdk
   register: install_openjdk_7
 

@@ -1,9 +1,9 @@
 - apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
-  with_items: 
-    - maven 
+  with_items:
+    - maven
 
 - apt: pkg={{item}} state=absent update_cache=yes cache_valid_time=3600
-  with_items: 
+  with_items:
     - maven2
 
 - lineinfile:

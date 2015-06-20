@@ -1,6 +1,6 @@
 # start with a clean slate for secrets
 
-# - shell: rm -rf cider-ci* 
+# - shell: rm -rf cider-ci*
 # - shell: rm -rf /var/local/*
 # - shell: rm -rf /var/log/cider-ci*
 # - shell: rm -rf /etc/init/cider-ci*

@@ -1,11 +1,11 @@
 
-- cron: 
-    name: nightly reboot 
-    hour: 3 
-    minute: 43 
-    job:  '/sbin/shutdown -r now' 
-    cron_file: nightly-reboot 
+- cron:
+    name: nightly reboot
+    hour: 3
+    minute: 43
+    job:  '/sbin/shutdown -r now'
+    cron_file: nightly-reboot
     user: 'root'
 
-  register: nightly_reboot 
+  register: nightly_reboot
 

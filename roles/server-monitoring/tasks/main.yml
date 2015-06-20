@@ -1,25 +1,25 @@
 
-- name: Monit service monitoring config 
-  template: 
+- name: Monit service monitoring config
+  template:
     src: "{{item}}"
     dest: /etc/monit/conf.d/{{item}}
     mode: "0700"
   with_items: monitored_services
- 
-- name: Reload monit 
-  monit: 
+
+- name: Reload monit
+  monit:
     name: monit
     state: reloaded
 
-- name: Service monitoring is present 
-  monit: 
+- name: Service monitoring is present
+  monit:
     name: "{{item}}"
-    state: present 
+    state: present
   with_items: monitored_services
   ignore_errors: True
 
 - name: Monitor service
-  monit: 
+  monit:
     name: "{{item}}"
     state: "{{monitoring_state}}"
   with_items: monitored_services

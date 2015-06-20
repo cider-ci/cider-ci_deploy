@@ -1,9 +1,9 @@
 # user with bash shell
 
-- apt: 
-    pkg: sudo 
-    state: latest 
-    update_cache: yes 
+- apt:
+    pkg: sudo
+    state: latest
+    update_cache: yes
     cache_valid_time: 3600
 
 - name: Add the user {{user}}
@@ -13,20 +13,20 @@
         shell=/bin/bash
 
 - name: Allow the exec-user to sudo itself
-  template: 
+  template:
     src: sudo
     dest: "/etc/sudoers.d/{{user}}"
 
 # ~/.bash_login.d gets sourced
 
-- file: path="~{{user}}/.bash_login.d" 
+- file: path="~{{user}}/.bash_login.d"
         state=directory
         owner={{user}}
         group={{user}}
         mode=0755
 
 - template: src=keep
-            dest="~{{user}}/.bash_login.d/keep" 
+            dest="~{{user}}/.bash_login.d/keep"
             owner={{user}} group={{user}} mode=0644
 
 - lineinfile: line='if [[ -d ~/.bash_login.d ]]; then for file in ~/.bash_login.d/* ;do source "$file"; done; fi'
@@ -52,7 +52,7 @@
               mode=0644
               create=yes
 
-### .bash_login 
+### .bash_login
 
 - lineinfile: line='if [[ -d ~/.bash_login.d ]]; then for file in ~/.bash_login.d/* ;do source "$file"; done; fi'
               state=present

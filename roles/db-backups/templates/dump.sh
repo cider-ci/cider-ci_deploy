@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Ansible managed 
+# Ansible managed
 
 bash << "EOF"
 su -s /bin/bash -l {{user_interface_user}}

@@ -1,17 +1,17 @@
 - name: install jdk
   apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
-  with_items: 
+  with_items:
     - python-httplib2
 
-- set_fact: 
+- set_fact:
    server_host: "{{ansible_default_ipv4.address}}"
   when: server_host is not defined
 
-- set_fact: 
+- set_fact:
     system_admin_login: system_admin
   when: system_admin_login is not defined
 
-- uri: 
+- uri:
     url: http://localhost:8880/cider-ci/ui/configuration_management/invoke
     user: system_admin
     password: "{{secret_key_base}}"
@@ -19,12 +19,12 @@
     method: POST
     HEADER_Content-Type: application/ruby
     register: previous_uri
-    body: > 
-      if User.where(is_admin: true).count == 0; 
-      User.create!(login: "{{system_admin_login}}", is_admin: true); 
-      end 
+    body: >
+      if User.where(is_admin: true).count == 0;
+      User.create!(login: "{{system_admin_login}}", is_admin: true);
+      end
 
-- uri: 
+- uri:
     url: http://localhost:8880/cider-ci/ui/configuration_management/invoke
     user: system_admin
     password: "{{secret_key_base}}"
@@ -32,12 +32,12 @@
     method: POST
     HEADER_Content-Type: application/ruby
     register: previous_uri
-    body: > 
+    body: >
       User.find_or_create_by!({ login: "{{system_admin_login}}"})
       .update_attributes(is_admin: true, password: "{{system_admin_password}}")
   when: system_admin_password is defined
 
-- uri: 
+- uri:
     url: http://localhost:8880/cider-ci/ui/configuration_management/invoke
     timeout: 90
     user: system_admin
@@ -46,7 +46,7 @@
     method: POST
     HEADER_Content-Type: application/ruby
     register: previous_uri
-    body: > 
+    body: >
       executor=Executor.find_or_initialize_by(name: "{{item}}");
       executor.update_attributes!(
       base_url: "https://{{hostvars[item]['ansible_default_ipv4']['address']}}:{{executor_service_https_port}}"
@@ -55,7 +55,7 @@
   with_items: groups['cider-ci-executors']
 
 
-- uri: 
+- uri:
     url: http://localhost:8880/cider-ci/ui/configuration_management/invoke
     timeout: 90
     user: system_admin
@@ -64,13 +64,13 @@
     method: POST
     HEADER_Content-Type: application/ruby
     register: previous_uri
-    body: > 
-      if Repository.count == 0; 
+    body: >
+      if Repository.count == 0;
       repo= Repository.find_or_initialize_by name:("Demo Project");
       repo.update_attributes!(origin_uri: 'https://github.com/cider-ci/cider-ci_demo-project-bash.git', public_view_permission: true );
       end
 
-- uri: 
+- uri:
     url: http://localhost:8880/cider-ci/ui/configuration_management/invoke
     timeout: 90
     user: system_admin
@@ -79,7 +79,7 @@
     method: POST
     HEADER_Content-Type: application/ruby
     register: previous_uri
-    body: > 
+    body: >
       welcome_page_settings= WelcomePageSettings.find;
       if welcome_page_settings.welcome_message.blank?;
       welcome_page_settings.update_attributes!(welcome_message: "# Welcome to your installation of Cider-CI");

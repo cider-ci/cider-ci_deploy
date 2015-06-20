@@ -1,17 +1,17 @@
 - hosts: cider-ci-server
-  vars_files: 
+  vars_files:
     - vars.yml
     - vars-server.yml
     - "{{ vars_local | default('vars.yml') }}"
   tasks:
-    - set_fact: 
+    - set_fact:
        server_host: "{{ansible_default_ipv4.address}}"
 
 - hosts: cider-ci-executors
 
   tags: [traits]
 
-  vars_files: 
+  vars_files:
     - vars.yml
     - vars-executors.yml
     - "{{ vars_local | default('vars.yml') }}"
@@ -46,7 +46,7 @@
     - role: trait_ruby-2.2
 
     - role: trait_ansible
-    - role: trait_mkdocs 
+    - role: trait_mkdocs
 
     - role: trait_cider-ci_api-access
 

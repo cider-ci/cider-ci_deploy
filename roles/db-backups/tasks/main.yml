@@ -3,15 +3,15 @@
     dest=/etc/cron.daily/db-backup_{{item}}_{{rails_env}}
     mode=0755
   with_items:
-    - structure-and-data 
+    - structure-and-data
     - data
   when: db_backups_enabled
 
 - file: >
     path=/etc/cron.daily/db-backup_{{item}}_{{rails_env}}
-    state=absent 
+    state=absent
   with_items:
-    - structure-and-data 
+    - structure-and-data
     - data
   when: not db_backups_enabled
 

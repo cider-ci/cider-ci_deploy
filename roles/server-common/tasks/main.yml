@@ -1,6 +1,6 @@
 ### Config ####################################################################
 
-- template: 
+- template:
     src: ../../../templates/config.yml
     dest: /var/local/cider-ci/config/config.yml
     mode: 0644
@@ -71,7 +71,7 @@
 ### Database ##################################################################
 
 - name: Create postgresql user
-  postgresql_user:  
+  postgresql_user:
     name: "{{database.user}}"
     password: "{{database.password}}"
     login_user: root

@@ -4,7 +4,7 @@
 - set_fact: server_host={{hostvars[groups['cider-ci-server'][0]]['server_host']}}
 - set_fact: secret_key_base={{hostvars[groups['cider-ci-server'][0]]['secret_key_base']}}
 
-- uri: 
+- uri:
     url: https://{{server_host}}/cider-ci/ui/configuration_management/invoke
     user: system_admin
     password: "{{secret_key_base}}"
