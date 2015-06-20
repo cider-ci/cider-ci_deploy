@@ -4,6 +4,7 @@ zhdk-cislave1 ansible_ssh_host=10.157.2.51 ansible_ssh_user=root
 zhdk-cislave2 ansible_ssh_host=10.157.2.52 ansible_ssh_user=root
 zhdk-cislave3 ansible_ssh_host=10.157.2.53 ansible_ssh_user=root
 zhdk-cislave4 ansible_ssh_host=10.157.2.54 ansible_ssh_user=root
+zhdk-cislave5 ansible_ssh_host=10.157.2.55 ansible_ssh_user=root
 
  
 [cider-ci-server]
@@ -14,6 +15,7 @@ zhdk-cislave1
 zhdk-cislave2
 zhdk-cislave3 
 zhdk-cislave4 
+zhdk-cislave5
 
 [zhdk-secrets:children]
 cider-ci-server

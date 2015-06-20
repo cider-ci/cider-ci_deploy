@@ -1,5 +1,10 @@
 # user with bash shell
 
+- apt: 
+    pkg: sudo 
+    state: latest 
+    update_cache: yes 
+    cache_valid_time: 3600
 
 - name: Add the user {{user}}
   user: name={{user}}
