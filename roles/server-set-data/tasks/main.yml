@@ -67,7 +67,7 @@
     body: >
       if Repository.count == 0;
       repo= Repository.find_or_initialize_by name:("Demo Project");
-      repo.update_attributes!(origin_uri: 'https://github.com/cider-ci/cider-ci_demo-project-bash.git', public_view_permission: true );
+      repo.update_attributes!(git_url: 'https://github.com/cider-ci/cider-ci_demo-project-bash.git', public_view_permission: true );
       end
 
 - uri:
