@@ -1,0 +1,2 @@
+executor_max_load: 10
+executor_nrepl_enabled: true
