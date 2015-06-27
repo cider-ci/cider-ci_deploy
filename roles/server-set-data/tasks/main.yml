@@ -1,18 +1,18 @@
-- name: install jdk
-  apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
+- apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
   with_items:
     - python-httplib2
-
-- set_fact:
-   server_host: "{{ansible_default_ipv4.address}}"
-  when: server_host is not defined
 
 - set_fact:
     system_admin_login: system_admin
   when: system_admin_login is not defined
 
+- wait_for:
+    port: 8880
+    state: started
+
 - uri:
     url: http://localhost:8880/cider-ci/ui/configuration_management/invoke
+    timeout: 90
     user: system_admin
     password: "{{secret_key_base}}"
     force_basic_auth: yes
@@ -26,6 +26,7 @@
 
 - uri:
     url: http://localhost:8880/cider-ci/ui/configuration_management/invoke
+    timeout: 90
     user: system_admin
     password: "{{secret_key_base}}"
     force_basic_auth: yes
