@@ -1,6 +1,6 @@
 check process cider-ci_repository
         matching "cider-ci_repository"
-        start program = "/usr/sbin/service cider-ci_repository start" with timeout 60 seconds
+        start program = "/usr/sbin/service cider-ci_repository start" with timeout 120 seconds
         stop program  = "/usr/sbin/service cider-ci_repository stop"
         if failed
                 url http://monit:{{services_basic_auth_secret}}@localhost:8881/cider-ci/repositories/status
