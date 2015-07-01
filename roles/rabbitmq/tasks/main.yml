@@ -7,8 +7,10 @@
 
 - rabbitmq_plugin: names=rabbitmq_management state=enabled
 
-- rabbitmq_vhost: name=cider-ci
-                  state=present
+- rabbitmq_vhost:
+    node: rabbit@{{ansible_nodename}}
+    name: cider-ci
+    state: present
 
 - rabbitmq_user:
     user: cider-ci

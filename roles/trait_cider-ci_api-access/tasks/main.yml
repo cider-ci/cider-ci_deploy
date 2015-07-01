@@ -1,3 +1,5 @@
+- apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
+  with_items: [python-httplib2]
 
 - set_fact: api_password={{api_password}}
 - set_fact: api_username={{api_username}}

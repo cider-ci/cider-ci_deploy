@@ -51,4 +51,3 @@
     - role: trait_cider-ci_api-access
 
     - role: trait_git
-      tags: [debug]

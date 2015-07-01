@@ -8,10 +8,12 @@
 - rabbitmq_plugin: names=rabbitmq_management state=enabled
 
 - rabbitmq_vhost:
+    node: rabbit@{{ansible_nodename}}
     name: "{{user}}"
     state: present
 
 - rabbitmq_user:
+    node: rabbit@{{ansible_nodename}}
     user: "{{user}}"
     force: yes
     password: "{{user}}"

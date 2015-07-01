@@ -12,7 +12,7 @@
 
 - uri:
     url: http://localhost:8880/cider-ci/ui/configuration_management/invoke
-    timeout: 90
+    timeout: 180
     user: system_admin
     password: "{{secret_key_base}}"
     force_basic_auth: yes
@@ -26,7 +26,7 @@
 
 - uri:
     url: http://localhost:8880/cider-ci/ui/configuration_management/invoke
-    timeout: 90
+    timeout: 180
     user: system_admin
     password: "{{secret_key_base}}"
     force_basic_auth: yes
@@ -40,7 +40,7 @@
 
 - uri:
     url: http://localhost:8880/cider-ci/ui/configuration_management/invoke
-    timeout: 90
+    timeout: 180
     user: system_admin
     password: "{{secret_key_base}}"
     force_basic_auth: yes
@@ -58,7 +58,7 @@
 
 - uri:
     url: http://localhost:8880/cider-ci/ui/configuration_management/invoke
-    timeout: 90
+    timeout: 180
     user: system_admin
     password: "{{secret_key_base}}"
     force_basic_auth: yes
@@ -73,7 +73,7 @@
 
 - uri:
     url: http://localhost:8880/cider-ci/ui/configuration_management/invoke
-    timeout: 90
+    timeout: 180
     user: system_admin
     password: "{{secret_key_base}}"
     force_basic_auth: yes
