@@ -4,5 +4,5 @@ check process cider-ci_builder
         stop program  = "/usr/sbin/service cider-ci_builder stop"
         if failed
                 url http://monit:{{services_basic_auth_secret}}@localhost:8884/cider-ci/builder/status
-                with timeout 30 seconds
+                with timeout 60 seconds
         then restart

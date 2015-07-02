@@ -1,0 +1,8 @@
+check process cider-ci_notifier
+        matching "cider-ci_notifier"
+        start program = "/usr/sbin/service cider-ci_notifier start" with timeout 120 seconds
+        stop program  = "/usr/sbin/service cider-ci_notifier stop"
+        if failed
+                url http://monit:{{services_basic_auth_secret}}@localhost:8887/cider-ci/notifier/status
+                with timeout 60 seconds
+        then restart

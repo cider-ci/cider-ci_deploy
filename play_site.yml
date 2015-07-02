@@ -119,6 +119,11 @@
       lein_service_user: cider-ci_dispatcher
 
     - role: lein-service
+      lein_service_name: cider-ci_notifier
+      lein_service_app_dir: /var/local/cider-ci/notifier
+      lein_service_user: cider-ci_notifier
+
+    - role: lein-service
       lein_service_name: cider-ci_repository
       lein_service_app_dir: /var/local/cider-ci/repository
       lein_service_user: cider-ci_repository

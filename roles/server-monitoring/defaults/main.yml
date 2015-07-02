@@ -4,6 +4,7 @@ monitored_services:
   - cider-ci_api
   - cider-ci_builder
   - cider-ci_dispatcher
+  - cider-ci_notifier
   - cider-ci_repository
   - cider-ci_storage
   - cider-ci_user-interface
