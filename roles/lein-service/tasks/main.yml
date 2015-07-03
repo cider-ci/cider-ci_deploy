@@ -17,7 +17,6 @@
 
 ### clone repo ################################################################
 
-
 - file: path={{lein_service_app_dir}}
         owner={{lein_service_user}}
         group={{lein_service_user}}
