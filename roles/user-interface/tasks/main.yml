@@ -1,10 +1,3 @@
-- name: Install dependencies
-  apt: pkg={{item}} state=present update_cache=yes cache_valid_time=3600
-  with_items:
-    - nodejs
-    - npm
-    - nodejs-legacy
-
 - file: path={{ui_root_path}}
         owner={{user_interface_user}}
         group={{user_interface_user}}
