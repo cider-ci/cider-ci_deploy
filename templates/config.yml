@@ -7,7 +7,7 @@ database:
   password: "{{database.password}}"
   max_pool_size: 3
 
-github_authtoken: "{{github_authtoken}}"
+github_authtoken: {{github_authtoken | default('NULL',true) }}
 
 hostname: "{{web_host_name | default(ansible_default_ipv4.address) }}"
 

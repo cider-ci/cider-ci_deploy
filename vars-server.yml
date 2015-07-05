@@ -1,7 +1,5 @@
 cider_ci_local_facts_file:  /etc/ansible/facts.d/cider_ci.fact
 
-github_authtoken: NULL
-
 # web
 #web_host_name: "{{ansible_default_ipv4.address}}"
 web_host_ip: "{{ansible_default_ipv4.address}}"
