@@ -4,8 +4,6 @@
     src: ../../../templates/config.yml
     dest: /var/local/cider-ci/config/config.yml
     mode: 0644
-  tags: [debug]
-
 
 ### UI-user ###################################################################
 
