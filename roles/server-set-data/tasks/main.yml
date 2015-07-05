@@ -8,11 +8,12 @@
 
 - wait_for:
     port: 8880
+    timeout: 600
     state: started
 
 - uri:
     url: http://localhost:8880/cider-ci/ui/configuration_management/invoke
-    timeout: 180
+    timeout: 300
     user: system_admin
     password: "{{secret_key_base}}"
     force_basic_auth: yes
@@ -24,9 +25,13 @@
       User.create!(login: "{{system_admin_login}}", is_admin: true);
       end
 
+- wait_for:
+    port: 8880
+    state: started
+
 - uri:
     url: http://localhost:8880/cider-ci/ui/configuration_management/invoke
-    timeout: 180
+    timeout: 300
     user: system_admin
     password: "{{secret_key_base}}"
     force_basic_auth: yes
@@ -38,9 +43,13 @@
       .update_attributes(is_admin: true, password: "{{system_admin_password}}")
   when: system_admin_password is defined
 
+- wait_for:
+    port: 8880
+    state: started
+
 - uri:
     url: http://localhost:8880/cider-ci/ui/configuration_management/invoke
-    timeout: 180
+    timeout: 300
     user: system_admin
     password: "{{secret_key_base}}"
     force_basic_auth: yes
@@ -55,10 +64,13 @@
       executor.reload
   with_items: groups['cider-ci-executors']
 
+- wait_for:
+    port: 8880
+    state: started
 
 - uri:
     url: http://localhost:8880/cider-ci/ui/configuration_management/invoke
-    timeout: 180
+    timeout: 300
     user: system_admin
     password: "{{secret_key_base}}"
     force_basic_auth: yes
@@ -71,9 +83,13 @@
       repo.update_attributes!(git_url: 'https://github.com/cider-ci/cider-ci_demo-project-bash.git', public_view_permission: true );
       end
 
+- wait_for:
+    port: 8880
+    state: started
+
 - uri:
     url: http://localhost:8880/cider-ci/ui/configuration_management/invoke
-    timeout: 180
+    timeout: 300
     user: system_admin
     password: "{{secret_key_base}}"
     force_basic_auth: yes
