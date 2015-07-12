@@ -36,6 +36,7 @@
 
     - role: trait_postgresql
     - role: trait_mysql
+    - role: trait_sqlite3
 
     - role: trait_rabbitmq
 
