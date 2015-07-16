@@ -8,7 +8,7 @@
     - python-configparser
     - python-mysqldb
 
-- mysql_user: name={{executor_execution_user | truncate(16,'') }}
+- mysql_user: name={{executor_execution_user | truncate(16,True,'') }}
               password={{executor_execution_user}}
               priv=*.*:ALL
               state=present
