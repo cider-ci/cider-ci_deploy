@@ -1,0 +1,12 @@
+[zhdk]
+zhdk-ci2 ansible_ssh_host=195.176.247.161 ansible_ssh_user=root
+
+[cider-ci-server]
+zhdk-ci2
+
+[cider-ci-executors]
+
+[zhdk-secrets:children]
+cider-ci-server
+cider-ci-executors
+

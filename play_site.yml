@@ -37,6 +37,7 @@
 
     - role: server-monitoring
       monitoring_state: unmonitored
+      monit_state: stopped
       tags: [monit]
 
 
@@ -102,6 +103,7 @@
     - role: server-common
 
     - role: user-interface
+      tags: debug
 
     - role: lein-service
       lein_service_name: cider-ci_api
@@ -141,5 +143,4 @@
 
     - role: server-monitoring
       monitoring_state: monitored
-
-
+      tags: [monit]

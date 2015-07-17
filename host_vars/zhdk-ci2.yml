@@ -1,3 +1,8 @@
 web_host_name: ci2.zhdk.ch
 db_backups_enabled: True
 
+lein_service_xmx_value: 3G
+user_interface_xmx_value: 5G
+
+
+

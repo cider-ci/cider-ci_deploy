@@ -1,4 +1,5 @@
 monitoring_state: monitored
+monit_state: started
 
 monitored_services:
   - cider-ci_api
