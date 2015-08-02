@@ -7,7 +7,7 @@
 - set_fact: secret_key_base={{hostvars[groups['cider-ci-server'][0]]['secret_key_base']}}
 
 - uri:
-    url: https://{{server_host}}/cider-ci/ui/configuration_management/invoke
+    url: https://{{server_host}}/cider-ci/ui/configuration_management_backdoor/invoke
     user: system_admin
     password: "{{secret_key_base}}"
     force_basic_auth: yes

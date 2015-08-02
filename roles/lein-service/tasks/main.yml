@@ -15,7 +15,7 @@
         state=directory
         mode=0755
 
-### clone repo ################################################################
+### setup dir  ################################################################
 
 - file: path={{lein_service_app_dir}}
         owner={{lein_service_user}}
