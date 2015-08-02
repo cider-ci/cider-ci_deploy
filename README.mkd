@@ -1,7 +1,7 @@
-Cider-CI Ansible Setup
-======================
+Cider-CI Deploy
+===============
 
-This is an Ansible playbook to set up and maintain a complete
+This is an Ansible playbook to set up, deploy and upgrade a complete
 [Cider-CI](https://github.com/cider-ci/cider-ci) environment: one _Cider-CI
 Server_ and any number of _Cider-CI Executors_.
 
@@ -9,7 +9,7 @@ Server_ and any number of _Cider-CI Executors_.
 Usage
 -----
 
-Please see <http://ci2.zhdk.ch/cider-ci/docs/install/>.
+Please see <http://docs.cider-ci.info/installation/>.
 
 ### Single Machine Demo Setup:
 
