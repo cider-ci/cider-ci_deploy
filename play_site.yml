@@ -103,7 +103,6 @@
     - role: server-common
 
     - role: user-interface
-      tags: debug
 
     - role: lein-service
       lein_service_name: cider-ci_api
@@ -140,6 +139,8 @@
     - role: server-set-data
 
     - role: server-reverse-proxy
+
+    - role: server-check-services
 
     - role: server-monitoring
       monitoring_state: monitored

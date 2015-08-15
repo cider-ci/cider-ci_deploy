@@ -1,0 +1,11 @@
+- hosts: demo-machine
+
+  vars_files:
+    - vars.yml
+
+  tasks:
+
+  - name: the cider_ci_master_secret
+    debug:
+      msg: '{{ cider_ci_master_secret }}'
+

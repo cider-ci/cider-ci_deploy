@@ -22,3 +22,30 @@ The ZHdK site uses the [ansible vault](https://docs.ansible.com/playbooks_vault.
 
     ansible-playbook -i hosts_zhdk-ci2 play_site.yml --vault-password-file bin/zhdk-vault-pass
 
+
+Customization and Advanced Topics
+---------------------------------
+
+### The `cider_ci_master_secret`
+
+The setup generates a default `cider_ci_master_secret` based on various properties
+of the target host and your application. These properties might be guessable or
+not, depending on the setup of your host. It is highly recommended to override
+the generated secret as shown in the invocations above.
+
+Alternatives to the command line arguments are variables defined in the Ansible
+Inventory. This is convenient in particular in conjunction with the [Ansible
+Vault].
+
+Caveat: the [Ansible rules of precedence] should be understood when proceeding
+in this manner. At any rate, invoking
+
+    ansible-playbook -i hosts_demo_single play_info.yml
+
+(possibly with augmented arguments) will show the actual used values and
+is recommended to be consulted for confirmation.
+
+  [Ansible rules of precedence]: http://docs.ansible.com/ansible/playbooks_variables.html#variable-precedence-where-should-i-put-a-variable
+  [Ansible Vault]: http://docs.ansible.com/ansible/playbooks_vault.html
+
+

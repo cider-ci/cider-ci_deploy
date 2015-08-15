@@ -1,6 +1,0 @@
-# good for demo but rather use the default otherwise
-executor_max_load: 4
-
-# for debugging ect.; huge security hole; requires private network, and or firewall
-executor_nrepl_enabled: true
-nrepl_bind_address: "0.0.0.0"

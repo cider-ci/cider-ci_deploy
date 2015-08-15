@@ -1,0 +1,21 @@
+- wait_for:
+    port: 8880
+    state: started
+
+- name: wait for {{item.name}}
+  wait_for:
+    port: "{{item.port}}"
+    timeout: 600
+    state: started
+  with_items: check_services
+
+- name: check {{item.name}}
+  uri:
+    url: http://localhost:{{item.port}}{{item.path}}
+    user: check
+    password: "{{secret_key_base}}"
+    force_basic_auth: yes
+    status_code: 200
+  with_items: check_services
+
+

@@ -1,3 +1,13 @@
 executor_service_nrepl_port: 7883
 executor_service_http_port: 8448
 executor_service_https_port: 443
+
+cider_ci_machine_signature: "{{ansible_machine_id}}"
+cider_ci_mounts_device_signature: '{{ ansible_mounts | map(attribute="device") | join(" ") | hash("sha1") }}'
+cider_ci_mounts_uuid_signature: '{{ ansible_mounts | map(attribute="device") | join(" ") | hash("sha1") }}'
+cider_ci_master_secret: >
+  {{[ cider_ci_machine_signature,
+      cider_ci_mounts_device_signature,
+      cider_ci_mounts_uuid_signature
+    ] | join(" ") | hash("sha256") }}
+

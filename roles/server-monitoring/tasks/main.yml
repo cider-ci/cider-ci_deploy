@@ -1,3 +1,8 @@
+- name: set monit service state
+  service:
+    name: monit
+    state: "{{monit_state}}"
+
 - name: Monit service monitoring config
   template:
     src: "{{item}}"
