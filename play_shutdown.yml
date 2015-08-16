@@ -1,0 +1,41 @@
+
+###############################################################################
+### Server ####################################################################
+###############################################################################
+
+- hosts: cider-ci-server
+  vars_files:
+    - vars.yml
+    - vars-server.yml
+    - "{{ vars_local | default('vars.yml') }}"
+  roles:
+
+    - role: server-apache2
+
+    - role: server-reverse-proxy
+      reverse_proxy_enabled: False
+
+    - role: server-monitoring
+      monitoring_state: unmonitored
+      monit_state: stopped
+      monitored_services: "{{cider_ci_server_services}}"
+      tags: [debug]
+
+    - role: server-shutdown-services
+      tags: [debug]
+
+###############################################################################
+### executors #################################################################
+###############################################################################
+
+- hosts: cider-ci-executors
+
+  vars_files:
+    - vars.yml
+    - vars-server.yml
+    - vars-executors.yml
+    - "{{ vars_local | default('vars.yml') }}"
+
+  roles: []
+
+  # TODO

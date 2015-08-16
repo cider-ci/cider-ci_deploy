@@ -1,22 +1,2 @@
-check_services:
-- name: ui
-  port: 8880
-  path: /cider-ci/ui/public
-- name: repository
-  port: 8881
-  path: /cider-ci/repositories/status
-- name: dispatcher
-  port: 8882
-  path: /cider-ci/dispatcher/status
-- name: builder
-  port: 8884
-  path: /cider-ci/builder/status
-- name: api
-  port: 8885
-  path: /cider-ci/api/status
-- name: storage
-  port: 8886
-  path: /cider-ci/storage/status
-- name: notifier
-  port: 8887
-  path: /cider-ci/notifier/status
+check_services: "{{cider_ci_server_services}}"
+

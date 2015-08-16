@@ -13,7 +13,48 @@ api_uri: "https://{{web_host_ip}}{{web_sub_path}}/api/"
 
 user_interface_user: cider-ci_user-interface
 
-cider_ci_database_secret: 'cider_ci_master_secret'
-secret_key_base: 'cider_ci_master_secret'
-services_basic_auth_secret: 'cider_ci_master_secret'
-cider_ci_rabbitmq_secret: 'cider_ci_master_secret'
+
+cider_ci_server_services:
+
+  - name: cider-ci_user-interface
+    port: 8880
+    path: /cider-ci/ui/public
+    type: puma
+
+  - name: cider-ci_repository
+    dir: /var/local/cider-ci/repository
+    port: 8881
+    path: /cider-ci/repositories/status
+    type: lein
+
+  - name: cider-ci_dispatcher
+    dir: /var/local/cider-ci/dispatcher
+    port: 8882
+    path: /cider-ci/dispatcher/status
+    type: lein
+
+  - name: cider-ci_builder
+    dir: /var/local/cider-ci/builder
+    port: 8884
+    path: /cider-ci/builder/status
+    type: lein
+
+  - name: cider-ci_api
+    dir: /var/local/cider-ci/api
+    user: cider-ci_api
+    port: 8885
+    path: /cider-ci/api/status
+    type: lein
+
+  - name: cider-ci_storage
+    dir: /var/local/cider-ci/storage
+    port: 8886
+    path: /cider-ci/storage/status
+    type: lein
+
+  - name: cider-ci_notifier
+    dir: /var/local/cider-ci/notifier
+    port: 8887
+    path: /cider-ci/notifier/status
+    type: lein
+

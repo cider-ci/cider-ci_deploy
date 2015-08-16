@@ -38,8 +38,11 @@
     - role: server-monitoring
       monitoring_state: unmonitored
       monit_state: stopped
-      tags: [monit]
+      monitored_services: "{{cider_ci_server_services}}"
+      tags: [debug]
 
+    - role: server-shutdown-services
+      tags: [debug]
 
 ###############################################################################
 ### executors #################################################################
@@ -104,6 +107,12 @@
 
     - role: user-interface
 
+
+    # TODO: lots of duplication here, ideally we would use
+    #   with_items: "{{cider_ci_server_services}}"
+    # but it doesn't work with roles for now, there seems
+    # to be coming something in Ansible v2
+
     - role: lein-service
       lein_service_name: cider-ci_api
       lein_service_app_dir: /var/local/cider-ci/api
@@ -134,6 +143,7 @@
       lein_service_app_dir: /var/local/cider-ci/storage
       lein_service_user: cider-ci_storage
 
+
     - role: db-backups
 
     - role: server-set-data
@@ -144,4 +154,5 @@
 
     - role: server-monitoring
       monitoring_state: monitored
+      monitored_services: "{{cider_ci_server_services}}"
       tags: [monit]

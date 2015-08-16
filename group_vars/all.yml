@@ -11,3 +11,7 @@ cider_ci_master_secret: >
       cider_ci_mounts_uuid_signature
     ] | join(" ") | hash("sha256") }}
 
+cider_ci_database_secret: "{{cider_ci_master_secret}}"
+secret_key_base: "{{cider_ci_master_secret}}"
+services_basic_auth_secret: "{{cider_ci_master_secret}}"
+cider_ci_rabbitmq_secret: "{{cider_ci_master_secret}}"

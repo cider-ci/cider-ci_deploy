@@ -9,11 +9,11 @@ Server_ and any number of _Cider-CI Executors_.
 Usage
 -----
 
-Please see <http://docs.cider-ci.info/installation/>.
+See also <http://docs.cider-ci.info/installation/> for more detailed information.
 
 ### Single Machine Demo Setup:
 
-    ansible-playbook -i hosts_demo_single play_site.yml -e 'system_admin_password=secret system_admin_login=admin'
+    ansible-playbook -i hosts_demo_single play_site.yml -e 'system_admin_password=secret system_admin_login=admin cider_ci_master_secret=REPLACE-WITH-YOUR-SECRET'
 
 
 ### ZHdK Specifics
