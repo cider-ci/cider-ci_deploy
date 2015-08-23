@@ -6,6 +6,7 @@
 
   roles:
     - role: prepare-all
+      tags: [prepare-all]
 
 ###############################################################################
 ### Clean slate ###############################################################
@@ -17,7 +18,7 @@
   roles:
     - role: clean-slate
       when: clean_slate
-
+      tags: [clean-slate]
 
 ###############################################################################
 ### Server phase 1 ############################################################
@@ -31,18 +32,20 @@
   roles:
 
     - role: server-apache2
+      tags: [server-apache2]
 
     - role: server-reverse-proxy
       reverse_proxy_enabled: False
+      tags: [server-reverse-proxy]
 
     - role: server-monitoring
       monitoring_state: unmonitored
       monit_state: stopped
       monitored_services: "{{cider_ci_server_services}}"
-      tags: [debug]
+      tags: [debug, server-monitoring]
 
     - role: server-shutdown-services
-      tags: [debug]
+      tags: [debug, server-shutdown-services]
 
 ###############################################################################
 ### executors #################################################################
@@ -58,26 +61,30 @@
 
   roles:
 
-
     - role: git-checkout
       git_checkout_target_path: '/var/local/cider-ci'
       git_checkout_repo: "{{cider_ci_repo}}"
       git_checkout_version: "{{ lookup('pipe','cd  ./../. && git log -n 1 --format=%H') }}"
+      tags: [git-checkout]
 
     - role: executor-secrets
+      tags: [executor-secrets]
 
     - role: executor-user
       user: '{{executor_execution_user}}'
+      tags: [executor-user]
 
     - role: executor-config
+      tags: [executor-config]
 
     - role: lein-service
       lein_service_name: cider-ci_executor
       lein_service_app_dir: /var/local/cider-ci/executor
       lein_service_user: root
+      tags: [lein-service]
 
     - role: nightly-reboot
-
+      tags: [nightly-reboot]
 
 ###############################################################################
 ### server phase 2 ############################################################
@@ -96,17 +103,21 @@
       git_checkout_target_path: '/var/local/cider-ci'
       git_checkout_repo: "{{cider_ci_repo}}"
       git_checkout_version: "{{ lookup('pipe','cd  ./../. && git log -n 1 --format=%H') }}"
+      tags: [git-checkout]
 
     - role: postgresql
       postgresql_version: 9.4
       port: 5432
+      tags: [postgresql]
 
     - role: rabbitmq
+      tags: [rabbitmq]
 
     - role: server-common
+      tags: [server-common]
 
     - role: user-interface
-
+      tags: [user-interface]
 
     # TODO: lots of duplication here, ideally we would use
     #   with_items: "{{cider_ci_server_services}}"
@@ -117,42 +128,51 @@
       lein_service_name: cider-ci_api
       lein_service_app_dir: /var/local/cider-ci/api
       lein_service_user: cider-ci_api
+      tags: [lein-service]
 
     - role: lein-service
       lein_service_name: cider-ci_builder
       lein_service_app_dir: /var/local/cider-ci/builder
       lein_service_user: cider-ci_builder
+      tags: [lein-service]
 
     - role: lein-service
       lein_service_name: cider-ci_dispatcher
       lein_service_app_dir: /var/local/cider-ci/dispatcher
       lein_service_user: cider-ci_dispatcher
+      tags: [lein-service]
 
     - role: lein-service
       lein_service_name: cider-ci_notifier
       lein_service_app_dir: /var/local/cider-ci/notifier
       lein_service_user: cider-ci_notifier
+      tags: [lein-service]
 
     - role: lein-service
       lein_service_name: cider-ci_repository
       lein_service_app_dir: /var/local/cider-ci/repository
       lein_service_user: cider-ci_repository
+      tags: [lein-service]
 
     - role: lein-service
       lein_service_name: cider-ci_storage
       lein_service_app_dir: /var/local/cider-ci/storage
       lein_service_user: cider-ci_storage
-
+      tags: [lein-service]
 
     - role: db-backups
+      tags: [db-backups]
 
     - role: server-set-data
+      tags: [server-set-data]
 
     - role: server-reverse-proxy
+      tags: [server-reverse-proxy]
 
     - role: server-check-services
+      tags: [server-check-services]
 
     - role: server-monitoring
       monitoring_state: monitored
       monitored_services: "{{cider_ci_server_services}}"
-      tags: [monit]
+      tags: [monit, server-monitoring]
