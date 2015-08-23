@@ -42,10 +42,10 @@
       monitoring_state: unmonitored
       monit_state: stopped
       monitored_services: "{{cider_ci_server_services}}"
-      tags: [debug, server-monitoring]
+      tags: [server-monitoring]
 
     - role: server-shutdown-services
-      tags: [debug, server-shutdown-services]
+      tags: [server-shutdown-services]
 
 ###############################################################################
 ### executors #################################################################
@@ -175,4 +175,4 @@
     - role: server-monitoring
       monitoring_state: monitored
       monitored_services: "{{cider_ci_server_services}}"
-      tags: [monit, server-monitoring]
+      tags: [server-monitoring]
