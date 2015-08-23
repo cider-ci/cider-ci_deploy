@@ -1,4 +1,6 @@
 ---
 - name: Ensure known_hosts for {{user}}
-  known_hosts: name="{{item.name}}" key="{{item.key}}" path="/home/{{user}}/.ssh/known_hosts"
+  known_hosts: name="{{item.name}}" key="{{item.key}}"
+  sudo: yes
+  sudo_user: "{{user}}"
   with_items: known_hosts
