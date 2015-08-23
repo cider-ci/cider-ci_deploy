@@ -44,6 +44,10 @@
     - role: server-shutdown-services
       tags: [debug]
 
+    - role: known-hosts
+      user: cider-ci_repository
+      tags: [known-hosts]
+
 ###############################################################################
 ### executors #################################################################
 ###############################################################################
@@ -77,6 +81,14 @@
       lein_service_user: root
 
     - role: nightly-reboot
+
+    - role: known-hosts
+      user: root
+      tags: [known-hosts]
+
+    - role: known-hosts
+      user: cider-ci_exec-user
+      tags: [known-hosts]
 
 
 ###############################################################################
