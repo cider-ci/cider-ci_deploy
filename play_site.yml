@@ -44,6 +44,10 @@
     - role: server-shutdown-services
       tags: [debug]
 
+    - role: own-ssh-key
+      user: cider-ci_repository
+      tags: [own-ssh-key]
+
 ###############################################################################
 ### executors #################################################################
 ###############################################################################
@@ -78,6 +82,13 @@
 
     - role: nightly-reboot
 
+    - role: own-ssh-key
+      user: root
+      tags: [own-ssh-key]
+
+    - role: own-ssh-key
+      user: cider-ci_exec-user
+      tags: [own-ssh-key]
 
 ###############################################################################
 ### server phase 2 ############################################################
