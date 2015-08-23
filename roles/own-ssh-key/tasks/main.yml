@@ -1,15 +1,9 @@
 ---
 - name: Ensure SSH dir is around
-  file: path=~/.ssh state=directory
-  sudo: yes
-  sudo_user: "{{user}}"
+  file: path=/home/{{user}}/.ssh state=directory owner={{user}} group={{user}}
 
 - name: Own SSH public key
-  template: src=id_rsa.pub dest=~/.ssh/id_rsa.pub
-  sudo: yes
-  sudo_user: "{{user}}"
+  template: src=id_rsa.pub dest=/home/{{user}}/.ssh/id_rsa.pub owner={{user}} group={{user}}
 
 - name: Own SSH private key
-  template: src=id_rsa dest=~/.ssh/id_rsa mode=0600
-  sudo: yes
-  sudo_user: "{{user}}"
+  template: src=id_rsa dest=/home/{{user}}/.ssh/id_rsa mode=0600 owner={{user}} group={{user}}
