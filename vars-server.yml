@@ -27,8 +27,8 @@ database:
 
 rubies:
   jruby:
-    version: jruby-1.7.19
-    alias: jruby-1.7
+    version: jruby-9.0.0.0
+    alias: jruby-9000
     present: True
   mri:
     version: 2.1.5
