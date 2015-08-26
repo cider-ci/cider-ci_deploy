@@ -101,7 +101,3 @@
       if welcome_page_settings.welcome_message.blank?;
       welcome_page_settings.update_attributes!(welcome_message: "# Welcome to your installation of Cider-CI");
       end;
-      if welcome_page_settings.radiator_config.blank?;
-      radiator_config= YAML.load_file(Rails.root.join("db", "initial_radiator_config.yml"));
-      welcome_page_settings.update_attributes!(radiator_config: radiator_config);
-      end;
