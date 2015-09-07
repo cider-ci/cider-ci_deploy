@@ -1,0 +1,14 @@
+- file:
+    path: /etc/cider-ci
+    state: directory
+    mode: "0755"
+
+- lineinfile:
+    line: "{{item}}"
+    dest: /etc/cider-ci/traits.txt
+    create: yes
+    state: present
+  with_items:
+    - "bash, "
+    - "linux, "
+

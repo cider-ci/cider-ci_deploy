@@ -12,6 +12,7 @@
     password: "{{secret_key_base}}"
     force_basic_auth: yes
     status_code: 200
+    validate_certs: no
   with_items: check_services
 
 

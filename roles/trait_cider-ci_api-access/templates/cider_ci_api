@@ -1,3 +1,0 @@
-export CIDER_CI_API_URL='{{api_uri}}'
-export CIDER_CI_PASSWORD='{{api_password}}'
-export CIDER_CI_USERNAME='{{ansible_hostname}}'

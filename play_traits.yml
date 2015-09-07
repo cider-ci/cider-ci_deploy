@@ -18,6 +18,8 @@
 
   roles:
 
+    - role: trait_defaults
+
     - role: trait_nodejs
     - role: trait_exiftool
     - role: trait_curl
@@ -48,7 +50,5 @@
 
     - role: trait_ansible
     - role: trait_mkdocs
-
-    - role: trait_cider-ci_api-access
 
     - role: trait_git
