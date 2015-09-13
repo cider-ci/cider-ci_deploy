@@ -1,3 +1,6 @@
+executor_sync_interval_pause_duration: 10 Seconds
+executor_trial_retention_duration: 5 Minutes
+
 executor_service_nrepl_port: 7883
 executor_service_http_port: 8448
 executor_service_https_port: 443
