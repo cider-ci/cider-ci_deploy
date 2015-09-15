@@ -1,4 +1,4 @@
-- hosts: demo-machine
+- hosts: cider-ci-server
 
   vars_files:
     - vars.yml
