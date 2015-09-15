@@ -8,15 +8,17 @@
     - python-configparser
     - python-mysqldb
 
-- mysql_user: name={{executor_execution_user | truncate(16,True,'') }}
-              password={{executor_execution_user}}
-              priv=*.*:ALL
-              state=present
+- mysql_user:
+    name: '{{mysql_executor_execution_user}}'
+    password: '{{executor_execution_user}}'
+    priv: '*.*:ALL'
+    state: present
 
-- template: src=mysql_env
-            dest=~{{executor_execution_user}}/.bash_login.d/mysql_env
-            owner={{executor_execution_user}}
-            mode=0755
+- template:
+    src: mysql_env
+    dest: ~{{executor_execution_user}}/.bash_login.d/mysql_env
+    owner: '{{executor_execution_user}}'
+    mode: '0755'
 
 - lineinfile:
     line: "{{item}},"
