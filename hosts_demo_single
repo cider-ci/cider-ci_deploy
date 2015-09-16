@@ -7,6 +7,3 @@ demo-machine
 [cider-ci-executors]
 demo-machine
 
-[demo-secrets:children]
-cider-ci-server
-cider-ci-executors

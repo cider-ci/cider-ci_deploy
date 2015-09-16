@@ -1,10 +1,41 @@
 ### Config ####################################################################
 
+
+- apt:
+    pkg: python-httplib2
+    state: latest
+    update_cache: yes
+    cache_valid_time: 3600
+
+- uri:
+    url: http://{{server_http_host_name}}/cider-ci/ui/configuration_management_backdoor/invoke
+    timeout: 300
+    user: system_admin
+    password: "{{secret_key_base}}"
+    force_basic_auth: yes
+    validate_certs: no
+    method: POST
+    HEADER_Content-Type: application/ruby
+    return_content: yes
+    body: |
+      executor= Executor.find_or_initialize_by(name: '{{inventory_hostname}}')
+      executor.update_attributes!(base_url: 'https://{{ansible_default_ipv4.address}}:{{executor_service_https_port}}')
+      executor.reload
+      "#{executor.id} #{executor.auth_password}"
+  register: update_or_create_executor
+  tags: [debug]
+
+
+- debug:
+    msg: 'id: {{update_or_create_executor.content.split()[0]}} password: {{update_or_create_executor.content.split()[1]}}'
+  tags: [debug]
+
+
 # general service config
-- template:
-    src: ../../../templates/config.yml
-    dest: /var/local/cider-ci/config/config.yml
-    mode: 0644
+#- template:
+#   src: ../../../templates/config.yml
+#   dest: /var/local/cider-ci/config/config.yml
+#   mode: 0644
 
 # executor specific config
 - template:

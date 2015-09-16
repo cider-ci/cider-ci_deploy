@@ -49,23 +49,23 @@
     port: 8880
     state: started
 
-- uri:
-    url: http://localhost:8880/cider-ci/ui/configuration_management_backdoor/invoke
-    timeout: 300
-    user: system_admin
-    password: "{{secret_key_base}}"
-    force_basic_auth: yes
-    validate_certs: no
-    method: POST
-    HEADER_Content-Type: application/ruby
-    register: previous_uri
-    body: >
-      executor=Executor.find_or_initialize_by(name: "{{item}}");
-      executor.update_attributes!(
-      base_url: "https://{{hostvars[item]['ansible_default_ipv4']['address']}}:{{executor_service_https_port}}"
-      );
-      executor.reload
-  with_items: groups['cider-ci-executors']
+#- uri:
+#    url: http://localhost:8880/cider-ci/ui/configuration_management_backdoor/invoke
+#    timeout: 300
+#    user: system_admin
+#    password: "{{secret_key_base}}"
+#    force_basic_auth: yes
+#    validate_certs: no
+#    method: POST
+#    HEADER_Content-Type: application/ruby
+#    register: previous_uri
+#    body: |
+#      executor= Executor.find_or_initialize_by(name: "{{item}}")
+#      executor.update_attributes!
+#        base_url: "https://{{hostvars[item]['ansible_default_ipv4']['address']}}:{{executor_service_https_port}}
+#      executor.reload
+#      executor.auth_password
+#  with_items: groups['cider-ci-executors']
 
 - wait_for:
     port: 8880

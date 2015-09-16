@@ -9,7 +9,7 @@ database:
 
 github_authtoken: {{github_authtoken | default('NULL',true) }}
 
-hostname: "{{web_host_name | default(ansible_default_ipv4.address) }}"
+hostname: "{{server_http_host_name}}"
 
 secret: "{{secret_key_base}}"
 
@@ -28,7 +28,7 @@ messaging:
     password: "{{cider_ci_rabbitmq_secret}}"
 
 
-server_base_url: "https://{{web_host_name | default(hostvars[groups['cider-ci-server'][0]]['ansible_default_ipv4']['address']) }}"
+server_base_url: "https://{{server_http_host_name}}"
 
 services:
 

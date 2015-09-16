@@ -2,6 +2,8 @@ sync_interval_pause_duration: {{executor_sync_interval_pause_duration}}
 
 trial_retention_duration: {{executor_trial_retention_duration}}
 
+server_base_url: "https://{{server_http_host_name}}"
+
 max_load: {{executor_max_load | default(ansible_processor_cores * ansible_processor_count) }}
 
 nrepl:
@@ -14,12 +16,9 @@ http:
   port: {{executor_service_http_port}}
   ssl-port: {{executor_service_https_port}}
 
-
-name: {{inventory_hostname}}
-
 basic_auth:
-  username: {{inventory_hostname}}
-  password: {{executor_password}}
+  username: {{update_or_create_executor.content.split()[0]}}
+  password: {{update_or_create_executor.content.split()[1]}}
 
 reporter:
   max_retries: 10

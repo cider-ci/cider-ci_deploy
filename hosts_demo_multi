@@ -7,7 +7,3 @@ demo-server
 
 [cider-ci-executors]
 demo-executor01
-
-[demo-secrets:children]
-cider-ci-server
-cider-ci-executors
