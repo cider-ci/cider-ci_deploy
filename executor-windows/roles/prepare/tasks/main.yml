@@ -1,0 +1,66 @@
+- win_file:
+    path: 'C:\cider-ci\setup\tmp'
+    state: directory
+
+- win_copy:
+    src: run-command.ps1
+    dest: 'C:\cider-ci\setup\tmp\run-command.ps1'
+
+- script: stop-service.ps1
+
+- script: clean.ps1
+
+
+#################################################
+
+- win_file:
+    path: 'C:\cider-ci\setup\tmp'
+    state: directory
+
+- win_copy:
+    src: run-command.ps1
+    dest: 'C:\cider-ci\setup\tmp\run-command.ps1'
+
+#################################################
+
+- win_user:
+    name: cider-ci_executor
+    password: '{{win_executor_user_password}}'
+    state: present
+    password_never_expires: yes
+    groups: Users
+    user_cannot_change_password: yes
+
+- win_file:
+    path: 'C:\cider-ci\bin'
+    state: directory
+
+- win_copy:
+    src: nssm.exe
+    dest: 'C:\cider-ci\bin\nssm.exe'
+
+- win_file:
+    path: 'C:\cider-ci\install'
+    state: directory
+
+#- script: >
+#    download.ps1
+#     -url 'http://download.oracle.com/otn-pub/java/jdk/8u60-b27/jdk-8u60-windows-x64.exe'
+#     -dest 'C:\cider-ci\install\jdk-8u60-windows-x64.exe'
+#
+
+- win_file:
+    path: 'C:\cider-ci\lib'
+    state: directory
+
+#- script: install-jdk.ps1
+#  tags: [debug]
+#
+
+- win_copy:
+    src: lein.bat
+    dest: 'C:\cider-ci\bin\lein.bat'
+
+- script: setup-lein.ps1
+
+

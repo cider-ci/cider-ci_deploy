@@ -1,0 +1,113 @@
+- apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
+  with_items:
+    - python-httplib2
+
+- set_fact:
+    admin_login: admin
+  when: admin_login is not defined
+
+- wait_for:
+    port: 8880
+    timeout: 600
+    state: started
+
+- uri:
+    url: http://localhost:8880/cider-ci/ui/configuration_management_backdoor/invoke
+    timeout: 300
+    user: system_admin
+    password: "{{secret_key_base}}"
+    force_basic_auth: yes
+    validate_certs: no
+    method: POST
+    HEADER_Content-Type: application/ruby
+    register: previous_uri
+    body: >
+      if User.where(is_admin: true).count == 0;
+      User.create!(login: "{{admin_login}}", is_admin: true);
+      end
+
+- wait_for:
+    port: 8880
+    state: started
+
+- uri:
+    url: http://localhost:8880/cider-ci/ui/configuration_management_backdoor/invoke
+    timeout: 300
+    user: system_admin
+    password: "{{secret_key_base}}"
+    force_basic_auth: yes
+    validate_certs: no
+    method: POST
+    HEADER_Content-Type: application/ruby
+    register: previous_uri
+    body: >
+      User.find_or_create_by!({ login: "{{admin_login}}"})
+      .update_attributes!(is_admin: true, password: "{{admin_password}}")
+  when: admin_password is defined
+
+- wait_for:
+    port: 8880
+    state: started
+
+#- uri:
+#    url: http://localhost:8880/cider-ci/ui/configuration_management_backdoor/invoke
+#    timeout: 300
+#    user: system_admin
+#    password: "{{secret_key_base}}"
+#    force_basic_auth: yes
+#    validate_certs: no
+#    method: POST
+#    HEADER_Content-Type: application/ruby
+#    register: previous_uri
+#    body: |
+#      executor= Executor.find_or_initialize_by(name: "{{item}}")
+#      executor.update_attributes!
+#        base_url: "https://{{hostvars[item]['ansible_default_ipv4']['address']}}:{{executor_service_https_port}}
+#      executor.reload
+#      executor.auth_password
+#  with_items: groups['cider-ci-executors']
+
+- wait_for:
+    port: 8880
+    state: started
+
+- name: Set demo repositories
+  uri:
+    url: http://localhost:8880/cider-ci/ui/configuration_management_backdoor/invoke
+    timeout: 300
+    user: system_admin
+    password: "{{secret_key_base}}"
+    force_basic_auth: yes
+    validate_certs: no
+    method: POST
+    HEADER_Content-Type: application/ruby
+    register: previous_uri
+    body: |
+      Repository.find_by(name: "Demo Project").try(&:destroy)
+      Repository.find_by(git_url: 'https://github.com/cider-ci/cider-ci_demo-project-bash.git').try(&:destroy)
+      Repository.find_or_initialize_by(name: "Cider-CI Bash Demo Project").update_attributes!(
+        git_url: 'https://github.com/cider-ci/cider-ci_demo-project-bash.git', public_view_permission: true)
+      Repository.find_by(git_url: 'https://github.com/cider-ci/cider-ci_demo-project-windows.git').try(&:destroy)
+      Repository.find_or_initialize_by(name: "Cider-CI Windows Demo Project").update_attributes!(
+        git_url: 'https://github.com/cider-ci/cider-ci_demo-project-windows.git', public_view_permission: true)
+
+
+- wait_for:
+    port: 8880
+    state: started
+
+- uri:
+    url: http://localhost:8880/cider-ci/ui/configuration_management_backdoor/invoke
+    timeout: 300
+    user: system_admin
+    password: "{{secret_key_base}}"
+    force_basic_auth: yes
+    validate_certs: no
+    method: POST
+    HEADER_Content-Type: application/ruby
+    register: previous_uri
+    body: >
+      welcome_page_settings= WelcomePageSettings.find;
+      if welcome_page_settings.welcome_message.blank?;
+      welcome_page_settings.update_attributes!(welcome_message: "# Welcome to your installation of Cider-CI");
+      end;

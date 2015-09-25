@@ -1,0 +1,9 @@
+# Managed by ansible
+{{user_interface_log_dir}}/*.log {
+daily
+missingok
+rotate 7
+compress
+delaycompress
+copytruncate
+}

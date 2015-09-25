@@ -1,0 +1,14 @@
+ssh_keys: []
+  # so we should use the file lookup here, but python hangs with 100% CPU if we do, WTF
+  # next, lookup looks relative to where the task is defined, which can changes within our deploy setup,
+  # so we rely on DEPLOY_ROOT_DIR
+  - "{{lookup('pipe', 'cat ${DEPLOY_ROOT_DIR}/inventories/zhdk/shared/ssh_keys/drtom')}}"
+  - "{{lookup('pipe', 'cat ${DEPLOY_ROOT_DIR}/inventories/zhdk/shared/ssh_keys/mfa')}}"
+  - "{{lookup('pipe', 'cat ${DEPLOY_ROOT_DIR}/inventories/zhdk/shared/ssh_keys/nimaai')}}"
+  - "{{lookup('pipe', 'cat ${DEPLOY_ROOT_DIR}/inventories/zhdk/shared/ssh_keys/rca')}}"
+
+
+
+removed_ssh_keys: []
+
+ntp_server: ntp.zhdk.ch

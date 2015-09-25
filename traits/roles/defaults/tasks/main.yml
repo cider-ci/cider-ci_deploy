@@ -1,0 +1,14 @@
+- file:
+    path: /var/local/cider-ci/config
+    state: directory
+    mode: "0755"
+
+- lineinfile:
+    line: "{{item}}"
+    dest: "{{cider_ci_traits_file}}"
+    create: yes
+    state: present
+  with_items:
+    - "- bash"
+    - "- linux"
+

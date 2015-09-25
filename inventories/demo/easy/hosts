@@ -1,0 +1,8 @@
+[simple-demo]
+demo-machine ansible_ssh_host=REPLACE-WITH-YOU-HOSTS-IP ansible_ssh_user=root
+
+[cider-ci-server]
+demo-machine
+
+[cider-ci-executors-linux]
+demo-machine

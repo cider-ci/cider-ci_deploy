@@ -1,0 +1,30 @@
+# we need to query the server once to access vars
+- hosts: cider-ci-server
+  tasks:
+  - setup: {}
+    tags: [executor-config]
+
+- hosts: cider-ci-executors-windows
+  vars_files:
+    - vars.yml
+    - "{{ vars_local | default('vars.yml') }}"
+
+  tasks: []
+
+  roles:
+
+  - role: executor-windows/roles/prepare
+    tags: [win-executor-prepare]
+
+  - role: executor-windows/roles/checkout
+    tags: [win-executor-checkout]
+
+  - role: executor-windows/roles/config
+    tags: [win-executor-config]
+
+  - role: executor-windows/roles/compile
+    tags: [win-executor-compile]
+
+  - role: executor-windows/roles/service
+    tags: [executor-service]
+

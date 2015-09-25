@@ -1,0 +1,10 @@
+- lineinfile:
+    line: "{{item}}"
+    dest: "{{cider_ci_traits_file}}"
+    create: yes
+    state: present
+  with_items:
+    - "- jdk"
+    - "- jdk-7"
+    - "- openjdk"
+    - "- openjdk-7"

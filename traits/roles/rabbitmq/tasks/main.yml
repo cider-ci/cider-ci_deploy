@@ -1,0 +1,45 @@
+- apt_key: url=http://www.rabbitmq.com/rabbitmq-signing-key-public.asc
+
+- apt_repository:  repo="deb http://www.rabbitmq.com/debian/ testing main"
+
+- apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
+  with_items: [rabbitmq-server, amqp-tools]
+
+- rabbitmq_plugin: names=rabbitmq_management state=enabled
+
+- rabbitmq_vhost:
+    node: rabbit@{{ansible_nodename}}
+    name: "{{user}}"
+    state: present
+
+- rabbitmq_user:
+    node: rabbit@{{ansible_nodename}}
+    user: "{{user}}"
+    force: yes
+    password: "{{user}}"
+    vhost: "{{user}}"
+    configure_priv: .*
+    read_priv: .*
+    write_priv: .*
+    state: present
+    tags: administrator
+
+- name: rabbitmq env vars
+  template:
+    src: rabbitmq-env
+    dest: ~{{user}}/.bash_login.d/rabbitmq-env
+    owner: "{{user}}"
+    mode: 0755
+
+- service:
+    name: rabbitmq-server
+    state: started
+
+- lineinfile:
+    line: "{{item}}"
+    dest: "{{cider_ci_traits_file}}"
+    create: yes
+    state: present
+  with_items:
+    - "- rabbitmq"
+

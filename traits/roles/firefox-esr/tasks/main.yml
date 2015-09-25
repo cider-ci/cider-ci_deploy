@@ -1,0 +1,13 @@
+- template: src=env
+            dest=~{{executor_execution_user}}/.bash_login.d/firefox-esr-env
+            owner={{executor_execution_user}}
+            mode=0755
+
+- lineinfile:
+    line: "{{item}}"
+    dest: "{{cider_ci_traits_file}}"
+    create: yes
+    state: present
+  with_items:
+    - "- firefox-esr"
+

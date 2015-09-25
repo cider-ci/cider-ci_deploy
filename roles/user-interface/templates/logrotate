@@ -1,9 +1,0 @@
-# Managed by ansible 
-{{user_interface_log_dir}}/*.log {{ui_root_path}}/log/*.log {
-daily
-missingok
-rotate 21
-compress
-delaycompress
-copytruncate
-}

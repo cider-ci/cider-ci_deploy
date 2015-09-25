@@ -1,0 +1,19 @@
+[demo]
+trusty10 ansible_ssh_host=192.168.0.10 ansible_ssh_user=root
+trusty11 ansible_ssh_host=192.168.0.11 ansible_ssh_user=root
+win60 ansible_ssh_host=192.168.0.60 ansible_connection=winrm ansible_ssh_user=root ansible_ssh_pass=root
+
+
+[cider-ci-server]
+trusty10
+
+[cider-ci-executors-linux]
+trusty11
+
+[cider-ci-executors-windows]
+win60
+
+[secrets:children]
+cider-ci-server
+cider-ci-executors-linux
+cider-ci-executors-windows

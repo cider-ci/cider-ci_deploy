@@ -1,0 +1,13 @@
+# specify the official hostname; it will be used in links an so on
+web_host_name: ci.zhdk.ch
+
+# take db backups every night
+db_backups_enabled: True
+
+# some very generous memory settings, just because we have plenty
+lein_service_xmx_value: 4G
+
+# even more for the ui, the caches reside in memory
+user_interface_xmx_value: 12G
+
+job_retention_duration: 30 Days

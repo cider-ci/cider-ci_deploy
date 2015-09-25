@@ -1,0 +1,21 @@
+- win_stat:
+    path: C:\cider-ci\executor\.git
+  register: stat_executor_git_dir
+
+- script:
+    git-clone-executor.ps1
+    -repo "{{cider_ci_executor_repo}}"
+  when: not stat_executor_git_dir.stat.exists
+
+- script: >
+    git-set-origin.ps1
+    -repo "{{cider_ci_executor_repo}}"
+  when: stat_executor_git_dir.stat.exists
+
+- script: git-fetch.ps1
+
+- script: >
+    git-checkout.ps1
+    -id "{{cider_ci_executor_cid}}"
+
+

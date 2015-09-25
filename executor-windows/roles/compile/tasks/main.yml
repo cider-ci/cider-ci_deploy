@@ -1,0 +1,4 @@
+- script: clean.ps1
+
+- script: compile.ps1
+

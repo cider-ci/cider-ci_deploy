@@ -1,0 +1,27 @@
+[zhdk]
+ci2 ansible_ssh_host=195.176.247.161 ansible_ssh_user=root
+cislave1 ansible_ssh_host=10.157.2.51 ansible_ssh_user=root
+cislave2 ansible_ssh_host=10.157.2.52 ansible_ssh_user=root
+cislave3 ansible_ssh_host=10.157.2.53 ansible_ssh_user=root
+cislave4 ansible_ssh_host=10.157.2.54 ansible_ssh_user=root
+cislave5 ansible_ssh_host=10.157.2.55 ansible_ssh_user=root
+cislave-madek ansible_ssh_host=cislave.madek.zhdk.ch ansible_ssh_user=root
+
+[cider-ci-server]
+ci2
+
+[cider-ci-executors-linux]
+cislave1
+cislave2
+cislave3
+cislave4
+cislave5
+cislave-madek
+
+[secrets:children]
+cider-ci-server
+cider-ci-executors-linux
+
+[linux-machines:children]
+cider-ci-server
+cider-ci-executors-linux

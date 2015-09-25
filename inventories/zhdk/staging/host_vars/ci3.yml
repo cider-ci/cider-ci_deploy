@@ -1,0 +1,13 @@
+# specify the official hostname; it will be used in links an so on
+web_host_name: ci3.zhdk.ch
+
+db_backups_enabled: True
+
+lein_service_xmx_value: 256m
+user_interface_xmx_value: 2G
+
+# we have to switch to different port for the executor since
+# the server is is using 443
+executor_service_https_port: 8443
+
+job_retention_duration: 30 Days

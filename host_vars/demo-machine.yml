@@ -1,4 +1,0 @@
-lein_service_xmx_value: 256m
-user_interface_xmx_value: 500m
-executor_max_load: 2
-executor_service_https_port: 8443

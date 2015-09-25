@@ -1,2 +1,3 @@
 dependencies:
+  - role: clean-slate
   - role: debuntu-setup

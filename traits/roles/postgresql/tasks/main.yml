@@ -1,0 +1,28 @@
+### Postgresql
+
+- name: Create postgresql user
+  postgresql_user:  name={{user}}
+                    password={{user}}
+                    role_attr_flags=CREATEDB,SUPERUSER
+                    login_user=root
+                    port={{postgresql_port}}
+
+- name: Create database
+  postgresql_db:  name={{executor_execution_user}}
+                  owner={{executor_execution_user}}
+                  login_user=root
+                  port={{postgresql_port}}
+
+- name: Env for pgs
+  template: src=pgenv
+            dest=~{{user}}/.bash_login.d/pgenv
+            owner={{user}}
+            mode=0755
+- lineinfile:
+    line: "{{item}}"
+    dest: "{{cider_ci_traits_file}}"
+    create: yes
+    state: present
+  with_items:
+    - "- postgresql"
+

@@ -1,9 +1,0 @@
-- lineinfile:
-    line: "{{item}},"
-    dest: /etc/cider-ci/traits.txt
-    create: yes
-    state: present
-  with_items:
-    - ruby
-    - jruby
-    - jruby-1.7

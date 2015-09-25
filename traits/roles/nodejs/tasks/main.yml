@@ -1,0 +1,11 @@
+- lineinfile:
+    line: "{{item}}"
+    dest: /var/local/cider-ci/config/traits.yml
+    create: yes
+    state: present
+  with_items:
+    - "- nodejs"
+    - "- node"
+    - "- npm"
+
+

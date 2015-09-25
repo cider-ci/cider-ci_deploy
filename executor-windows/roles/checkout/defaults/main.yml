@@ -1,0 +1,1 @@
+cider_ci_executor_cid: "{{lookup('pipe','cd ${DEPLOY_ROOT_DIR}/../executor && git log -n 1 --format=%H')}}"

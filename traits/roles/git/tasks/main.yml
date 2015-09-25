@@ -1,0 +1,26 @@
+- apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
+  with_items:
+    - git
+
+- shell: git config --global user.name "{{executor_execution_user}}"
+  become: yes
+  become_user: "{{executor_execution_user}}"
+  become_method: su
+  register: last_command
+  changed_when: last_command.stdout != ""
+
+
+- shell: git config --global user.email "{{executor_execution_user}}@{{inventory_hostname}}"
+  become: yes
+  become_user: "{{executor_execution_user}}"
+  become_method: su
+  register: last_command
+  changed_when: last_command.stdout != ""
+
+- lineinfile:
+    line: "{{item}}"
+    dest: "{{cider_ci_traits_file}}"
+    create: yes
+    state: present
+  with_items:
+    - "- git"

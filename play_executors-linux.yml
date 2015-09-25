@@ -1,0 +1,48 @@
+###############################################################################
+### executors #################################################################
+###############################################################################
+
+# we need to query the server once to access vars
+- hosts: cider-ci-server
+  tasks:
+  - setup: {}
+
+- hosts: cider-ci-executors-linux
+
+  vars_files:
+    - vars.yml
+    - vars-server.yml
+    - vars-executors.yml
+    - "{{ vars_local | default('vars.yml') }}"
+
+
+  tasks: []
+
+  roles:
+
+    - role: prepare-all
+      tags: [prepare-all]
+
+    - role: git-checkout
+      git_checkout_target_path: '{{cider_ci_executor_path}}'
+      git_checkout_repo: "{{cider_ci_executor_repo}}"
+      git_checkout_version: "{{lookup('pipe','cd ${DEPLOY_ROOT_DIR}/../executor && git log -n 1 --format=%H ')}}"
+
+
+      tags: [git-checkout, debug]
+
+    - role: executor-linux/roles/user
+      user: '{{executor_execution_user}}'
+      tags: [executor-user]
+
+    - role: executor-linux/roles/config
+      tags: [executor-config]
+
+    - role: lein-service
+      lein_service_name: cider-ci_executor
+      lein_service_app_dir: '{{cider_ci_executor_path}}'
+      lein_service_user: root
+      tags: [lein-service]
+
+    - role: executor-linux/roles/nightly-reboot
+      tags: [nightly-reboot]

@@ -13,37 +13,37 @@
     - role: server-apache2
       tags: [server-apache2]
 
-    - role: server-reverse-proxy
+    - role: server/roles/reverse-proxy
       reverse_proxy_enabled: False
       tags: [server-reverse-proxy]
 
-    - role: server-monitoring
+    - role: server/roles/monitoring
       monitoring_state: unmonitored
       monit_state: stopped
       monitored_services: "{{cider_ci_server_services}}"
       tags: [server-monitoring]
 
-    - role: server-shutdown-services
+    - role: server/roles/shutdown-services
       tags: [server-shutdown-services]
 
     - role: git-checkout
-      git_checkout_target_path: '/var/local/cider-ci'
+      git_checkout_target_path: '{{cider_ci_server_path}}'
       git_checkout_repo: "{{cider_ci_repo}}"
-      git_checkout_version: "{{ lookup('pipe','cd  ./../. && git log -n 1 --format=%H') }}"
-      tags: [git-checkout]
+      git_checkout_version: "{{ lookup('pipe','cd  ${DEPLOY_ROOT_DIR}/../. && git log -n 1 --format=%H') }}"
+      tags: [server-checkout]
 
     - role: postgresql
       postgresql_version: 9.4
       port: 5432
-      tags: [postgresql]
+      tags: [server-postgresql]
 
-    - role: rabbitmq
-      tags: [rabbitmq]
+    - role: server/roles/rabbitmq
+      tags: [server-rabbitmq]
 
-    - role: server-common
+    - role: server/roles/common
       tags: [server-common]
 
-    - role: user-interface
+    - role: server/roles/user-interface
       tags: [user-interface]
 
     # TODO: lots of duplication here, ideally we would use
@@ -53,53 +53,53 @@
 
     - role: lein-service
       lein_service_name: cider-ci_api
-      lein_service_app_dir: /var/local/cider-ci/api
+      lein_service_app_dir: '{{cider_ci_server_path}}/api'
       lein_service_user: cider-ci_api
       tags: [lein-service]
 
     - role: lein-service
       lein_service_name: cider-ci_builder
-      lein_service_app_dir: /var/local/cider-ci/builder
+      lein_service_app_dir: '{{cider_ci_server_path}}/builder'
       lein_service_user: cider-ci_builder
       tags: [lein-service]
 
     - role: lein-service
       lein_service_name: cider-ci_dispatcher
-      lein_service_app_dir: /var/local/cider-ci/dispatcher
+      lein_service_app_dir: '{{cider_ci_server_path}}/dispatcher'
       lein_service_user: cider-ci_dispatcher
       tags: [lein-service]
 
     - role: lein-service
       lein_service_name: cider-ci_notifier
-      lein_service_app_dir: /var/local/cider-ci/notifier
+      lein_service_app_dir: '{{cider_ci_server_path}}/notifier'
       lein_service_user: cider-ci_notifier
       tags: [lein-service]
 
     - role: lein-service
       lein_service_name: cider-ci_repository
-      lein_service_app_dir: /var/local/cider-ci/repository
+      lein_service_app_dir: '{{cider_ci_server_path}}/repository'
       lein_service_user: cider-ci_repository
       tags: [lein-service]
 
     - role: lein-service
       lein_service_name: cider-ci_storage
-      lein_service_app_dir: /var/local/cider-ci/storage
+      lein_service_app_dir: '{{cider_ci_server_path}}/storage'
       lein_service_user: cider-ci_storage
       tags: [lein-service]
 
-    - role: db-backups
-      tags: [db-backups]
+    - role: server/roles/db-backups
+      tags: [server-db-backups]
 
-    - role: server-set-data
+    - role: server/roles/set-data
       tags: [server-set-data]
 
-    - role: server-reverse-proxy
+    - role: server/roles/reverse-proxy
       tags: [server-reverse-proxy]
 
-    - role: server-check-services
+    - role: server/roles/check-services
       tags: [server-check-services]
 
-    - role: server-monitoring
+    - role: server/roles/monitoring
       monitoring_state: monitored
       monitored_services: "{{cider_ci_server_services}}"
       tags: [server-monitoring]

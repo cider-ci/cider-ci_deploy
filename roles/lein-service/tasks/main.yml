@@ -63,13 +63,26 @@
 
 ### enable
 
+
 - service: name={{lein_service_name}} enabled=yes
+  ignore_errors: true
+
+# the above used to suffice, but it not seems anymore
+
+- command: systemctl enable {{lein_service_name}}
+  when: ansible_distribution_release == 'jessie'
+  ignore_errors: true
+
 
 ### start
 
 - command: logrotate -f /etc/logrotate.d/{{lein_service_name}}
 
-- service: name={{lein_service_name}} state=restarted
+- service:
+    name: '{{lein_service_name}}'
+    state: stopped
+  ignore_errors: true
 
-- service: name={{lein_service_name}} state=started
-
+- service:
+    name: '{{lein_service_name}}'
+    state: started

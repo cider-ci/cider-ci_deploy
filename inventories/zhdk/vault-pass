@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+gpg -d -o- inventories/zhdk/vault-key.txt.asc
+

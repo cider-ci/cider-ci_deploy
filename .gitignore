@@ -1,3 +1,4 @@
 /tmp
 vars.local.yml
 *vault_pass.txt
+callback_plugins/fix-ssl.pyc

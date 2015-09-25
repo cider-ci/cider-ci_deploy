@@ -1,0 +1,37 @@
+- apt_key: url=http://www.rabbitmq.com/rabbitmq-signing-key-public.asc
+  when: ansible_distribution_release == 'trusty'
+
+- apt_repository:  repo="deb http://www.rabbitmq.com/debian/ testing main"
+  when: ansible_distribution_release == 'trusty'
+
+- apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
+  with_items: [rabbitmq-server, amqp-tools]
+
+- rabbitmq_plugin: names=rabbitmq_management state=enabled
+
+- rabbitmq_user:
+    name: cider-ci_production
+    state: absent
+
+- rabbitmq_vhost:
+    name: cider-ci_production
+    state: absent
+
+- rabbitmq_vhost:
+    name: cider-ci_production
+    state: present
+
+- rabbitmq_user:
+    user: cider-ci_production
+    force: yes
+    password: "{{cider_ci_mq_secret}}"
+    vhost: cider-ci_production
+    configure_priv: .*
+    read_priv: .*
+    write_priv: .*
+    state: present
+    tags: management
+
+- service:
+    name: rabbitmq-server
+    state: restarted

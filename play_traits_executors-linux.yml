@@ -1,0 +1,94 @@
+- hosts: cider-ci-server
+  vars_files:
+    - vars.yml
+    - vars-server.yml
+    - "{{ vars_local | default('vars.yml') }}"
+  tasks:
+    - set_fact:
+       server_host: "{{ansible_default_ipv4.address}}"
+
+- hosts: cider-ci-executors-linux
+
+  tags: [traits]
+
+  vars_files:
+    - vars.yml
+    - vars-executors.yml
+    - "{{ vars_local | default('vars.yml') }}"
+
+  roles:
+
+    - role: traits/roles/defaults
+      when: install_trait_defaults
+
+    - role: traits/roles/nodejs
+      when: install_trait_nodejs
+
+    - role: traits/roles/curl
+      when: install_trait_curl
+
+    - role: traits/roles/imagemagick
+      when: install_trait_imagemagick
+
+    - role: traits/roles/chrome-and-chromedriver
+      when: install_trait_chrome_and_chromedriver
+
+    - role: traits/roles/firefox
+      when: install_trait_firefox and ( ansible_distribution != 'Debian' )
+
+    - role: traits/roles/firefox-esr
+      when: install_trait_firefox_esr
+
+    - role: traits/roles/phantomjs
+      when: install_trait_phantomjs
+
+    - role: traits/roles/tightvnc
+      when: install_trait_tightvnc
+
+    - role: traits/roles/openjdk
+      when: install_trait_openjdk
+
+    - role: traits/roles/maven
+      when: install_trait_maven
+
+    - role: traits/roles/leiningen
+      when: install_trait_leiningen
+
+    - role: traits/roles/postgresql
+      when: install_trait_postgresql
+
+    - role: traits/roles/mysql
+      when: install_trait_mysql
+
+    - role: traits/roles/sqlite3
+      when: install_trait_sqlite3
+
+    - role: traits/roles/rabbitmq
+      when: install_trait_rabbitmq
+
+    - role: traits/roles/rbenv
+      when: install_trait_rbenv
+
+    - role: traits/roles/jruby-9000
+      when: install_trait_jruby_9000
+
+    - role: traits/roles/jruby-1.7
+      when: install_trait_jruby_17
+
+    - role: traits/roles/ruby-2.1
+      when: install_trait_ruby_21
+
+    - role: traits/roles/ruby-2.2
+      when: install_trait_ruby_22
+
+    - role: traits/roles/ansible
+      when: install_trait_ansible
+
+    - role: traits/roles/mkdocs
+      when: install_trait_mkdocs
+
+    - role: traits/roles/git
+      when: install_trait_git
+
+    - role: traits/roles/exiftool
+      when: install_trait_exiftool

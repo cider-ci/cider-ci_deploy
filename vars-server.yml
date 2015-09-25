@@ -11,11 +11,7 @@ repositories_path: /var/local/repositories
 trial_attachments_path: /var/local/storage/trial-attachments
 tree_attachments_path: /var/local/storage/tree-attachments
 
-ui_root_path: /var/local/cider-ci/user-interface
-
-cider_ci_database_secret_path: "{{secrets_dir_path}}/cider_ci_database_secret.txt"
-cider_ci_rabbitmq_secret_path: "{{secrets_dir_path}}/cider_ci_rabbitmq_secret.txt"
-
+ui_root_path: '{{cider_ci_server_path}}/user-interface'
 
 database:
   name: cider-ci_v3_{{rails_env}}

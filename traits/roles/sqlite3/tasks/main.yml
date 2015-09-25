@@ -1,0 +1,15 @@
+### MySQL
+
+- apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
+  with_items:
+    - sqlite3
+    - libsqlite3-dev
+
+- lineinfile:
+    line: "{{item}}"
+    dest: "{{cider_ci_traits_file}}"
+    create: yes
+    state: present
+  with_items:
+    - "- sqlite3"
+

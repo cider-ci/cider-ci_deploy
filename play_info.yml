@@ -5,16 +5,14 @@
 
   tasks:
 
-  - name: the cider_ci_master_secret
-    debug:
-      msg: '{{ cider_ci_master_secret }}'
+  - debug:
+      var: cider_ci_master_secret
 
-  - name: executor-password
-    shell: echo -n "{{executor_name}}" | openssl sha1 -hmac "{{secret_key_base}}" | cut -f2 -d ' '
-    register: executor_password_task
-    when: executor_name is defined
+  - debug:
+      var: cider_ci_database_secret
 
-  - name: executor-password print
-    debug:
-      msg: '{{executor_name}} : {{ executor_password_task.stdout }}'
-    when: executor_name is defined
+  - debug:
+      var: secret_key_base
+
+  - debug:
+      var: cider_ci_mq_secret

@@ -1,0 +1,9 @@
+- win_template:
+    src: setup-service.ps1
+    dest: C:\cider-ci\setup\tmp\setup-service.ps1
+
+- script: setup-service.ps1
+  register: setup_service
+
+- debug:
+    var: setup_service.stdout_lines

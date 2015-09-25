@@ -1,23 +1,13 @@
 ### Prepare machines ##########################################################
 
-- hosts: all
+- hosts: [cider-ci-server, cider-ci-executors-linux]
   vars_files:
     - vars.yml
     - "{{ vars_local | default('vars.yml') }}"
 
   roles:
-    - role: prepare-all
-      tags: [prepare-all]
-
-### Clean slate ###############################################################
-
-- hosts: all
-  vars_files:
-    - vars.yml
-  roles:
-    - role: clean-slate
-      when: clean_slate
-      tags: [clean-slate]
+  - role: prepare-all
+    tags: [prepare-all]
 
 ### Server ####################################################################
 
@@ -25,5 +15,10 @@
 
 ### executors #################################################################
 
-- include: play_executors.yml
+- include: play_executors-linux.yml
 
+- include: play_executors-windows.yml
+
+### traits for linux executors ################################################
+
+- include: play_traits_executors-linux.yml

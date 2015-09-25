@@ -2,25 +2,29 @@ Cider-CI Deploy
 ===============
 
 This is an Ansible playbook to set up, deploy and upgrade a complete
-[Cider-CI](https://github.com/cider-ci/cider-ci) environment: one _Cider-CI
-Server_ and any number of _Cider-CI Executors_.
-
+[Cider-CI](https://github.com/cider-ci/cider-ci) environment.
 
 Usage
 -----
 
-See also <http://docs.cider-ci.info/installation/> for more detailed information.
+### Simple Demo
 
-### Single Machine Demo Setup:
+See also <http://docs.cider-ci.info/installation/> for more detailed information!
 
-    ansible-playbook -i hosts_demo_single play_site.yml -e 'system_admin_password=secret system_admin_login=admin cider_ci_master_secret=REPLACE-WITH-YOUR-SECRET'
+    DEPLOY_ROOT_DIR=`pwd` time ansible-playbook -i inventories/demo/easy/hosts play_site.yml -e 'ansible_ssh_host=192.168.0.31 cider_ci_master_secret=secret admin_password=secret'
 
+### Advanced Demo
+
+    ANSIBLE_LOAD_CALLBACK_PLUGINS=1 DEPLOY_ROOT_DIR=`pwd` ansible-playbook -i inventories/demo/advanced/hosts play_site.yml
+
+The first env var might be necessary due to
+[Ansible issue 10294](https://github.com/ansible/ansible/issues/10294).
 
 ### ZHdK Specifics
 
-The ZHdK site uses the [ansible vault](https://docs.ansible.com/playbooks_vault.html):
+The ZHdK site uses the [ansible vault](https://docs.ansible.com/playbooks_vault.html), here is one example:
 
-    ansible-playbook -i hosts_zhdk-ci2 play_site.yml --vault-password-file bin/zhdk-vault-pass
+    export DEPLOY_ROOT_DIR=`pwd` && ansible-playbook -i inventories/zhdk/ci2/hosts play_site.yml --vault-password-file inventories/zhdk/vault-pass
 
 
 Customization and Advanced Topics
@@ -30,8 +34,7 @@ Customization and Advanced Topics
 
 The setup generates a default `cider_ci_master_secret` based on various properties
 of the target host and your application. These properties might be guessable or
-not, depending on the setup of your host. It is highly recommended to override
-the generated secret as shown in the invocations above.
+not, depending on the setup of your host.
 
 Alternatives to the command line arguments are variables defined in the Ansible
 Inventory. This is convenient in particular in conjunction with the [Ansible
@@ -47,5 +50,3 @@ is recommended to be consulted for confirmation.
 
   [Ansible rules of precedence]: http://docs.ansible.com/ansible/playbooks_variables.html#variable-precedence-where-should-i-put-a-variable
   [Ansible Vault]: http://docs.ansible.com/ansible/playbooks_vault.html
-
-

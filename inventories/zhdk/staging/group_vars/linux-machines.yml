@@ -1,0 +1,41 @@
+ssh_keys:
+  # so we should use the file lookup here, but python hangs with 100% CPU if we do, WTF
+  # next, lookup looks relative to where the task is defined, which can changes within our deploy setup,
+  # so we rely on DEPLOY_ROOT_DIR
+  - "{{lookup('pipe', 'cat ${DEPLOY_ROOT_DIR}/inventories/zhdk/shared/ssh_keys/drtom')}}"
+  - "{{lookup('pipe', 'cat ${DEPLOY_ROOT_DIR}/inventories/zhdk/shared/ssh_keys/mfa')}}"
+  - "{{lookup('pipe', 'cat ${DEPLOY_ROOT_DIR}/inventories/zhdk/shared/ssh_keys/nimaai')}}"
+  - "{{lookup('pipe', 'cat ${DEPLOY_ROOT_DIR}/inventories/zhdk/shared/ssh_keys/rca')}}"
+
+
+
+removed_ssh_keys: []
+
+ntp_server: ntp.zhdk.ch
+
+
+install_trait_ansible: True
+install_trait_chrome_and_chromedriver: True
+install_trait_curl: True
+install_trait_defaults: true
+install_trait_exiftool: True
+install_trait_firefox: True
+install_trait_firefox_esr: True
+install_trait_git: true
+install_trait_imagemagick: True
+install_trait_jruby_17: True
+install_trait_jruby_9000: True
+install_trait_leiningen: True
+install_trait_maven: True
+install_trait_mkdocs: True
+install_trait_mysql: True
+install_trait_nodejs: True
+install_trait_openjdk: True
+install_trait_phantomjs: True
+install_trait_postgresql: True
+install_trait_rabbitmq: True
+install_trait_rbenv: True
+install_trait_ruby_21: True
+install_trait_ruby_22: True
+install_trait_sqlite3: True
+install_trait_tightvnc: True
