@@ -10,6 +10,9 @@
 
   roles:
 
+    - role: server/roles/check
+      tags: [server-check]
+
     - role: server-apache2
       tags: [server-apache2]
 

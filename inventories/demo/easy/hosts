@@ -1,5 +1,5 @@
 [simple-demo]
-demo-machine ansible_ssh_host=REPLACE-WITH-YOU-HOSTS-IP ansible_ssh_user=root
+demo-machine ansible_ssh_host=127.0.0.1 ansible_ssh_user=root
 
 [cider-ci-server]
 demo-machine

@@ -34,8 +34,11 @@ services_basic_auth_secret: >
 cider_ci_mq_secret: >
   {{lookup('pipe', "echo -n 'cider_ci_mq_secret' | openssl sha1 -hmac '{{cider_ci_master_secret}}' | cut -f2 -d ' '")}}
 
-
-
+repositories:
+  - git_url: https://github.com/cider-ci/cider-ci_demo-project-bash.git
+    name: Cider-CI Bash Demo Project
+  - git_url: https://github.com/cider-ci/cider-ci_demo-project-windows.git
+    name: Cider-CI Windows Demo Project
 
 install_trait_ansible: False
 install_trait_chrome_and_chromedriver: False
