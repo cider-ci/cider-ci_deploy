@@ -1,5 +1,5 @@
 # specify the official hostname; it will be used in links an so on
-web_host_name: ci.zhdk.ch
+server_http_host_name: ci.zhdk.ch
 
 # take db backups every night
 db_backups_enabled: True

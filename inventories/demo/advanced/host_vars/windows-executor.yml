@@ -1,0 +1,2 @@
+# Configuration for the windows-executor in the advanced demo
+win_executor_user_password: secret

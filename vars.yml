@@ -4,6 +4,8 @@ cider_ci_executor_repo: https://github.com/cider-ci/cider-ci_executor.git
 cider_ci_base_path: /var/local/cider-ci
 cider_ci_server_path: '{{cider_ci_base_path}}/server'
 cider_ci_executor_path: '{{cider_ci_base_path}}/executor'
+cider_ci_executor_accepted_repositories_file_path: '{{cider_ci_executor_path}}/config/accepted-repositories.yml'
+
 cider_ci_traits_file: '{{cider_ci_executor_path}}/config/traits.yml'
 
 web_host_ip: "{{hostvars[groups['cider-ci-server'][0]]['ansible_default_ipv4']['address']}}"

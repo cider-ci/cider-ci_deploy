@@ -38,6 +38,13 @@
     line: "- {{item}}"
     state: present
     create: yes
-    dest: "{{cider_ci_accepted_repositories_file}}"
+    dest: "{{cider_ci_executor_accepted_repositories_file_path}}"
   with_items: "{{executor_accepted_respositories}}"
 
+
+- lineinfile:
+    line: "- {{item}}"
+    dest: "{{cider_ci_traits_file}}"
+    create: yes
+    state: present
+  with_items: "{{cider_ci_executor_manual_traits}}"

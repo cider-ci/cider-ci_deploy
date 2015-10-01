@@ -1,4 +1,4 @@
-ssh_keys: []
+ssh_keys:
   # so we should use the file lookup here, but python hangs with 100% CPU if we do, WTF
   # next, lookup looks relative to where the task is defined, which can changes within our deploy setup,
   # so we rely on DEPLOY_ROOT_DIR

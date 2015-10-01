@@ -6,6 +6,8 @@ cislave3 ansible_ssh_host=10.157.2.53 ansible_ssh_user=root
 cislave4 ansible_ssh_host=10.157.2.54 ansible_ssh_user=root
 cislave5 ansible_ssh_host=10.157.2.55 ansible_ssh_user=root
 cislave-madek ansible_ssh_host=cislave.madek.zhdk.ch ansible_ssh_user=root
+# ci-slavewin1 ansible_ssh_host=ci-slavewin1.ad.zhdk.ch ansible_connection=winrm ansible_ssh_user=cider-ci_admin
+
 
 [cider-ci-server]
 ci2
@@ -18,9 +20,14 @@ cislave4
 cislave5
 cislave-madek
 
+[cider-ci-executors-windows]
+# ci-slavewin1
+
 [secrets:children]
 cider-ci-server
 cider-ci-executors-linux
+cider-ci-executors-windows
+
 
 [linux-machines:children]
 cider-ci-server

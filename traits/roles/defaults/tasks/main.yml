@@ -10,5 +10,5 @@
     state: present
   with_items:
     - "- bash"
+    - "- git"
     - "- linux"
-

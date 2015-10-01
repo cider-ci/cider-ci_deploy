@@ -1,7 +1,42 @@
+###############################################################################
+# Cider-CI Default Variables
+################################################################################
+
+# This files contains variables for you Cider-CI environment which are
+# meant to be overridden for customization.
+
+###############################################################################
+### General Variables #########################################################
+###############################################################################
+
 clean_slate: False
-add_cider_ci_demo_projects: True
+
+server_http_host_name: "{{ hostvars[groups['cider-ci-server'][0]]['ansible_default_ipv4']['address'] }}"
+
+lein_service_xmx_value: 256m
+
+
+###############################################################################
+### Server Specific Variables #################################################
+###############################################################################
 
 job_retention_duration: 50 Years
+db_backups_enabled: False
+
+user_interface_xmx_value: 3G
+
+### Managed Repositories ######################################################
+
+repositories:
+  - git_url: https://github.com/cider-ci/cider-ci_demo-project-bash.git
+    name: Cider-CI Bash Demo Project
+  - git_url: https://github.com/cider-ci/cider-ci_demo-project-windows.git
+    name: Cider-CI Windows Demo Project
+
+
+###############################################################################
+### Executor Specific Variables ###############################################
+###############################################################################
 
 executor_sync_interval_pause_duration: 10 Seconds
 executor_trial_retention_duration: 5 Minutes
@@ -11,34 +46,12 @@ executor_nrepl_enabled: false
 executor_service_http_port: 8448
 executor_service_https_port: 443
 
-server_http_host_name: "{{web_host_name | default(hostvars[groups['cider-ci-server'][0]]['ansible_default_ipv4']['address']) }}"
+### Accepted Repositories, array of uri strings, empty => no restriction
 
-cider_ci_machine_signature: "{{ansible_machine_id}}"
-cider_ci_mounts_device_signature: '{{ ansible_mounts | map(attribute="device") | join(" ") | hash("sha1") }}'
-cider_ci_mounts_uuid_signature: '{{ ansible_mounts | map(attribute="device") | join(" ") | hash("sha1") }}'
-cider_ci_master_secret: >
-  {{[ cider_ci_machine_signature,
-      cider_ci_mounts_device_signature,
-      cider_ci_mounts_uuid_signature
-    ] | join(" ") | hash("sha256") }}_deploy_generated
+executor_accepted_respositories: []
 
-cider_ci_database_secret: >
-  {{lookup('pipe', "echo -n 'database_password' | openssl sha1 -hmac '{{cider_ci_master_secret}}' | cut -f2 -d ' '")}}
 
-secret_key_base: >
-  {{lookup('pipe', "echo -n 'secret_key_base' | openssl sha1 -hmac '{{cider_ci_master_secret}}' | cut -f2 -d ' '")}}
-
-services_basic_auth_secret: >
-  {{lookup('pipe', "echo -n 'services_basic_auth_secret' | openssl sha1 -hmac '{{cider_ci_master_secret}}' | cut -f2 -d ' '")}}
-
-cider_ci_mq_secret: >
-  {{lookup('pipe', "echo -n 'cider_ci_mq_secret' | openssl sha1 -hmac '{{cider_ci_master_secret}}' | cut -f2 -d ' '")}}
-
-repositories:
-  - git_url: https://github.com/cider-ci/cider-ci_demo-project-bash.git
-    name: Cider-CI Bash Demo Project
-  - git_url: https://github.com/cider-ci/cider-ci_demo-project-windows.git
-    name: Cider-CI Windows Demo Project
+### Executor Traits ###########################################################
 
 install_trait_ansible: False
 install_trait_chrome_and_chromedriver: False
@@ -65,3 +78,33 @@ install_trait_ruby_21: False
 install_trait_ruby_22: False
 install_trait_sqlite3: False
 install_trait_tightvnc: False
+
+# array of strings, each which will added to traits
+cider_ci_executor_manual_traits: []
+
+###############################################################################
+### Secretes ##################################################################
+###############################################################################
+
+cider_ci_machine_signature: "{{ansible_machine_id}}"
+cider_ci_mounts_device_signature: '{{ ansible_mounts | map(attribute="device") | join(" ") | hash("sha1") }}'
+cider_ci_mounts_uuid_signature: '{{ ansible_mounts | map(attribute="device") | join(" ") | hash("sha1") }}'
+cider_ci_master_secret: >
+  {{[ cider_ci_machine_signature,
+      cider_ci_mounts_device_signature,
+      cider_ci_mounts_uuid_signature
+    ] | join(" ") | hash("sha256") }}_deploy_generated
+
+cider_ci_database_secret: >
+  {{lookup('pipe', "echo -n 'database_password' | openssl sha1 -hmac '{{cider_ci_master_secret}}' | cut -f2 -d ' '")}}
+
+secret_key_base: >
+  {{lookup('pipe', "echo -n 'secret_key_base' | openssl sha1 -hmac '{{cider_ci_master_secret}}' | cut -f2 -d ' '")}}
+
+services_basic_auth_secret: >
+  {{lookup('pipe', "echo -n 'services_basic_auth_secret' | openssl sha1 -hmac '{{cider_ci_master_secret}}' | cut -f2 -d ' '")}}
+
+cider_ci_mq_secret: >
+  {{lookup('pipe', "echo -n 'cider_ci_mq_secret' | openssl sha1 -hmac '{{cider_ci_master_secret}}' | cut -f2 -d ' '")}}
+
+

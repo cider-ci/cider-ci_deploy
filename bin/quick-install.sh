@@ -43,6 +43,6 @@ pip install -I ansible==1.9.3
 ###############################################################################
 
 rm -rf cider-ci
-git clone -b tmp https://github.com/cider-ci/cider-ci.git --recursive
+git clone -b master https://github.com/cider-ci/cider-ci.git --recursive
 cd cider-ci/deploy
-DEPLOY_ROOT_DIR=`pwd` ansible-playbook -i inventories/demo/easy/hosts play_site.yml
+DEPLOY_ROOT_DIR=`pwd` ansible-playbook -i inventories/demo/simple/hosts play_site.yml

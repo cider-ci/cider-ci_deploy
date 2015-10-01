@@ -4,14 +4,17 @@ Cider-CI Deploy
 This is an Ansible playbook to set up, deploy and upgrade a complete
 [Cider-CI](https://github.com/cider-ci/cider-ci) environment.
 
+
 Usage
 -----
 
+See also <http://docs.cider-ci.info/installation/> for details.
+
+
 ### Simple Demo
 
-See also <http://docs.cider-ci.info/installation/> for more detailed information!
 
-    DEPLOY_ROOT_DIR=`pwd` time ansible-playbook -i inventories/demo/easy/hosts play_site.yml -e 'ansible_ssh_host=192.168.0.31 cider_ci_master_secret=secret admin_password=secret'
+    DEPLOY_ROOT_DIR=`pwd` time ansible-playbook -i inventories/demo/simple/hosts play_site.yml -e 'ansible_ssh_host=192.168.0.31 cider_ci_master_secret=secret admin_password=secret'
 
 ### Advanced Demo
 
@@ -24,29 +27,8 @@ The first env var might be necessary due to
 
 The ZHdK site uses the [ansible vault](https://docs.ansible.com/playbooks_vault.html), here is one example:
 
-    export DEPLOY_ROOT_DIR=`pwd` && ansible-playbook -i inventories/zhdk/ci2/hosts play_site.yml --vault-password-file inventories/zhdk/vault-pass
+    ANSIBLE_LOAD_CALLBACK_PLUGINS=1 DEPLOY_ROOT_DIR=`pwd` ansible-playbook -i inventories/zhdk/staging/hosts play_site.yml --vault-password-file inventories/zhdk/vault-pass
 
 
-Customization and Advanced Topics
----------------------------------
 
-### The `cider_ci_master_secret`
 
-The setup generates a default `cider_ci_master_secret` based on various properties
-of the target host and your application. These properties might be guessable or
-not, depending on the setup of your host.
-
-Alternatives to the command line arguments are variables defined in the Ansible
-Inventory. This is convenient in particular in conjunction with the [Ansible
-Vault].
-
-Caveat: the [Ansible rules of precedence] should be understood when proceeding
-in this manner. At any rate, invoking
-
-    ansible-playbook -i hosts_demo_single play_info.yml
-
-(possibly with augmented arguments) will show the actual used values and
-is recommended to be consulted for confirmation.
-
-  [Ansible rules of precedence]: http://docs.ansible.com/ansible/playbooks_variables.html#variable-precedence-where-should-i-put-a-variable
-  [Ansible Vault]: http://docs.ansible.com/ansible/playbooks_vault.html
