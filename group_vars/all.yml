@@ -80,7 +80,7 @@ install_trait_sqlite3: False
 install_trait_tightvnc: False
 
 # array of strings, each which will added to traits
-cider_ci_executor_manual_traits: []
+executor_manual_traits: []
 
 ###############################################################################
 ### Secretes ##################################################################

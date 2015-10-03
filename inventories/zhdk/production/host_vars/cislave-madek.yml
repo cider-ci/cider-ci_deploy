@@ -2,8 +2,8 @@ executor_accepted_respositories:
   - https://github.com/Madek/madek.git
   - https://github.com/cider-ci/cider-ci.git
 
-cider_ci_executor_max_load: 2
-cider_ci_executor_manual_traits:
+executor_max_load: 2
+executor_manual_traits:
   - "{{ansible_hostname}}"
   - deploy-madek-test
 

@@ -4,8 +4,8 @@ trial_retention_duration: {{executor_trial_retention_duration}}
 
 server_base_url: "https://{{server_http_host_name}}"
 
-{% if cider_ci_executor_max_load is defined %}
-max_load: {{cider_ci_executor_max_load}}
+{% if executor_max_load is defined %}
+max_load: {{executor_max_load}}
 {% endif %}
 
 nrepl:

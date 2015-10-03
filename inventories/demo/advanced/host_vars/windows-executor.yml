@@ -1,2 +1,6 @@
 # Configuration for the windows-executor in the advanced demo
+#
 win_executor_user_password: secret
+
+# enabled for pull mode only
+executor_base_url: NULL

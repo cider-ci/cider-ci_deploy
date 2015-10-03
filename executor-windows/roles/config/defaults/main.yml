@@ -1,0 +1,1 @@
+executor_base_url: 'https://{{ansible_ip_addresses[0]}}:{{executor_service_https_port}}'

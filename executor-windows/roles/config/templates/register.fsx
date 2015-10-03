@@ -4,7 +4,11 @@ let password = """{{secret_key_base}}"""
 
 let body = """
   executor= Executor.find_or_initialize_by(name: '{{inventory_hostname}}')
-  executor.update_attributes!(base_url: 'https://{{ansible_ip_addresses[0]}}:{{executor_service_https_port}}')
+{% if executor_base_url is not none %}
+   executor.update_attributes!(base_url: '{{executor_base_url}}')
+{% else %}
+   executor.update_attributes!(base_url: nil)
+{%endif %}
   executor.reload
   "#{executor.id} #{executor.auth_password}"
 """

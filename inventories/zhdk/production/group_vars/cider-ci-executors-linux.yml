@@ -24,6 +24,6 @@ install_trait_ruby_22: True
 install_trait_sqlite3: True
 install_trait_tightvnc: True
 
-cider_ci_executor_max_load: "{{ ansible_processor_cores * ansible_processor_count }}"
-cider_ci_executor_manual_traits:
+executor_max_load: "{{ ansible_processor_cores * ansible_processor_count }}"
+executor_manual_traits:
   - "{{ansible_hostname}}"

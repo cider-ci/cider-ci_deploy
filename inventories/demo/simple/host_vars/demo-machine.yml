@@ -10,7 +10,7 @@ user_interface_xmx_value: 1G
 
 # independent of the cores of the machine we need at least 2 parallel execution
 # to demo a few things
-cider_ci_executor_max_load: 2
+executor_max_load: 2
 
 # we have to switch to different port for the executor since
 # the server is is using 443

@@ -29,6 +29,7 @@
     state: present
     password_never_expires: yes
     groups: Users
+    groups_action: Add
     user_cannot_change_password: yes
 
 - win_file:
