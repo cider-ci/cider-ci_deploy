@@ -1,5 +1,13 @@
 # Configuration for the windows-executor in the advanced demo
-#
+
+ansible_connection: winrm
+
+# login for the local administrator account, TO BE ADJUSTED
+ansible_ssh_user: root
+# password for the local administrator account, TO BE REPLACED
+ansible_ssh_pass: root
+
+# password for the execution user, TO BE REPLACED
 win_executor_user_password: secret
 
 # enabled for pull mode only
