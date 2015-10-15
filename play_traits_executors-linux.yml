@@ -93,3 +93,6 @@
     - role: traits/roles/exiftool
       when: "'exiftool' in traits"
 
+    - role: traits/roles/bower
+      when: "'bower' in traits"
+      tags: ['bower']

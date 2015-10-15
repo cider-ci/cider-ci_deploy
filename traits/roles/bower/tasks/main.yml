@@ -1,0 +1,8 @@
+- name: Update/Install bower
+  npm: name=bower global=yes
+
+- name: Set bower to noninteractive
+  command: "bower --config.interactive=false"
+  become: yes
+  become_user: "{{executor_execution_user}}"
+  become_method: su
