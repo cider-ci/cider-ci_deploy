@@ -21,6 +21,9 @@
     - role: traits/roles/defaults
       when: install_trait_defaults
 
+    - role: traits/roles/apache2
+      when: install_trait_apache2
+
     - role: traits/roles/nodejs
       when: install_trait_nodejs
 

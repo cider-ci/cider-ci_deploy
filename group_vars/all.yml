@@ -54,6 +54,7 @@ executor_accepted_respositories: []
 ### Executor Traits ###########################################################
 
 install_trait_ansible: False
+install_trait_apache2: False # MUST NOT be enabled on a "single" machine setup!
 install_trait_chrome_and_chromedriver: False
 install_trait_curl: False
 install_trait_defaults: true

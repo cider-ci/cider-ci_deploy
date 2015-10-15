@@ -1,0 +1,16 @@
+- service:
+    name: apache2
+    state: stopped
+
+- service:
+    name: apache2
+    enabled: false
+
+- lineinfile:
+    line: "{{item}}"
+    dest: "{{cider_ci_traits_file}}"
+    create: yes
+    state: present
+  with_items:
+    - "- apache2"
+

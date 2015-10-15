@@ -1,4 +1,5 @@
 install_trait_ansible: True
+install_trait_apache2: True
 install_trait_chrome_and_chromedriver: True
 install_trait_curl: True
 install_trait_defaults: true
