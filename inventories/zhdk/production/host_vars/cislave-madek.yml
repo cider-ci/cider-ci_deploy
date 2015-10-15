@@ -7,28 +7,7 @@ cider_ci_executor_manual_traits:
   - "{{ansible_hostname}}"
   - deploy-madek-test
 
-install_trait_ansible: True
-install_trait_chrome_and_chromedriver: False
-install_trait_curl: False
-install_trait_defaults: True
-install_trait_exiftool: False
-install_trait_firefox: False
-install_trait_firefox_esr: False
-install_trait_git: True
-install_trait_imagemagick: False
-install_trait_jruby_17: False
-install_trait_jruby_9000: False
-install_trait_leiningen: False
-install_trait_maven: False
-install_trait_mkdocs: False
-install_trait_mysql: False
-install_trait_nodejs: False
-install_trait_openjdk: False
-install_trait_phantomjs: False
-install_trait_postgresql: False
-install_trait_rabbitmq: False
-install_trait_rbenv: False
-install_trait_ruby_21: False
-install_trait_ruby_22: False
-install_trait_sqlite3: False
-install_trait_tightvnc: False
+traits: 
+  - ansible
+  - defaults
+  - git

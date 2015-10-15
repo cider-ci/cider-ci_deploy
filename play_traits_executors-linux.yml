@@ -19,76 +19,77 @@
   roles:
 
     - role: traits/roles/defaults
-      when: install_trait_defaults
+      when: "'defaults' in traits"
 
     - role: traits/roles/nodejs
-      when: install_trait_nodejs
+      when: "'nodejs' in traits"
 
     - role: traits/roles/curl
-      when: install_trait_curl
+      when: "'curl' in traits"
 
     - role: traits/roles/imagemagick
-      when: install_trait_imagemagick
+      when: "'imagemagick' in traits"
 
     - role: traits/roles/chrome-and-chromedriver
-      when: install_trait_chrome_and_chromedriver
+      when: "'chrome-and-chromedriver' in traits"
 
     - role: traits/roles/firefox
-      when: install_trait_firefox and ( ansible_distribution != 'Debian' )
+      when: "'firefox' in traits and ( ansible_distribution != 'Debian' )"
 
     - role: traits/roles/firefox-esr
-      when: install_trait_firefox_esr
+      when: "'firefox-esr' in traits"
 
     - role: traits/roles/phantomjs
-      when: install_trait_phantomjs
+      when: "'phantomjs' in traits"
 
     - role: traits/roles/tightvnc
-      when: install_trait_tightvnc
+      when: "'tightvnc' in traits"
 
     - role: traits/roles/openjdk
-      when: install_trait_openjdk
+      when: "'openjdk' in traits"
 
     - role: traits/roles/maven
-      when: install_trait_maven
+      when: "'maven' in traits"
 
     - role: traits/roles/leiningen
-      when: install_trait_leiningen
+      when: "'leiningen' in traits"
 
     - role: traits/roles/postgresql
-      when: install_trait_postgresql
+      when: "'postgresql' in traits"
 
     - role: traits/roles/mysql
-      when: install_trait_mysql
+      when: "'mysql' in traits"
 
     - role: traits/roles/sqlite3
-      when: install_trait_sqlite3
+      when: "'sqlite3' in traits"
 
     - role: traits/roles/rabbitmq
-      when: install_trait_rabbitmq
+      when: "'rabbitmq' in traits"
 
     - role: traits/roles/rbenv
-      when: install_trait_rbenv
+      when: "'rbenv' in traits"
 
     - role: traits/roles/jruby-9000
-      when: install_trait_jruby_9000
+      when: "'jruby-9000' in traits"
 
     - role: traits/roles/jruby-1.7
-      when: install_trait_jruby_17
+      when: "'jruby-1.7' in traits"
 
     - role: traits/roles/ruby-2.1
-      when: install_trait_ruby_21
+      when: "'ruby-2.1' in traits"
 
     - role: traits/roles/ruby-2.2
-      when: install_trait_ruby_22
+      when: "'ruby-2.2' in traits"
 
     - role: traits/roles/ansible
-      when: install_trait_ansible
+      when: "'ansible' in traits"
 
     - role: traits/roles/mkdocs
-      when: install_trait_mkdocs
+      when: "'mkdocs' in traits"
 
     - role: traits/roles/git
-      when: install_trait_git
+      when: "'git' in traits"
 
     - role: traits/roles/exiftool
-      when: install_trait_exiftool
+      when: "'exiftool' in traits"
+
