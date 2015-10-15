@@ -4,3 +4,5 @@
 # - shell: rm -rf /var/local/*
 # - shell: rm -rf /var/log/cider-ci*
 # - shell: rm -rf /etc/init/cider-ci*
+
+- apt: pkg=bzip2 state=latest update_cache=yes cache_valid_time=3600
