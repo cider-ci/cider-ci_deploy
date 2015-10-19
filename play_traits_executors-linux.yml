@@ -59,6 +59,7 @@
 
     - role: traits/roles/postgresql
       when: install_trait_postgresql
+      tags: [trait-postgresql]
 
     - role: traits/roles/mysql
       when: install_trait_mysql
