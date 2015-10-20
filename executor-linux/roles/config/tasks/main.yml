@@ -1,11 +1,9 @@
 ### Config ####################################################################
 
-
-- apt:
-    pkg: python-httplib2
-    state: latest
-    update_cache: yes
-    cache_valid_time: 3600
+- apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
+  with_items:
+    - python-httplib2
+    - bzip2
 
 - uri:
     url: http://{{server_http_host_name}}/cider-ci/ui/configuration_management_backdoor/invoke
