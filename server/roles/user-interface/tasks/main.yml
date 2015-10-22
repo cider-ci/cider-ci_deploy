@@ -68,10 +68,6 @@
     owner: "{{user_interface_user}}"
     mode: 0755
 
-- name: package bundle.js
-  shell:  su -l -s /bin/bash -c 'cd {{ui_root_path}}
-            && npm run build' {{user_interface_user}}
-
 - name: Precompile assets
   shell:  su -l -s /bin/bash -c 'source /etc/profile.d/rbenv-load.sh
             && rbenv-load
