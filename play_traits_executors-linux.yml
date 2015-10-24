@@ -94,5 +94,8 @@
     - role: traits/roles/git
       when: install_trait_git
 
+    - role: traits/roles/graphviz
+      when: install_trait_graphviz
+
     - role: traits/roles/exiftool
       when: install_trait_exiftool
