@@ -70,7 +70,7 @@
     register: previous_uri
     body: |
       Repository.find_or_initialize_by(git_url: '{{item.git_url}}')
-        .update_attributes!(name: '{{item.name}}')
+        .update_attributes!(JSON.parse('{{item | to_json}}'))
   with_items: '{{repositories}}'
 
 
