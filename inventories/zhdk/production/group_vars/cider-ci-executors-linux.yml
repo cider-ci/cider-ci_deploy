@@ -8,6 +8,7 @@ install_trait_firefox: True
 install_trait_firefox_esr: True
 install_trait_git: true
 install_trait_graphviz: True
+install_trait_hunspell: True
 install_trait_imagemagick: True
 install_trait_jruby_17: True
 install_trait_jruby_9000: True

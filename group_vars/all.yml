@@ -63,6 +63,7 @@ install_trait_firefox: False
 install_trait_firefox_esr: False
 install_trait_git: true
 install_trait_graphviz: False
+install_trait_hunspell: False
 install_trait_imagemagick: False
 install_trait_jruby_17: False
 install_trait_jruby_9000: False

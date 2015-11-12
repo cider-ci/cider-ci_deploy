@@ -30,6 +30,9 @@
     - role: traits/roles/curl
       when: install_trait_curl
 
+    - role: traits/roles/hunspell
+      when: install_trait_hunspell
+
     - role: traits/roles/imagemagick
       when: install_trait_imagemagick
 
