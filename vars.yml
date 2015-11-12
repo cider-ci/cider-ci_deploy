@@ -15,6 +15,15 @@ api_uri: "https://{{web_host_ip}}{{web_sub_path}}/api/"
 
 user_interface_user: cider-ci_user-interface
 
+cider_ci_executor_services:
+
+  - name: cider-ci_executor
+    port: "{{executor_service_http_port}}"
+    path: /hello
+    type: lein
+    http_username: monit
+    http_password: "{{executor_password}}"
+
 cider_ci_server_services:
 
   - name: cider-ci_user-interface

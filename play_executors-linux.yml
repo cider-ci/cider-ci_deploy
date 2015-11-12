@@ -6,6 +6,7 @@
 - hosts: cider-ci-server
   tasks:
   - setup: {}
+    tags: [always]
 
 - hosts: cider-ci-executors-linux
 
@@ -23,13 +24,17 @@
     - role: prepare-all
       tags: [prepare-all]
 
+    - role: executor-linux/roles/monitoring
+      monitoring_state: unmonitored
+      monit_state: stopped
+      monitored_services: "{{cider_ci_executor_services}}"
+      tags: [executor-monitoring-stop]
+
     - role: git-checkout
       git_checkout_target_path: '{{cider_ci_executor_path}}'
       git_checkout_repo: "{{cider_ci_executor_repo}}"
       git_checkout_version: "{{lookup('pipe','cd ${DEPLOY_ROOT_DIR}/../executor && git log -n 1 --format=%H ')}}"
-
-
-      tags: [git-checkout, debug]
+      tags: [executor-git-checkout]
 
     - role: executor-linux/roles/user
       user: '{{executor_execution_user}}'
@@ -42,7 +47,15 @@
       lein_service_name: cider-ci_executor
       lein_service_app_dir: '{{cider_ci_executor_path}}'
       lein_service_user: root
-      tags: [lein-service]
+      tags: [executor-lein-service]
+
+    - role: executor-linux/roles/check-services
+      check_services: "{{cider_ci_executor_services}}"
+
+    - role: executor-linux/roles/monitoring
+      monitoring_state: monitored
+      monitored_services: "{{cider_ci_executor_services}}"
+      tags: [executor-monitoring-start]
 
     - role: executor-linux/roles/nightly-reboot
       tags: [nightly-reboot]

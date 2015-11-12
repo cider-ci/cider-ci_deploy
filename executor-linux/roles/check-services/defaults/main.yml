@@ -1,0 +1,2 @@
+check_services: "{{cider_ci_server_services}}"
+

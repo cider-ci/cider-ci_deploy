@@ -1,0 +1,29 @@
+- name: Restart monit
+  service:
+    name: monit
+    state: restarted
+
+- name: Monit service monitoring config
+  template:
+    src: service
+    dest: /etc/monit/conf.d/{{item.name}}
+    mode: "0700"
+  with_items: monitored_services
+
+- name: Monitor service
+  monit:
+    name: "{{item.name}}"
+    state: "{{monitoring_state}}"
+  with_items: monitored_services
+  failed_when: False
+  ignore_errors: True
+
+- name: Reload monit
+  monit:
+    name: monit
+    state: reloaded
+
+- name: set monit service state
+  service:
+    name: monit
+    state: "{{monit_state}}"
