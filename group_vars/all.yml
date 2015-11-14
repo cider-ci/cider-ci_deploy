@@ -2,7 +2,7 @@
 # Cider-CI Default Variables
 ################################################################################
 
-# This files contains variables for you Cider-CI environment which are
+# This files contains variables for your Cider-CI environment which are
 # meant to be overridden for customization.
 
 ###############################################################################
