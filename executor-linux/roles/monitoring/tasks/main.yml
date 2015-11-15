@@ -2,6 +2,7 @@
   service:
     name: monit
     state: restarted
+  when: monit_state != "stopped"
 
 - name: Monit service monitoring config
   template:
@@ -9,6 +10,7 @@
     dest: /etc/monit/conf.d/{{item.name}}
     mode: "0700"
   with_items: monitored_services
+  when: monit_state != "stopped"
 
 - name: Monitor service
   monit:
@@ -17,11 +19,13 @@
   with_items: monitored_services
   failed_when: False
   ignore_errors: True
+  when: monit_state != "stopped"
 
 - name: Reload monit
   monit:
     name: monit
     state: reloaded
+  when: monit_state != "stopped"
 
 - name: set monit service state
   service:

@@ -1,3 +1,1 @@
 allow_duplicates: yes
-dependencies:
-  - role: executor-linux/roles/config
