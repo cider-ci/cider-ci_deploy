@@ -1,8 +1,0 @@
-check process cider-ci_user-interface
-        matching "cider-ci_user-interface"
-        start program = "/usr/sbin/service cider-ci_user-interface start" with timeout 120 seconds
-        stop program  = "/usr/sbin/service cider-ci_user-interface stop"
-        if failed
-                url http://localhost:8880/cider-ci/ui
-                with timeout 60 seconds
-        then restart

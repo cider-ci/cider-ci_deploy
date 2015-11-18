@@ -20,11 +20,11 @@
       reverse_proxy_enabled: False
       tags: [server-reverse-proxy]
 
-    - role: server/roles/monitoring
+    - role: monit-http-services
       monitoring_state: unmonitored
       monit_state: stopped
       monitored_services: "{{cider_ci_server_services}}"
-      tags: [server-monitoring]
+      tags: [monit-http-services-stop]
 
     - role: server/roles/shutdown-services
       tags: [server-shutdown-services]
@@ -102,10 +102,7 @@
     - role: server/roles/check-services
       tags: [server-check-services]
 
-    - role: server/roles/monitoring
+    - role: monit-http-services
       monitoring_state: monitored
       monitored_services: "{{cider_ci_server_services}}"
-      tags: [server-monitoring]
-
-
-
+      tags: [monit-http-services-start]

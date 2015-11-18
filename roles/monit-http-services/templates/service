@@ -5,4 +5,5 @@ check process {{item.name}}
         if failed
                 url http://{{item.http_username}}:{{item.http_password}}@localhost:{{item.port}}{{item.path}}
                 with timeout 60 seconds
+                for 10 cycles
         then restart

@@ -24,11 +24,11 @@
     - role: prepare-all
       tags: [prepare-all]
 
-    - role: executor-linux/roles/monitoring
+    - role: monit-http-services
       monitoring_state: unmonitored
       monit_state: stopped
       monitored_services: "{{cider_ci_executor_services}}"
-      tags: [executor-monitoring-stop]
+      tags: [monit-http-services-stop]
 
     - role: git-checkout
       git_checkout_target_path: '{{cider_ci_executor_path}}'
@@ -52,10 +52,10 @@
     - role: executor-linux/roles/check-services
       check_services: "{{cider_ci_executor_services}}"
 
-    - role: executor-linux/roles/monitoring
+    - role: monit-http-services
       monitoring_state: monitored
       monitored_services: "{{cider_ci_executor_services}}"
-      tags: [executor-monitoring-start]
+      tags: [monit-http-services-stop]
 
     - role: executor-linux/roles/nightly-reboot
       tags: [nightly-reboot]

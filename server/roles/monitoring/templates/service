@@ -1,8 +1,0 @@
-check process {{item.name}}
-        matching "{{item.name}}"
-        start program = "/usr/sbin/service {{item.name}} start" with timeout 120 seconds
-        stop program  = "/usr/sbin/service {{item.name}} stop"
-        if failed
-                url http://monit:{{services_basic_auth_secret}}@localhost:{{item.port}}{{item.path}}
-                with timeout 60 seconds
-        then restart

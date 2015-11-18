@@ -30,24 +30,32 @@ cider_ci_server_services:
     port: 8880
     path: /cider-ci/ui/public
     type: puma
+    http_username: monit
+    http_password: '{{services_basic_auth_secret}}'
 
   - name: cider-ci_repository
     dir: /var/local/cider-ci/repository
     port: 8881
     path: /cider-ci/repositories/status
     type: lein
+    http_username: monit
+    http_password: '{{services_basic_auth_secret}}'
 
   - name: cider-ci_dispatcher
     dir: /var/local/cider-ci/dispatcher
     port: 8882
     path: /cider-ci/dispatcher/status
     type: lein
+    http_username: monit
+    http_password: '{{services_basic_auth_secret}}'
 
   - name: cider-ci_builder
     dir: /var/local/cider-ci/builder
     port: 8884
     path: /cider-ci/builder/status
     type: lein
+    http_username: monit
+    http_password: '{{services_basic_auth_secret}}'
 
   - name: cider-ci_api
     dir: /var/local/cider-ci/api
@@ -55,16 +63,21 @@ cider_ci_server_services:
     port: 8885
     path: /cider-ci/api/status
     type: lein
+    http_username: monit
+    http_password: '{{services_basic_auth_secret}}'
 
   - name: cider-ci_storage
     dir: /var/local/cider-ci/storage
     port: 8886
     path: /cider-ci/storage/status
     type: lein
+    http_username: monit
+    http_password: '{{services_basic_auth_secret}}'
 
   - name: cider-ci_notifier
     dir: /var/local/cider-ci/notifier
     port: 8887
     path: /cider-ci/notifier/status
     type: lein
-
+    http_username: monit
+    http_password: '{{services_basic_auth_secret}}'

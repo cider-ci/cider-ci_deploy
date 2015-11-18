@@ -1,3 +1,0 @@
-monitoring_state: monitored
-monit_state: started
-monitored_services: cider_ci_server_services

@@ -1,8 +1,0 @@
-check process cider-ci_api
-        matching "cider-ci_api"
-        start program = "/usr/sbin/service cider-ci_api start" with timeout 120 seconds
-        stop program  = "/usr/sbin/service cider-ci_api stop"
-        if failed
-                url http://monit:{{services_basic_auth_secret}}@localhost:8885/cider-ci/api/status
-                with timeout 60 seconds
-        then restart
