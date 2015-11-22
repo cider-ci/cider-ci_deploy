@@ -23,12 +23,13 @@
        executor.update_attributes!(base_url: nil)
       {%endif %}
       executor.reload
-      "#{executor.id} #{executor.auth_password}"
+      {id: executor.id, password: executor.auth_password}
   register: update_or_create_executor
+  tags: [debug]
 
 - set_fact:
-    executor_id: '{{update_or_create_executor.content.split()[0]}}'
-    executor_password: '{{update_or_create_executor.content.split()[1]}}'
+    executor_id: '{{update_or_create_executor.json.result.id}}'
+    executor_password: '{{update_or_create_executor.json.result.password}}'
 
 # executor specific config
 - template:
