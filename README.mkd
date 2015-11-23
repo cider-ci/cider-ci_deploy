@@ -29,11 +29,12 @@ The ZHdK site uses the [ansible vault](https://docs.ansible.com/playbooks_vault.
 
     ANSIBLE_LOAD_CALLBACK_PLUGINS=1 DEPLOY_ROOT_DIR=`pwd` ansible-playbook -i inventories/zhdk/staging/hosts play_site.yml --vault-password-file inventories/zhdk/vault-pass
 
-or
+production public:
 
-    ANSIBLE_LOAD_CALLBACK_PLUGINS=1 DEPLOY_ROOT_DIR=`pwd` ansible-playbook -i inventories/zhdk/production/hosts play_site.yml --ask-vault
+    ANSIBLE_LOAD_CALLBACK_PLUGINS=1 DEPLOY_ROOT_DIR=`pwd` ansible-playbook -i inventories/zhdk/prod-public/hosts play_site.yml --ask-vault
 
+production internal:
 
-
+    ANSIBLE_LOAD_CALLBACK_PLUGINS=1 DEPLOY_ROOT_DIR=`pwd` ansible-playbook -i inventories/zhdk/prod-public/hosts play_site.yml --ask-vault
 
 

@@ -7,21 +7,35 @@
 - apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
   with_items: [rabbitmq-server, amqp-tools]
 
+- service:
+    name: rabbitmq-server
+    state: stopped
+
+- template: src=rabbitmq-env.conf dest=/etc/rabbitmq/rabbitmq-env.conf  mode=0644
+
+- service:
+    name: rabbitmq-server
+    state: started
+
 - rabbitmq_plugin: names=rabbitmq_management state=enabled
 
 - rabbitmq_user:
     name: cider-ci_production
+    node: rabbit@localhost
     state: absent
 
 - rabbitmq_vhost:
     name: cider-ci_production
+    node: rabbit@localhost
     state: absent
 
 - rabbitmq_vhost:
     name: cider-ci_production
+    node: rabbit@localhost
     state: present
 
 - rabbitmq_user:
+    node: rabbit@localhost
     user: cider-ci_production
     force: yes
     password: "{{cider_ci_mq_secret}}"

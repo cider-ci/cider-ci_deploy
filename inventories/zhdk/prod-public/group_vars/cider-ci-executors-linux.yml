@@ -1,0 +1,32 @@
+install_trait_ansible: True
+install_trait_apache2: True
+install_trait_chrome_and_chromedriver: True
+install_trait_curl: True
+install_trait_defaults: true
+install_trait_exiftool: True
+install_trait_firefox: True
+install_trait_firefox_esr: True
+install_trait_git: true
+install_trait_graphviz: True
+install_trait_hunspell: True
+install_trait_imagemagick: True
+install_trait_jruby_17: True
+install_trait_jruby_9000: True
+install_trait_leiningen: True
+install_trait_maven: True
+install_trait_mkdocs: True
+install_trait_mysql: True
+install_trait_nodejs: True
+install_trait_openjdk: True
+install_trait_phantomjs: True
+install_trait_postgresql: True
+install_trait_rabbitmq: True
+install_trait_rbenv: True
+install_trait_ruby_21: True
+install_trait_ruby_22: True
+install_trait_sqlite3: True
+install_trait_tightvnc: True
+
+executor_max_load: "{{ ansible_processor_cores * ansible_processor_count }}"
+executor_manual_traits:
+  - "{{ansible_hostname}}"
