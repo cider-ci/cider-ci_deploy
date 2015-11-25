@@ -23,7 +23,14 @@ lein_service_xmx_value: 256m
 job_retention_duration: 50 Years
 db_backups_enabled: False
 
-user_interface_xmx_value: 3G
+
+### Memory ####################################################################
+# database uses around 20% already
+user_interface_xmx_value: "{{ (ansible_memtotal_mb * 0.5) | round | int }}m"
+user_interface_xms_value: "{{ (ansible_memtotal_mb * 0.25) | round | int }}m"
+user_interface_cache_size_megabytes: "{{ (ansible_memtotal_mb * 0.1) | round | int }}"
+lein_service_xmx_value: "{{ (ansible_memtotal_mb * 0.06) | round | int }}m"
+
 
 ### Managed Repositories ######################################################
 
