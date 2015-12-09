@@ -8,7 +8,7 @@ ci4
 [cider-ci-executors-linux]
 
 [cider-ci-executors-windows]
-# ci-slavewin1
+#ci-slavewin1
 
 [secrets:children]
 cider-ci-server

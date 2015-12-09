@@ -1,12 +1,5 @@
-
 windows:
-  - name: "Ci2"
-    id: 2
+  '2':
+    name: ssh Ci2
     command: |
-      ssh root@Ci2
-  - id: 4
-    name: vim
-    command: |
-      vim
-    post_command_send_keys:
-      \\n
+      ssh root@ci2.zhdk.ch
