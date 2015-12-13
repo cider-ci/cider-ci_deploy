@@ -24,6 +24,9 @@
     - role: traits/roles/apache2
       when: install_trait_apache2
 
+    - role: traits/roles/build-openwrt
+      when: install_trait_build_openwrt
+
     - role: traits/roles/nodejs
       when: install_trait_nodejs
 
