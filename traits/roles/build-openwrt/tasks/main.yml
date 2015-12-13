@@ -1,0 +1,25 @@
+# OpenWRT buildroot dependencies for Debian-based systems:
+-  apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
+   with_items:
+    - build-essential
+    - libncurses5-dev
+    - m4
+    - flex
+    - git
+    - git-core
+    - zlib1g-dev
+    - unzip
+    - subversion
+    - gawk
+    - python
+    - libssl-dev
+    - quilt
+    - screen
+
+- lineinfile:
+    line: "{{item}}"
+    dest: "{{cider_ci_traits_file}}"
+    create: yes
+    state: present
+  with_items:
+    - "- build-openwrt"
