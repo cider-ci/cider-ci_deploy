@@ -1,6 +1,6 @@
 [zhdk]
 ci4 ansible_ssh_host=ci4.zhdk.ch ansible_ssh_user=root
-# ci-slavewin1 ansible_ssh_host=ci-slavewin1.ad.zhdk.ch ansible_connection=winrm ansible_ssh_user=cider-ci_admin
+ci-slavewin1 ansible_ssh_host=ci-slavewin1.ad.zhdk.ch ansible_connection=winrm ansible_ssh_user=cider-ci_admin
 
 [cider-ci-server]
 ci4
@@ -8,7 +8,7 @@ ci4
 [cider-ci-executors-linux]
 
 [cider-ci-executors-windows]
-#ci-slavewin1
+ci-slavewin1
 
 [secrets:children]
 cider-ci-server

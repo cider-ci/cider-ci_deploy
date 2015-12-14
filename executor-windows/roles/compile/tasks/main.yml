@@ -2,3 +2,10 @@
 
 - script: compile.ps1
 
+- script: jar.ps1
+
+#- script: uberjar.ps1
+#- raw: |
+#    cd C:\cider-ci\executor
+#    C:\cider-ci\bin\lein.bat uberjar
+#
