@@ -1,5 +1,5 @@
 ruby_2_1:
-  version: 2.1.5
+  version: 2.1.7
   alias: 2.1
   present: True
   default: False
