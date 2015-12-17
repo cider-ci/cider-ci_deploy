@@ -66,12 +66,6 @@
 
 ### Assets ####################################################################
 
-- template:
-    src: theme-selector.sass
-    dest: "{{ui_root_path}}/app/assets/stylesheets/theme-selector.sass"
-    owner: "{{user_interface_user}}"
-    mode: 0755
-
 - name: Precompile assets
   shell:  su -l -s /bin/bash -c 'source /etc/profile.d/rbenv-load.sh
             && rbenv-load

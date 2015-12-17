@@ -3,4 +3,3 @@ user_interface_log_dir: "{{ui_root_path}}/log"
 user_interface_service_name: cider-ci_user-interface
 user_interface_service_bin: /usr/local/bin/{{user_interface_service_name}}
 user_interface_wrapper_bin: /usr/local/bin/{{user_interface_service_name}}_wrapper
-user_interface_theme: cider
