@@ -13,8 +13,14 @@
     msg: '{{update_or_create_executor}}'
 
 - set_fact:
-    executor_id: '{{update_or_create_executor.stdout.split()[0]}}'
-    executor_password: '{{update_or_create_executor.stdout.split()[1]}}'
+    update_or_create_executor_data: '{{ update_or_create_executor.stdout | from_json }}'
+
+- debug:
+    msg: '{{update_or_create_executor_data}}'
+
+- set_fact:
+    executor_id: '{{update_or_create_executor_data.result.split()[0]}}'
+    executor_password: '{{update_or_create_executor_data.result.split()[1]}}'
 
 - debug:
     msg: >

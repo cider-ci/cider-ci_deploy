@@ -12,3 +12,5 @@ win_executor_user_password: secret
 
 # enabled for pull mode only
 executor_base_url: NULL
+
+executor_nrepl_enabled: true

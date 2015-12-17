@@ -2,7 +2,7 @@
 - hosts: cider-ci-server
   tasks:
   - setup: {}
-    tags: [executor-config]
+    tags: [win-executor-config]
 
 - hosts: cider-ci-executors-windows
   vars_files:
