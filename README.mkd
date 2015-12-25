@@ -38,3 +38,6 @@ production internal:
     ANSIBLE_LOAD_CALLBACK_PLUGINS=1 DEPLOY_ROOT_DIR=`pwd` ansible-playbook -i inventories/zhdk/prod-public/hosts play_site.yml --ask-vault
 
 
+### Dump and Retrieve the Database
+
+    DEPLOY_ROOT_DIR=`pwd` ansible-playbook -i inventories/zhdk/prod-public/hosts play_dump-and-fetch-data.yml --ask-vault

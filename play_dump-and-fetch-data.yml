@@ -1,0 +1,35 @@
+---
+
+- hosts: cider-ci-server
+
+  vars_files:
+    - vars.yml
+    - vars-server.yml
+
+  vars:
+    dump_items:
+      - data
+      - structure_and_data
+
+  tasks:
+
+  - name: Dump
+    become: true
+    become_user: 'cider-ci_user-interface'
+    become_method: su
+    shell:  |
+      set -eux
+      source /etc/profile.d/rbenv-load.sh
+      rbenv-load
+      cd {{ui_root_path}}
+      export RAILS_ENV={{rails_env}}
+      export RBENV_VERSION={{rubies.mri.version}}
+      bundle exec rake db:pg:{{item}}:dump FILE=/tmp/{{item}}.pgbin
+    args:
+      executable: /bin/bash
+    with_items: "{{dump_items}}"
+
+  - fetch:
+      src: /tmp/madek_{{item}}.pgbin
+      dest: tmp/
+    with_items: "{{dump_items}}"
