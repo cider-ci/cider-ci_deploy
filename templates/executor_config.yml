@@ -22,10 +22,6 @@ basic_auth:
   username: {{executor_id}}
   password: {{executor_password}}
 
-reporter:
-  max_retries: 10
-  retry_ms_factor: 1000
-
 exec_user:
 
   {% if executor_execution_user is defined %}
