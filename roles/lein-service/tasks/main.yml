@@ -42,6 +42,11 @@
 - template: src=logrotate
             dest=/etc/logrotate.d/{{lein_service_name}}
 
+
+### service ###################################################################
+
+### enable
+
 - template: src=init.conf
             dest=/etc/init/{{lein_service_name}}.conf
   register: lein_service_init
