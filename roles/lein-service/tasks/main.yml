@@ -15,15 +15,12 @@
         state=directory
         mode=0755
 
-### setup dir  ################################################################
+### setup dir and config ######################################################
 
 - file: path={{lein_service_app_dir}}
         owner={{lein_service_user}}
         group={{lein_service_user}}
         recurse=yes
-  changed_when: false
-
-- shell: cd {{lein_service_app_dir}} && LEIN_ROOT=1 JVM_OPTS=-Xmx256m lein clean
   changed_when: false
 
 - template: src={{ lein_service_config_template_src }}
@@ -41,6 +38,29 @@
 
 - template: src=logrotate
             dest=/etc/logrotate.d/{{lein_service_name}}
+
+
+### clean and compile #########################################################
+
+# Note: don't mess with this! compile does not only make the service (re)start
+# faster, it works around: https://github.com/weavejester/clout/issues/27
+#
+# TODO: we need to remove `:aot :all` for now; too many problems
+# try it again with java8
+
+- name: lein clean and compile
+  become: true
+  become_user: '{{lein_service_user}}'
+  become_method: su
+  shell:  |
+    set -eux
+    cd {{lein_service_app_dir}}
+    export LEIN_ROOT=yes
+    export JAVA_OPTS=-Xmx256m
+    lein {{item}}
+  args:
+    executable: /bin/bash
+  with_items: [clean, compile]
 
 
 ### service ###################################################################
@@ -64,9 +84,6 @@
             dest=/etc/systemd/system/{{lein_service_name}}.service
   register: lein_service_init
   when: ansible_distribution_release == 'jessie'
-
-
-### enable
 
 
 - service: name={{lein_service_name}} enabled=yes
