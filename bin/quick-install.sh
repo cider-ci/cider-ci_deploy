@@ -5,6 +5,13 @@ set -ex
 ### Cider-CI Quick Install ####################################################
 ###############################################################################
 
+### examples ##################################################################
+#
+# curl https://raw.githubusercontent.com/cider-ci/cider-ci_deploy/master/bin/quick-install.sh | bash
+#
+# curl https://raw.githubusercontent.com/cider-ci/cider-ci_deploy/master/bin/quick-install.sh | bash -s '3.11.0'
+#
+
 ### check if we are root ######################################################
 
 if [ "$UID" != "0" ]; then
@@ -52,7 +59,7 @@ cd cider-ci/deploy
 ### switch to explicit ref if given ###########################################
 if [ -n "$1" ]; then
   git fetch --all
-  git reset --hard "$1"
+  git reset --hard "$1" --
   git submodule update --init --recursive
 fi
 
