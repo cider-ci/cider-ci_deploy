@@ -1,3 +1,6 @@
+#!/usr/bin/env bash
+set -ex
+
 ###############################################################################
 ### Cider-CI Quick Install ####################################################
 ###############################################################################
@@ -35,7 +38,7 @@ cat ~/.ssh/authorized_keys.bk | uniq > ~/.ssh/authorized_keys
 ### install Ansible ###########################################################
 
 apt-get install python2.7 python2.7-dev python-pip git -y -f
-pip install -I ansible==1.9.3
+pip install -I ansible==1.9.4
 
 
 ###############################################################################
@@ -45,4 +48,12 @@ pip install -I ansible==1.9.3
 rm -rf cider-ci
 git clone -b master https://github.com/cider-ci/cider-ci.git --recursive
 cd cider-ci/deploy
+
+### switch to explicit ref if given ###########################################
+if [ -n "$1" ]; then
+  git fetch --all
+  git reset --hard "$1"
+  git submodule update --init --recursive
+fi
+
 DEPLOY_ROOT_DIR=`pwd` ansible-playbook -i inventories/demo/simple/hosts play_site.yml
