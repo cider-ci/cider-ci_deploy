@@ -28,7 +28,7 @@ cider_ci_server_services:
 
   - name: cider-ci_user-interface
     port: 8880
-    path: /cider-ci/ui/public
+    path: /cider-ci/ui/status
     type: puma
     http_username: monit
     http_password: '{{services_basic_auth_secret}}'
