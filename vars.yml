@@ -19,7 +19,7 @@ cider_ci_executor_services:
 
   - name: cider-ci_executor
     port: "{{executor_service_http_port}}"
-    path: /hello
+    path: /status
     type: lein
     http_username: monit
     http_password: "{{executor_password}}"
