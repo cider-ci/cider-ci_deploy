@@ -1,0 +1,6 @@
+
+ci_virtual_hosts:
+- hostname: "{{ hostvars[groups['cider-ci-server'][0]]['ansible_default_ipv4']['address'] }}"
+  ssl_certificate_file: /etc/ssl/certs/ssl-cert-snakeoil.pem
+  ssl_certificate_key_file: /etc/ssl/private/ssl-cert-snakeoil.key
+

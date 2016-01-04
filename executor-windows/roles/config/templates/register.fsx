@@ -1,4 +1,4 @@
-let url = """http://{{server_http_host_name}}/cider-ci/ui/configuration_management_backdoor/invoke"""
+let url = """http://{{ci_virtual_hosts[0]['hostname']}}/cider-ci/ui/configuration_management_backdoor/invoke"""
 let username = """admin"""
 let password = """{{secret_key_base}}"""
 

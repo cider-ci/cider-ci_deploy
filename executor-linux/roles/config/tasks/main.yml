@@ -6,7 +6,7 @@
     - bzip2
 
 - uri:
-    url: http://{{server_http_host_name}}/cider-ci/ui/configuration_management_backdoor/invoke
+    url: http://{{ci_virtual_hosts[0]['hostname']}}/cider-ci/ui/configuration_management_backdoor/invoke
     timeout: 300
     user: system_admin
     password: "{{secret_key_base}}"

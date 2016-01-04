@@ -1,68 +1,109 @@
-### offline ###################################################################
-
-- template: >
-    src=offline.apache.conf
-    dest=/etc/apache2/sites-available/offline.conf
-    mode=0755
-
-- command: a2ensite offline
-  when: not reverse_proxy_enabled
 
 - command: a2dissite offline
-  when: reverse_proxy_enabled
-
-- template: >
-    src=offline_https.apache.conf
-    dest=/etc/apache2/sites-available/offline_https.conf
-    mode=0755
-
-- command: a2ensite offline_https
-  when: not reverse_proxy_enabled
+  failed_when: false
 
 - command: a2dissite offline_https
-  when: reverse_proxy_enabled
+  failed_when: false
 
+- file:
+    path: /etc/apache2/sites-available/offline.conf
+    state: absent
+
+- file:
+    path: /etc/apache2/sites-available/offline_https.conf
+    state: absent
+
+- file:
+    path: /etc/apache2/shared
+    state: absent
+
+- file:
+    path: /etc/apache2/sites-available/cider-ci.conf
+    state: absent
+
+- file:
+    path: /etc/apache2/sites-available/cider-ci_https.conf
+    state: absent
+
+
+### offline ###################################################################
+
+- template:
+    src: offline.apache.conf
+    dest: /etc/apache2/sites-available/{{item.hostname}}_offline.conf
+    mode: 0755
+  with_items: ci_virtual_hosts
+
+- command: a2ensite {{item.hostname}}_offline
+  when: not reverse_proxy_enabled
+  with_items: ci_virtual_hosts
+
+- command: a2dissite {{item.hostname}}_offline
+  when: reverse_proxy_enabled
+  with_items: ci_virtual_hosts
+
+- template:
+    src: offline_https.apache.conf
+    dest: /etc/apache2/sites-available/{{item.hostname}}_offline_https.conf
+    mode: 0755
+  with_items: ci_virtual_hosts
+
+- command: a2ensite {{item.hostname}}_offline_https
+  when: not reverse_proxy_enabled
+  with_items: ci_virtual_hosts
+
+- command: a2dissite {{item.hostname}}_offline_https
+  when: reverse_proxy_enabled
+  with_items: ci_virtual_hosts
 
 
 ### shared site  ##############################################################
 
-- file: path=/etc/apache2/shared
-        state=directory
-        mode=0755
+- file:
+    path: /etc/apache2/{{item.hostname}}_shared
+    state: directory
+    mode: 0755
+  with_items: ci_virtual_hosts
 
-- template: >
-    src=shared-site.apache.conf
-    dest=/etc/apache2/shared/cider-ci_site.conf
-    mode=0644
-
+- template:
+    src: shared-site.apache.conf
+    dest: /etc/apache2/{{item.hostname}}_shared/cider-ci_site.conf
+    mode: 0644
+  with_items: ci_virtual_hosts
 
 ### http site #################################################################
 
-- template: >
-    src=site.apache.conf
-    dest=/etc/apache2/sites-available/cider-ci.conf
-    mode=0755
+- template:
+    src: site.apache.conf
+    dest: /etc/apache2/sites-available/cider-ci_{{item.hostname}}.conf
+    mode: 0755
+  with_items: ci_virtual_hosts
 
-- command: a2ensite cider-ci
+- command: a2ensite cider-ci_{{item.hostname}}
   when: reverse_proxy_enabled
+  with_items: ci_virtual_hosts
 
-- command: a2dissite cider-ci
+- command: a2dissite cider-ci_{{item.hostname}}
   when: not reverse_proxy_enabled
+  with_items: ci_virtual_hosts
 
 
 ### https site ################################################################
 
-- template: >
-    src=site_https.apache.conf
-    dest=/etc/apache2/sites-available/cider-ci_https.conf
-    mode=0755
+- template:
+    src: site_https.apache.conf
+    dest: /etc/apache2/sites-available/cider-ci_https_{{item.hostname}}.conf
+    mode: 0755
   register: reverse_proxy_https_site
+  with_items: ci_virtual_hosts
 
-- command: a2ensite cider-ci_https
+- command: a2ensite cider-ci_https_{{item.hostname}}
   when: reverse_proxy_enabled
+  with_items: ci_virtual_hosts
 
-- command: a2dissite cider-ci_https
+- command: a2dissite cider-ci_https_{{item.hostname}}
   when: not reverse_proxy_enabled
+  with_items: ci_virtual_hosts
 
 ### reload ####################################################################
 

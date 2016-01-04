@@ -1,5 +1,10 @@
 # specify the official hostname; it will be used in links an so on
-server_http_host_name: ci4.zhdk.ch
+ci_virtual_hosts:
+- hostname: ci4.zhdk.ch
+  ssl_certificate_file: /etc/ssl/certs/ssl-cert-snakeoil.pem
+  ssl_certificate_key_file: /etc/ssl/private/ssl-cert-snakeoil.key
+
+
 
 # take db backups every night
 db_backups_enabled: True

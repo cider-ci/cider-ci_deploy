@@ -11,7 +11,7 @@ database:
 
 github_authtoken: {{github_authtoken | default('NULL',true) }}
 
-hostname: "{{server_http_host_name}}"
+hostname: "{{ci_virtual_hosts[0]['hostname']}}"
 
 secret: "{{secret_key_base}}"
 
@@ -30,7 +30,7 @@ messaging:
     password: "{{cider_ci_mq_secret}}"
 
 
-server_base_url: "https://{{server_http_host_name}}"
+server_base_url: "https://{{ci_virtual_hosts[0]['hostname']}}"
 
 services:
 
