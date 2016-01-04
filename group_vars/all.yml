@@ -13,9 +13,6 @@ clean_slate: False
 
 server_http_host_name: "{{ hostvars[groups['cider-ci-server'][0]]['ansible_default_ipv4']['address'] }}"
 
-lein_service_xmx_value: 256m
-
-
 ###############################################################################
 ### Server Specific Variables #################################################
 ###############################################################################
@@ -25,11 +22,13 @@ db_backups_enabled: False
 
 
 ### Memory ####################################################################
+
+ci_memtotal_mb: '{{ansible_memtotal_mb}}'
+
 # database uses around 20% already
-user_interface_xmx_value: "{{ (ansible_memtotal_mb * 0.5) | round | int }}m"
-user_interface_xms_value: "{{ (ansible_memtotal_mb * 0.25) | round | int }}m"
-user_interface_cache_size_megabytes: "{{ (ansible_memtotal_mb * 0.1) | round | int }}"
-lein_service_xmx_value: "{{ (ansible_memtotal_mb * 0.06) | round | int }}m"
+user_interface_xmx_mb_value: "{{ ( (ci_memtotal_mb | int) * 0.5) | round | int }}"
+user_interface_cache_size_megabytes: "{{ ( (ci_memtotal_mb | int) * 0.1) | round | int }}"
+lein_service_xmx_mb_value: "{{ ( (ci_memtotal_mb | int) * 0.06) | round | int }}"
 
 
 ### Managed Repositories ######################################################

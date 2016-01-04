@@ -1,6 +1,6 @@
 - debug:
-    var: ansible_memtotal_mb
+    var: ci_memtotal_mb
 
 - fail:
-    msg: "An Cider-CI Server must have at least 2GB of Memory, it has {{ansible_memtotal_mb}} mb!"
-  when: ansible_memtotal_mb < 2000
+    msg: "An Cider-CI Server must have at least 1GB of memory available, it has {{ci_memtotal_mb}} mb!"
+  when: ci_memtotal_mb < 1000

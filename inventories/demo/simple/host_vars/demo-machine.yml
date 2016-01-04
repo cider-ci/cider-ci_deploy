@@ -4,10 +4,6 @@ nrepl_bind_address: 0.0.0.0
 # no point in using ntp for a (probably?) virtual machine
 ntp_enabled: False
 
-# low settings so we get by with about 2G - 3G of RAM
-lein_service_xmx_value: 200M
-user_interface_xmx_value: 1G
-
 # independent of the cores of the machine we need at least 2 parallel execution
 # to demo a few things
 executor_max_load: 2

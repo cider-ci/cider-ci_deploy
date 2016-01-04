@@ -1,6 +1,6 @@
 lein_service_user: "{{lein_git_service_name}}"
 lein_service_app_dir: "/var/local/{{lein_service_name}}"
-# lein_service_xmx_value: 256m
+# lein_service_xmx_mb_value: 256
 lein_service_log_dir: "{{lein_service_app_dir}}/log"
 lein_service_bin: /usr/local/bin/{{lein_service_name}}
 lein_service_wrapper_bin: /usr/local/bin/{{lein_service_name}}_wrapper

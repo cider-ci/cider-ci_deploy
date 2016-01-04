@@ -6,6 +6,15 @@
   tasks:
 
   - debug:
+      var: ansible_memtotal_mb
+
+  - debug:
+      var: ci_memtotal_mb
+
+  - debug:
+      var: user_interface_xmx_mb_value
+
+  - debug:
       var: cider_ci_master_secret
 
   - debug:
