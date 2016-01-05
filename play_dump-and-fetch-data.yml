@@ -16,7 +16,7 @@
   - name: Dump
     become: true
     become_user: 'cider-ci_user-interface'
-    become_method: su
+    become_method: sudo
     shell:  |
       set -eux
       source /etc/profile.d/rbenv-load.sh
@@ -30,6 +30,6 @@
     with_items: "{{dump_items}}"
 
   - fetch:
-      src: /tmp/madek_{{item}}.pgbin
+      src: /tmp/{{item}}.pgbin
       dest: tmp/
     with_items: "{{dump_items}}"
