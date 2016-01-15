@@ -56,7 +56,6 @@
     set -eux
     cd {{lein_service_app_dir}}
     export LEIN_ROOT=yes
-    export JAVA_OPTS=-Xmx256m
     lein {{item}}
   args:
     executable: /bin/bash
