@@ -126,7 +126,7 @@ services:
       max_pool_size: 20
 
     repositories:
-      path: "/tmp/cider-ci_repositories"
+      path: {{repositories_path}}
 
 
   storage:

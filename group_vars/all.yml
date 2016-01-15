@@ -17,9 +17,12 @@ ci_virtual_hosts:
   ssl_certificate_key_file: /etc/ssl/private/ssl-cert-snakeoil.key
 
 
+
 ###############################################################################
 ### Server Specific Variables #################################################
 ###############################################################################
+
+repositories_path:  "/tmp/cider-ci_repositories"
 
 job_retention_duration: 50 Years
 db_backups_enabled: False
