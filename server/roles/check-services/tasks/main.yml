@@ -14,5 +14,3 @@
     status_code: 200
     validate_certs: no
   with_items: check_services
-
-

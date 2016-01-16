@@ -47,11 +47,12 @@
 #
 # TODO: we need to remove `:aot :all` for now; too many problems
 # try it again with java8
+# Lein clean is disable for now
 
 - name: lein clean and compile
   become: true
   become_user: '{{lein_service_user}}'
-  become_method: su
+  become_method: sudo
   shell:  |
     set -eux
     cd {{lein_service_app_dir}}
@@ -59,7 +60,12 @@
     lein {{item}}
   args:
     executable: /bin/bash
-  with_items: [clean, compile]
+  with_items: [clean]
+  when: FALSE
+
+- shell:  |
+    rm -rf '{{lein_service_app_dir}}/target'
+  changed_when: false
 
 
 ### service ###################################################################

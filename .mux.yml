@@ -1,5 +1,5 @@
 windows:
   '2':
-    name: ssh Ci2
+    name: root@Ci2
     command: |
       ssh root@ci2.zhdk.ch
