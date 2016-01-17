@@ -34,7 +34,7 @@ ci_memtotal_mb: '{{ansible_memtotal_mb * 0.8 }}'
 
 # database uses around 20% already
 user_interface_xmx_mb_value: "{{ ( (ci_memtotal_mb | int) * 0.5) | round | int }}"
-user_interface_cache_size_megabytes: "{{ ( (ci_memtotal_mb | int) * 0.1) | round | int }}"
+user_interface_cache_store_size_megabytes: "{{ ( (ci_memtotal_mb | int) * 0.05) | round | int }}"
 lein_service_xmx_mb_value: "{{ ( (ci_memtotal_mb | int) * 0.06) | round | int }}"
 
 

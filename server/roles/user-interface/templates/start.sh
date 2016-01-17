@@ -8,6 +8,7 @@ rbenv shell {{rubies.jruby.version}}
 # Rails Settings
 export RAILS_ENV={{rails_env}}
 export RAILS_RELATIVE_URL_ROOT={{web_sub_path}}{{web_ui_prefix}}
+export CACHE_STORE_SIZE_MB={{ user_interface_cache_store_size_megabytes }}
 
 # Memory Settings
 export JRUBY_OPTS="-J-Xmx{{user_interface_xmx_mb_value}}m"
