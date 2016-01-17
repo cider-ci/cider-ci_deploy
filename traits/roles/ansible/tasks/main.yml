@@ -3,7 +3,10 @@
   - python-pip
   - python-dev
 
-- pip: name=ansible extra_args='--upgrade'
+- pip:
+    name: ansible
+    version: 1.9.4
+    extra_args: --upgrade
 
 - file:
     path: /etc/cider-ci
@@ -17,3 +20,4 @@
     state: present
   with_items:
     - "- ansible"
+    - "- ansible-1.9"
