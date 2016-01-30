@@ -8,5 +8,5 @@
   host: 127.0.0.1
   username: '{{database.user}}'
   password: '{{database.password}}'
-
-
+  variables:
+    statement_timeout: {{user_interface_statement_timeout_milliseconds}}

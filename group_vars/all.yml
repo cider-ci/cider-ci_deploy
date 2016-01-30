@@ -27,6 +27,7 @@ repositories_path:  "/tmp/cider-ci_repositories"
 job_retention_duration: 50 Years
 db_backups_enabled: False
 
+user_interface_statement_timeout_milliseconds: 3000
 
 ### Memory ####################################################################
 
