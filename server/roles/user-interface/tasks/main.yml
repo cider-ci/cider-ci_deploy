@@ -64,21 +64,6 @@
   changed_when: not migrate.stdout | match("")
 
 
-### Assets ####################################################################
-
-- name: Precompile assets
-  shell:  su -l -s /bin/bash -c 'source /etc/profile.d/rbenv-load.sh
-            && rbenv-load
-            && cd {{ui_root_path}}
-            && export RAILS_ENV={{rails_env}}
-            && export RBENV_VERSION={{rubies.mri.version}}
-            && rm -rf public/assets/*
-            && rm -rf tmp/cache/*
-            && bundle exec rake assets:precompile' {{user_interface_user}}
-          executable=/bin/bash
-  register: precompile_assets
-  changed_when: not precompile_assets.stderr | match("")
-
 ### logrotation ################################################################
 
 - template: src=logrotate
