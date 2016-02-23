@@ -1,5 +1,7 @@
 job_retention_duration: "{{job_retention_duration}}"
 
+authentication_providers: {{authentication_providers | to_json }}
+
 database:
   adapter: "postgresql"
   classname: "org.postgresl.Driver"
