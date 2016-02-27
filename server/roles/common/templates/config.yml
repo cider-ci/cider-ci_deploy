@@ -22,7 +22,8 @@ basic_auth:
   password: "{{services_basic_auth_secret}}"
 
 session:
-  secret: "{{secret_key_base}}"
+  max_lifetime: "{{max_session_lifetime}}"
+  secret: "{{session_secret}}"
 
 messaging:
   connection:

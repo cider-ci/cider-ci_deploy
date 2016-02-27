@@ -10,6 +10,8 @@
 ### General Variables #########################################################
 ###############################################################################
 
+max_session_lifetime: 7 days
+
 clean_slate: False
 
 ci_virtual_hosts:
@@ -118,6 +120,10 @@ cider_ci_database_secret: >
 
 secret_key_base: >
   {{lookup('pipe', "echo -n 'secret_key_base' | openssl sha1 -hmac '{{cider_ci_master_secret}}' | cut -f2 -d ' '")}}
+
+session_secret: >
+  {{lookup('pipe', "echo -n 'session_secret' | openssl sha1 -hmac '{{cider_ci_master_secret}}' | cut -f2 -d ' '")}}
+
 
 services_basic_auth_secret: >
   {{lookup('pipe', "echo -n 'services_basic_auth_secret' | openssl sha1 -hmac '{{cider_ci_master_secret}}' | cut -f2 -d ' '")}}
