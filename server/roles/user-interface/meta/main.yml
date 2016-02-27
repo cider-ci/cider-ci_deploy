@@ -1,7 +1,7 @@
 allow_duplicates: yes
 
 dependencies:
-  - role: install_nodejs
+  - role: install-nodejs
 
   - role: rbenv
     user: "{{user_interface_user}}"

@@ -22,6 +22,3 @@
 [submodule "roles/git-checkout"]
 	path = roles/git-checkout
 	url = https://github.com/DrTom/ansible-role_git-checkout.git
-[submodule "roles/install_nodejs"]
-	path = roles/install_nodejs
-	url = https://github.com/eins78/ansible-role-nodejs-npm.git
