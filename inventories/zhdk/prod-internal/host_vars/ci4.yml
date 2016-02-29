@@ -4,9 +4,54 @@ ci_virtual_hosts:
   ssl_certificate_file: /etc/ssl/certs/ssl-cert-snakeoil.pem
   ssl_certificate_key_file: /etc/ssl/private/ssl-cert-snakeoil.key
 
-
-
 # take db backups every night
 db_backups_enabled: True
 
 job_retention_duration: 30 Days
+
+authentication_providers:
+  github:
+    name: GitHub
+    client_id: "{{github_client_id}}"
+    client_secret: "{{github_client_secret}}"
+    oauth_base_url: https://github.com/login/oauth
+    api_endpoint: https://api.github.com
+    sign-in_strategies:
+
+    - type: team-membership
+      organization-login: zhdk
+      team-name: 'ci4.zhdk.ch Admins'
+      access_token: "{{github_zhdk_team_membership_access_token}}"
+      create-attributes:
+        is_admin: true
+        account_enabled: true
+        password_sign_in_allowed: true
+        max_session_lifetime: 7 days
+      update-attributes:
+        is_admin: true
+        account_enabled: true
+
+    - type: team-membership
+      organization-login: zhdk
+      team-name: 'C#/MS-SQL Developers'
+      access_token: "{{github_zhdk_team_membership_access_token}}"
+      create-attributes:
+        is_admin: false
+        account_enabled: true
+        password_sign_in_allowed: false
+        max_session_lifetime: 7 days
+      update-attributes:
+        account_enabled: true
+
+    - type: team-membership
+      organization-login: zhdk
+      team-name: 'PHP Developers'
+      access_token: "{{github_zhdk_team_membership_access_token}}"
+      create-attributes:
+        is_admin: false
+        account_enabled: true
+        password_sign_in_allowed: false
+        max_session_lifetime: 7 days
+      update-attributes:
+        account_enabled: true
+
