@@ -1,3 +1,7 @@
+- apt_key:
+    url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+    state: present
+
 - apt_repository:
     repo: 'deb https://deb.nodesource.com/node_4.x {{ansible_distribution_release}} main'
     state: present
