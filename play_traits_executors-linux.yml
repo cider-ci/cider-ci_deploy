@@ -77,6 +77,7 @@
 
     - role: traits/roles/rbenv
       when: install_trait_rbenv
+      tags: [install_trait_rbenv]
 
     - role: traits/roles/jruby-9000
       when: install_trait_jruby_9000
