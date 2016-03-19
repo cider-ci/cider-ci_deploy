@@ -39,6 +39,7 @@
 
     - role: traits/roles/chrome-and-chromedriver
       when: install_trait_chrome_and_chromedriver
+      tags: [install_trait_chrome_and_chromedriver]
 
     - role: traits/roles/firefox
       when: install_trait_firefox and ( ansible_distribution != 'Debian' )
