@@ -26,6 +26,7 @@
 
     - role: traits/roles/nodejs
       when: install_trait_nodejs
+      tags: [install_trait_nodejs]
 
     - role: traits/roles/curl
       when: install_trait_curl
