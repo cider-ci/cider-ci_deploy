@@ -1,0 +1,29 @@
+- name: set up directories for files
+  file:
+    path: '{{ci_trait_postgresql_config_dir}}'
+    state: directory
+
+- name: template init playbook
+  template:
+    src: cider-ci_trait-postgresql_init-play.yml
+    dest: '{{ci_trait_postgresql_init_play_path}}'
+
+- name: template post playbook
+  template:
+    src: cider-ci_trait-postgresql_post-play.yml
+    dest: '{{ci_trait_postgresql_post_play_path}}'
+
+- name: template trait postgresql service
+  template:
+    src: cider-ci_trait-postgresql.service
+    dest: /etc/systemd/system/{{ci_trait_postgresql_service_name}}.service
+
+- name: reload systemctl
+  command: systemctl daemon-reload
+  changed_when: false
+
+- name: start trait postgresql service
+  service:
+    name: '{{ci_trait_postgresql_service_name}}'
+    state: started
+    enabled: yes

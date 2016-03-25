@@ -1,0 +1,20 @@
+[Unit]
+Description=Cider-CI {{service.name}} Service
+After=syslog.target
+After=network.target
+
+BindsTo=cider-ci_postgresql.service
+BindsTo=cider-ci_rabbitmq.service
+
+[Service]
+WorkingDirectory={{service_dir}}
+User=cider-ci
+Group=cider-ci
+Environment=JRUBY_HOME={{service_dir}}/vendor/jruby
+Environment=PATH={{service_dir}}/vendor/jruby/bin:/usr/local/bin:/usr/bin:/bin
+Environment=RAILS_ENV=production
+Environment=RAILS_RELATIVE_URL_ROOT={{ci_web_context}}{{service.context}}
+ExecStart={{service_dir}}/vendor/jruby/bin/jruby -S bundle exec puma config.ru -t 4:40 -b tcp://localhost:{{service.http_port}}
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,9 @@
+- include: install.yml
+- include: init.yml
+
+- name: Create the a database for root
+  postgresql_db:
+    name: root
+    login_user: root
+    owner: root
+    port: '{{ci_postgres_port}}'

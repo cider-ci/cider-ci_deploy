@@ -1,0 +1,20 @@
+[Unit]
+Description=Cider-CI Executor
+
+After=syslog.target
+After=network.target
+
+BindsTo=cider-ci_executor-download.service
+After=cider-ci_executor-download.service
+
+[Service]
+Restart=always
+StartLimitInterval=300
+StartLimitBurst=5
+
+WorkingDirectory=/cider-ci/executor
+Environment=CLASSPATH=/cider-ci/executor/config:/cider-ci/executor/executor.jar
+ExecStart=/usr/lib/jvm/java-8-openjdk-amd64/bin/java "-Xmx200m" cider_ci.ex.main
+
+[Install]
+WantedBy=multi-user.target

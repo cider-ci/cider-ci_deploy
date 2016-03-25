@@ -1,0 +1,45 @@
+#!/usr/bin/env ruby
+
+require 'yaml'
+require 'shellwords'
+require 'digest'
+require 'fileutils'
+
+JAR_DIR = '/cider-ci/executor'.freeze
+JAR_PATH = "#{JAR_DIR}/executor.jar".freeze
+JAR_DL_PATH = '/cider-ci/downloads/executor/executor.jar'.freeze
+JAR_TMP_PATH = '/tmp/executor.jar'.freeze
+
+def download
+  config = YAML.load_file('/cider-ci/executor/config/config.yml')
+  server_base_url = (config['server_base_url'] \
+    || raise('server_base_url not configured'))
+
+  url = "#{server_base_url.shellescape}#{JAR_DL_PATH.shellescape}"
+  dl_cmd = 'curl --connect-timeout 5 --silent --show-error --fail --insecure ' \
+    + url + " > #{JAR_TMP_PATH.shellescape} "
+
+  system(dl_cmd) || raise("downloading #{url} failed")
+end
+
+def replace_jar_if_changed
+  jar_digest = (Digest::SHA256.file(JAR_PATH).hexdigest if File.exist? JAR_PATH)
+  jar_tmp_digest = Digest::SHA256.file(JAR_TMP_PATH).hexdigest
+  if jar_digest != jar_tmp_digest
+    FileUtils.mkdir_p(JAR_DIR)
+    FileUtils.mv(JAR_TMP_PATH, JAR_PATH)
+    true
+  end
+  false
+end
+
+def restart_executor
+  system('/usr/bin/systemctl', 'restart', 'cider-ci_executor.service') \
+    || raise('restarting executor failed')
+end
+
+download
+replaced = replace_jar_if_changed
+restart_executor if replaced
+
+exit 0

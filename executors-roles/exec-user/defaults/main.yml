@@ -1,0 +1,2 @@
+ci_exec_user: ci-exec-user
+ci_exec_user_home: ~{{executor_execution_user}}

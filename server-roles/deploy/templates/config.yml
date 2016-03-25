@@ -1,0 +1,166 @@
+job_retention_duration: {{job_retention_duration | default('30 days') }}
+
+authentication_providers: {{authentication_providers | default({}) | to_json }}
+
+database:
+  adapter: postgresql
+  classname: org.postgresl.Driver
+  subname: '//localhost:{{ci_postgres_port}}/cider-ci_v4'
+  subprotocol: postgresql
+  user: cider-ci
+  password: "{{ci_database_secret}}"
+  max_pool_size: 3
+
+hostname: localhost
+
+secret: "{{ci_master_secret}}"
+
+basic_auth:
+  password: "{{ci_services_secret}}"
+
+session:
+  secret: "{{ci_master_secret}}"
+
+messaging:
+  connection:
+    vhost: cider-ci_v4
+    host: localhost
+    port: {{ci_rabbitmq_node_port}}
+    username: cider-ci
+    password: "{{ci_messaging_secret}}"
+
+server_base_url: {{ci_base_url}}
+
+services:
+
+  api:
+
+    http:
+      host: localhost
+      port: 8885
+      context: /cider-ci
+      sub_context: /api
+      ssl: false
+
+    nrepl:
+      port: 7885
+      bind: localhost
+      enabled: true
+
+    database:
+      max_pool_size: 10
+
+  builder:
+
+    http:
+      host: localhost
+      port: 8884
+      context: /cider-ci
+      sub_context: /builder
+      ssl: false
+
+    nrepl:
+      port: 7884
+      bind: localhost
+      enabled: true
+
+    database:
+      max_pool_size: 10
+
+
+  dispatcher:
+
+    http:
+      host: localhost
+      port: 8882
+      context: '/cider-ci'
+      sub_context: '/dispatcher'
+      ssl: false
+
+    nrepl:
+      port: 7882
+      bind: localhost
+      enabled: true
+
+    database:
+      max_pool_size: 30
+
+    dispatch_interval: 0.25
+
+
+
+  notifier:
+
+    http:
+      host: localhost
+      port: 8887
+      context: /cider-ci
+      sub_context: /notifier
+      ssl: false
+
+    nrepl:
+      port: 7887
+      bind: localhost
+      enabled: true
+
+    database:
+      max_pool_size: 10
+
+
+  repository:
+
+    http:
+      host: localhost
+      port: 8881
+      context: /cider-ci
+      sub_context: /repositories
+      ssl: false
+
+    nrepl:
+      port: 7881
+      bind: localhost
+      enabled: true
+
+    database:
+      max_pool_size: 20
+
+    repositories:
+      path: /cider-ci/data/repositories
+
+
+  storage:
+
+    http:
+      host: localhost
+      port: 8886
+      context: /cider-ci
+      sub_context: /storage
+      ssl: false
+
+    nrepl:
+      port: 7886
+      bind: localhost
+      enabled: true
+
+    database:
+      max_pool_size: 10
+
+    stores:
+
+      - url_path_prefix: /trial-attachments
+        file_path: /cider-ci/data/attachments/trial-attachments
+        db_table: trial_attachments
+
+      - url_path_prefix: /tree-attachments
+        file_path: /cider-ci/data/attachments/tree-attachments
+        db_table: tree_attachments
+
+  ui:
+
+    http:
+      host: localhost
+      port: 8880
+      context: /cider-ci
+      sub_context: /ui
+      ssl: false
+

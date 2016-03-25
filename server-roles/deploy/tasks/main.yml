@@ -1,0 +1,40 @@
+- name: make sure service {{item.value.name}} is stopped
+  service:
+    name: cider-ci_{{item.value.name}}
+    state: stopped
+  failed_when: false
+  with_dict: '{{ci_services}}'
+
+- include: install.yml
+  tags: [deploy-install]
+
+- include: configure.yml
+  tags: [deploy-configure]
+
+- include: setup-messaging.yml
+  tags: [deploy-setup-messaging]
+
+- include: setup-database.yml
+  tags: [deploy-setup-database]
+
+- include: setup-service.yml
+  with_dict: '{{ci_services}}'
+  tags: [deploy-setup-services]
+
+- name: reload systemctl
+  command: systemctl daemon-reload
+  changed_when: false
+
+- name: start service {{item.value.name}}
+  service:
+    name: cider-ci_{{item.value.name}}
+    state: started
+    enabled: yes
+  with_dict: '{{ci_services}}'
+
+- name: wait for service {{item.value.name}}
+  wait_for:
+    host: localhost
+    port: '{{item.value.http_port}}'
+    timeout: 60
+  with_dict: '{{ci_services}}'

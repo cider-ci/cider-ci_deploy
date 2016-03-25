@@ -1,0 +1,18 @@
+- name: run the rbenv_installer
+  become: yes
+  become_user: '{{ci_exec_user}}'
+  shell: >
+    curl https://raw.githubusercontent.com/fesplugas/rbenv-installer/master/bin/rbenv-installer
+    | bash
+
+- template:
+    src: rbenv.sh
+    dest: ~{{ci_exec_user}}/.bash_login.d/rbenv.sh
+    owner: root
+    group: '{{ci_exec_user}}'
+    mode: 0640
+
+- name: register rbenv trait
+  register_traits:
+    traits: [rbenv]
+    file: /cider-ci/executor/config/traits.yml

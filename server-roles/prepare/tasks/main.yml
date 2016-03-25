@@ -1,0 +1,39 @@
+- name: copy cider-ci to the server
+  synchronize:
+    src: cider-ci.tar.gz
+    dest: /tmp/cider-ci.tar.gz
+    copy_links: yes
+
+- name: create cider-ci group
+  group:
+    name: cider-ci
+    system: yes
+
+- name: create cider-ci user
+  user:
+    name: cider-ci
+    group: cider-ci
+
+- name: stop service {{item.value.name}}
+  service:
+    name: cider-ci_{{item.value.name}}
+    state: stopped
+  failed_when: false
+  with_dict: '{{ci_services}}'
+  tags: [setup-services]
+
+- name: stop every cider-ci_* service
+  command: systemctl stop cider-ci_*
+  failed_when: false
+
+- name: clean systemd service files
+  command: rm -f /etc/systemd/system/cider-ci*
+  when: ci_clean_slate
+
+- name: reload systemctl
+  command: systemctl daemon-reload
+  changed_when: false
+
+- name: clean cider-ci base directory
+  command: rm -f /etc/systemd/system/cider-ci*
+  when: ci_clean_slate

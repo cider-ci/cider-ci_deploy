@@ -1,0 +1,56 @@
+- name: epel-release
+  yum: name=epel-release state=latest
+
+- name: upgrade all packages
+  yum: name=* state=latest
+
+- name: set zoneinfo to UTC
+  file: src=/usr/share/zoneinfo/UTC dest=/etc/localtime  state=link
+
+- name: install vmware tools
+  yum: name=open-vm-tools state=latest
+  when: ansible_virtualization_type == "VMware"
+
+- name: start and enable vmtoolds
+  service:
+    name: vmtoolsd
+    state: started
+    enabled: true
+
+- name: install basic packages
+  yum: name={{item}} state=latest
+  with_items: [vim-enhanced, ncurses-term, bash-completion, bc, apg, openssl]
+
+- name: install the 'Development tools' package group
+  yum: name="@Development tools" state=present
+
+- name: install extra development packages
+  yum: name={{item}} state=latest
+  with_items: [ zlib, zlib-devel, gcc-c++, patch,
+    readline, readline-devel, libyaml-devel, libffi-devel,
+    openssl-devel, make, bzip2, autoconf, automake, libtool,
+    bison, curl, sqlite-devel, ruby]
+
+- name: install updated git
+  yum: name='{{item}}' state=present
+  with_items:
+  - 'http://opensource.wandisco.com/centos/7/git/x86_64/git-2.7.0-1.WANdisco.284.x86_64.rpm'
+  - 'http://opensource.wandisco.com/centos/7/git/x86_64/perl-Git-2.7.0-1.WANdisco.284.noarch.rpm'
+  tags: [git]
+
+
+- name: install etckeeper
+  yum: name=etckeeper state=latest
+
+- name: setup /etc to be tracked by etc keeper
+  shell: |
+    #!/usr/bin/env bash
+    set -eux
+    cd /etc
+    if [ ! -d .git ]; then
+      git config --global user.email 'root@localhost'
+      git config --global user.name root
+      etckeeper init
+      etckeeper commit "Initial commit"
+    fi
+  tags: [etckeeper]

@@ -1,0 +1,21 @@
+- include: setup-apache2.yml
+
+- name: disable all cider-ci sites
+  shell: rm /etc/apache2/sites-enabled/cider-ci_*
+  failed_when: false
+  register: cmd
+  changed_when: cmd.rc != 0
+
+- name: remove cider-ci configurations
+  file:
+    path: /etc/apache2/cider-ci
+    state: absent
+
+- include: virtual-host.yml
+  with_indexed_items: '{{ci_virtual_hosts}}'
+
+- name: reload reverse-proxy
+  service:
+    name: apache2
+    state: reloaded
+

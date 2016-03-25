@@ -1,0 +1,13 @@
+server_base_url: {{server_base_url}}
+
+basic_auth:
+  username: {{executor_name}}
+  password: {{executor_password}}
+
+
+self_update: {{ci_executor_self_update | default(true) }}
+
+exec_user:
+  name: '{{ci_exec_user}}'
+
+working_dir: '{{ci_working_dir}}'

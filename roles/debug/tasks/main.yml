@@ -1,0 +1,9 @@
+- debug:
+    var: hostvars[inventory_hostname]
+    # verbosity: 2
+- debug:
+    var: ci_master_secret
+    # verbosity: 2
+- debug:
+    var: ci_database_secret
+    # verbosity: 2

@@ -1,0 +1,10 @@
+/tmp
+vars.local.yml
+*vault_pass.txt
+callback_plugins/fix-ssl.pyc
+.retry
+*tar.gz
+*secret.txt
+zhdk-secrets.yml
+/inventories/*/config.yml
+/inventories/*/data.yml

@@ -1,0 +1,26 @@
+- name: Install dependencies
+  apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
+  with_items: [ruby, curl]
+
+- file:
+    path: /cider-ci/executor
+    state: absent
+  when: ci_clean_slate
+
+- include: configure.yml
+
+- include: setup-downloader.yml
+  tags: [executors_deploy_setup-downloader]
+
+- include: setup-service.yml
+  tags: [executors_deploy_setup-service]
+
+- update_system_traits: {}
+  tags: executors_deploy_update-system-traits
+
+- register_traits:
+    traits:
+      - '{{ansible_distribution}}'
+      - '{{ansible_distribution}} {{ansible_distribution_release}}'
+      - '{{inventory_hostname}}'
+    file: /etc/cider-ci/traits.yml

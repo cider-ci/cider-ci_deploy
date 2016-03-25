@@ -1,0 +1,31 @@
+- name: Configure APT for nodejs
+  shell: curl -sL https://deb.nodesource.com/setup_4.x | bash -
+
+- name: Install node.js
+  apt:
+    pkg: nodejs
+    state: latest
+    cache_valid_time: 3600
+
+- name: update npm
+  shell: npm install --global npm@latest
+
+- name: node major version
+  shell: node -p 'process.versions.node.split(".")[0]'
+  register: ci_trait_nodejs_major_version
+  changed_when: false
+
+- name: register nodjes trait
+  register_traits:
+    remove_match: "^nodejs.*"
+    traits:
+      - nodejs
+      - nodejs {{ci_trait_nodejs_major_version.stdout}}
+    file: /etc/cider-ci/traits.yml
+
+- name: register npm trait
+  register_traits:
+    remove_match: "^npm.*"
+    traits:
+      - npm
+    file: /etc/cider-ci/traits.yml

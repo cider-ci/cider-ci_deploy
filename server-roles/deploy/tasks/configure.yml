@@ -1,0 +1,21 @@
+- name: Configure rails secrets
+  template:
+    src: rails-secrets.yml
+    dest: /cider-ci/server/user-interface/config/secrets.yml
+
+- name: Configure services
+  template:
+    src: config.yml
+    dest: /cider-ci/server/config/config.yml
+
+- name: cider-ci user owns the required data directories
+  file:
+    path: '{{item}}'
+    state: directory
+    owner: cider-ci
+    group: cider-ci
+    mode: 0755
+  with_items:
+  - /cider-ci/data/attachments/trial-attachments
+  - /cider-ci/data/attachments/tree-attachments
+  - /cider-ci/data/repositories

@@ -1,0 +1,54 @@
+server_url_host: ci3.zhdk.ch
+server_base_url: http://{{server_url_host}}
+
+authentication_providers:
+  github:
+    name: GitHub
+    client_id: "{{github_client_id}}"
+    client_secret: "{{github_client_secret}}"
+    oauth_base_url: https://github.com/login/oauth
+    api_endpoint: https://api.github.com
+    sign-in_strategies:
+
+    - type: team-membership
+      organization-login: zhdk
+      team-name: 'ci.zhdk.ch Admins'
+      access_token: "{{github_zhdk_team_membership_access_token}}"
+      create-attributes:
+        is_admin: true
+        account_enabled: true
+        password_sign_in_allowed: true
+        max_session_lifetime: 7 days
+      update-attributes:
+        is_admin: true
+        account_enabled: true
+
+    - type: organization-membership
+      organization-login: Madek
+      create-attributes:
+        is_admin: false
+        account_enabled: true
+        password_sign_in_allowed: false
+        max_session_lifetime: 7 days
+      update-attributes:
+        account_enabled: true
+
+    - type: organization-membership
+      organization-login: leihs
+      create-attributes:
+        is_admin: false
+        account_enabled: true
+        password_sign_in_allowed: false
+        max_session_lifetime: 7 days
+      update-attributes:
+        account_enabled: true
+
+    - type: organization-membership
+      organization-login: cider-ci
+      create-attributes:
+        is_admin: false
+        account_enabled: true
+        password_sign_in_allowed: false
+        max_session_lifetime: 7 days
+      update-attributes:
+        account_enabled: true

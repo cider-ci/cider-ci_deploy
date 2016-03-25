@@ -1,0 +1,14 @@
+- name: set env
+  template:
+    src: env.sh
+    dest: ~{{ci_exec_user}}/.bash_login.d/opendjk.sh
+
+- name: register trait
+  register_traits:
+    traits:
+      - JDK
+      - JDK 8
+      - OpenJDK
+      - OpenJDK 8
+    file: /cider-ci/executor/config/traits.yml
+

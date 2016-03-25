@@ -1,0 +1,32 @@
+- name: test if the lein version is already installed
+  stat:
+    path: '{{ci_trait_leiningen_bin_path}}'
+  register: ci_trait_leiningen_bin_path_stat
+
+- name: create bin dir
+  file:
+    path: ~{{ci_exec_user}}/bin
+    state: directory
+    mode: 0755
+  when: not ci_trait_leiningen_bin_path_stat.stat.exists
+
+- name: download leiningen
+  get_url:
+    url: https://raw.github.com/technomancy/leiningen/{{ci_trait_leiningen_version}}/bin/lein
+    dest: '{{ci_trait_leiningen_bin_path}}'
+    mode: 0755
+  when: not ci_trait_leiningen_bin_path_stat.stat.exists
+
+- name: link to the most recent version of leinigen
+  file:
+    dest: ~{{ci_exec_user}}/bin/lein
+    src: '{{ci_trait_leiningen_bin_path}}'
+    state: link
+
+- name: register leiningen trait
+  register_traits:
+    remove_match: "^Leiningen.*"
+    traits:
+      - Leiningen
+      - Leiningen {{ci_trait_leiningen_version_major}}
+    file: /cider-ci/executor/config/traits.yml

@@ -1,0 +1,9 @@
+- hosts: 127.0.0.1
+  connection: local
+
+  roles:
+  - role: openjdk8_install
+
+  tasks:
+  - name: build release archive
+    shell: ./build

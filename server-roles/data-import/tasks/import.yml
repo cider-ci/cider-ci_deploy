@@ -1,0 +1,20 @@
+- name: copy the data file over
+  copy:
+    src: '{{inventory_dir}}/data.yml'
+    dest: /tmp/ci_import.yml
+
+- name: import the data
+  become: yes
+  become_user: cider-ci
+  shell: |
+    #!/usr/bin/env bash
+    set -eux
+    export PATH=/cider-ci/server/user-interface/vendor/jruby/bin:$PATH
+    cd /cider-ci/server/user-interface/
+    jruby --dev -S bundle exec rake cider_ci:import_data FILE=/tmp/ci_import.yml
+
+- name: remove the data file
+  file:
+    path: /tmp/ci_import.yml
+    state: absent
+

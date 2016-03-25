@@ -1,0 +1,48 @@
+- hosts: 127.0.0.1
+  connection: local
+
+  tasks:
+  - name: build release archive
+    shell: ./build
+
+- hosts: cider-ci_server
+
+  vars_files:
+  - 'config.yml'
+  - 'server-config.yml'
+  - '{{inventory_dir}}/config.yml'
+  - '{{inventory_dir}}/server-config.yml'
+
+  pre_tasks: []
+
+  roles:
+
+  - role: debug
+    tags: [debug]
+
+  - role: os_setup
+    tags: [os-setup]
+
+  - role: openjdk8_install
+    tags: [openjdk8_install]
+
+  - role: server-roles/postgresql
+    tags: [postgresql]
+
+  - role: server-roles/rabbitmq
+    tags: [rabbitmq]
+
+  - role: server-roles/prepare
+    tags: [prepare]
+
+  - role: server-roles/deploy
+    tags: [deploy]
+
+  - role: server-roles/reverse-proxy
+    tags: [reverse-proxy]
+
+  - role: server-roles/data-import
+    tags: [import-data]
+
+# - role: server-roles/finalize
+#   tags: [finalize]

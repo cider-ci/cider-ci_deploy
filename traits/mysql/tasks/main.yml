@@ -1,0 +1,31 @@
+### MySQL
+
+- name: install mysql packages
+  apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
+  with_items:
+    - libmysqlclient-dev
+    - mysql-client
+    - mysql-server
+    - python-configparser
+    - python-mysqldb
+
+- name: setup user
+  mysql_user:
+    name: '{{ci_exec_user}}'
+    password: '{{ci_exec_user}}'
+    priv: '*.*:ALL'
+    state: present
+
+- name: setup env
+  template:
+    src: mysql_env.sh
+    dest: ~{{ci_exec_user}}/.bash_login.d/mysql.sh
+    owner: root
+    group: '{{ci_exec_user}}'
+    mode: 0640
+
+- name: register postgresql trait
+  register_traits:
+    traits:
+      - MySQL
+    file: /cider-ci/executor/config/traits.yml

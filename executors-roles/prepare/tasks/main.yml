@@ -1,0 +1,19 @@
+- name: stop every cider-ci_executor* service
+  command: systemctl stop cider-ci_executor*
+  when: ci_clean_slate
+  failed_when: false
+
+- name: clean executor systemd service files
+  command: rm -f /etc/systemd/system/cider-ci_executor*
+  when: ci_clean_slate
+
+- name: reload systemctl
+  command: systemctl daemon-reload
+  changed_when: false
+  when: ci_clean_slate
+
+- name: clean executor files
+  file:
+    path: /cider-ci/executor
+    state: absent
+  when: ci_clean_slate

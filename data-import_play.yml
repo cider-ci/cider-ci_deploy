@@ -1,0 +1,17 @@
+- hosts: cider-ci_server
+
+  vars_files:
+  - 'config.yml'
+  - 'server-config.yml'
+  - '{{inventory_dir}}/config.yml'
+  - '{{inventory_dir}}/server-config.yml'
+
+  pre_tasks: []
+
+  roles:
+
+  - role: debug
+    tags: [debug]
+
+  - role: server-roles/data-import
+    tags: [import-data]

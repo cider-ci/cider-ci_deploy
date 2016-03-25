@@ -1,0 +1,9 @@
+check process cider-ci_{{service.name}}
+        matching cider-ci_{{service.name}}
+        start program = "/bin/systemctl start cider-ci_{{service.name}}" with timeout 120 seconds
+        stop program  = "/bin/systemctl stop cider-ci_{{service.name}}"
+        if failed
+                url http://monit:{{monit_password}}@localhost{{ci_web_context}}{{service.context}}/status
+                with timeout 60 seconds
+                for 10 cycles
+        then restart

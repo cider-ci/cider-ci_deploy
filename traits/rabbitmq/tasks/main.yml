@@ -1,0 +1,58 @@
+- name: install rabbitmq
+  apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
+  with_items: [rabbitmq-server, amqp-tools]
+
+- name: enable rabbitmq_management
+  rabbitmq_plugin:
+    names: rabbitmq_management
+    state: enabled
+
+- name: Create plays directories
+  file:
+    path: '{{ci_trait_rabbitmq_play_dir}}'
+    state: directory
+
+- name: template the rabbitmq config file
+  template:
+    src: rabbitmq.config
+    dest: '{{ci_trait_rabbitmq_play_dir}}/rabbitmq.config'
+    owner: rabbitmq
+    group: rabbitmq
+    mode: 0600
+
+- name: Template post play
+  template:
+    src: cider-ci_trait-rabbitmq_post-play.yml
+    dest: '{{ci_trait_rabbitmq_post_play_path}}'
+    owner: rabbitmq
+    group: rabbitmq
+    mode: 0600
+
+- name: Template trait rabbitmq service
+  template:
+    src: cider-ci_trait-rabbitmq.service
+    dest: /etc/systemd/system/cider-ci_trait-rabbitmq.service
+
+- name: reload systemctl
+  command: systemctl daemon-reload
+  changed_when: false
+
+- name: Start trait rabbitmq service
+  service:
+    name: cider-ci_trait-rabbitmq
+    state: restarted
+    enabled: yes
+
+- name: Env for the user
+  template:
+    src: rabbitmq_env.sh
+    dest: ~{{ci_exec_user}}/.bash_login.d/rabbitmq_env.sh
+    owner: root
+    group: '{{ci_exec_user}}'
+    mode: 0640
+
+- name: Register rabbitmq trait
+  register_traits:
+    traits:
+      - RabbitMQ
+    file: /cider-ci/executor/config/traits.yml

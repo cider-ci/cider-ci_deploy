@@ -1,0 +1,7 @@
+- stat:
+    path: '{{inventory_dir}}/data.yml'
+  delegate_to: localhost
+  register: data_file
+
+- include: import.yml
+  when: data_file.stat.exists

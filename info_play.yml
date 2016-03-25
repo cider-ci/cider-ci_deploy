@@ -1,0 +1,15 @@
+- hosts: all
+
+  vars_files:
+  - 'config.yml'
+  - 'server-config.yml'
+  - '{{inventory_dir}}/config.yml'
+  - '{{inventory_dir}}/server-config.yml'
+
+  pre_tasks: []
+
+  roles:
+
+  - role: debug
+    tags: [debug]
+

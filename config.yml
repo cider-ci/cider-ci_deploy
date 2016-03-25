@@ -1,0 +1,2 @@
+ci_clean_slate: true
+ci_master_secret: "{{ lookup('password', inventory_dir + '/' + 'master_secret.txt chars=ascii_letters,digits,hexdigits length=40') }}"

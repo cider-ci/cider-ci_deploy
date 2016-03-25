@@ -1,0 +1,5 @@
+ci_trait_leiningen_version_major: 2
+ci_trait_leiningen_version_minor: 6
+ci_trait_leiningen_version_patch: 1
+ci_trait_leiningen_version: '{{ci_trait_leiningen_version_major}}.{{ci_trait_leiningen_version_minor}}.{{ci_trait_leiningen_version_patch}}'
+ci_trait_leiningen_bin_path: ~{{ci_exec_user}}/bin/lein-{{ci_trait_leiningen_version}}

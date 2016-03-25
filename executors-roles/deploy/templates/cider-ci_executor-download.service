@@ -1,0 +1,7 @@
+[Unit]
+Description=Cider-CI Executor-Download
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/cider-ci/executor/bin/download

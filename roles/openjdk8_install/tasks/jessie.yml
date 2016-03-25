@@ -1,0 +1,11 @@
+- apt_repository:
+    repo: deb http://http.debian.net/debian jessie-backports main contrib non-free
+    state: present
+    update_cache: yes
+
+- apt:
+    name: openjdk-8-jdk
+    state: latest
+    default_release: jessie-backports
+
+  # java etc is here: /usr/lib/jvm/java-8-openjdk-amd64/bin

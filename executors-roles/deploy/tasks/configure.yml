@@ -1,0 +1,20 @@
+- file:
+    path: /cider-ci/executor/config
+    state: directory
+    mode: 0755
+
+- name: determine basic auth properties
+  hmac_sha1_signature:
+    message: '{{inventory_hostname}}'
+    secret: '{{ci_master_secret}}'
+  register: executor_auth
+
+- name: set exectuor username and password
+  set_fact:
+    executor_name: '{{inventory_hostname}}'
+    executor_password: '{{executor_auth.signature}}'
+
+- name: create or update config file
+  template:
+    src: config.yml
+    dest: /cider-ci/executor/config/config.yml

@@ -1,0 +1,29 @@
+- hosts: cider-ci_executors
+
+  vars_files:
+  - 'config.yml'
+  - 'executors-config.yml'
+  - '{{inventory_dir}}/config.yml'
+  - '{{inventory_dir}}/executors-config.yml'
+
+  pre_tasks: []
+
+  roles:
+
+  - role: debug
+    tags: [debug]
+
+  - role: os_setup
+    tags: [os-setup]
+
+  - role: openjdk8_install
+    tags: [openjdk8_install]
+
+  - role: executors-roles/prepare
+    tags: [executors_perpare]
+
+  - role: executors-roles/exec-user
+    tags: [executors_exec-user]
+
+  - role: executors-roles/deploy
+    tags: [executors_deploy]

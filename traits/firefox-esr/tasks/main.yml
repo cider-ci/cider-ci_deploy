@@ -1,0 +1,41 @@
+- apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
+  with_items:
+    - lbzip2
+
+- stat: path={{ci_trait_firefox_esr_bin_path}}
+  register: ci_trait_firefox_esr_bin_path_stats
+
+- get_url:
+    url: http://ftp.mozilla.org/pub/mozilla.org/firefox/releases/{{ci_trait_firefox_dl_sub_path}}/linux-x86_{{ ansible_userspace_bits }}/en-US/firefox-{{ci_trait_firefox_dl_sub_path}}.tar.bz2
+    dest: '{{ci_trait_firefox_esr_dl_path}}'
+  when: not ci_trait_firefox_esr_bin_path_stats.stat.exists
+
+- shell: cd /tmp && tar xf {{ci_trait_firefox_esr_dl_path}}
+  when: not ci_trait_firefox_esr_bin_path_stats.stat.exists
+
+- shell: mv /tmp/firefox {{ci_trait_firefox_esr_dir}}
+  when: not ci_trait_firefox_esr_bin_path_stats.stat.exists
+
+- name: set env
+  template:
+    src: env.sh
+    dest: ~{{ci_exec_user}}/.bash_login.d/firefox_esr.sh
+  when: ci_trait_firefox_esr_default
+
+- name: set versioned env
+  template:
+    src: env_versioned.sh
+    dest: ~{{ci_exec_user}}/.bash_login.d/firefox_esr_{{ci_trait_firefox_esr_version_major}}.sh
+
+- name: register trait
+  register_traits:
+    traits:
+      - Firefox ESR
+      - Firefox ESR {{ci_trait_firefox_esr_version_major}}
+    file: /cider-ci/executor/config/traits.yml
+
+
+
+
+
+

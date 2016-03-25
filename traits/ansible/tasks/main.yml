@@ -1,0 +1,20 @@
+- name: install ansible dependencies
+  apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
+  with_items:
+  - python-pip
+  - python-dev
+
+- name: install ansible via pip
+  pip:
+    name: ansible
+    version: '{{ci_trait_ansible_version}}'
+    extra_args: --upgrade
+
+- name: register ansible trait
+  register_traits:
+    remove_match: "^ansible.*"
+    traits:
+      - Ansible
+      - Ansible {{ci_trait_ansible_version_major}}
+      - Ansible {{ci_trait_ansible_version}}
+    file: /etc/cider-ci/traits.yml

@@ -1,0 +1,20 @@
+- name: remove previously installed cider-ci server
+  file:
+    path: /cider-ci/server
+    state: absent
+
+- name: unpack cider-ci
+  shell: >
+    cd /cider-ci
+    && tar xf /tmp/cider-ci.tar.gz
+
+- name: move to /cider-ci/server
+  command: mv /cider-ci/cider-ci /cider-ci/server
+
+- name: adjust permissions
+  file:
+    path: /cider-ci/server
+    state: directory
+    owner: cider-ci
+    group: cider-ci
+    recurse: yes

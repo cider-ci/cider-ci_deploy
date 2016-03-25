@@ -1,0 +1,19 @@
+[Unit]
+Description=Cider-CI {{service.name}} Service
+After=syslog.target
+After=network.target
+
+BindsTo=cider-ci_postgresql.service
+
+BindsTo=cider-ci_rabbitmq.service
+
+
+[Service]
+WorkingDirectory={{service_dir}}
+User=cider-ci
+Group=cider-ci
+Environment=CLASSPATH={{service_dir}}/config:{{service_dir}}/{{service.name}}.jar
+ExecStart=/usr/lib/jvm/java-8-openjdk-amd64/bin/java "-Xmx{{ service.xmx_mb | default(200) }}m" {{service.main}}
+
+[Install]
+WantedBy=multi-user.target

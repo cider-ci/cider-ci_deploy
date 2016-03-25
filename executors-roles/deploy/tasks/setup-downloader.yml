@@ -1,0 +1,25 @@
+- file:
+    path: /cider-ci/executor/bin
+    state: directory
+    mode: 0755
+
+- name: install download binary
+  template:
+    src: download
+    dest: /cider-ci/executor/bin/download
+    mode: u+rwx,g+rx,o+rx
+
+- name: install download service
+  template:
+    src: cider-ci_executor-download.service
+    dest: /etc/systemd/system/cider-ci_executor-download.service
+    mode: 0644
+
+- name: reload systemctl
+  command: systemctl daemon-reload
+  changed_when: false
+
+- name: invoke download service
+  service:
+    name: cider-ci_executor-download
+    state: restarted

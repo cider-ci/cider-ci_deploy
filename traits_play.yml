@@ -1,0 +1,66 @@
+- hosts: cider-ci_executors
+
+  vars_files:
+  - 'config.yml'
+  - 'executors-config.yml'
+  - 'traits-config.yml'
+  - '{{inventory_dir}}/config.yml'
+  - '{{inventory_dir}}/executors-config.yml'
+  - '{{inventory_dir}}/traits-config.yml'
+
+  pre_tasks: []
+
+  roles:
+
+  - role: debug
+    tags: [debug]
+
+  - role: traits/ansible
+    when: ci_trait_ansible
+    tags: ci_trait_ansible
+
+  - role: traits/leiningen
+    when: ci_trait_leiningen
+    tags: ci_trait_leiningen
+
+  - role: traits/firefox-esr
+    when: ci_trait_firefox_esr
+    tags: ci_trait_firefox_esr
+
+  - role: traits/misc
+    when: ci_trait_misc
+    tags: ci_trait_misc
+
+  - role: traits/mysql
+    when: ci_trait_mysql
+    tags: ci_trait_mysql
+
+  - role: traits/nodejs
+    when: ci_trait_nodejs
+    tags: ci_trait_nodejs
+
+  - role: traits/openjdk
+    when: ci_trait_openjdk
+    tags: ci_trait_openjdk
+
+  - role: traits/phantomjs
+    when: ci_trait_phantomjs
+    tags: ci_trait_phantomjs
+
+  - role: traits/postgresql
+    when: ci_trait_postgresql
+    tags: ci_trait_postgresql
+
+  - role: traits/rabbitmq
+    when: ci_trait_rabbitmq
+    tags: ci_trait_rabbitmq
+
+  - role: traits/rbenv
+    when: ci_trait_rbenv
+    tags: ci_trait_rbenv
+
+  - role: traits/sqlite
+    when: ci_trait_sqlite
+    tags: ci_trait_sqlite
+
+

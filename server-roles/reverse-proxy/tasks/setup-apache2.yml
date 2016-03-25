@@ -1,0 +1,19 @@
+- name: Install apache2
+  apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
+  register: apache2_install
+  with_items:
+    - apache2
+    - libapache2-mod-xsendfile
+
+- name: Disable default site
+  command:  a2dissite 000-default
+            removes=/etc/apache2/sites-enabled/000-default.conf
+  when: ci_apache2_disable_default
+
+- name: Enable modules
+  shell:  a2enmod {{item}}
+  register: result
+  with_items: '{{ci_apache2_modules}}'
+  changed_when: result.stdout | search("Enabling module")
+
+

@@ -1,0 +1,9 @@
+ci_apache2_disable_default: true
+ci_apache2_modules:
+  - expires
+  - headers
+  - proxy
+  - proxy_http
+  - rewrite
+  - ssl
+  - xsendfile

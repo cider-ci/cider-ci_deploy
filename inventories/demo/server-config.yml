@@ -1,0 +1,2 @@
+server_url_host: localhost
+server_base_url: http://{{server_url_host}}:{{server_url_port}}

@@ -1,0 +1,32 @@
+- apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
+  with_items:
+    - lbzip2
+
+- stat: path={{ci_trait_phantomjs_bin_path}}
+  register: ci_trait_phantomjs_bin_path_stats
+
+- get_url:
+    url: https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-{{ci_trait_phantomjs_version}}-linux-x86_64.tar.bz2
+    dest: '{{ci_trait_phantomjs_dl_path}}'
+  when: not ci_trait_phantomjs_bin_path_stats.stat.exists
+
+- shell: cd /tmp && tar xf {{ci_trait_phantomjs_dl_path}}
+  when: not ci_trait_phantomjs_bin_path_stats.stat.exists
+
+- shell: mv /tmp/phantomjs-{{ci_trait_phantomjs_version}}-linux-x86_64/bin/phantomjs {{ci_trait_phantomjs_bin_path}}
+  when: not ci_trait_phantomjs_bin_path_stats.stat.exists
+
+- name: link to the most recent version of phantomjs
+  file:
+    dest: ~{{ci_exec_user}}/bin/phantomjs
+    src: '{{ci_trait_phantomjs_bin_path}}'
+    state: link
+
+- name: register trait
+  register_traits:
+    remove_match: '^PhantomJS.*'
+    traits:
+      - PhantomJS
+      - PhantomJS {{ci_trait_phantomjs_version_major}}
+      - PhantomJS {{ci_trait_phantomjs_version_major}}.{{ci_trait_phantomjs_version_minor}}
+    file: /cider-ci/executor/config/traits.yml

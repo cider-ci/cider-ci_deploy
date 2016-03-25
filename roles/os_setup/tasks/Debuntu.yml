@@ -1,0 +1,43 @@
+- name: dist upgrade
+  apt: upgrade=dist update_cache=yes cache_valid_time=3600
+
+### Install some stuff we need ###############################################
+
+- name: Install stuff
+  apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
+  with_items: [ruby, python-passlib]
+
+### Vim as default editor #####################################################
+
+- name: Install vim-nox
+  apt: pkg=vim-nox state=latest update_cache=yes cache_valid_time=3600
+  register: install_vim_nox
+  when: ci_vim_mode == true
+
+- name: Set vim-nox as default editor
+  command: update-alternatives --set editor /usr/bin/vim.nox
+  when:  ci_vim_mode == true
+  register: result
+  changed_when: result.stdout | search("using \/usr\/bin\/vim\.nox")
+
+- lineinfile:
+    dest: "{{ansible_env.HOME}}/.bashrc"
+    line: set -o vi
+  when:  ci_vim_mode == true
+
+
+### etckeeper #################################################################
+
+- include: Debuntu_etckeeper.yml
+
+
+### vmware ####################################################################
+
+- name: install vmware tools
+  apt: name={{item}} state=latest update_cache=yes cache_valid_time=3600
+  when: ansible_virtualization_type == "VMware"
+  with_items:
+  - open-vm-tools
+  - open-vm-tools-dkms
+
+

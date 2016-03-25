@@ -1,0 +1,81 @@
+- apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
+  with_items: [rabbitmq-server, amqp-tools]
+
+- name: create {{ci_rabbitmq_user}} group
+  group:
+    name: '{{ci_rabbitmq_user}}'
+    system: yes
+
+- name: create {{ci_rabbitmq_user}} user
+  user:
+    name: '{{ci_rabbitmq_user}}'
+    group: '{{ci_rabbitmq_user}}'
+
+- name: rabbitmq systemd service file
+  template:
+    src: cider-ci_rabbitmq.service
+    dest: /etc/systemd/system/cider-ci_rabbitmq.service
+
+- name: reload systemctl
+  command: systemctl daemon-reload
+  changed_when: false
+
+- name: make sure the rabbitmq service is not running
+  service:
+    name: cider-ci_rabbitmq
+    state: stopped
+  when: ci_clean_slate
+
+- name: rabbitmq clean slate
+  shell: rm -rf {{ci_rabbitmq_working_dir}}
+  when: ci_clean_slate
+
+- name: create the rabbitmq working directory
+  file:
+    path: '{{ci_rabbitmq_working_dir}}'
+    state: directory
+    owner: '{{ci_rabbitmq_user}}'
+    group: '{{ci_rabbitmq_user}}'
+
+- name: template the rabbitmq config file
+  template:
+    src: rabbitmq.config
+    dest: '{{ci_rabbitmq_config_file_path}}'
+    owner: '{{ci_rabbitmq_user}}'
+    group: '{{ci_rabbitmq_user}}'
+    mode: 0600
+
+- name: the rabbitmq service is running
+  service:
+    name: cider-ci_rabbitmq
+    state: started
+    enabled: yes
+
+- name: wait for rabbitmq
+  wait_for:
+    host: localhost
+    port: '{{ci_rabbitmq_node_port}}'
+    timeout: 60
+
+- name: enalbe the management interface
+  shell: |
+    export RABBITMQ_NODENAME='{{ci_rabbitmq_node_name}}'
+    rabbitmq-plugins enable rabbitmq_management
+
+- name: the rabbitmq service is running
+  service:
+    name: cider-ci_rabbitmq
+    state: restarted
+    enabled: yes
+
+- name: wait for rabbitmq
+  wait_for:
+    host: localhost
+    port: '{{ci_rabbitmq_node_port}}'
+    timeout: 60
+
+- name: wait for the management interface
+  wait_for:
+    host: localhost
+    port: '{{ci_rabbitmq_mangement_port}}'
+    timeout: 300

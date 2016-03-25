@@ -1,0 +1,50 @@
+- name: Etc keeper install packages
+  apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
+  with_items:
+    - etckeeper
+    - git
+
+- name: etckeeper uninitialize bzr (in case)
+  command: etckeeper uninit -f
+           removes=/etc/.bzr
+
+- name: etckeeper deconfigure bzr
+  lineinfile:
+    dest: /etc/etckeeper/etckeeper.conf
+    regexp: bzr
+    line: >
+      #VCS="bzr"
+
+- name: etckeeper configuer git
+  lineinfile:
+    dest: /etc/etckeeper/etckeeper.conf
+    regexp: git
+    line: VCS="git"
+
+- name: setup /etc to be tracked by etc keeper and initialize
+  shell: |
+    #!/usr/bin/env bash
+    set -eux
+    cd /etc
+    if [ ! -d .git ]; then
+      git config --global user.email 'root@localhost'
+      git config --global user.name root
+      etckeeper init
+      etckeeper commit "Initial commit"
+    fi
+  args:
+    creates: /etc/.git
+  tags: [etckeeper]
+
+
+#- name: Etc keeper uninitialize bzr (in case)
+#  command: etckeeper uninit -f
+#           removes=/etc/.bzr
+#
+#- name: Etc keeper configuration for git
+#  copy: src=etckeeper.conf
+#        dest=/etc/etckeeper/etckeeper.conf
+#
+#- name: Etc keeper initialize with git
+#  shell: etckeeper init && etckeeper commit 'initial commit'
+#         creates=/etc/.git

@@ -1,0 +1,7 @@
+- include: build_play.yml
+
+- include: server-deploy_play.yml
+
+- include: executors-deploy_play.yml
+
+- include: traits_play.yml

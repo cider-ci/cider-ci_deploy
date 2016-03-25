@@ -1,0 +1,115 @@
+# user with bash shell
+
+- apt:
+    pkg: sudo
+    state: latest
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Add the user {{ci_exec_user}}
+  user:
+    name: '{{ci_exec_user}}'
+    home: /home/{{ci_exec_user}}
+    generate_ssh_key: yes
+    system: no
+    shell: /bin/bash
+
+- name: Allow the exec-user to sudo itself
+  template:
+    src: sudo
+    dest: /etc/sudoers.d/{{ci_exec_user}}
+
+- name: create ~/.bash_login.d
+  file:
+    path: ~{{ci_exec_user}}/.bash_login.d
+    state: directory
+    owner: root
+    group: '{{ci_exec_user}}'
+    mode: 0750
+
+- template:
+    src: keep
+    dest: ~{{ci_exec_user}}/.bash_login.d/keep
+    owner: root
+    group: '{{ci_exec_user}}'
+    mode: 0640
+
+- name: (un)set shell vi mode
+  become: yes
+  become_user: '{{ci_exec_user}}'
+  lineinfile:
+    dest: ~/.bashrc
+    line: set -o vi
+    state: "{{ 'present' if ci_vim_mode == true else 'absent' }}"
+
+- name: source every file under .bash_login.d dir
+  lineinfile:
+    line: 'if [[ -d ~/.bash_login.d ]]; then for file in ~/.bash_login.d/* ;do source "$file"; done; fi'
+    state: present
+    create: yes
+    owner: root
+    group: '{{ci_exec_user}}'
+    mode: 0640
+    dest: ~{{ci_exec_user}}/.bash_login
+
+- name: create /home/{{ci_exec_user}}/bin
+  file:
+    path: /home/{{ci_exec_user}}/bin
+    state: directory
+    owner: root
+    group: '{{ci_exec_user}}'
+    mode: 0750
+
+- name: include /home/{{ci_exec_user}}/bin  into the path
+  lineinfile:
+    line: 'export PATH=/home/{{ci_exec_user}}/bin:${PATH}'
+    state: present
+    create: yes
+    owner: root
+    group: '{{ci_exec_user}}'
+    mode: 0640
+    dest: ~{{ci_exec_user}}/.bash_login
+
+- name: load .bash_login via bash_profile
+  lineinfile:
+    line: 'if [[ -f ~/.bash_login ]]; then source ~/.bash_login; fi'
+    state: present
+    dest: ~{{ci_exec_user}}/.bash_profile
+    owner: root
+    group: '{{ci_exec_user}}'
+    mode: 0640
+    create: yes
+
+- name: setup to source every file in ~/.bash_login.d from ~/.bash_profile
+  lineinfile:
+    line: 'if [[ -d ~/.bash_login.d ]]; then for file in ~/.bash_login.d/* ;do source "$file"; done; fi'
+    state: present
+    dest: ~{{ci_exec_user}}/.bash_profile
+    owner: root
+    group: '{{ci_exec_user}}'
+    mode: 0640
+    create: yes
+
+- name: setup to source every file in ~/.bash_login.d from ~/.bash_login
+  lineinfile:
+    line: 'if [[ -d ~/.bash_login.d ]]; then for file in ~/.bash_login.d/* ;do source "$file"; done; fi'
+    state: present
+    dest: ~{{ci_exec_user}}/.bash_login
+    owner: root
+    group: '{{ci_exec_user}}'
+    mode: 0640
+    create: yes
+
+- name: change the ownership of login related files so they cannot be changed
+  file:
+    state: file
+    path: ~{{ci_exec_user}}/{{item}}
+    owner: root
+    group: '{{ci_exec_user}}'
+    mode: 0640
+  with_items:
+    - .profile
+    - .bashrc
+    - .bash_logout
+    - .bash_login
+    - .bash_profile

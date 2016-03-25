@@ -1,0 +1,14 @@
+- name: install service
+  template:
+    src: cider-ci_executor.service
+    dest: /etc/systemd/system/cider-ci_executor.service
+    mode: 0644
+
+- name: reload systemctl
+  command: systemctl daemon-reload
+  changed_when: false
+
+- name: executor service is started
+  service:
+    name: cider-ci_executor
+    state: restarted
