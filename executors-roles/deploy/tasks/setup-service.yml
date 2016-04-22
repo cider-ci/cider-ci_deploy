@@ -12,3 +12,4 @@
   service:
     name: cider-ci_executor
     state: restarted
+    enabled: yes

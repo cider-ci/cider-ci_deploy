@@ -1,4 +1,2 @@
 ci_vim_mode: true
 
-server_url_host: 192.168.0.40
-server_base_url: http://{{server_url_host}}:{{server_url_port}}

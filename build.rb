@@ -7,6 +7,7 @@ require 'active_support/all'
 require 'fileutils'
 
 LEIN_SERVICES= %w(api builder dispatcher executor notifier repository storage)
+RAILS_SERVICES= %w(user-interface)
 
 DEPLOY_DIR= File.dirname(File.absolute_path(__FILE__))
 SOURCE_DIR= File.absolute_path("#{DEPLOY_DIR}/..")
@@ -18,9 +19,23 @@ def exec! cmd
   Open3.popen3(cmd) do |stdin, stdout, stderr, wait_thr|
     exit_status = wait_thr.value
     unless exit_status.success?
-      abort stderr.read
+      abort stderr.read.strip
     else
-      stdout.read
+      stdout.read.strip
+    end
+  end
+end
+
+
+def release_build release_conf
+  unless release_conf[:pre].presence
+    ''
+    if _ = release_conf[:build]
+      "+#{_}"
+    else
+      "+" + (Dir.chdir("..") do
+        exec! 'git log -n 1 --pretty=%t'
+      end)
     end
   end
 end
@@ -28,13 +43,18 @@ end
 def release
   release = YAML.load_file("../config/releases.yml").
     with_indifferent_access[:releases][0]
+
+  pre =  if _ = release[:version_pre].presence
+           "-#{_}"
+         else
+           ''
+         end
+
   'Cider-CI' +
     ((edition = release[:edition].presence) ? "_#{edition}_" : "_").to_s +
     release[:version_major].to_s + "." +
     release[:version_minor].to_s + "." +
-    release[:version_patch].to_s +
-    ((pre=release[:version_pre].presence) ? "-#{pre}" : "") +
-    ((build=release[:version_build].presence) ? "+#{build}" : "")
+    release[:version_patch].to_s + pre  + release_build(release)
 end
 
 def prepare
@@ -69,7 +89,7 @@ def build_documentation_dir
 end
 
 def build_rails_services
-  %w( user-interface ).each do |service|
+  RAILS_SERVICES.each do |service|
     copy_git_repo_files service
     print " rails service #{service} built, ..."
   end

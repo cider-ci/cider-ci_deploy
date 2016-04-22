@@ -1,3 +1,7 @@
+server_url_host: 192.168.0.40
+server_url_port: 80
+server_base_url: http://{{server_url_host}}:{{server_url_port}}
+
 ci_vim_mode: true
 ci_master_secret: secret
 ci_database_secret: secret
