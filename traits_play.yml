@@ -1,12 +1,7 @@
 - hosts: cider-ci_executors
 
   vars_files:
-  - 'config.yml'
-  - 'executors-config.yml'
-  - 'traits-config.yml'
   - '{{inventory_dir}}/config.yml'
-  - '{{inventory_dir}}/executors-config.yml'
-  - '{{inventory_dir}}/traits-config.yml'
 
   pre_tasks: []
 

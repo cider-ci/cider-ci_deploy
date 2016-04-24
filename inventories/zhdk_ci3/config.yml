@@ -1,5 +1,20 @@
+ci_vim_mode: true
+
 server_url_host: ci3.zhdk.ch
 server_base_url: http://{{server_url_host}}
+
+ci_trait_ansible: true
+ci_trait_firefox_esr: true
+ci_trait_leiningen: true
+ci_trait_mysql: true
+ci_trait_misc: true
+ci_trait_nodejs: true
+ci_trait_openjdk: true
+ci_trait_phantomjs: true
+ci_trait_postgresql: true
+ci_trait_rabbitmq: true
+ci_trait_rbenv: true
+ci_trait_sqlite: true
 
 authentication_providers:
   github:
@@ -52,3 +67,4 @@ authentication_providers:
         max_session_lifetime: 7 days
       update-attributes:
         account_enabled: true
+

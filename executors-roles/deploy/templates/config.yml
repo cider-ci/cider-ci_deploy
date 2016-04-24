@@ -4,7 +4,6 @@ basic_auth:
   username: {{executor_name}}
   password: {{executor_password}}
 
-
 self_update: {{ci_executor_self_update | default(true) }}
 
 exec_user:

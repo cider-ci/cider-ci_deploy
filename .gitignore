@@ -5,6 +5,5 @@ callback_plugins/fix-ssl.pyc
 .retry
 *tar.gz
 *secret.txt
-zhdk-secrets.yml
-/inventories/*/config.yml
+*secrets.yml
 /inventories/*/data.yml

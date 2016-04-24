@@ -1,6 +1,9 @@
 - hosts: 127.0.0.1
   connection: local
 
+  vars_files:
+  - '{{inventory_dir}}/config.yml'
+
   tasks:
   - name: build release archive
     shell: ./build
@@ -8,10 +11,7 @@
 - hosts: cider-ci_server
 
   vars_files:
-  - 'config.yml'
-  - 'server-config.yml'
   - '{{inventory_dir}}/config.yml'
-  - '{{inventory_dir}}/server-config.yml'
 
   pre_tasks: []
 

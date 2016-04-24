@@ -29,7 +29,7 @@ messaging:
     username: cider-ci
     password: "{{ci_messaging_secret}}"
 
-server_base_url: {{ci_base_url}}
+server_base_url: {{server_base_url}}
 
 services:
 

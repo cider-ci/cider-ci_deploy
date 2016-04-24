@@ -8,7 +8,6 @@ ci3
 [cider-ci_executors]
 ci-executor-07
 
-[zhdk-secrets]
+[secrets]
 ci3
 ci-executor-07
-
