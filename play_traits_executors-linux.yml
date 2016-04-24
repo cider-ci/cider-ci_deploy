@@ -55,6 +55,7 @@
 
     - role: traits/roles/openjdk
       when: install_trait_openjdk
+      tags: [trait-openjdk]
 
     - role: traits/roles/maven
       when: install_trait_maven

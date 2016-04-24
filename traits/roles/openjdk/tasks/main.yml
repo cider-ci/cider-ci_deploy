@@ -1,3 +1,11 @@
+- debug:
+    var: hostvars[inventory_hostname]
+
+- include: trusty.yml
+  when: >
+    (ansible_distribution_release == 'trusty')
+    and (ansible_architecture == 'x86_64')
+
 - lineinfile:
     line: "{{item}}"
     dest: "{{cider_ci_traits_file}}"

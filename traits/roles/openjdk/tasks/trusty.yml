@@ -1,0 +1,51 @@
+- apt_repository: repo='ppa:openjdk-r/ppa'
+
+- name: install jdks
+  apt:
+    pkg: '{{item}}'
+    state: latest
+    update_cache: yes
+    cache_valid_time: 3600
+  with_items:
+    - openjdk-7-jre-headless
+    - openjdk-7-jdk
+    - openjdk-8-jre-headless
+    - openjdk-8-jdk
+    - visualvm
+
+- name: set default java
+  command: >
+    update-alternatives --set java
+    /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
+  register: result
+  changed_when: result.stdout | search("using")
+
+- name: set default javac
+  command: >
+    update-alternatives --set javac
+    /usr/lib/jvm/java-8-openjdk-amd64/bin/javac
+  register: result
+  changed_when: result.stdout | search("using")
+
+- name: set environment variable
+  template:
+    src: '{{item}}-env'
+    dest: ~{{executor_execution_user}}/.bash_login.d/{{item}}-env
+    owner: '{{executor_execution_user}}'
+    mode: '0755'
+  with_items:
+    - openjdk7
+    - openjdk8
+
+- lineinfile:
+    line: "{{item}}"
+    dest: "{{cider_ci_traits_file}}"
+    create: yes
+    state: present
+  with_items:
+    - "- jdk"
+    - "- openjdk"
+    - "- jdk-7"
+    - "- openjdk-7"
+    - "- jdk-8"
+    - "- openjdk-8"
