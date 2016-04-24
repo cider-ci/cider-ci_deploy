@@ -1,0 +1,21 @@
+- name: configure database monitoring
+  template:
+    src: cider-ci_rabbitmq.monit
+    dest: /etc/monit/conf.d/cider-ci_rabbitmq
+
+- name: reload monit
+  service:
+    name: monit
+    state: reloaded
+
+- name: wait for rabbitmq
+  wait_for:
+    host: localhost
+    port: '{{ci_rabbitmq_node_port}}'
+    timeout: 60
+
+- name: wait for the management interface
+  wait_for:
+    host: localhost
+    port: '{{ci_rabbitmq_mangement_port}}'
+    timeout: 300

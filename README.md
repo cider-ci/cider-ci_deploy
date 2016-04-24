@@ -1,10 +1,6 @@
 Cider-CI v4  Deploy
 ===================
 
-TODO:
-
-* monitoring for services (including rabbitmq and postgresql)
-* monitoring access via http
 
 ### Traits
 

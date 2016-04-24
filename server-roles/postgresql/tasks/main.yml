@@ -1,5 +1,8 @@
 - include: install.yml
+
 - include: init.yml
+
+- include: monitor.yml
 
 - name: Create the a database for root
   postgresql_db:

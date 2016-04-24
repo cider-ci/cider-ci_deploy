@@ -1,3 +1,4 @@
+# this can take long; it is duplicated here to minimize down time
 - name: copy cider-ci to the server
   synchronize:
     src: cider-ci.tar.gz
@@ -14,13 +15,13 @@
     name: cider-ci
     group: cider-ci
 
-- name: stop service {{item.value.name}}
+- name: unmonitor every cider-ci service
+  command: rm -f /etc/monit/conf.d/cider-ci_*
+
+- name: restart monitoring
   service:
-    name: cider-ci_{{item.value.name}}
-    state: stopped
-  failed_when: false
-  with_dict: '{{ci_services}}'
-  tags: [setup-services]
+    name: monit
+    state: restarted
 
 - name: stop every cider-ci_* service
   command: systemctl stop cider-ci_*

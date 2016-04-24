@@ -1,0 +1,9 @@
+- name: configure database monitoring
+  template:
+    src: cider-ci_postgresql.monit
+    dest: /etc/monit/conf.d/cider-ci_postgresql
+
+- name: reload monit
+  service:
+    name: monit
+    state: reloaded

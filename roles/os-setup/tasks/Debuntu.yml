@@ -7,6 +7,22 @@
   apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
   with_items: [ruby, python-passlib]
 
+### set timezone ##############################################################
+
+- name: Set timezone variables
+  copy:
+    content: '{{server_timezone}}'
+    dest: /etc/timezone
+    owner: root
+    group: root
+    mode: 0644
+  register: set_etc_timezone
+
+- name: reconfigure tzdata
+  command: dpkg-reconfigure --frontend noninteractive tzdata
+  when: set_etc_timezone.changed
+
+
 ### Vim as default editor #####################################################
 
 - name: Install vim-nox
@@ -31,21 +47,11 @@
 - include: Debuntu_etckeeper.yml
 
 
-### set timezone ##############################################################
+### monit #####################################################################
 
-
-- name: Set timezone variables
-  copy:
-    content: '{{server_timezone}}'
-    dest: /etc/timezone
-    owner: root
-    group: root
-    mode: 0644
-  register: set_etc_timezone
-
-- name: reconfigure tzdata
-  command: dpkg-reconfigure --frontend noninteractive tzdata
-  when: set_etc_timezone.changed
+- include: Debuntu_monit.yml
+  tags:
+  - os-setup_monit
 
 
 ### vmware ####################################################################

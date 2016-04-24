@@ -68,14 +68,6 @@
     state: restarted
     enabled: yes
 
-- name: wait for rabbitmq
-  wait_for:
-    host: localhost
-    port: '{{ci_rabbitmq_node_port}}'
-    timeout: 60
+- include: monitor-and-wait.yml
 
-- name: wait for the management interface
-  wait_for:
-    host: localhost
-    port: '{{ci_rabbitmq_mangement_port}}'
-    timeout: 300
+

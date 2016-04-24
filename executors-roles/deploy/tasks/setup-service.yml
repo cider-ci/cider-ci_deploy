@@ -1,3 +1,7 @@
+- name: install monit
+  apt: name={{item}} state=latest update_cache=yes cache_valid_time=3600
+  with_items: [monit]
+
 - name: install service
   template:
     src: cider-ci_executor.service
@@ -13,3 +17,14 @@
     name: cider-ci_executor
     state: restarted
     enabled: yes
+
+- name: configure executor monitoring
+  template:
+    src: cider-ci_executor.monit
+    dest: /etc/monit/conf.d/cider-ci_executor
+    mode: 0600
+
+- name: reload monitoring
+  service:
+    name: monit
+    state: reloaded

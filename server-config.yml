@@ -8,6 +8,7 @@ ci_base_url: http://{{ ci_external_hostname }}
 ci_virtual_hosts:
 - hostname: "{{ ci_internal_hostname }}"
   ip: "{{ ci_internal_hostname }}"
+  logfile_infix: "{{ ci_internal_hostname }}"
 - hostname: NULL
   ip: '*'
   ssl_certificate_file: /etc/ssl/certs/ssl-cert-snakeoil.pem
@@ -52,6 +53,7 @@ ci_services:
     context: /ui
     max_memory_fraction: 0.40
     cache_store_size_fraction: 0.05
+    monit_match: java.*user-interface.*puma.*config\.ru
 
   api:
     name: api
@@ -60,6 +62,7 @@ ci_services:
     http_port: 8885
     context: /api
     main: cider_ci.api.main
+    monit_match: java.*cider_ci\.api\.main
 
   builder:
     name: builder
@@ -68,6 +71,7 @@ ci_services:
     http_port: 8884
     context: /builder
     main: cider_ci.builder.main
+    monit_match: java.*cider_ci\.builder\.main
 
   dispatcher:
     name: dispatcher
@@ -76,6 +80,7 @@ ci_services:
     http_port: 8882
     context: /dispatcher
     main: cider_ci.dispatcher.main
+    monit_match: java.*cider_ci\.dispatcher\.main
 
   notifier:
     name: notifier
@@ -84,6 +89,7 @@ ci_services:
     http_port: 8887
     context: /notifier
     main: cider_ci.notifier.main
+    monit_match: java.*cider_ci\.notifier\.main
 
   repository:
     name: repository
@@ -92,10 +98,13 @@ ci_services:
     http_port: 8881
     context: /repositories
     main: cider_ci.repository.main
+    monit_match: java.*cider_ci\.repository\.main
 
   storage:
     name: storage
     type: java
     path: /storage
+    context: /storage
     http_port: 8886
     main: cider_ci.storage.main
+    monit_match: java.*cider_ci\.storage\.main

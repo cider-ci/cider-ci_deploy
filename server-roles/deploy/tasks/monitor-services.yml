@@ -14,3 +14,8 @@
 
 - include: monitor-service.yml
   with_dict: '{{ci_services}}'
+
+- name: reload monit
+  service:
+    name: monit
+    state: reloaded

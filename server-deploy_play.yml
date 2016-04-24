@@ -20,11 +20,14 @@
   - role: debug
     tags: [debug]
 
-  - role: os_setup
+  - role: os-setup
     tags: [os-setup]
 
   - role: openjdk8_install
     tags: [openjdk8_install]
+
+  - role: server-roles/prepare
+    tags: [prepare]
 
   - role: server-roles/postgresql
     tags: [postgresql]
@@ -32,17 +35,11 @@
   - role: server-roles/rabbitmq
     tags: [rabbitmq]
 
-  - role: server-roles/prepare
-    tags: [prepare]
-
   - role: server-roles/deploy
     tags: [deploy]
 
   - role: server-roles/reverse-proxy
-    tags: [reverse-proxy]
+    tags: [server_reverse-proxy]
 
   - role: server-roles/data-import
-    tags: [import-data]
-
-# - role: server-roles/finalize
-#   tags: [finalize]
+    tags: [server_import-data]

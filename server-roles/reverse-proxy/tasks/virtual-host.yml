@@ -2,35 +2,24 @@
     index: '{{item.0}}'
     virtual_host: '{{item.1}}'
 
-- file:
-    path: /etc/apache2/cider-ci/{{index}}
-    state: directory
-    mode: 0755
-
-- template:
-    src: shared.conf
-    dest: /etc/apache2/cider-ci/{{index}}/shared.conf
-    mode: 0644
-
 - template:
     src: http.conf
-    dest: /etc/apache2/cider-ci/{{index}}/http.conf
+    dest: /etc/apache2/cider-ci/{{index}}_http.conf
     mode: 0644
 
 - file:
     state: link
-    src: /etc/apache2/cider-ci/{{index}}/http.conf
+    src: /etc/apache2/cider-ci/{{index}}_http.conf
     dest: /etc/apache2/sites-enabled/cider-ci_{{index}}_http.conf
-
 
 - template:
     src: https.conf
-    dest: /etc/apache2/cider-ci/{{index}}/https.conf
+    dest: /etc/apache2/cider-ci/{{index}}_https.conf
     mode: 0644
   when: virtual_host.ssl_certificate_file is defined
 
 - file:
     state: link
-    src: /etc/apache2/cider-ci/{{index}}/https.conf
+    src: /etc/apache2/cider-ci/{{index}}_https.conf
     dest: /etc/apache2/sites-enabled/cider-ci_{{index}}_https.conf
   when: virtual_host.ssl_certificate_file is defined

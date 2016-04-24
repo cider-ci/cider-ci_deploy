@@ -1,0 +1,9 @@
+check process cider-ci_executor
+        matching "java .* cider_ci\.ex\.main"
+        start program = "/bin/systemctl start cider-ci_executor" with timeout 120 seconds
+        stop program  = "/bin/systemctl stop cider-ci_executor"
+        if failed
+                url http://{{executor_name}}:{{executor_password}}@localhost:8883/status
+                with timeout 60 seconds
+                for 10 cycles
+        then restart

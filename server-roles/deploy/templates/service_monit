@@ -1,5 +1,5 @@
 check process cider-ci_{{service.name}}
-        matching cider-ci_{{service.name}}
+        matching {{service.monit_match}}
         start program = "/bin/systemctl start cider-ci_{{service.name}}" with timeout 120 seconds
         stop program  = "/bin/systemctl stop cider-ci_{{service.name}}"
         if failed

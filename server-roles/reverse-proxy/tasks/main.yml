@@ -11,6 +11,16 @@
     path: /etc/apache2/cider-ci
     state: absent
 
+- file:
+    path: /etc/apache2/cider-ci/
+    state: directory
+    mode: 0755
+
+- template:
+    src: shared.conf
+    dest: /etc/apache2/cider-ci/shared.conf
+    mode: 0644
+
 - include: virtual-host.yml
   with_indexed_items: '{{ci_virtual_hosts}}'
 

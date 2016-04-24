@@ -1,3 +1,9 @@
+- name: copy cider-ci to the server
+  synchronize:
+    src: cider-ci.tar.gz
+    dest: /tmp/cider-ci.tar.gz
+    copy_links: yes
+
 - name: remove previously installed cider-ci server
   file:
     path: /cider-ci/server

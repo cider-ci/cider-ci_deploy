@@ -16,7 +16,7 @@ def download
     || raise('server_base_url not configured'))
 
   url = "#{server_base_url.shellescape}#{JAR_DL_PATH.shellescape}"
-  dl_cmd = 'curl --connect-timeout 5 --silent --show-error --fail --insecure ' \
+  dl_cmd = 'curl --retry 10 --connect-timeout 5 --silent --show-error --fail --insecure ' \
     + url + " > #{JAR_TMP_PATH.shellescape} "
 
   system(dl_cmd) || raise("downloading #{url} failed")

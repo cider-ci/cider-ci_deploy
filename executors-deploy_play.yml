@@ -13,7 +13,7 @@
   - role: debug
     tags: [debug]
 
-  - role: os_setup
+  - role: os-setup
     tags: [os-setup]
 
   - role: openjdk8_install

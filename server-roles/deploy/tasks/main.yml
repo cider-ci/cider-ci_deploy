@@ -1,3 +1,10 @@
+# this can take long; it is duplicated here to minimize down time
+- name: copy cider-ci to the server
+  synchronize:
+    src: cider-ci.tar.gz
+    dest: /tmp/cider-ci.tar.gz
+    copy_links: yes
+
 - name: make sure service {{item.value.name}} is stopped
   service:
     name: cider-ci_{{item.value.name}}
@@ -38,3 +45,6 @@
     port: '{{item.value.http_port}}'
     timeout: 60
   with_dict: '{{ci_services}}'
+
+
+- include: monitor-services.yml

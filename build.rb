@@ -26,35 +26,17 @@ def exec! cmd
   end
 end
 
-
-def release_build release_conf
-  unless release_conf[:pre].presence
-    ''
-    if _ = release_conf[:build]
-      "+#{_}"
-    else
-      "+" + (Dir.chdir("..") do
-        exec! 'git log -n 1 --pretty=%t'
-      end)
-    end
-  end
-end
-
 def release
   release = YAML.load_file("../config/releases.yml").
     with_indifferent_access[:releases][0]
-
-  pre =  if _ = release[:version_pre].presence
-           "-#{_}"
-         else
-           ''
-         end
-
   'Cider-CI' +
     ((edition = release[:edition].presence) ? "_#{edition}_" : "_").to_s +
     release[:version_major].to_s + "." +
     release[:version_minor].to_s + "." +
-    release[:version_patch].to_s + pre  + release_build(release)
+    release[:version_patch].to_s +
+    ((pre=release[:version_pre].presence) ? "-#{pre}" : "") +
+  ((build=release[:version_build].presence) ? "+#{build}" : "") +
+  "+" + exec!("cd .. && git log -n 1 --pretty=%t")
 end
 
 def prepare

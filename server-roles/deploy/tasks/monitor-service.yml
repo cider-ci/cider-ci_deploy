@@ -1,0 +1,11 @@
+- set_fact:
+    service: "{{item.value}}"
+
+- debug:
+    var: service
+
+- template:
+    src: service_monit
+    dest: /etc/monit/conf.d/cider-ci_{{service.name}}
+    mode: 0600
+
