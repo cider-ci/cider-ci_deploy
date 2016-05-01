@@ -3,12 +3,14 @@
   with_items:
   - python-pip
   - python-dev
+  tags: [internet]
 
 - name: install ansible via pip
   pip:
     name: ansible
     version: '{{ci_trait_ansible_version}}'
     extra_args: --upgrade
+  tags: [internet]
 
 - name: register ansible trait
   register_traits:
@@ -18,3 +20,4 @@
       - Ansible {{ci_trait_ansible_version_major}}
       - Ansible {{ci_trait_ansible_version}}
     file: /etc/cider-ci/traits.yml
+

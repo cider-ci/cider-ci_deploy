@@ -30,6 +30,7 @@
     readline, readline-devel, libyaml-devel, libffi-devel,
     openssl-devel, make, bzip2, autoconf, automake, libtool,
     bison, curl, sqlite-devel, ruby]
+  tags: [internet]
 
 - name: install updated git
   yum: name='{{item}}' state=present

@@ -3,6 +3,7 @@
   with_items:
     - etckeeper
     - git
+  tags: [internet]
 
 - name: etckeeper uninitialize bzr (in case)
   command: etckeeper uninit -f

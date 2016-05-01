@@ -1,11 +1,13 @@
 - name: dist upgrade
   apt: upgrade=dist update_cache=yes cache_valid_time=3600
+  tags: [internet]
 
 ### Install some stuff we need ###############################################
 
 - name: Install stuff
   apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
   with_items: [ruby, python-passlib]
+  tags: [internet]
 
 ### set timezone ##############################################################
 
@@ -29,6 +31,7 @@
   apt: pkg=vim-nox state=latest update_cache=yes cache_valid_time=3600
   register: install_vim_nox
   when: ci_vim_mode == true
+  tags: [internet]
 
 - name: Set vim-nox as default editor
   command: update-alternatives --set editor /usr/bin/vim.nox
@@ -62,5 +65,6 @@
   with_items:
   - open-vm-tools
   - open-vm-tools-dkms
+  tags: [internet]
 
 

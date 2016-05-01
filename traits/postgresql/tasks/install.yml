@@ -2,10 +2,12 @@
   apt_key:
     id: ACCC4CF8
     url: http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc
+  tags: [internet]
 
 - name: Add pgdg apt repository
   apt_repository:
     repo: deb http://apt.postgresql.org/pub/repos/apt/ {{ansible_distribution_release}}-pgdg main
+  tags: [internet]
 
 - name: Install postgresql
   apt: pkg={{item}} state=present update_cache=yes cache_valid_time=3600
@@ -16,4 +18,5 @@
     - postgresql-contrib-9.5
     - postgresql-9.5
     - python-psycopg2
+  tags: [internet]
 

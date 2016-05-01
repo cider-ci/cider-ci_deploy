@@ -8,6 +8,7 @@
     - mysql-server
     - python-configparser
     - python-mysqldb
+  tags: [internet]
 
 - name: setup user
   mysql_user:

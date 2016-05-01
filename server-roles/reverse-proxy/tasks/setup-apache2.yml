@@ -4,6 +4,7 @@
   with_items:
     - apache2
     - libapache2-mod-xsendfile
+  tags: [internet]
 
 - name: Disable default site
   command:  a2dissite 000-default

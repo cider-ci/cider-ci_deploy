@@ -10,6 +10,7 @@
     - imagemagick
     - libimage-exiftool-perl
     - xvfb
+  tags: [internet]
 
 - name: register traits
   register_traits:

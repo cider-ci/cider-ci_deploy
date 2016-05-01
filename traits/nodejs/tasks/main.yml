@@ -1,11 +1,13 @@
 - name: Configure APT for nodejs
   shell: curl -sL https://deb.nodesource.com/setup_4.x | bash -
+  tags: [internet]
 
 - name: Install node.js
   apt:
     pkg: nodejs
     state: latest
     cache_valid_time: 3600
+  tags: [internet]
 
 - name: update npm
   shell: npm install --global npm@latest

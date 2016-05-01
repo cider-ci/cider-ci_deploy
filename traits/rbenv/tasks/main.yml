@@ -4,6 +4,8 @@
   shell: >
     curl https://raw.githubusercontent.com/fesplugas/rbenv-installer/master/bin/rbenv-installer
     | bash
+  tags: [internet]
+
 
 - template:
     src: rbenv.sh
