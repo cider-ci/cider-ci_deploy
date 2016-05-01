@@ -1,8 +1,15 @@
 ### load rbenv
 
-- template: src=load_rbenv
-            dest="~{{user}}/.bash_login.d/load_rbenv"
-            owner={{user}} group={{user}} mode=0755
+- shell: rm -rf ~/.rbenv/plugins
+  become: yes
+  become_user: '{{executor_execution_user}}'
+
+- name: run the rbenv_installer
+  become: yes
+  become_user: '{{executor_execution_user}}'
+  shell: >
+    curl https://raw.githubusercontent.com/fesplugas/rbenv-installer/master/bin/rbenv-installer
+    | bash
 
 - lineinfile:
     line: "{{item}}"

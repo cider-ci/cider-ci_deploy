@@ -1,0 +1,14 @@
+### load rbenv
+
+- template: src=load_rbenv
+            dest="~{{user}}/.bash_login.d/load_rbenv"
+            owner={{user}} group={{user}} mode=0755
+
+- lineinfile:
+    line: "{{item}}"
+    dest: "{{cider_ci_traits_file}}"
+    create: yes
+    state: present
+  with_items:
+    - "- rbenv"
+
