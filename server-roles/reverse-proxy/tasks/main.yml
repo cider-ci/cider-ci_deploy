@@ -20,6 +20,8 @@
     src: shared.conf
     dest: /etc/apache2/cider-ci/shared.conf
     mode: 0644
+  tags:
+    - server_setup-munin
 
 - include: virtual-host.yml
   with_indexed_items: '{{ci_virtual_hosts}}'
@@ -28,4 +30,6 @@
   service:
     name: apache2
     state: reloaded
+  tags:
+    - server_setup-munin
 

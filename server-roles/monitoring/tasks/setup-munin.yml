@@ -1,0 +1,58 @@
+- name: dependencies
+  apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
+  with_items:
+    - munin
+    - munin-node
+    - munin-plugins-extra
+    - libcgi-fast-perl
+    - libapache2-mod-fcgid
+    - libdbd-pg-perl
+  tags:
+    - internet
+
+- template:
+    src: munin.conf
+    dest: /etc/munin/munin.conf
+    backup: true
+
+- template:
+    src: cider-ci_postgresql_munin.conf
+    dest: /etc/munin/plugin-conf.d/cider-ci_postgresql
+
+- file:
+    state: link
+    src:  /usr/share/munin/plugins/postgres_connections_db
+    dest: /etc/munin/plugins/cider-ci_postgres_connections_db
+
+- file:
+    state: link
+    src:  /usr/share/munin/plugins/postgres_size_
+    dest: /etc/munin/plugins/cider-ci_postgres_postgres_size_ALL
+
+- shell: rm -f /etc/munin/plugins/nfs*
+- shell: rm -f /etc/munin/plugins/exim*
+- shell: rm -f /etc/munin/plugins/interrupts*
+- shell: rm -f /etc/munin/plugins/irqstats*
+
+- service:
+    name: '{{item}}'
+    state: restarted
+    enabled: true
+  with_items:
+    - munin-node
+
+- htpasswd:
+    path: /etc/munin/cider-ci_htpasswd
+    name: cider-ci
+    password: '{{ci_master_secret}}'
+    owner: root
+    group: www-data
+    mode: 0640
+
+- apache2_module:
+    name: fcgid
+    state: present
+
+- service:
+    name: apache2
+    state: restarted

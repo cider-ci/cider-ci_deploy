@@ -41,5 +41,8 @@
   - role: server-roles/reverse-proxy
     tags: [server_reverse-proxy]
 
+  - role: server-roles/monitoring
+    tags: [server_monitoring]
+
   - role: server-roles/data-import
     tags: [server_import-data]
