@@ -45,5 +45,3 @@
     port: '{{item.value.http_port}}'
     timeout: 60
   with_dict: '{{ci_services}}'
-
-- include: monitor-services.yml
