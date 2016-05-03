@@ -8,7 +8,7 @@ ci_virtual_hosts:
 # take db backups every night
 db_backups_enabled: True
 
-job_retention_duration: 30 Days
+job_retention_duration: 14 Days
 
 authentication_providers:
   github:
