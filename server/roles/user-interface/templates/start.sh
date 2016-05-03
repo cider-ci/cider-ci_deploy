@@ -1,5 +1,5 @@
 #!/bin/bash
-set -eux
+set -x
 source /etc/profile.d/rbenv-load.sh
 cd {{ui_root_path}}
 rbenv-load
