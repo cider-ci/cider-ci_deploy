@@ -1,5 +1,5 @@
 - name: copy the data file over
-  copy:
+  template:
     src: '{{inventory_dir}}/data.yml'
     dest: /tmp/ci_import.yml
 

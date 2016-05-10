@@ -1,0 +1,33 @@
+managed_repositories:
+
+  'https://github.com/cider-ci/cider-ci_demo-project-bash.git':
+    update_attributes:
+      name: 'Cider-CI Bash Demo Project'
+
+  'https://github.com/Madek/madek-datalayer.git':
+    update_attributes: &MADEK
+      name: Madek Datalayer
+      update_notification_token: {{madek_datalayer_update_notification_token}}
+      branch_trigger_include_match: ^.*ci.*v4.*$
+      foreign_api_endpoint: https://api.github.com
+      foreign_api_authtoken: {{github_authtoken}}
+      foreign_api_owner: Madek
+      foreign_api_repo: madek-datalayer
+
+  'https://github.com/cider-ci/cider-ci_clj-utils':
+    update_attributes:
+      name: Cider-CI clj-utils
+      update_notification_token: {{cider_ci_clj_utils_update_notification_token}}
+      foreign_api_endpoint: https://api.github.com
+      foreign_api_authtoken: {{github_authtoken}}
+      foreign_api_owner: cider-ci
+      foreign_api_repo: cider-ci_clj-utils
+
+  'https://github.com/cider-ci/cider-ci_documentation-source.git':
+    update_attributes:
+      name: Cider-CI Documentation Source
+      update_notification_token: {{cider_ci_documentation_source_update_notification_token}}
+      foreign_api_endpoint: https://api.github.com
+      foreign_api_authtoken: {{github_authtoken}}
+      foreign_api_owner: cider-ci
+      foreign_api_repo: cider-ci_documentation-source
