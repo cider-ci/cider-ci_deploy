@@ -48,7 +48,7 @@ apt-get install -y git
 
 ### install Ansible ###########################################################
 
-apt-get install python2.7 python2.7-dev python-pip git -y -f
+apt-get install python2.7 python2.7-dev python-pip git libffi-dev -y -f
 pip install -I ansible==${ANSIBLE_VERSION}
 
 

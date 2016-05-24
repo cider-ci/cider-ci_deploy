@@ -1,0 +1,21 @@
+jobs:
+  build:
+    name: Build the Cider-CI Archive
+    context:
+      tasks:
+        build:
+          tree-attachments:
+            archive:
+              content-type: application/gzip
+              include-match: cider-ci\.tar\.gz$
+          git-options:
+            submodules:
+              clone: true
+              timeout: 60
+          scripts:
+            build:
+              body: |
+                set -eux
+                cd deploy
+                ./build
+                cp cider-ci.tar.gz ../.

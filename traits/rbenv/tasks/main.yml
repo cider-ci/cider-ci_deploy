@@ -1,3 +1,20 @@
+- name: install dependencies
+  apt: name={{item}} state=latest update_cache=yes cache_valid_time=3600
+  tags: [internet]
+  with_items:
+    - autoconf
+    - bison
+    - build-essential
+    - libffi-dev
+    - libgdbm-dev
+    - libgdbm3
+    - libncurses5-dev
+    - libreadline6-dev
+    - libssl-dev
+    - libyaml-dev
+    - zlib1g-dev
+
+
 - name: run the rbenv_installer
   become: yes
   become_user: '{{ci_exec_user}}'
