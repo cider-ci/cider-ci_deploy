@@ -3,6 +3,8 @@ jobs:
     name: Build the Cider-CI Archive
     context:
       tasks:
+        traits:
+          Cislave5: true
         build:
           tree-attachments:
             archive:
