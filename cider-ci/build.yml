@@ -3,9 +3,9 @@ jobs:
     name: Build the Cider-CI Archive
     context:
       tasks:
-        traits:
-          Cislave5: true
         build:
+          traits:
+            Cislave5: true
           tree-attachments:
             archive:
               content-type: application/gzip
