@@ -13,3 +13,5 @@
 
 - name: build release archive
   shell: ./build
+  when: not search_download_archive.url
+  tags: [debug]
