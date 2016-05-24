@@ -21,4 +21,4 @@ jobs:
                 set -eux
                 cd deploy
                 ./build
-                cp cider-ci.tar.gz ../.
+                mv cider-ci.tar.gz ../.

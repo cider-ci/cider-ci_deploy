@@ -5,8 +5,4 @@
   - '{{inventory_dir}}/config.yml'
 
   roles:
-  - role: openjdk8_install
-
-  tasks:
-  - name: build release archive
-    shell: ./build
+  - role: build
