@@ -3,5 +3,13 @@
     (ansible_distribution == "Debian"
       or  ansible_distribution == "Ubuntu")
 
+- search_download_archive: {}
+  register: search_download_archive
+  tags: [debug]
+
+- debug:
+    var: search_download_archive
+  tags: [debug]
+
 - name: build release archive
   shell: ./build

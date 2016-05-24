@@ -3,10 +3,21 @@
 
 require 'json'
 require 'openssl'
-require 'pathname'
+require 'open3'
 
-self_pathname = Pathname.new(File.absolute_path(__FILE__))
-require self_pathname.join("..","exec.rb").to_s
+def exec! cmd
+  Open3.popen3(cmd) do |stdin, stdout, stderr, wait_thr|
+    stdin.close()
+    out = stdout.read
+    err = stderr.read
+    exit_status = wait_thr.value
+    unless exit_status.success?
+      abort out + err
+    else
+      out
+    end
+  end
+end
 
 tree_id = exec!('cd .. && git log -n 1 --pretty=%T').strip
 

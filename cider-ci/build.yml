@@ -9,7 +9,7 @@ jobs:
           tree-attachments:
             archive:
               content-type: application/gzip
-              include-match: cider-ci\.tar\.gz$
+              include-match: ^cider-ci\.tar\.gz$
           git-options:
             submodules:
               clone: true
@@ -21,4 +21,4 @@ jobs:
                 set -eux
                 cd deploy
                 ./build
-                mv cider-ci.tar.gz ../.
+                mv cider-ci.tar.gz ../cider-ci.tar.gz
