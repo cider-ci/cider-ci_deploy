@@ -1,0 +1,8 @@
+- include: debuntu_install_dependencies.yml
+  when: >
+    (ansible_distribution == "Debian"
+      or  ansible_distribution == "Ubuntu")
+
+- name: build release archive
+  shell: ./bin/archive-build
+  tags: [debug]

@@ -24,23 +24,27 @@ tree_id = exec!('cd .. && git log -n 1 --pretty=%T').strip
 # TODO: for now we use what is found on cider-ci
 # later on we want to use releases on GitHub (git tag --points-at HEAD)
 # which are singed!
-cider_ci_url = "http://ci.zhdk.ch/cider-ci/storage/tree-attachments/#{tree_id}/cider-ci.tar.gz"
+ci_url_prefix = "http://ci.zhdk.ch/cider-ci/storage/tree-attachments/#{tree_id}"
 
 def check_url! url
-  begin
-    exec! " curl -sS --fail -I '#{url}'"
-    url
-  rescue Exception => e
-    nil
-  end
+  exec! " curl -sS --fail -I '#{url}'"
 end
 
 args = JSON.parse(File.open(ARGV[0]).read) rescue {}
 
-print JSON.dump(
-  "changed" => false,
-  "url" => check_url!("http://ci.zhdk.ch/cider-ci/storage/tree-attachments/#{tree_id}/cider-ci.tar.gz"),
-  "stdout" => "OK"
-)
+begin
+  check_url! "#{ci_url_prefix}/cider-ci.tar.gz"
+  check_url! "#{ci_url_prefix}/cider-ci.tar.gz.sig"
+  print JSON.dump(
+    "changed" => false,
+    "url_prefix" => ci_url_prefix,
+    "stdout" => "Archive and signature found."
+  )
+rescue Exception => e
+  print JSON.dump(
+    "changed" => false,
+    "stdout" => "Warning: archive or signature missing! #{e}"
+  )
+end
 
 exit 0

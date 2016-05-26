@@ -1,8 +1,8 @@
-- hosts: 127.0.0.1
+- hosts: localhost
   connection: local
 
   vars_files:
   - '{{inventory_dir}}/config.yml'
 
   roles:
-  - role: build
+  - role: find_or_build_archive

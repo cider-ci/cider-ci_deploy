@@ -1,0 +1,18 @@
+- search_download_archive: {}
+  register: search_download_archive
+  tags: [debug]
+
+- debug:
+    var: search_download_archive
+  tags: [debug]
+
+- set_fact:
+    download_archive_url_prefix: "{{search_download_archive.url_prefix}}"
+  when: >
+    (search_download_archive.url is not none)
+    and (not force_local_build)
+  tags: [debug]
+
+- debug:
+    var: download_archive_url_prefix
+  tags: [debug]

@@ -1,12 +1,4 @@
-- hosts: 127.0.0.1
-  connection: local
-
-  vars_files:
-  - '{{inventory_dir}}/config.yml'
-
-  tasks:
-  - name: build release archive
-    shell: ./build
+- include: build_play.yml
 
 - hosts: cider-ci_server
 

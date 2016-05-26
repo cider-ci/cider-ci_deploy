@@ -1,0 +1,28 @@
+- name: upload archive to the server
+  synchronize:
+    src: "{{item}}"
+    dest: /tmp/{{item}}
+  when: hostvars.localhost.download_archive_url_prefix is not defined
+  with_items:
+    - cider-ci.tar.gz
+
+- name: download archive to the server
+  get_url:
+    url: '{{hostvars.localhost.download_archive_url_prefix}}/{{item}}'
+    dest: /tmp/{{item}}
+    force: yes
+  when: hostvars.localhost.download_archive_url_prefix is defined
+  with_items:
+    - cider-ci.tar.gz
+    - cider-ci.tar.gz.sig
+
+- name: copy public key to the server
+  copy:
+    src: crypto/cider-ci.pub.pem
+    dest: /tmp/cider-ci.pub.pem
+  when: hostvars.localhost.download_archive_url_prefix is defined
+
+- name: verify archive
+  shell: openssl dgst -verify /tmp/cider-ci.pub.pem -signature /tmp/cider-ci.tar.gz.sig /tmp/cider-ci.tar.gz
+  when: hostvars.localhost.download_archive_url_prefix is defined
+

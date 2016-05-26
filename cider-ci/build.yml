@@ -5,11 +5,14 @@ jobs:
       tasks:
         build:
           traits:
-            Cislave5: true
+            madek-cislave: true
           tree-attachments:
             archive:
               content-type: application/gzip
               include-match: ^cider-ci\.tar\.gz$
+            signature:
+              content-type: application/octet-stream
+              include-match: ^cider-ci\.tar\.gz\.sig$
           git-options:
             submodules:
               clone: true
@@ -20,5 +23,7 @@ jobs:
               body: |
                 set -eux
                 cd deploy
-                ./build
-                cp cider-ci.tar.gz ../cider-ci.tar.gz
+                ./bin/archive-build
+                ./bin/archive-sign
+                cp cider-ci.tar.gz* ../.
+

@@ -6,13 +6,14 @@ require 'pry'
 require 'active_support/all'
 require 'fileutils'
 
+APP_NAME='cider-ci'
 LEIN_SERVICES= %w(api builder dispatcher executor notifier repository storage)
 RAILS_SERVICES= %w(user-interface)
 
-DEPLOY_DIR= File.dirname(File.absolute_path(__FILE__))
+DEPLOY_DIR= Pathname.new(File.dirname(File.absolute_path(__FILE__))).join("..").to_s
 SOURCE_DIR= File.absolute_path("#{DEPLOY_DIR}/..")
 CONFIG_DIR= File.absolute_path("#{SOURCE_DIR}/config")
-BUILD_DIR= File.absolute_path("#{DEPLOY_DIR}/tmp/cider-ci")
+BUILD_DIR= File.absolute_path("#{DEPLOY_DIR}/tmp/#{APP_NAME}")
 BUILD_CONFIG_DIR= File.absolute_path("#{BUILD_DIR}/config")
 
 def exec! cmd
@@ -29,32 +30,36 @@ def exec! cmd
   end
 end
 
-def release
+def clean
+  FileUtils.rm_r BUILD_DIR, :force => true
+end
+
+def tree_id
+  tree_id= Dir.chdir(SOURCE_DIR) do
+    exec!("git log -1 --pretty=%T").strip
+  end
+end
+
+def releases
   release = YAML.load_file("../config/releases.yml").
     with_indifferent_access[:releases][0]
-  'Cider-CI' +
-    ((edition = release[:edition].presence) ? "_#{edition}_" : "_").to_s +
-    release[:version_major].to_s + "." +
-    release[:version_minor].to_s + "." +
-    release[:version_patch].to_s +
-    ((pre=release[:version_pre].presence) ? "-#{pre}" : "") +
-  ((build=release[:version_build].presence) ? "+#{build}" : "") +
-  "+" + exec!("cd .. && git log -n 1 --pretty=%t").strip
+  release[:version_build] = tree_id[0,5].strip
+  {'releases' => [release]}
 end
 
 def prepare
-  print "preparing ... "
-  FileUtils.rm_r BUILD_DIR, :force => true
+  clean
   FileUtils.mkdir_p BUILD_DIR
-  print "done, "
+  IO.write("#{BUILD_DIR}/tree_id",tree_id)
+  print " prepared, ..."
 end
 
 def build_config_dir
   print "building config dir ... "
   FileUtils.mkdir_p BUILD_CONFIG_DIR
   FileUtils.cp "#{CONFIG_DIR}/config_default.yml", BUILD_CONFIG_DIR
-  FileUtils.cp "#{CONFIG_DIR}/releases.yml", BUILD_CONFIG_DIR
-  print "done, "
+  IO.write "#{BUILD_CONFIG_DIR}/releases.yml", releases.to_yaml
+  print " config dir built, ..."
 end
 
 def copy_git_repo_files dir_name
@@ -139,15 +144,26 @@ def pack build_archive
     set -eux
     cd #{BUILD_DIR}
     cd ..
-    tar cfz #{DEPLOY_DIR}/#{build_archive} cider-ci
+    tar cfz #{DEPLOY_DIR}/#{build_archive} #{APP_NAME}
   CMD
   print "done, "
 end
 
+def archive_is_up_to_date
+  clean
+  begin
+    exec! "tar xvfz #{APP_NAME}.tar.gz -C tmp #{APP_NAME}/tree_id"
+    IO.read("#{BUILD_DIR}/tree_id") == tree_id
+  rescue Exception => e
+    nil
+  end
+end
+
 def main
-  build_archive = "#{release}.tar.gz"
-  if File.exist? build_archive
-    print "Build archive #{build_archive} exists, ..."
+  build_archive = "#{APP_NAME}.tar.gz"
+  clean
+  if archive_is_up_to_date
+    print "existing archive #{build_archive} is up to date"
   else
     print "building #{build_archive} ..."
     prepare
@@ -157,11 +173,8 @@ def main
     build_lein_services
     build_downloads
     pack build_archive
+    puts " done "
   end
-  FileUtils.ln_s build_archive, "cider-ci.tar.gz", force: true
-  print "linked, "
-  puts " done "
 end
 
-# puts exec! "env | grep JAVA"
 main()

@@ -1,0 +1,4 @@
+- include: search_download_archive.yml
+
+- include: build.yml
+  when: download_archive_url_prefix is not defined

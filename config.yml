@@ -17,6 +17,7 @@ ci_master_secret: "{{ lookup('password', inventory_dir + '/' + 'master_secret.tx
 
 server_base_url: http://{{ hostvars[groups['cider-ci_server'][0]].ansible_default_ipv4.address  }}
 
+force_local_build: false
 
 ###############################################################################
 ### executor specific config ##################################################

@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
+set -eu
 
 export PATH=../user-interface/vendor/jruby/bin:$PATH
 export BUNDLE_GEMFILE=../user-interface/Gemfile
 
-bundle exec jruby -S build.rb
+bundle exec jruby -S bin/archive-build.rb
