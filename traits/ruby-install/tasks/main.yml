@@ -1,0 +1,33 @@
+- apt: pkg={{item}} state=present update_cache=yes cache_valid_time=3600
+  with_items:
+    - autoconf
+    - bison
+    - build-essential
+    - libffi-dev
+    - libgdbm-dev
+    - libgdbm3
+    - libncurses5-dev
+    - libreadline-dev
+    - libreadline6-dev
+    - libssl-dev
+    - libyaml-dev
+    - zlib1g-dev
+
+- name: copy install dir
+  synchronize:
+    src: files/ruby-install-0.6.0
+    dest: /tmp/
+    recursive: true
+    delete: true
+    checksum: true
+
+- name: install ruby-install
+  shell:  |
+    set -eux
+    cd /tmp/ruby-install-0.6.0
+    make install
+
+- name: register trait
+  register_traits:
+    traits: [ruby-install]
+    file: /cider-ci/executor/config/traits.yml

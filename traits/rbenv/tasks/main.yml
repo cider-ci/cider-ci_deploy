@@ -9,11 +9,11 @@
     - libgdbm-dev
     - libgdbm3
     - libncurses5-dev
+    - libreadline-dev
     - libreadline6-dev
     - libssl-dev
     - libyaml-dev
     - zlib1g-dev
-
 
 - name: run the rbenv_installer
   become: yes

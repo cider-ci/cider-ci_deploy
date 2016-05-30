@@ -14,6 +14,7 @@ ci_trait_phantomjs: true
 ci_trait_postgresql: true
 ci_trait_rabbitmq: true
 ci_trait_rbenv: true
+ci_trait_ruby_install: true
 ci_trait_sqlite: true
 
 authentication_providers:
