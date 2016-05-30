@@ -14,13 +14,17 @@
     when: ci_trait_ansible
     tags: ci_trait_ansible
 
-  - role: traits/leiningen
-    when: ci_trait_leiningen
-    tags: ci_trait_leiningen
+  - role: traits/chruby
+    when: ci_trait_chruby
+    tags: ci_trait_chruby
 
   - role: traits/firefox-esr
     when: ci_trait_firefox_esr
     tags: ci_trait_firefox_esr
+
+  - role: traits/leiningen
+    when: ci_trait_leiningen
+    tags: ci_trait_leiningen
 
   - role: traits/misc
     when: ci_trait_misc
