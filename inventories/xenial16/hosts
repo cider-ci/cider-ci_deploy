@@ -1,0 +1,7 @@
+xenial-16 ansible_host=192.168.0.16  ansible_user=root ansible_ssh_pass=root
+
+[cider-ci_server]
+xenial-16
+
+[cider-ci_executors]
+xenial-16

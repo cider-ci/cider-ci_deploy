@@ -5,12 +5,15 @@
   - python-dev
   tags: [internet]
 
+- name: upgrade pip
+  shell: |
+    set -eux
+    pip install -I --upgrade pip
+
 - name: install ansible via pip
-  pip:
-    name: ansible
-    version: '{{ci_trait_ansible_version}}'
-    extra_args: --upgrade
-  tags: [internet]
+  shell: |
+    set -eux
+    pip install -I --upgrade paramiko==1.17.0 ansible=={{ci_trait_ansible_version}}
 
 - name: register ansible trait
   register_traits:

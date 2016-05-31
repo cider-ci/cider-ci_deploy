@@ -1,2 +1,2 @@
 ci_trait_ansible_version_major: 2
-ci_trait_ansible_version: '{{ci_trait_ansible_version_major}}.0.1.0'
+ci_trait_ansible_version: '{{ci_trait_ansible_version_major}}.0.2.0'

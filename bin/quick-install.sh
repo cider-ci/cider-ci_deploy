@@ -1,7 +1,7 @@
 #!/bin/bash
 set -eux
 
-ANSIBLE_VERSION=2.0.1.0
+ANSIBLE_VERSION=2.0.2.0
 CIDER_CI_DIR=/tmp/cider-ci
 
 ################################################################################
@@ -49,8 +49,8 @@ apt-get install -y git
 ### install Ansible ###########################################################
 
 apt-get install python2.7 python2.7-dev python-pip git libffi-dev -y -f
-pip install -I ansible==${ANSIBLE_VERSION}
-
+pip install -I --upgrade pip
+pip install -I --upgrade paramiko==1.17.0 ansible==${ANSIBLE_VERSION}
 
 ###############################################################################
 ### checkout ##################################################################

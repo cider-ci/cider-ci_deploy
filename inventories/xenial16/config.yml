@@ -1,0 +1,22 @@
+ci_vim_mode: true
+
+ci_master_secret: secret
+ci_database_secret: secret
+ci_messaging_secret: secret
+ci_services_secret: secret
+
+ci_trait_ansible: true
+ci_trait_chruby: true
+ci_trait_firefox_esr: true
+ci_trait_leiningen: true
+ci_trait_mysql: true
+ci_trait_misc: true
+ci_trait_nodejs: true
+ci_trait_openjdk: true
+ci_trait_phantomjs: true
+ci_trait_postgresql: true
+ci_trait_rabbitmq: false
+ci_trait_rbenv: true
+ci_trait_ruby_install: true
+ci_trait_sqlite: true
+

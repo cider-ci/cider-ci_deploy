@@ -40,7 +40,7 @@ ci_trait_phantomjs: false
 ci_trait_postgresql: false
 ci_trait_rabbitmq: false
 ci_trait_rbenv: false
-ci_trait_ruby_version: false
+ci_trait_ruby_install: false
 ci_trait_sqlite: false
 
 
