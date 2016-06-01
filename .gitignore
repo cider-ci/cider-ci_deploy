@@ -1,9 +1,10 @@
-/tmp
-vars.local.yml
-*vault_pass.txt
-callback_plugins/fix-ssl.pyc
-.retry
-*tar.gz
+*.retry
 *secret.txt
 *secrets.yml
+*tar.gz
+*vault_pass.txt
+.retry
 /inventories/*/data.yml
+/tmp
+callback_plugins/fix-ssl.pyc
+vars.local.yml

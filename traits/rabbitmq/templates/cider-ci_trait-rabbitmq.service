@@ -11,7 +11,7 @@ Environment=RABBITMQ_CONFIG_FILE={{ci_trait_rabbitmq_working_dir}}/rabbitmq
 Environment=RABBITMQ_NODENAME={{ci_trait_rabbitmq_node_name}}
 Environment=RABBITMQ_NODE_PORT={{ci_trait_rabbitmq_node_port}}
 
-TimeoutStartSec=5
+TimeoutStartSec=10
 
 User=rabbitmq
 Group=rabbitmq

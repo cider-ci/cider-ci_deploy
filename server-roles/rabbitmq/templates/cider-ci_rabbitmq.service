@@ -12,7 +12,7 @@ Environment=RABBITMQ_CONFIG_FILE={{ci_rabbitmq_config_file}}
 Environment=RABBITMQ_NODENAME={{ci_rabbitmq_node_name}}
 Environment=RABBITMQ_NODE_PORT={{ci_rabbitmq_node_port}}
 
-TimeoutStartSec=5
+TimeoutStartSec=10
 
 User={{ci_rabbitmq_user}}
 Group={{ci_rabbitmq_user}}
