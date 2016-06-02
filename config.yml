@@ -29,11 +29,12 @@ ci_working_dir: /tmp/ci_working-dir
 ### traits ####################################################################
 # the default is not to install any of these traits
 ci_trait_ansible: false
+ci_trait_apache2: false
 ci_trait_chruby: false
 ci_trait_firefox_esr: false
 ci_trait_leiningen: false
-ci_trait_mysql: false
 ci_trait_misc: false
+ci_trait_mysql: false
 ci_trait_nodejs: false
 ci_trait_openjdk: false
 ci_trait_phantomjs: false

@@ -14,6 +14,10 @@
     when: ci_trait_ansible
     tags: ci_trait_ansible
 
+  - role: traits/apache2
+    when: ci_trait_apache2
+    tags: ci_trait_apache2
+
   - role: traits/chruby
     when: ci_trait_chruby
     tags: ci_trait_chruby
