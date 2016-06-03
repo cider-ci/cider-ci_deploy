@@ -41,13 +41,9 @@
   with_items:
     - munin-node
 
-- htpasswd:
+- file:
     path: /etc/munin/cider-ci_htpasswd
-    name: cider-ci
-    password: '{{ci_master_secret}}'
-    owner: root
-    group: www-data
-    mode: 0640
+    state: absent
 
 - apache2_module:
     name: fcgid

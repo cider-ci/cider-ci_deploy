@@ -43,6 +43,7 @@ begin
 rescue Exception => e
   print JSON.dump(
     "changed" => false,
+    "url_prefix" => nil,
     "stdout" => "Warning: archive or signature missing! #{e}"
   )
 end

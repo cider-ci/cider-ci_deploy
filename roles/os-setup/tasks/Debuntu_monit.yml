@@ -5,41 +5,41 @@
   with_items: [monit]
   tags: [internet]
 
-- name: configuer monit service interval
+- name: configure monit service interval
   lineinfile:
     dest: /etc/monit/monitrc
     regexp: 'set daemon'
     line: set daemon 60 # check services at 60 seconds interval
 
-- name: configuer monit http port
+- name: configure monit http port
   lineinfile:
     dest: /etc/monit/monitrc
     regexp: set httpd port
     line: set httpd port 2812 and
 
-- name: configuer monit http address
+- name: configure monit http address
   lineinfile:
     dest: /etc/monit/monitrc
     regexp: 'address localhost'
     line: '   address localhost'
 
-- name: configuer monit http address
+- name: configure monit http address
   lineinfile:
     dest: /etc/monit/monitrc
     regexp: 'address localhost'
     line: '   address localhost'
 
-- name: configuer monit http allow localhost
+- name: configure monit http allow localhost
   lineinfile:
     dest: /etc/monit/monitrc
     regexp: 'allow localhost'
     line: '   allow localhost'
 
-- name: configuer monit http allow localhost
+- name: configure monit http allow localhost
   lineinfile:
     dest: /etc/monit/monitrc
     regexp: 'allow (admin|cider-ci):.*'
-    line: '   allow admin:"{{ci_master_secret}}"'
+    state: absent
 
 - name: reload monit
   service:

@@ -16,7 +16,7 @@
     line: >
       #VCS="bzr"
 
-- name: etckeeper configuer git
+- name: etckeeper configure git
   lineinfile:
     dest: /etc/etckeeper/etckeeper.conf
     regexp: git
