@@ -44,6 +44,16 @@
     state: restarted
     enabled: yes
 
+- name: configure monitoring
+  template:
+    src: cider-ci_trait-rabbitmq.monit
+    dest: /etc/monit/conf.d/cider-ci_trait-rabbitmq
+
+- name: reload monit
+  service:
+    name: monit
+    state: reloaded
+
 - name: Env for the user
   template:
     src: rabbitmq_env.sh

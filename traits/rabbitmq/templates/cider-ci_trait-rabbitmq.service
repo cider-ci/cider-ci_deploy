@@ -11,13 +11,13 @@ Environment=RABBITMQ_CONFIG_FILE={{ci_trait_rabbitmq_working_dir}}/rabbitmq
 Environment=RABBITMQ_NODENAME={{ci_trait_rabbitmq_node_name}}
 Environment=RABBITMQ_NODE_PORT={{ci_trait_rabbitmq_node_port}}
 
-TimeoutStartSec=10
+TimeoutStartSec=30
 
 User=rabbitmq
 Group=rabbitmq
-#WorkingDirectory={{ci_trait_rabbitmq_working_dir}}
+WorkingDirectory={{ci_trait_rabbitmq_working_dir}}
 
-ExecStartPre=/bin/rm -rf {{ci_trait_rabbitmq_working_dir}}
+ExecStartPre=/bin/rm -rf {{ci_trait_rabbitmq_working_dir}}/*
 ExecStartPre=/bin/mkdir -p {{ci_trait_rabbitmq_working_dir}}
 ExecStartPre=/bin/mkdir -p {{ci_trait_rabbitmq_working_dir}}
 ExecStartPre=/bin/cp {{ci_trait_rabbitmq_play_dir}}/rabbitmq.config {{ci_trait_rabbitmq_working_dir}}/rabbitmq.config
@@ -32,7 +32,6 @@ ExecStartPost=/usr/local/bin/ansible-playbook {{ci_trait_rabbitmq_post_play_path
 # ExecStartPost=/usr/sbin/rabbitmqctl add_user {{ci_exec_user}} {{ci_exec_user}}
 # ExecStartPost=/usr/sbin/rabbitmqctl set_permissions -p {{ci_exec_user}} {{ci_exec_user}} ".*"  ".*" ".*"
 # ExecStartPost=/usr/sbin/rabbitmqctl set_user_tags {{ci_exec_user}} administrator
-
 
 
 [Install]
