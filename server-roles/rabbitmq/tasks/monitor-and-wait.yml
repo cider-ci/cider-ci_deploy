@@ -1,4 +1,4 @@
-- name: configure database monitoring
+- name: configure monitoring
   template:
     src: cider-ci_rabbitmq.monit
     dest: /etc/monit/conf.d/cider-ci_rabbitmq

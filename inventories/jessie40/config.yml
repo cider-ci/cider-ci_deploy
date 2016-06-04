@@ -1,6 +1,7 @@
 ci_vim_mode: true
 
 ci_master_secret: secret
+ci_management_admin_secret: secret
 ci_database_secret: secret
 ci_messaging_secret: secret
 ci_services_secret: secret

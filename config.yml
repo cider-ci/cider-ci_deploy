@@ -69,10 +69,10 @@ rails_timezone: UTC
 
 ### Secrets ###################################################################
 
-ci_management_admin_secret: '{ci_master_secret}'
-ci_database_secret: "{{ [ci_master_secret, 'ci_database_secret', ci_master_secret ] | join(' ') | hash('sha256') }}"
-ci_messaging_secret: "{{ [ci_master_secret, 'ci_messaging_secret', ci_master_secret ] | join(' ') | hash('sha256') }}"
-ci_services_secret: "{{ [ci_master_secret, 'ci_services_secret', ci_master_secret ] | join(' ') | hash('sha256') }}"
+ci_management_admin_secret: "{{ [ci_master_secret, 'admin', ci_master_secret ] | join(' ') | hash('sha256') }}"
+ci_database_secret: "{{ [ci_master_secret, 'ci_database', ci_master_secret ] | join(' ') | hash('sha256') }}"
+ci_messaging_secret: "{{ [ci_master_secret, 'ci_messaging', ci_master_secret ] | join(' ') | hash('sha256') }}"
+ci_services_secret: "{{ [ci_master_secret, 'ci_services', ci_master_secret ] | join(' ') | hash('sha256') }}"
 
 
 
