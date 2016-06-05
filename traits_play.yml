@@ -18,6 +18,10 @@
     when: ci_trait_apache2
     tags: ci_trait_apache2
 
+  - role: traits/bower
+    when: ci_trait_bower
+    tags: ci_trait_bower
+
   - role: traits/chruby
     when: ci_trait_chruby
     tags: ci_trait_chruby
