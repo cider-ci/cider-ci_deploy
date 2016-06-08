@@ -1,3 +1,10 @@
+- hosts: cider-ci_server
+
+  roles:
+
+  - role: debug
+    tags: [debug]
+
 - hosts: cider-ci_executors
 
   vars_files:

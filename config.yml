@@ -25,6 +25,9 @@ force_local_build: false
 
 ci_exec_user: ci-exec-user
 ci_working_dir: /tmp/ci_working-dir
+executor_service_nrepl_port: 7883
+executor_nrepl_enabled: false
+
 
 ### traits ####################################################################
 # the default is not to install any of these traits

@@ -15,6 +15,12 @@
     system: no
     shell: /bin/bash
 
+- name: set some default nice value
+  lineinfile:
+    dest: /etc/security/limits.conf
+    line: "{{ci_exec_user}} hard priority {{ci_exec_user_priority | default(3)}} "
+    regexp: "^{{ci_exec_user}}.*priority.*$"
+
 - name: Allow the exec-user to sudo itself
   template:
     src: sudo

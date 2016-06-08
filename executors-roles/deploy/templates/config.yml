@@ -1,5 +1,16 @@
 server_base_url: {{server_base_url}}
 
+{% if executor_max_load is defined %}
+max_load: {{executor_max_load}}
+{% endif %}
+
+trial_retention_duration: {{ executor_trial_retention_duration | default('30 Minutes')}}
+
+nrepl:
+  port: {{executor_service_nrepl_port}}
+  bind: "{{nrepl_bind_address | default('127.0.0.1')}}"
+  enabled: {{executor_nrepl_enabled}}
+
 basic_auth:
   username: {{executor_name}}
   password: {{executor_password}}
