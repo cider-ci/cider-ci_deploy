@@ -19,7 +19,7 @@ jobs:
               timeout: 60
           scripts:
             build:
-              timeout: 10 Minutes
+              timeout: 20 Minutes
               body: |
                 set -eux
                 cd deploy
