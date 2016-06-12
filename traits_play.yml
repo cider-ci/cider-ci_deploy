@@ -58,10 +58,6 @@
     when: ci_trait_postgresql
     tags: ci_trait_postgresql
 
-  - role: traits/rabbitmq
-    when: ci_trait_rabbitmq
-    tags: ci_trait_rabbitmq
-
   - role: traits/rbenv
     when: ci_trait_rbenv
     tags: ci_trait_rbenv

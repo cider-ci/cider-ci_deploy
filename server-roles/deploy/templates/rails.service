@@ -4,7 +4,6 @@ After=syslog.target
 After=network.target
 
 BindsTo=cider-ci_postgresql.service
-BindsTo=cider-ci_rabbitmq.service
 
 [Service]
 WorkingDirectory={{service_dir}}

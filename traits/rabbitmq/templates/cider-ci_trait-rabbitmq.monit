@@ -1,8 +1,0 @@
-check process cider-ci_rabbitmq
-  matching "beam.smp .* -sname {{ci_trait_rabbitmq_node_name}}"
-  group rabbitmq
-  start program = "/bin/systemctl start cider-ci_trait-rabbitmq"
-  stop program = "/bin/systemctl stop cider-ci_trait-rabbitmq"
-if 5 restarts within 10 cycles then timeout
-if failed port {{ci_trait_rabbitmq_node_port}} 2 times within 3 cycles then restart
-if failed port {{ci_trait_rabbitmq_mangement_port}} 2 times within 3 cycles then restart

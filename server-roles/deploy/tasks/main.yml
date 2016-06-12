@@ -11,9 +11,6 @@
 - include: configure.yml
   tags: [deploy-configure]
 
-- include: setup-messaging.yml
-  tags: [deploy-setup-messaging]
-
 - include: setup-database.yml
   tags: [deploy-setup-database]
 

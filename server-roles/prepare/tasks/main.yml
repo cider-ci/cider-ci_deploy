@@ -16,10 +16,10 @@
 - name: unmonitor every cider-ci service
   command: rm -f /etc/monit/conf.d/cider-ci_*
 
-- name: restart monitoring
+- name: stop monitoring
   service:
     name: monit
-    state: restarted
+    state: stopped
 
 - name: stop every cider-ci_* service
   command: systemctl stop cider-ci_*

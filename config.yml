@@ -43,7 +43,6 @@ ci_trait_nodejs: false
 ci_trait_openjdk: false
 ci_trait_phantomjs: false
 ci_trait_postgresql: false
-ci_trait_rabbitmq: false
 ci_trait_rbenv: false
 ci_trait_ruby_install: false
 ci_trait_sqlite: false
@@ -88,8 +87,6 @@ ci_services_secret: "{{ [ci_master_secret, 'ci_services', ci_master_secret ] | j
 ci_internal_hostname: localhost
 
 ci_postgres_port: 9432
-ci_trait_rabbitmq_node_port: 5673
-ci_rabbitmq_mangement_port: 15673
 
 ci_server_dir: /cider-ci/server
 ci_web_context: /cider-ci
