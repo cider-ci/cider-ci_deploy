@@ -107,6 +107,15 @@
     mode: 0640
     create: yes
 
+- name: configure git
+  become: yes
+  become_user: '{{ci_exec_user}}'
+  become_method: sudo
+  shell: |
+    git config --global user.email '{{ci_exec_user}}@{{inventory_hostname}}'
+    git config --global user.name '{{ci_exec_user}}'
+  tags: [executor-configure-git]
+
 - name: change the ownership of login related files so they cannot be changed
   file:
     state: file

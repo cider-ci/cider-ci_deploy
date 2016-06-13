@@ -21,17 +21,24 @@
     name: monit
     state: stopped
 
-- name: stop every cider-ci_* service
-  command: systemctl stop cider-ci_*
+- name: stop all cider-ci services
+  shell:
+    systemctl list-unit-files --type=service
+    | awk '{print $1}'
+    | grep cider-ci
+    | xargs systemctl stop
   failed_when: false
 
 - name: clean systemd service files
   command: rm -f /etc/systemd/system/cider-ci*
-  when: ci_clean_slate
 
 - name: reload systemctl
   command: systemctl daemon-reload
   changed_when: false
+
+- name: kill all remaining processes of the user cider-ci
+  shell: pkill -u cider-ci
+  failed_when: false
 
 - name: clean cider-ci base directory
   command: rm -f /etc/systemd/system/cider-ci*

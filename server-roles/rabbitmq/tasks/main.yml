@@ -1,4 +1,4 @@
-- apt: pkg={{item}} state=purge absent=yes update_cache=yes cache_valid_time=3600
+- apt: pkg={{item}} state=absent purge=yes update_cache=yes cache_valid_time=3600
   with_items: [rabbitmq-server, amqp-tools]
   tags: [internet]
 

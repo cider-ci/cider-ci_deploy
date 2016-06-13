@@ -21,14 +21,6 @@ basic_auth:
 session:
   secret: "{{ci_master_secret}}"
 
-messaging:
-  connection:
-    vhost: cider-ci_v4
-    host: localhost
-    port: {{ci_rabbitmq_node_port}}
-    username: cider-ci
-    password: "{{ci_messaging_secret}}"
-
 server_base_url: {{server_base_url}}
 
 services:
