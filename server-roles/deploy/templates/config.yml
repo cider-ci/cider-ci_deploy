@@ -1,4 +1,6 @@
-job_retention_duration: {{job_retention_duration | default('30 days') }}
+job_retention_duration: {{job_retention_duration | default('100 Years') }}
+task_retention_duration: {{task_retention_duration | default('100 Years') }}
+trial_retention_duration: {{trial_retention_duration | default('100 Years') }}
 
 authentication_providers: {{authentication_providers | default({}) | to_json }}
 
