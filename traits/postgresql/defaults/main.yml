@@ -5,6 +5,7 @@ ci_trait_postgresql_version_major: 9
 ci_trait_postgresql_version_minor: 5
 
 ci_trait_postgresql_port: 54{{ci_trait_postgresql_version_major}}{{ci_trait_postgresql_version_minor}}
+ci_trait_postgresql_max_connections: 500
 ci_trait_postgresql_version: '{{ci_trait_postgresql_version_major}}.{{ci_trait_postgresql_version_minor}}'
 
 ci_trait_postgresql_data_dir: /tmp/cider-ci_trait_postgresql-{{ci_trait_postgresql_version}}_data

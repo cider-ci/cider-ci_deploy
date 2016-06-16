@@ -29,6 +29,15 @@
       group: postgres
       mode: 0600
 
+  - name: configure max connections
+    lineinfile:
+      dest: '{{ci_trait_postgresql_data_dir}}/postgresql.conf'
+      regexp: .*max_connections\s*=\s*\d+.*
+      line: max_connections = {{ci_trait_postgresql_max_connections}}
+      owner: postgres
+      group: postgres
+      mode: 0600
+
   - name: configure postgresql socket dir
     lineinfile:
       dest: '{{ci_trait_postgresql_data_dir}}/postgresql.conf'
