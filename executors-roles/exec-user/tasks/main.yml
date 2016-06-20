@@ -7,9 +7,14 @@
     cache_valid_time: 3600
   tags: [internet]
 
+- name: Add the group {{ci_exec_user}}
+  group:
+    name: '{{ci_exec_user}}'
+
 - name: Add the user {{ci_exec_user}}
   user:
     name: '{{ci_exec_user}}'
+    group: '{{ci_exec_user}}'
     home: /home/{{ci_exec_user}}
     generate_ssh_key: yes
     system: no
