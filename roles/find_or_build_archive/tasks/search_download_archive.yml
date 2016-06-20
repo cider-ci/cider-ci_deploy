@@ -7,12 +7,12 @@
   tags: [debug]
 
 - set_fact:
-    download_archive_url_prefix: "{{search_download_archive.url_prefix}}"
+    download_urls: "{{search_download_archive.urls}}"
   when: >
-    (search_download_archive.url is not none)
+    (search_download_archive.urls is not none)
     and (not force_local_build)
   tags: [debug]
 
 - debug:
-    var: download_archive_url_prefix
+    var: download_urls
   tags: [debug]

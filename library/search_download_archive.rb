@@ -4,6 +4,7 @@
 require 'json'
 require 'openssl'
 require 'open3'
+require 'yaml'
 
 def exec! cmd
   Open3.popen3(cmd) do |stdin, stdout, stderr, wait_thr|
@@ -19,31 +20,49 @@ def exec! cmd
   end
 end
 
-tree_id = exec!('cd .. && git log -n 1 --pretty=%T').strip
+def tag
+  release = YAML.load_file("../config/releases.yml")['releases'].first
+  tag = "#{release['version_major']}.#{release['version_minor']}.#{release['version_patch']}" \
+    + ( release['version_pre'] ?  "-#{release['version_pre']}" : "")
+end
 
-# TODO: for now we use what is found on cider-ci
-# later on we want to use releases on GitHub (git tag --points-at HEAD)
-# which are singed!
-ci_url_prefix = "http://ci.zhdk.ch/cider-ci/storage/tree-attachments/#{tree_id}"
+@tag = tag
+@tree_id = exec!('cd .. && git log -n 1 --pretty=%T').strip
 
 def check_url! url
   exec! " curl -sS --fail -I '#{url}'"
 end
 
+def check_and_build_urls base_url
+  begin
+    ['cider-ci.tar.gz', 'cider-ci.tar.gz.sig'].map{|name|
+      base_url + "/" + name
+    }.map{ |url|
+      check_url!(url) && url
+    }
+  rescue Exception => e
+    nil
+  end
+end
+
+def find_urls
+  check_and_build_urls("https://github.com/cider-ci/cider-ci/releases/download/#{@tag}") \
+  || check_and_build_urls("http://ci.zhdk.ch/cider-ci/storage/tree-attachments/#{@tree_id}")
+end
+
+
 args = JSON.parse(File.open(ARGV[0]).read) rescue {}
 
 begin
-  check_url! "#{ci_url_prefix}/cider-ci.tar.gz"
-  check_url! "#{ci_url_prefix}/cider-ci.tar.gz.sig"
   print JSON.dump(
     "changed" => false,
-    "url_prefix" => ci_url_prefix,
+    "urls" => find_urls,
     "stdout" => "Archive and signature found."
   )
 rescue Exception => e
   print JSON.dump(
     "changed" => false,
-    "url_prefix" => nil,
+    "urls" => nil,
     "stdout" => "Warning: archive or signature missing! #{e}"
   )
 end

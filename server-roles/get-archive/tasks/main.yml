@@ -2,19 +2,23 @@
   synchronize:
     src: "{{item}}"
     dest: /tmp/{{item}}
-  when: hostvars.localhost.download_archive_url_prefix is not defined
+  when: hostvars.localhost.download_urls is not defined
   with_items:
     - cider-ci.tar.gz
 
 - name: download archive to the server
   get_url:
-    url: '{{hostvars.localhost.download_archive_url_prefix}}/{{item}}'
-    dest: /tmp/{{item}}
+    url: '{{hostvars.localhost.download_urls[0]}}'
+    dest: /tmp/cider-ci.tar.gz
     force: yes
-  when: hostvars.localhost.download_archive_url_prefix is defined
-  with_items:
-    - cider-ci.tar.gz
-    - cider-ci.tar.gz.sig
+  when: hostvars.localhost.download_urls is defined
+
+- name: download archive signature to the server
+  get_url:
+    url: '{{hostvars.localhost.download_urls[1]}}'
+    dest: /tmp/cider-ci.tar.gz.sig
+    force: yes
+  when: hostvars.localhost.download_urls is defined
 
 - name: copy public key to the server
   copy:
