@@ -62,7 +62,7 @@ rm -rf "${CIDER_CI_DIR}"
 git clone --no-checkout https://github.com/cider-ci/cider-ci "${CIDER_CI_DIR}"
 cd "${CIDER_CI_DIR}"
 git checkout "${VERSION}"
-git submodule update --init --recursive
+git submodule update --init --recursive deploy
 
 
 ###############################################################################
