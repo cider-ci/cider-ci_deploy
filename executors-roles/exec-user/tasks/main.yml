@@ -10,6 +10,7 @@
 - name: Add the user {{ci_exec_user}}
   user:
     name: '{{ci_exec_user}}'
+    group: '{{ci_exec_user}}'
     home: /home/{{ci_exec_user}}
     generate_ssh_key: yes
     system: no
