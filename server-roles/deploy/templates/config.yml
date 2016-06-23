@@ -13,7 +13,9 @@ database:
   password: "{{ci_database_secret}}"
   max_pool_size: 3
 
-hostname: localhost
+internal_hostname: {{ci_internal_hostname}}
+external_hostname: {{ci_external_hostname}}
+hostname: {{ci_external_hostname}}
 
 secret: "{{ci_master_secret}}"
 

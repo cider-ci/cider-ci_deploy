@@ -18,6 +18,9 @@
   - role: openjdk8_install
     tags: [openjdk8_install]
 
+  - role: server-roles/get-archive
+    tags: [get-archive]
+
   - role: server-roles/prepare
     tags: [prepare]
 

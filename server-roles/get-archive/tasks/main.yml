@@ -24,9 +24,9 @@
   copy:
     src: crypto/cider-ci.pub.pem
     dest: /tmp/cider-ci.pub.pem
-  when: hostvars.localhost.download_archive_url_prefix is defined
+  when: hostvars.localhost.download_urls is defined
 
 - name: verify archive
   shell: openssl dgst -verify /tmp/cider-ci.pub.pem -signature /tmp/cider-ci.tar.gz.sig /tmp/cider-ci.tar.gz
-  when: hostvars.localhost.download_archive_url_prefix is defined
+  when: hostvars.localhost.download_urls is defined
 

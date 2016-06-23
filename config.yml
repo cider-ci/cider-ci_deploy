@@ -85,6 +85,7 @@ ci_services_secret: "{{ [ci_master_secret, 'ci_services', ci_master_secret ] | j
 ###############################################################################
 
 ci_internal_hostname: localhost
+ci_external_hostname: '{{ci_internal_hostname}}'
 
 ci_postgres_port: 9432
 

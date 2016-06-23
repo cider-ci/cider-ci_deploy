@@ -1,0 +1,23 @@
+tasks:
+  build:
+    traits:
+      ci-executor-madek: true
+    tree_attachments:
+      archive:
+        content_type: application/gzip
+        include_match: ^cider-ci\.tar\.gz$
+      signature:
+        content_type: application/octet-stream
+        include_match: ^cider-ci\.tar\.gz\.sig$
+    git_options:
+      submodules:
+        include_match: ^.*$
+    scripts:
+      build:
+        timeout: 20 Minutes
+        body: |
+          set -eux
+          cd deploy
+          ./bin/archive-build
+          ./bin/archive-sign
+          cp cider-ci.tar.gz* ../.
