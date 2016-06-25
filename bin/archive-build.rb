@@ -36,14 +36,14 @@ end
 
 def tree_id
   tree_id= Dir.chdir(SOURCE_DIR) do
-    exec!("git log -1 --pretty=%T").strip
+    exec!("git log -1 --pretty=%t").strip
   end
 end
 
 def releases
   release = YAML.load_file("../config/releases.yml").
     with_indifferent_access[:releases][0]
-  release[:version_build] = tree_id[0,5].strip
+  release[:version_build] = tree_id
   {'releases' => [release]}
 end
 
