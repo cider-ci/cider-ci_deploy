@@ -1,6 +1,6 @@
 managed_users:
   admin:
-    create_attributes:
+    update_attributes:
       is_admin: true
       password: '{{ci_master_secret}}'
 

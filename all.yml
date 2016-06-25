@@ -3,7 +3,7 @@
 #
 # It is not included by default!
 #
-# We recommend to symlink this file from your inventory `/group_vars/all.yml`
+# We recommend to symlink this file from your inventory `group_vars/all.yml`
 # file. Then override variables with dedicated group or host files.  See
 # http://docs.cider-ci.info/installation/setup-and-deploy/ for details.
 #
@@ -29,6 +29,7 @@ ci_ntp_server: pool.ntp.org
 ### executor specific config ##################################################
 ###############################################################################
 
+ci_executor_daily_reboot: true
 ci_executor_exec_user: ci-exec-user
 ci_executor_working_dir: /tmp/ci_working-dir
 ci_executor_service_nrepl_port: 7883

@@ -26,3 +26,19 @@
       - '{{ansible_distribution}} {{ansible_distribution_release}}'
       - '{{inventory_hostname}}'
     file: /etc/cider-ci/traits.yml
+
+- name: daily reboot
+  cron:
+    name: daily reboot
+    hour: 5
+    minute: 43
+    job: reboot
+    cron_file: daily reboot
+    user: 'root'
+  when: ci_executor_daily_reboot
+
+- name: daily reboot
+  cron:
+    name: daily reboot
+    state: absent
+  when: not ci_executor_daily_reboot
