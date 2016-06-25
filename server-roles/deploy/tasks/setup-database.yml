@@ -7,7 +7,7 @@
 - name: wait for service cider-ci_postgresql
   wait_for:
     host: localhost
-    port: '{{ci_postgres_port}}'
+    port: '{{ci_server_postgres_port}}'
     timeout: 60
 
 - name: Configure the rails database
@@ -19,19 +19,19 @@
   become_user: root
   become_method: sudo
   postgresql_user:
-    password: '{{ci_database_secret}}'
+    password: '{{ci_server_database_secret}}'
     name: cider-ci
     role_attr_flags: CREATEDB,SUPERUSER,LOGIN
     login_user: root
-    port: '{{ci_postgres_port}}'
+    port: '{{ci_server_postgres_port}}'
 
 - name: Create the database
   postgresql_db:
     name: cider-ci_v4
     login_host: localhost
     login_user: cider-ci
-    login_password: '{{ci_database_secret}}'
-    port: '{{ci_postgres_port}}'
+    login_password: '{{ci_server_database_secret}}'
+    port: '{{ci_server_postgres_port}}'
 
 - name: Migrate the database
   become: yes

@@ -1,4 +1,4 @@
-ci_exec_user: ci-exec-user
+ci_executor_exec_user: ci-exec-user
 
-ci_working_dir: /tmp/ci_working-dir
+ci_executor_working_dir: /tmp/ci_working-dir
 

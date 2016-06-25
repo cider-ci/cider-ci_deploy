@@ -12,17 +12,17 @@
 
 - name: setup user
   mysql_user:
-    name: '{{ci_exec_user}}'
-    password: '{{ci_exec_user}}'
+    name: '{{ci_executor_exec_user}}'
+    password: '{{ci_executor_exec_user}}'
     priv: '*.*:ALL'
     state: present
 
 - name: setup env
   template:
     src: mysql_env.sh
-    dest: ~{{ci_exec_user}}/.bash_login.d/mysql.sh
+    dest: ~{{ci_executor_exec_user}}/.bash_login.d/mysql.sh
     owner: root
-    group: '{{ci_exec_user}}'
+    group: '{{ci_executor_exec_user}}'
     mode: 0640
 
 - name: register postgresql trait

@@ -1,8 +1,5 @@
 - hosts: cider-ci_executors
 
-  vars_files:
-  - '{{inventory_dir}}/config.yml'
-
   pre_tasks: []
 
   roles:
@@ -11,61 +8,61 @@
     tags: [debug]
 
   - role: traits/ansible
-    when: ci_trait_ansible
-    tags: ci_trait_ansible
+    when: ci_executor_trait_ansible
+    tags: ci_executor_trait_ansible
 
   - role: traits/apache2
-    when: ci_trait_apache2
-    tags: ci_trait_apache2
+    when: ci_executor_trait_apache2
+    tags: ci_executor_trait_apache2
 
   - role: traits/bower
-    when: ci_trait_bower
-    tags: ci_trait_bower
+    when: ci_executor_trait_bower
+    tags: ci_executor_trait_bower
 
   - role: traits/chruby
-    when: ci_trait_chruby
-    tags: ci_trait_chruby
+    when: ci_executor_trait_chruby
+    tags: ci_executor_trait_chruby
 
   - role: traits/firefox-esr
-    when: ci_trait_firefox_esr
-    tags: ci_trait_firefox_esr
+    when: ci_executor_trait_firefox_esr
+    tags: ci_executor_trait_firefox_esr
 
   - role: traits/leiningen
-    when: ci_trait_leiningen
-    tags: ci_trait_leiningen
+    when: ci_executor_trait_leiningen
+    tags: ci_executor_trait_leiningen
 
   - role: traits/misc
-    when: ci_trait_misc
-    tags: ci_trait_misc
+    when: ci_executor_trait_misc
+    tags: ci_executor_trait_misc
 
   - role: traits/mysql
-    when: ci_trait_mysql
-    tags: ci_trait_mysql
+    when: ci_executor_trait_mysql
+    tags: ci_executor_trait_mysql
 
   - role: traits/nodejs
-    when: ci_trait_nodejs
-    tags: ci_trait_nodejs
+    when: ci_executor_trait_nodejs
+    tags: ci_executor_trait_nodejs
 
   - role: traits/openjdk
-    when: ci_trait_openjdk
-    tags: ci_trait_openjdk
+    when: ci_executor_trait_openjdk
+    tags: ci_executor_trait_openjdk
 
   - role: traits/phantomjs
-    when: ci_trait_phantomjs
-    tags: ci_trait_phantomjs
+    when: ci_executor_trait_phantomjs
+    tags: ci_executor_trait_phantomjs
 
   - role: traits/postgresql
-    when: ci_trait_postgresql
-    tags: ci_trait_postgresql
+    when: ci_executor_trait_postgresql
+    tags: ci_executor_trait_postgresql
 
   - role: traits/rbenv
-    when: ci_trait_rbenv
-    tags: ci_trait_rbenv
+    when: ci_executor_trait_rbenv
+    tags: ci_executor_trait_rbenv
 
   - role: traits/ruby-install
-    when: ci_trait_ruby_install
-    tags: ci_trait_ruby_install
+    when: ci_executor_trait_ruby_install
+    tags: ci_executor_trait_ruby_install
 
   - role: traits/sqlite
-    when: ci_trait_sqlite
-    tags: ci_trait_sqlite
+    when: ci_executor_trait_sqlite
+    tags: ci_executor_trait_sqlite

@@ -22,12 +22,12 @@
     mode: 0644
 
 - include: virtual-host.yml
-  with_indexed_items: '{{ci_virtual_hosts}}'
+  with_indexed_items: '{{ci_server_virtual_hosts}}'
 
 - htpasswd:
     path: '{ci_server_dir}/config/management_htpasswd'
     name: admin
-    password: '{ci_management_admin_secret}'
+    password: '{ci_server_management_admin_secret}'
     owner: root
     group: www-data
     mode: 0640

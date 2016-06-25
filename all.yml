@@ -1,9 +1,12 @@
 ###############################################################################
-# This is the default ansible deploy configuration of Cider-CI.
+# This is a default ansible deploy configuration of Cider-CI.
 #
-# It is linked from the playbook directory `group_vars/all.yml`, and thus
-# has a very low priority when it comes to variables precedence and overriding
-# with Ansible.
+# It is not included by default!
+#
+# We recommend to symlink this file from your inventory `/group_vars/all.yml`
+# file. Then override variables with dedicated group or host files.  See
+# http://docs.cider-ci.info/installation/setup-and-deploy/ for details.
+#
 ###############################################################################
 
 
@@ -15,84 +18,82 @@ ci_clean_slate: false
 
 ci_master_secret: "{{ lookup('password', inventory_dir + '/' + 'master_secret.txt chars=ascii_letters,digits,hexdigits length=40') }}"
 
-server_base_url: http://{{ hostvars[groups['cider-ci_server'][0]].ansible_default_ipv4.address  }}
+ci_server_base_url: http://{{ hostvars[groups['cider-ci_server'][0]].ansible_default_ipv4.address  }}
 
-force_local_build: false
+ci_force_local_build: false
+
+ci_ntp_setup: true
+ci_ntp_server: pool.ntp.org
 
 ###############################################################################
 ### executor specific config ##################################################
 ###############################################################################
 
-ci_exec_user: ci-exec-user
-ci_working_dir: /tmp/ci_working-dir
-executor_service_nrepl_port: 7883
-executor_nrepl_enabled: false
+ci_executor_exec_user: ci-exec-user
+ci_executor_working_dir: /tmp/ci_working-dir
+ci_executor_service_nrepl_port: 7883
+ci_executor_nrepl_enabled: false
 
 
 ### traits ####################################################################
 # the default is not to install any of these traits
-ci_trait_ansible: false
-ci_trait_apache2: false
-ci_trait_bower: false
-ci_trait_chruby: false
-ci_trait_firefox_esr: false
-ci_trait_leiningen: false
-ci_trait_misc: false
-ci_trait_mysql: false
-ci_trait_nodejs: false
-ci_trait_openjdk: false
-ci_trait_phantomjs: false
-ci_trait_postgresql: false
-ci_trait_rbenv: false
-ci_trait_ruby_install: false
-ci_trait_sqlite: false
+ci_executor_trait_ansible: false
+ci_executor_trait_apache2: false
+ci_executor_trait_bower: false
+ci_executor_trait_chruby: false
+ci_executor_trait_firefox_esr: false
+ci_executor_trait_leiningen: false
+ci_executor_trait_misc: false
+ci_executor_trait_mysql: false
+ci_executor_trait_nodejs: false
+ci_executor_trait_openjdk: false
+ci_executor_trait_phantomjs: false
+ci_executor_trait_postgresql: false
+ci_executor_trait_rbenv: false
+ci_executor_trait_ruby_install: false
+ci_executor_trait_sqlite: false
 
 
 ###############################################################################
 ### Server specific config ####################################################
 ###############################################################################
 
-ci_virtual_hosts:
-- hostname: "{{ ci_internal_hostname }}"
-  ip: "{{ ci_internal_hostname }}"
-  logfile_infix: "{{ ci_internal_hostname }}"
+ci_server_external_hostname: '{{ci_server_internal_hostname}}'
+
+ci_server_virtual_hosts:
+- hostname: "{{ ci_server_internal_hostname }}"
+  ip: "{{ ci_server_internal_hostname }}"
+  logfile_infix: "{{ ci_server_internal_hostname }}"
 - hostname: NULL
   ip: '*'
   ssl_certificate_file: /etc/ssl/certs/ssl-cert-snakeoil.pem
   ssl_certificate_key_file: /etc/ssl/private/ssl-cert-snakeoil.key
 
 
-server_timezone: Etc/UTC
-rails_timezone: UTC
-
-  #- hostname: NULL
-  #ssl_certificate_file: /etc/ssl/certs/ssl-cert-snakeoil.pem
-  #ssl_certificate_key_file: /etc/ssl/private/ssl-cert-snakeoil.key
-
 
 ### Secrets ###################################################################
 
-ci_management_admin_secret: "{{ [ci_master_secret, 'admin', ci_master_secret ] | join(' ') | hash('sha256') }}"
-ci_database_secret: "{{ [ci_master_secret, 'ci_database', ci_master_secret ] | join(' ') | hash('sha256') }}"
-ci_messaging_secret: "{{ [ci_master_secret, 'ci_messaging', ci_master_secret ] | join(' ') | hash('sha256') }}"
-ci_services_secret: "{{ [ci_master_secret, 'ci_services', ci_master_secret ] | join(' ') | hash('sha256') }}"
-
+ci_server_management_admin_secret: "{{ [ci_master_secret, 'admin', ci_master_secret ] | join(' ') | hash('sha256') }}"
+ci_server_database_secret: "{{ [ci_master_secret, 'ci_database', ci_master_secret ] | join(' ') | hash('sha256') }}"
+ci_server_services_secret: "{{ [ci_master_secret, 'ci_server_services', ci_master_secret ] | join(' ') | hash('sha256') }}"
 
 
 ###############################################################################
-### server specific config, ###################################################
-### meant to be overridden under special circumstances only ###################
+### server specific config,
+### meant to be overridden under special circumstances only
 ###############################################################################
 
-ci_internal_hostname: localhost
-ci_external_hostname: '{{ci_internal_hostname}}'
+ci_server_timezone: Etc/UTC
+ci_server_rails_timezone: UTC
 
-ci_postgres_port: 9432
+ci_server_internal_hostname: localhost
+
+ci_server_postgres_port: 9432
 
 ci_server_dir: /cider-ci/server
-ci_web_context: /cider-ci
+ci_server_web_context: /cider-ci
 
-ci_services:
+ci_server_services:
 
   ui:
     name: user-interface

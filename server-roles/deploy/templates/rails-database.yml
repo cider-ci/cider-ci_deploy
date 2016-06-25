@@ -1,11 +1,11 @@
 default: &default
-  port: '{{ci_postgres_port}}'
+  port: '{{ci_server_postgres_port}}'
   adapter: postgresql
   encoding: unicode
   host: localhost
   pool: 15
   username: cider-ci
-  password: '{{ci_database_secret}}'
+  password: '{{ci_server_database_secret}}'
   database: cider-ci_v4
 
 development:

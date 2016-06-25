@@ -1,7 +1,7 @@
 - name: set env
   template:
     src: env.sh
-    dest: ~{{ci_exec_user}}/.bash_login.d/opendjk.sh
+    dest: ~{{ci_executor_exec_user}}/.bash_login.d/opendjk.sh
 
 - name: register trait
   register_traits:

@@ -1,14 +1,14 @@
 - include: install.yml
 
 - include: configure.yml
-  tags: [ci_trait_postgresql_configure]
+  tags: [ci_executor_trait_postgresql_configure]
 
 - name: Env for the user
   template:
     src: pgenv.sh
-    dest: ~{{ci_trait_postgresql_exec_user}}/.bash_login.d/postgresql.sh
+    dest: ~{{ci_executor_trait_postgresql_exec_user}}/.bash_login.d/postgresql.sh
     owner: root
-    group: '{{ci_trait_postgresql_exec_user}}'
+    group: '{{ci_executor_trait_postgresql_exec_user}}'
     mode: 0640
 
 
@@ -16,5 +16,5 @@
   register_traits:
     traits:
       - PostgreSQL
-      - PostgreSQL {{ci_trait_postgresql_version}}
+      - PostgreSQL {{ci_executor_trait_postgresql_version}}
     file: /cider-ci/executor/config/traits.yml

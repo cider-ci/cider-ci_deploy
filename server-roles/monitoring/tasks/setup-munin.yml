@@ -22,12 +22,12 @@
 - file:
     state: link
     src:  /usr/share/munin/plugins/postgres_connections_db
-    dest: /etc/munin/plugins/cider-ci_postgres_connections_db
+    dest: /etc/munin/plugins/cider-ci_server_postgres_connections_db
 
 - file:
     state: link
     src:  /usr/share/munin/plugins/postgres_size_
-    dest: /etc/munin/plugins/cider-ci_postgres_postgres_size_ALL
+    dest: /etc/munin/plugins/cider-ci_server_postgres_postgres_size_ALL
 
 - shell: rm -f /etc/munin/plugins/nfs*
 - shell: rm -f /etc/munin/plugins/exim*

@@ -1,31 +1,31 @@
-job_retention_duration: {{job_retention_duration | default('100 Years') }}
-task_retention_duration: {{task_retention_duration | default('100 Years') }}
-trial_retention_duration: {{trial_retention_duration | default('100 Years') }}
+job_retention_duration: {{ci_server_job_retention_duration | default('100 Years') }}
+task_retention_duration: {{ci_server_task_retention_duration | default('100 Years') }}
+trial_retention_duration: {{ci_server_trial_retention_duration | default('100 Years') }}
 
-authentication_providers: {{authentication_providers | default({}) | to_json }}
+authentication_providers: {{ci_server_authentication_providers | default({}) | to_json }}
 
 database:
   adapter: postgresql
   classname: org.postgresl.Driver
-  subname: '//localhost:{{ci_postgres_port}}/cider-ci_v4'
+  subname: '//localhost:{{ci_server_postgres_port}}/cider-ci_v4'
   subprotocol: postgresql
   user: cider-ci
-  password: "{{ci_database_secret}}"
+  password: "{{ci_server_database_secret}}"
   max_pool_size: 3
 
-internal_hostname: {{ci_internal_hostname}}
-external_hostname: {{ci_external_hostname}}
-hostname: {{ci_external_hostname}}
+internal_hostname: {{ci_server_internal_hostname}}
+external_hostname: {{ci_server_external_hostname}}
+hostname: {{ci_server_external_hostname}}
 
 secret: "{{ci_master_secret}}"
 
 basic_auth:
-  password: "{{ci_services_secret}}"
+  password: "{{ci_server_services_secret}}"
 
 session:
   secret: "{{ci_master_secret}}"
 
-server_base_url: {{server_base_url}}
+server_base_url: {{ci_server_base_url}}
 
 services:
 

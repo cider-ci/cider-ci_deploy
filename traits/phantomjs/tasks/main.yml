@@ -3,24 +3,24 @@
     - lbzip2
   tags: [internet]
 
-- stat: path={{ci_trait_phantomjs_bin_path}}
-  register: ci_trait_phantomjs_bin_path_stats
+- stat: path={{ci_executor_trait_phantomjs_bin_path}}
+  register: ci_executor_trait_phantomjs_bin_path_stats
 
 - get_url:
-    url: https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-{{ci_trait_phantomjs_version}}-linux-x86_64.tar.bz2
-    dest: '{{ci_trait_phantomjs_dl_path}}'
-  when: not ci_trait_phantomjs_bin_path_stats.stat.exists
+    url: https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-{{ci_executor_trait_phantomjs_version}}-linux-x86_64.tar.bz2
+    dest: '{{ci_executor_trait_phantomjs_dl_path}}'
+  when: not ci_executor_trait_phantomjs_bin_path_stats.stat.exists
 
-- shell: cd /tmp && tar xf {{ci_trait_phantomjs_dl_path}}
-  when: not ci_trait_phantomjs_bin_path_stats.stat.exists
+- shell: cd /tmp && tar xf {{ci_executor_trait_phantomjs_dl_path}}
+  when: not ci_executor_trait_phantomjs_bin_path_stats.stat.exists
 
-- shell: mv /tmp/phantomjs-{{ci_trait_phantomjs_version}}-linux-x86_64/bin/phantomjs {{ci_trait_phantomjs_bin_path}}
-  when: not ci_trait_phantomjs_bin_path_stats.stat.exists
+- shell: mv /tmp/phantomjs-{{ci_executor_trait_phantomjs_version}}-linux-x86_64/bin/phantomjs {{ci_executor_trait_phantomjs_bin_path}}
+  when: not ci_executor_trait_phantomjs_bin_path_stats.stat.exists
 
 - name: link to the most recent version of phantomjs
   file:
-    dest: ~{{ci_exec_user}}/bin/phantomjs
-    src: '{{ci_trait_phantomjs_bin_path}}'
+    dest: ~{{ci_executor_exec_user}}/bin/phantomjs
+    src: '{{ci_executor_trait_phantomjs_bin_path}}'
     state: link
 
 - name: register trait
@@ -28,6 +28,6 @@
     remove_match: '^PhantomJS.*'
     traits:
       - PhantomJS
-      - PhantomJS {{ci_trait_phantomjs_version_major}}
-      - PhantomJS {{ci_trait_phantomjs_version_major}}.{{ci_trait_phantomjs_version_minor}}
+      - PhantomJS {{ci_executor_trait_phantomjs_version_major}}
+      - PhantomJS {{ci_executor_trait_phantomjs_version_major}}.{{ci_executor_trait_phantomjs_version_minor}}
     file: /cider-ci/executor/config/traits.yml

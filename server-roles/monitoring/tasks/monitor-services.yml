@@ -14,7 +14,7 @@
     monit_password: '{{monit_password_signature.signature}}'
 
 - include: monitor-service.yml
-  with_dict: '{{ci_services}}'
+  with_dict: '{{ci_server_services}}'
 
 - name: reload monit
   service:

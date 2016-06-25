@@ -1,0 +1,42 @@
+- name: Install dependencies
+  apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
+  with_items: [ruby]
+  tags: [internet]
+
+- name: create the backups folder
+  file:
+    path: '{{ci_db_backups_dir}}'
+    state: directory
+    owner: cider-ci
+    group: cider-ci
+    mode: 0750
+
+- name: create the bin folder
+  file:
+    path: /cider-ci/bin
+    state: directory
+
+- name: create the backup bin
+  template:
+    src: ci-db-backup.rb
+    dest: /cider-ci/bin/ci-db-backup.rb
+    mode: 0755
+
+- name: create the rotate file
+  template:
+    src: logrotate
+    dest: /etc/logrotate.d/ci-db-backups
+
+- name: create the daily backup job if enabled
+  file:
+    src: /cider-ci/bin/ci-db-backup.rb
+    path: /etc/cron.daily/ci-db-backup
+    state: link
+    force: true
+  when: ci_db_backups_enabled
+
+- name: remove the daily backup job if not enabled
+  file:
+    path: /etc/cron.daily/ci-db-backup
+    state: absent
+  when: not ci_db_backups_enabled

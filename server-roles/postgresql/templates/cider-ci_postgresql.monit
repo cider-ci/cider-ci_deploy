@@ -1,7 +1,7 @@
 check process cider-ci_postgresql
-  matching "postgres -D {{ci_postgres_data_dir}}"
+  matching "postgres -D {{ci_server_postgres_data_dir}}"
   group database
   start program = "/bin/systemctl start cider-ci_postgresql"
   stop program = "/bin/systemctl stop cider-ci_postgresql"
 if 5 restarts within 10 cycles then timeout
-if failed port {{ci_postgres_port}} 4 times within 6 cycles then restart
+if failed port {{ci_server_postgres_port}} 4 times within 6 cycles then restart

@@ -9,4 +9,4 @@
     name: root
     login_user: root
     owner: root
-    port: '{{ci_postgres_port}}'
+    port: '{{ci_server_postgres_port}}'

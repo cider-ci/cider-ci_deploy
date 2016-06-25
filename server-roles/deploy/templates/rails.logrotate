@@ -1,0 +1,9 @@
+# Managed by ansible
+{{ci_server_dir}}{{service.path}}/*.log {
+daily
+missingok
+rotate 7
+compress
+delaycompress
+copytruncate
+}

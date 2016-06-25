@@ -1,1 +1,1 @@
-{{ci_exec_user}} ALL=({{ci_exec_user}}) NOPASSWD: ALL
+{{ci_executor_exec_user}} ALL=({{ci_executor_exec_user}}) NOPASSWD: ALL

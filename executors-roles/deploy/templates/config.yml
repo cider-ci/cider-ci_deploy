@@ -1,15 +1,15 @@
-server_base_url: {{server_base_url}}
+server_base_url: {{ci_server_base_url}}
 
 {% if executor_max_load is defined %}
 max_load: {{executor_max_load}}
 {% endif %}
 
-trial_retention_duration: {{ executor_trial_retention_duration | default('30 Minutes')}}
+trial_retention_duration: {{ ci_executor_trial_retention_duration | default('30 Minutes')}}
 
 nrepl:
-  port: {{executor_service_nrepl_port}}
+  port: {{ci_executor_service_nrepl_port}}
   bind: "{{nrepl_bind_address | default('127.0.0.1')}}"
-  enabled: {{executor_nrepl_enabled}}
+  enabled: {{ci_executor_nrepl_enabled}}
 
 basic_auth:
   username: {{executor_name}}
@@ -18,6 +18,6 @@ basic_auth:
 self_update: {{ci_executor_self_update | default(true) }}
 
 exec_user:
-  name: '{{ci_exec_user}}'
+  name: '{{ci_executor_exec_user}}'
 
-working_dir: '{{ci_working_dir}}'
+working_dir: '{{ci_executor_working_dir}}'

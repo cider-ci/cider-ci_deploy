@@ -5,8 +5,8 @@
     var: ci_master_secret
     # verbosity: 2
 - debug:
-    var: ci_management_admin_secret
+    var: ci_server_management_admin_secret
     # verbosity: 2
 - debug:
-    var: ci_database_secret
+    var: ci_server_database_secret
     # verbosity: 2

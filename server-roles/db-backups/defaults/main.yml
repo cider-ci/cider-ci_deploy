@@ -1,0 +1,3 @@
+ci_db_backups_enabled: True
+ci_db_backups_dir: /cider-ci/var/backups
+ci_db_backups_rails_root: '{{ci_server_dir}}{{ci_server_services.ui.path}}'

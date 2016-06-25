@@ -5,3 +5,5 @@
 - include: executors-deploy_play.yml
 
 - include: traits_play.yml
+
+- include: info_play.yml

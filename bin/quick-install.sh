@@ -1,7 +1,7 @@
 #!/bin/bash
 set -eux
 
-ANSIBLE_VERSION=2.0.2.0
+ANSIBLE_VERSION=2.1.0.0
 CIDER_CI_DIR=/tmp/cider-ci
 
 ################################################################################
@@ -10,13 +10,11 @@ CIDER_CI_DIR=/tmp/cider-ci
 
 ### examples ##################################################################
 #
-# curl https://raw.githubusercontent.com/cider-ci/cider-ci_deploy/master/bin/quick-install.sh | bash
-#
-# curl https://raw.githubusercontent.com/cider-ci/cider-ci_deploy/master/bin/quick-install.sh | bash -s 'v4'
+# curl https://raw.githubusercontent.com/cider-ci/cider-ci_deploy/release/bin/quick-install.sh | bash
 #
 
 if [ -z ${1-} ]; then
-  VERSION='v4'
+  VERSION='release'
 else
   VERSION=${1-}
 fi

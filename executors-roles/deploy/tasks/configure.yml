@@ -18,3 +18,8 @@
   template:
     src: config.yml
     dest: /cider-ci/executor/config/config.yml
+
+- name: create or update accepted-repositories.yml config file
+  template:
+    src: accepted-repositories.yml
+    dest: /cider-ci/executor/config/accepted-repositories.yml

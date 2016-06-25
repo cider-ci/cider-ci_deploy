@@ -7,15 +7,15 @@
     cache_valid_time: 3600
   tags: [internet]
 
-- name: Add the group {{ci_exec_user}}
+- name: Add the group {{ci_executor_exec_user}}
   group:
-    name: '{{ci_exec_user}}'
+    name: '{{ci_executor_exec_user}}'
 
-- name: Add the user {{ci_exec_user}}
+- name: Add the user {{ci_executor_exec_user}}
   user:
-    name: '{{ci_exec_user}}'
-    group: '{{ci_exec_user}}'
-    home: /home/{{ci_exec_user}}
+    name: '{{ci_executor_exec_user}}'
+    group: '{{ci_executor_exec_user}}'
+    home: /home/{{ci_executor_exec_user}}
     generate_ssh_key: yes
     system: no
     shell: /bin/bash
@@ -23,32 +23,32 @@
 - name: set some default nice value
   lineinfile:
     dest: /etc/security/limits.conf
-    line: "{{ci_exec_user}} hard priority {{ci_exec_user_priority | default(3)}} "
-    regexp: "^{{ci_exec_user}}.*priority.*$"
+    line: "{{ci_executor_exec_user}} hard priority {{ci_executor_exec_user_priority | default(3)}} "
+    regexp: "^{{ci_executor_exec_user}}.*priority.*$"
 
 - name: Allow the exec-user to sudo itself
   template:
     src: sudo
-    dest: /etc/sudoers.d/{{ci_exec_user}}
+    dest: /etc/sudoers.d/{{ci_executor_exec_user}}
 
 - name: create ~/.bash_login.d
   file:
-    path: ~{{ci_exec_user}}/.bash_login.d
+    path: ~{{ci_executor_exec_user}}/.bash_login.d
     state: directory
     owner: root
-    group: '{{ci_exec_user}}'
+    group: '{{ci_executor_exec_user}}'
     mode: 0750
 
 - template:
     src: keep
-    dest: ~{{ci_exec_user}}/.bash_login.d/keep
+    dest: ~{{ci_executor_exec_user}}/.bash_login.d/keep
     owner: root
-    group: '{{ci_exec_user}}'
+    group: '{{ci_executor_exec_user}}'
     mode: 0640
 
 - name: (un)set shell vi mode
   become: yes
-  become_user: '{{ci_exec_user}}'
+  become_user: '{{ci_executor_exec_user}}'
   lineinfile:
     dest: ~/.bashrc
     line: set -o vi
@@ -60,35 +60,35 @@
     state: present
     create: yes
     owner: root
-    group: '{{ci_exec_user}}'
+    group: '{{ci_executor_exec_user}}'
     mode: 0640
-    dest: ~{{ci_exec_user}}/.bash_login
+    dest: ~{{ci_executor_exec_user}}/.bash_login
 
-- name: create /home/{{ci_exec_user}}/bin
+- name: create /home/{{ci_executor_exec_user}}/bin
   file:
-    path: /home/{{ci_exec_user}}/bin
+    path: /home/{{ci_executor_exec_user}}/bin
     state: directory
     owner: root
-    group: '{{ci_exec_user}}'
+    group: '{{ci_executor_exec_user}}'
     mode: 0750
 
-- name: include /home/{{ci_exec_user}}/bin  into the path
+- name: include /home/{{ci_executor_exec_user}}/bin  into the path
   lineinfile:
-    line: 'export PATH=/home/{{ci_exec_user}}/bin:${PATH}'
+    line: 'export PATH=/home/{{ci_executor_exec_user}}/bin:${PATH}'
     state: present
     create: yes
     owner: root
-    group: '{{ci_exec_user}}'
+    group: '{{ci_executor_exec_user}}'
     mode: 0640
-    dest: ~{{ci_exec_user}}/.bash_login
+    dest: ~{{ci_executor_exec_user}}/.bash_login
 
 - name: load .bash_login via bash_profile
   lineinfile:
     line: 'if [[ -f ~/.bash_login ]]; then source ~/.bash_login; fi'
     state: present
-    dest: ~{{ci_exec_user}}/.bash_profile
+    dest: ~{{ci_executor_exec_user}}/.bash_profile
     owner: root
-    group: '{{ci_exec_user}}'
+    group: '{{ci_executor_exec_user}}'
     mode: 0640
     create: yes
 
@@ -96,9 +96,9 @@
   lineinfile:
     line: 'if [[ -d ~/.bash_login.d ]]; then for file in ~/.bash_login.d/* ;do source "$file"; done; fi'
     state: present
-    dest: ~{{ci_exec_user}}/.bash_profile
+    dest: ~{{ci_executor_exec_user}}/.bash_profile
     owner: root
-    group: '{{ci_exec_user}}'
+    group: '{{ci_executor_exec_user}}'
     mode: 0640
     create: yes
 
@@ -106,27 +106,27 @@
   lineinfile:
     line: 'if [[ -d ~/.bash_login.d ]]; then for file in ~/.bash_login.d/* ;do source "$file"; done; fi'
     state: present
-    dest: ~{{ci_exec_user}}/.bash_login
+    dest: ~{{ci_executor_exec_user}}/.bash_login
     owner: root
-    group: '{{ci_exec_user}}'
+    group: '{{ci_executor_exec_user}}'
     mode: 0640
     create: yes
 
 - name: configure git
   become: yes
-  become_user: '{{ci_exec_user}}'
+  become_user: '{{ci_executor_exec_user}}'
   become_method: sudo
   shell: |
-    git config --global user.email '{{ci_exec_user}}@{{inventory_hostname}}'
-    git config --global user.name '{{ci_exec_user}}'
+    git config --global user.email '{{ci_executor_exec_user}}@{{inventory_hostname}}'
+    git config --global user.name '{{ci_executor_exec_user}}'
   tags: [executor-configure-git]
 
 - name: change the ownership of login related files so they cannot be changed
   file:
     state: file
-    path: ~{{ci_exec_user}}/{{item}}
+    path: ~{{ci_executor_exec_user}}/{{item}}
     owner: root
-    group: '{{ci_exec_user}}'
+    group: '{{ci_executor_exec_user}}'
     mode: 0640
   with_items:
     - .profile

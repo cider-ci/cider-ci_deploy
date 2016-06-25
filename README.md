@@ -8,7 +8,7 @@ Cider-CI v4  Deploy
 #### Firefox ESR
 
 ```yaml
-ci_trait_ansible: true
+ci_executor_trait_ansible: true
 ```
 
 This trait installs an ESR version of Firefox. The executable is not in the

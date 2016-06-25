@@ -1,7 +1,10 @@
-localhost ansible_connection=local
+demo ansible_connection=local
+
+[cider-ci_hosts]
+demo
 
 [cider-ci_server]
-localhost
+demo
 
 [cider-ci_executors]
-localhost
+demo

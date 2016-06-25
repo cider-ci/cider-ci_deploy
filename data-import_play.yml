@@ -1,8 +1,5 @@
 - hosts: cider-ci_server
 
-  vars_files:
-  - '{{inventory_dir}}/config.yml'
-
   pre_tasks: []
 
   roles:

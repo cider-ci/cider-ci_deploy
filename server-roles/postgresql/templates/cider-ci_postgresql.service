@@ -6,16 +6,16 @@ After=network.target
 [Service]
 Type=forking
 
-User={{ci_postgres_user}}
-Group={{ci_postgres_user}}
+User={{ci_server_postgres_user}}
+Group={{ci_server_postgres_user}}
 
-Environment=PGDATA={{ci_postgres_data_dir}}
+Environment=PGDATA={{ci_server_postgres_data_dir}}
 
 OOMScoreAdjust=-1000
 
-ExecStart={{ci_postgres_bin_dir}}/pg_ctl start -D ${PGDATA} -s -w -t 300
-ExecStop={{ci_postgres_bin_dir}}/pg_ctl stop -D ${PGDATA} -s -m fast
-ExecReload={{ci_postgres_bin_dir}}/pg_ctl reload -D ${PGDATA} -s
+ExecStart={{ci_server_postgres_bin_dir}}/pg_ctl start -D ${PGDATA} -s -w -t 300
+ExecStop={{ci_server_postgres_bin_dir}}/pg_ctl stop -D ${PGDATA} -s -m fast
+ExecReload={{ci_server_postgres_bin_dir}}/pg_ctl reload -D ${PGDATA} -s
 
 # Give a reasonable amount of time for the server to start up/shut down
 TimeoutSec=300

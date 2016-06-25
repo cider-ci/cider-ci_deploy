@@ -14,7 +14,7 @@
 
 - name: node major version
   shell: node -p 'process.versions.node.split(".")[0]'
-  register: ci_trait_nodejs_major_version
+  register: ci_executor_trait_nodejs_major_version
   changed_when: false
 
 - name: register nodjes trait
@@ -22,7 +22,7 @@
     remove_match: "^nodejs.*"
     traits:
       - nodejs
-      - nodejs {{ci_trait_nodejs_major_version.stdout}}
+      - nodejs {{ci_executor_trait_nodejs_major_version.stdout}}
     file: /etc/cider-ci/traits.yml
 
 - name: register npm trait

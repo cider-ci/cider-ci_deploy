@@ -7,9 +7,6 @@
 
 - hosts: cider-ci_executors
 
-  vars_files:
-  - '{{inventory_dir}}/config.yml'
-
   pre_tasks: []
 
   roles:

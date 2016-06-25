@@ -1,6 +1,6 @@
-ci_postgres_data_dir: /cider-ci/var/postgresql_9.5
-ci_postgres_bin_dir: /usr/lib/postgresql/9.5/bin
-ci_postgres_lock_file_dir: /var/run/postgresql
-ci_postgres_user: postgres
-ci_postgres_port: 9432
-ci_postgres_socket_dir: /var/run/postgresql
+ci_server_postgres_data_dir: /cider-ci/var/postgresql_9.5
+ci_server_postgres_bin_dir: /usr/lib/postgresql/9.5/bin
+ci_server_postgres_lock_file_dir: /var/run/postgresql
+ci_server_postgres_user: postgres
+ci_server_postgres_port: 9432
+ci_server_postgres_socket_dir: /var/run/postgresql
