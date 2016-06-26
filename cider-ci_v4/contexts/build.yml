@@ -13,6 +13,11 @@ tasks:
       submodules:
         include_match: ^.*$
     scripts:
+      prepare:
+        body: |
+          set -eux
+          cd lein-dev-plugin
+          lein install
       build:
         timeout: 20 Minutes
         body: |
