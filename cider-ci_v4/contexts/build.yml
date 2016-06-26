@@ -20,6 +20,9 @@ tasks:
           lein install
       build:
         timeout: 20 Minutes
+        start_when:
+          prepared:
+            script_key: prepare
         body: |
           set -eux
           cd deploy
