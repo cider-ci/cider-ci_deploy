@@ -1,7 +1,7 @@
 server_base_url: {{ci_server_base_url}}
 
-{% if executor_max_load is defined %}
-max_load: {{executor_max_load}}
+{% if ci_executor_max_load is defined %}
+max_load: {{ci_executor_max_load}}
 {% endif %}
 
 trial_retention_duration: {{ ci_executor_trial_retention_duration | default('30 Minutes')}}
