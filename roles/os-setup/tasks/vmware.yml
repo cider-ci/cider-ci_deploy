@@ -1,0 +1,9 @@
+- name: install vmware tools
+  apt: name={{item}} state=latest update_cache=yes cache_valid_time=3600
+  when: ansible_virtualization_type == "VMware"
+  with_items:
+  - open-vm-tools
+  - open-vm-tools-dkms
+  tags: [internet]
+
+

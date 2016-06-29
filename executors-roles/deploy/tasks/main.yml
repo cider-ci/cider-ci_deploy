@@ -29,16 +29,20 @@
 
 - name: daily reboot
   cron:
-    name: daily reboot
+    name: daily-reboot
     hour: 5
     minute: 43
-    job: reboot
-    cron_file: daily reboot
+    job: '/sbin/shutdown -r now'
+    cron_file: daily-reboot
     user: 'root'
   when: ci_executor_daily_reboot
+  tags: [debug]
 
 - name: daily reboot
   cron:
-    name: daily reboot
+    cron_file: daily-reboot
+    name: daily-reboot
     state: absent
   when: not ci_executor_daily_reboot
+  tags: [debug]
+

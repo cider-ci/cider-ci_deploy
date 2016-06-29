@@ -18,18 +18,15 @@ ci_clean_slate: false
 
 ci_master_secret: "{{ lookup('password', inventory_dir + '/' + 'master_secret.txt chars=ascii_letters,digits,hexdigits length=40') }}"
 
-ci_server_base_url: http://{{ hostvars[groups['cider-ci_server'][0]].ansible_default_ipv4.address  }}
+ci_server_base_url: http://{{ ci_server_external_hostname }}
 
 ci_force_local_build: false
-
-ci_ntp_setup: true
-ci_ntp_server: pool.ntp.org
 
 ###############################################################################
 ### executor specific config ##################################################
 ###############################################################################
 
-ci_executor_daily_reboot: true
+ci_executor_daily_reboot: false
 ci_executor_exec_user: ci-exec-user
 ci_executor_working_dir: /tmp/ci_working-dir
 ci_executor_service_nrepl_port: 7883

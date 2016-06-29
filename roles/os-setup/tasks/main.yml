@@ -1,17 +1,17 @@
-- include: RedHead7.yml
-  when: >
-    ansible_os_family == "RedHat"
-    and ansible_distribution_major_version|int >= 7
+- include: prepare.yml
 
-- include: Debuntu.yml
-  when: >
-    (ansible_distribution == "Ubuntu"
-      and ansible_distribution_major_version|int >= 7)
+- include: time.yml
 
-- include: Debuntu.yml
-  when: >
-    (ansible_distribution == "Debian"
-      and ansible_distribution_major_version|int >= 8)
-    or
-    (ansible_distribution == "Ubuntu")
+- include: ntp.yml
+  when: ci_ntp_setup
+  tags: [ntp]
+
+- include: vim.yml
+  when: ci_vim_mode
+
+- include: etckeeper.yml
+
+- include: monit.yml
+
+- include: vmware.yml
 

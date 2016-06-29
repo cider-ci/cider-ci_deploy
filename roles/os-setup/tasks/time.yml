@@ -1,0 +1,17 @@
+### set timezone ##############################################################
+
+- name: Set timezone variables
+  copy:
+    content: '{{ci_server_timezone}}'
+    dest: /etc/timezone
+    owner: root
+    group: root
+    mode: 0644
+  register: set_etc_timezone
+
+- name: reconfigure tzdata
+  command: dpkg-reconfigure --frontend noninteractive tzdata
+  when: set_etc_timezone.changed
+
+
+

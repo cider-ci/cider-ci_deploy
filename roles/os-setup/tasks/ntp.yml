@@ -1,0 +1,33 @@
+### setup ntp #################################################################
+
+- apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
+  with_items: [ntpdate, ntp]
+
+- name: remove default pool settings
+  lineinfile:
+    dest: /etc/ntp.conf
+    regexp: '^pool.*$'
+    state: absent
+
+- name: configure ntp server
+  lineinfile:
+    insertafter: '# Specify one or more NTP servers'
+    dest: /etc/ntp.conf
+    line: 'pool {{ci_ntp_server}}'
+    regexp: '^pool.*$'
+
+- name: stop ntp service
+  service:
+    name: ntp
+    state: stopped
+
+- name: run initial ntpdate
+  shell:
+    #!/bin/bash
+    set -eux
+    ntpdate {{ci_ntp_server}}
+
+- name: start ntp service
+  service:
+    name: ntp
+    state: started

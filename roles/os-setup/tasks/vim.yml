@@ -1,0 +1,14 @@
+- name: Install vim-nox
+  apt: pkg=vim-nox state=latest update_cache=yes cache_valid_time=3600
+  register: install_vim_nox
+  tags: [internet]
+
+- name: Set vim-nox as default editor
+  command: update-alternatives --set editor /usr/bin/vim.nox
+  register: result
+  changed_when: result.stdout | search("using \/usr\/bin\/vim\.nox")
+
+- name: set the vi mode for the shell
+  lineinfile:
+    dest: "{{ansible_env.HOME}}/.bashrc"
+    line: set -o vi
