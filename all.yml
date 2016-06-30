@@ -22,6 +22,9 @@ ci_server_base_url: http://{{ ci_server_external_hostname }}
 
 ci_force_local_build: false
 
+ci_ntp_setup: no
+ci_ntp_server: pool.ntp.org
+
 ###############################################################################
 ### executor specific config ##################################################
 ###############################################################################
