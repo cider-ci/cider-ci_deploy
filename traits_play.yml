@@ -31,6 +31,10 @@
     when: ci_executor_trait_leiningen
     tags: ci_executor_trait_leiningen
 
+  - role: traits/lxd
+    when: ci_executor_trait_lxd
+    tags: ci_executor_trait_lxd
+
   - role: traits/misc
     when: ci_executor_trait_misc
     tags: ci_executor_trait_misc

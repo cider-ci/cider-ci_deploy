@@ -1,0 +1,7 @@
+- debug:
+    msg: LXD
+
+- include: ubuntu_xenial.yml
+  when: >
+    (ansible_distribution == "Ubuntu"
+      and ansible_distribution_release == "xenial")

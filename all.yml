@@ -44,6 +44,7 @@ ci_executor_trait_bower: false
 ci_executor_trait_chruby: false
 ci_executor_trait_firefox_esr: false
 ci_executor_trait_leiningen: false
+ci_executor_trait_lxd: false
 ci_executor_trait_misc: false
 ci_executor_trait_mysql: false
 ci_executor_trait_nodejs: false

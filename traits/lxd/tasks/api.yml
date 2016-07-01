@@ -1,0 +1,41 @@
+# see also
+# https://www.stgraber.org/2016/04/18/lxd-api-direct-interaction/
+# https://github.com/jeffshantz/hyperkit
+
+- name: configure the lxd_api_https_address
+  shell: |
+    lxc config set core.https_address \
+      {{ ci_executor_trait_lxd_api_https_address }}
+
+- file:
+    path: ~{{ci_executor_exec_user}}/.config/lxc
+    state: directory
+    mode: 0750
+    owner: root
+    group: '{{ci_executor_exec_user}}'
+
+- name: create user cert and key
+  # become: yes
+  # become_user: '{{ci_executor_exec_user}}'
+  shell: |
+    #/bin/bash
+    set -eux
+    LXC_USER_CONFIG_DIR=~{{ci_executor_exec_user}}/.config/lxc
+    if [ ! -f ${LXC_USER_CONFIG_DIR}/client.key ]; then
+      openssl req -nodes -x509 -newkey rsa:2048 -days 3650 -subj '/CN=localhost' \
+        -keyout $LXC_USER_CONFIG_DIR/client.key.secret \
+        -out $LXC_USER_CONFIG_DIR/client.crt
+      openssl rsa -in $LXC_USER_CONFIG_DIR/client.key.secret \
+        -out $LXC_USER_CONFIG_DIR/client.key
+    fi
+    chgrp -R {{ci_executor_exec_user}} $LXC_USER_CONFIG_DIR
+    chmod o-rwx $LXC_USER_CONFIG_DIR/*
+    lxc config trust add $LXC_USER_CONFIG_DIR/client.crt
+
+- name: setup env
+  template:
+    src: user_lxc_env.sh
+    dest: ~{{ci_executor_exec_user}}/.bash_login.d/lxc.sh
+    owner: root
+    group: '{{ci_executor_exec_user}}'
+    mode: 0640
