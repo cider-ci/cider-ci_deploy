@@ -39,9 +39,9 @@ apt-get update
 apt-get dist-upgrade -y -f
 
 
-### install git ###############################################################
+### install dependencies ######################################################
 
-apt-get install -y git
+apt-get install -y git ruby
 
 
 ### install Ansible ###########################################################
