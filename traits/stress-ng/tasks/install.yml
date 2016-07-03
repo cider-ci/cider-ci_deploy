@@ -1,0 +1,38 @@
+- name: install dependencies
+  apt: name={{item}} state=latest update_cache=yes cache_valid_time=3600
+  tags: [internet]
+  with_items:
+    - build-essential
+
+- name: pre clean up
+  shell: |
+    #!/bin/bash
+    cd /tmp
+    rm -rf stress-ng*
+
+- name: copy stress-ng to the server
+  copy:
+    src: '{{ci_trait_stress_ng_archive}}'
+    dest: /tmp/{{ci_trait_stress_ng_archive}}
+
+- name: unpack, compile and move binary in place
+  shell: |
+    #!/bin/bash
+    set -eux
+    cd /tmp
+    tar xvfz {{ci_trait_stress_ng_archive}}
+    cd {{ci_trait_stress_ng_prefix}}
+    make
+    mv stress-ng ~{{ci_executor_exec_user}}/bin/stress-ng
+
+- name: post clean up
+  shell: |
+    #!/bin/bash
+    cd /tmp
+    rm -rf stress-ng*
+
+- name: register stress-ng trait
+  register_traits:
+    traits: [stress-ng]
+    file: /cider-ci/executor/config/traits.yml
+

@@ -1,0 +1,4 @@
+ci_trait_stress_ng_version: 0.06.07
+ci_trait_stress_ng_prefix: stress-ng-{{ci_trait_stress_ng_version}}
+ci_trait_stress_ng_archive: stress-ng-{{ci_trait_stress_ng_version}}.tar.gz
+ci_trait_stress_ng_url: http://kernel.ubuntu.com/~cking/tarballs/stress-ng/{{ci_trait_stress_ng_archive}}

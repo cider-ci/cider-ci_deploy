@@ -1,0 +1,13 @@
+- name: check the installed stress-ng version
+  become: yes
+  become_user: '{{ci_executor_exec_user}}'
+  become_method: sudo
+  shell:
+    #!/bin/bash
+    ~{{ci_executor_exec_user}}/bin/stress-ng --version
+  changed_when: false
+  register: installed_stress_ng_version
+  ignore_errors: yes
+
+- include: install.yml
+  when: installed_stress_ng_version.stdout != 'stress-ng, version {{ci_trait_stress_ng_version}}'
