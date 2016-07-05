@@ -63,6 +63,10 @@ ci_executor_trait_stress_ng: true
 
 ci_server_external_hostname: '{{ci_server_internal_hostname}}'
 
+# the following value is a PG interval!
+# https://www.postgresql.org/docs/current/static/datatype-datetime.html
+ci_server_trial_dispatch_timeout: 30 Minutes
+
 ci_server_virtual_hosts:
 - hostname: "{{ ci_server_internal_hostname }}"
   ip: "{{ ci_server_internal_hostname }}"

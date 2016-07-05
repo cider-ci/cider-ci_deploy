@@ -4,6 +4,8 @@ trial_retention_duration: {{ci_server_trial_retention_duration | default('100 Ye
 
 authentication_providers: {{ci_server_authentication_providers | default({}) | to_json }}
 
+trial_dispatch_timeout: {{ci_server_trial_dispatch_timeout}}
+
 database:
   adapter: postgresql
   classname: org.postgresl.Driver
