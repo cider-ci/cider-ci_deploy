@@ -1,0 +1,16 @@
+- name: install git-crypt
+  apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
+  with_items: [git-crypt]
+  tags: [internet]
+
+- name: get the version
+  shell: git-crypt --version
+  register: git_crypt_version
+
+- name: register the git-crypt trait
+  register_traits:
+    remove_match: "^git-crypt.*"
+    traits:
+      - git-crypt
+      - '{{git_crypt_version.stderr}}' # strange
+    file: /etc/cider-ci/traits.yml

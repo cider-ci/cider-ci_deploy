@@ -23,6 +23,10 @@
     when: ci_executor_trait_chruby
     tags: ci_executor_trait_chruby
 
+  - role: traits/git-crypt
+    when: ci_executor_trait_git_crypt
+    tags: ci_executor_trait_git_crypt
+
   - role: traits/firefox-esr
     when: ci_executor_trait_firefox_esr
     tags: ci_executor_trait_firefox_esr
