@@ -6,6 +6,6 @@ to install this trait.
 
 See also <https://github.com/AGWA/git-crypt>.
 
-This trail will work on **Ubuntu Xenial systems only**. `git-crypt` is not included in
-Debian Jessie. Nothing will happen on Debian Jessie executors!
-
+This trail will install a system wide package on **Ubuntu Xenial** systems. On
+other systems it will install git-crypt from source for the configured
+`{{ci_executor_exec_user}}` only.

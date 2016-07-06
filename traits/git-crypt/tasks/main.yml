@@ -2,3 +2,7 @@
   when: >
     (ansible_distribution == "Ubuntu"
       and ansible_distribution_release == "xenial")
+
+
+- include: install-from-source.yml
+  when: ansible_distribution == "Debian"
