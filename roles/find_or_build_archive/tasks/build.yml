@@ -3,6 +3,7 @@
   with_items:
     - ruby
     - pandoc
+    - nodejs
   when: >
     (ansible_distribution == "Debian"
       or  ansible_distribution == "Ubuntu")

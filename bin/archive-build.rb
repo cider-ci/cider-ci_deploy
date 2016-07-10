@@ -120,6 +120,10 @@ def build_lein_service service_name
 end
 
 def build_lein_services
+  exec! <<-CMD.strip_heredoc
+    cd lein-dev-plugin
+    lein install
+  CMD
   LEIN_SERVICES.each do |lein_service|
     build_lein_service lein_service
   end
