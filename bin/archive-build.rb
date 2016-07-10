@@ -121,8 +121,8 @@ end
 
 def build_lein_services
   exec! <<-CMD.strip_heredoc
-    cd lein-dev-plugin
-    lein install
+    cd #{SOURCE_DIR}/lein-dev-plugin
+    #{DEPLOY_DIR}/bin/lein install
   CMD
   LEIN_SERVICES.each do |lein_service|
     build_lein_service lein_service
