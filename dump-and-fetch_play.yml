@@ -1,0 +1,29 @@
+---
+- hosts: cider-ci_server
+
+  vars:
+    dump_items:
+      - data
+      - structure_and_data
+
+  tasks:
+
+  - name: Dump db
+    become: true
+    become_user: cider-ci
+    become_method: su
+    shell:  |
+      set -eux
+      cd {{ci_server_dir}}/{{ci_server_services.ui.path}}
+      export PATH=$(pwd)/vendor/jruby/bin/:$PATH
+      export RAILS_ENV=production
+      jruby -S bundle exec rake db:pg:{{item}}:dump FILE=/tmp/madek_{{item}}.pgbin
+    args:
+      executable: /bin/bash
+    with_items: "{{dump_items}}"
+
+  - name: Fetch db
+    fetch:
+      src: /tmp/madek_{{item}}.pgbin
+      dest: tmp/
+    with_items: "{{dump_items}}"
