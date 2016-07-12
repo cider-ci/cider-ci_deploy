@@ -2,7 +2,7 @@
   tags: [deploy-install]
 
 - include: configure.yml
-  tags: [deploy-configure]
+  tags: [configure]
 
 - include: setup-database.yml
   tags: [deploy-setup-database]
