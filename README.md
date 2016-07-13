@@ -15,6 +15,10 @@ See the [traits/git-crypt/README](traits/git-crypt/README.md).
 
 See the [traits/lxd/README](traits/lxd/README.md).
 
+### MySQL / MariaDB
+
+See the [traits/mysql/README](traits/mysql/README.md).
+
 
 ### PostgreSQL
 
