@@ -89,4 +89,17 @@
     state: started
     enabled: yes
 
+- name: create db for root
+  postgresql_db:
+    name: root
+    login_user: root
+    owner: root
+    port: '{{ci_server_postgres_port}}'
+
+- name: add the postgres role
+  postgresql_user:
+    login_user: root
+    port: '{{ci_server_postgres_port}}'
+    name: postgres
+    role_attr_flags: SUPERUSER
 
