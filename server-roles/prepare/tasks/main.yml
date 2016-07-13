@@ -1,6 +1,7 @@
 - name: create a db backup if possible
   command: /cider-ci/bin/ci-db-backup.rb
   ignore_errors: true
+  when: ci_create_db_backup_before_deploy
 
 - name: Install dependencies
   apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600

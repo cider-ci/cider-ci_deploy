@@ -14,16 +14,27 @@
 ### general config ############################################################
 ###############################################################################
 
-ci_clean_slate: false
+# set the hostname where external services,
+# like executors can reach the Cider-CI server
+ci_server_external_hostname: '{{ci_server_internal_hostname}}'
 
-ci_master_secret: "{{ lookup('password', inventory_dir + '/' + 'master_secret.txt chars=ascii_letters,digits,hexdigits length=40') }}"
-
+# changes this if you have https configured
 ci_server_base_url: http://{{ ci_server_external_hostname }}
 
-ci_force_local_build: false
+# it is a good idea to set an explicit master secret
+ci_master_secret: "{{ lookup('password', inventory_dir + '/' + 'master_secret.txt chars=ascii_letters,digits,hexdigits length=40') }}"
 
+# you will see strange things in the UI, like "created in two minutes" if server
+# and executor machines get out of sync
 ci_ntp_setup: no
 ci_ntp_server: pool.ntp.org
+
+
+### deploy specific config ####################################################
+
+ci_clean_slate: no
+ci_create_db_backup_before_deploy: yes
+ci_force_local_build: no
 
 ###############################################################################
 ### executor specific config ##################################################
@@ -58,11 +69,8 @@ ci_executor_trait_ruby_install: false
 ci_executor_trait_sqlite: false
 ci_executor_trait_stress_ng: true
 
-###############################################################################
-### Server specific config ####################################################
-###############################################################################
+### Http Server specific config ###############################################
 
-ci_server_external_hostname: '{{ci_server_internal_hostname}}'
 
 # the following value is a PG interval!
 # https://www.postgresql.org/docs/current/static/datatype-datetime.html
