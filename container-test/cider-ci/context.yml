@@ -1,0 +1,14 @@
+task:
+  key: test-deploy-to-container
+  name: Test Deploy to Container
+  environment_variables:
+    CONTAINER_NAME: cider-ci-deploy-test-{{CIDER_CI_TRIAL_ID}}
+  max_trials: 1
+  git_options:
+    submodules:
+      include_match: ^deploy$
+  include:
+    - container-test/cider-ci/task-components/bundle.yml
+    - container-test/cider-ci/task-components/container.yml
+    - container-test/cider-ci/task-components/deploy-to-container.yml
+    - container-test/cider-ci/task-components/test-container.yml

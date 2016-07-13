@@ -1,0 +1,10 @@
+managed_users:
+  admin:
+    update_attributes:
+      is_admin: true
+      password: '{{ci_master_secret}}'
+
+managed_repositories:
+  'https://github.com/cider-ci/cider-ci_demo-project-bash':
+    update_attributes:
+      name: 'Cider-CI Bash Demo Project'

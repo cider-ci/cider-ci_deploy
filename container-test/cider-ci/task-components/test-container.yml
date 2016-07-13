@@ -1,0 +1,10 @@
+scripts:
+  test:
+    start_when:
+      deployed to container:
+        script_key: deploy-to-container
+    body: |
+      #!/usr/bin/env bash
+      set -eux
+      lxc exec ${CONTAINER_NAME} -- curl --fail http://test:secret@localhost/cider-ci/api/status
+      lxc exec ${CONTAINER_NAME} -- curl --fail http://test:secret@localhost/cider-ci/ui/status

@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -eux
+
+apt-get update
+apt-get install curl ruby libyaml-dev python2.7 python2.7-dev python-pip git libffi-dev -y -f
+pip install -I --upgrade pip
+pip install -I --upgrade paramiko==1.17.0 ansible==2.1.0.0
+ansible --version

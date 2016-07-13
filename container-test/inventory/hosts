@@ -1,0 +1,10 @@
+localmachine ansible_connection=local
+
+[cider-ci_hosts]
+localmachine
+
+[cider-ci_server]
+localmachine
+
+[cider-ci_executors]
+localmachine

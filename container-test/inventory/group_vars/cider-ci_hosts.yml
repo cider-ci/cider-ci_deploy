@@ -1,0 +1,4 @@
+ci_master_secret: secret
+ci_server_management_admin_secret: secret
+ci_server_database_secret: secret
+ci_server_services_secret: secret

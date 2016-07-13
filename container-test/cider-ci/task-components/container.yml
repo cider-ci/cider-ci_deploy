@@ -1,0 +1,32 @@
+traits:
+  LXD: yes
+
+scripts:
+
+  create-container:
+    start_when:
+      bundled:
+        script_key: bundle
+    body: |
+      #!/usr/bin/env bash
+      set -eux
+      # lxc launch images:debian/jessie/amd64  ${CONTAINER_NAME}
+      # Debian doesn't work because of https://github.com/systemd/systemd/issues/719
+      lxc launch ubuntu:16.04 ${CONTAINER_NAME}
+      lxc list
+
+  destroy-container:
+    start_when:
+      test is in terminal state:
+        script_key: test
+        states: [aborted, passed, failed, skipped]
+    ignore_abort: yes
+    timeout: 1 Hour
+    body: |
+      #!/usr/bin/env bash
+      set -eux
+      lxc list
+      lxc info ${CONTAINER_NAME}
+      lxc delete --force ${CONTAINER_NAME}
+      lxc list
+
