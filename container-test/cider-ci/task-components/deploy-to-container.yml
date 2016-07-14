@@ -10,6 +10,7 @@ scripts:
       set -eux
       lxc exec ${CONTAINER_NAME} -- ifconfig
       git repack
+      git submodule foreach repack
       # the next command will not work if we invoke it too quickly after
       # booting the machine
       sleep 30
