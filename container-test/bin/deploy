@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 set -eux
 
-ansible-playbook -i container-test/inventory/hosts deploy.yml
+ansible-playbook -i container-test/inventory/hosts deploy_play.yml
