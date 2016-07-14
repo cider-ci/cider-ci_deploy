@@ -25,7 +25,7 @@ scripts:
     body: |
       #!/usr/bin/env bash
       set -eux
-      sleep 300
+      sleep 3000
       lxc list
       lxc info ${CONTAINER_NAME}
       lxc delete --force ${CONTAINER_NAME}
