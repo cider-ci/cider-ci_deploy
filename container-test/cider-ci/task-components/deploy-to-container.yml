@@ -10,7 +10,7 @@ scripts:
       set -eux
       lxc exec ${CONTAINER_NAME} -- ifconfig
       git repack -a -d && rm .git/objects/info/alternates
-      git submodule foreach 'git repack -a -d && rm .git/objects/info/alternates'
+      git submodule foreach --recursive 'git repack -a -d && rm .git/objects/info/alternates'
       # the next command will not work if we invoke it too quickly after
       # booting the machine
       sleep 30
