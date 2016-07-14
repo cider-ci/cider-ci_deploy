@@ -9,8 +9,9 @@ scripts:
       #!/usr/bin/env bash
       set -eux
       lxc exec ${CONTAINER_NAME} -- ifconfig
+      git fetch --unshallow
       git repack -a -d
-      git submodule foreach 'git repack -a -d'
+      git submodule foreach 'git fetch --unshallow && git repack -a -d'
       # the next command will not work if we invoke it too quickly after
       # booting the machine
       sleep 30
