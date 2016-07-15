@@ -3,6 +3,7 @@
     - autoconf
     - bison
     - build-essential
+    - libcurl4-openssl-dev
     - libffi-dev
     - libgdbm-dev
     - libgdbm3
