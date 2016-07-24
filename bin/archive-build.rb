@@ -77,18 +77,7 @@ end
 
 def build_documentation_dir
   print "building documentation ... "
-  Dir.chdir "#{SOURCE_DIR}/documentation-source" do
-    cmd= <<-CMD.strip_heredoc
-      #!/usr/bin/env bash
-      set -eux
-      cd "#{SOURCE_DIR}/documentation-source"
-      export BUNDLE_GEMFILE=$(pwd)/Gemfile
-      export PATH=$(pwd)/vendor/jruby/bin:$(pwd)/vendor/bundle/jruby/2.2.0/bin:$PATH
-      jruby -S bundle exec middleman build
-    CMD
-    exec! cmd
-  end
-  FileUtils.mv "#{SOURCE_DIR}/documentation-source/build", "#{BUILD_DIR}/documentation"
+  copy_git_repo_files 'documentation'
   print "done, "
 end
 
