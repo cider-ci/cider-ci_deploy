@@ -30,7 +30,7 @@
     fi
     chgrp -R {{ci_executor_exec_user}} $LXC_USER_CONFIG_DIR
     chmod o-rwx $LXC_USER_CONFIG_DIR/*
-    lxc config trust add $LXC_USER_CONFIG_DIR/client.crt
+    lxc config trust add $LXC_USER_CONFIG_DIR/client.crt || /bin/true
 
 - name: setup env
   template:
