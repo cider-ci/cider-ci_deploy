@@ -32,6 +32,7 @@ end
 
 def clean
   FileUtils.rm_r BUILD_DIR, :force => true
+  FileUtils.rm_r "#{CONFIG_DIR}/deploy-info.yml", :force => true
 end
 
 def tree_id
@@ -39,6 +40,19 @@ def tree_id
     exec!("git log -1 --pretty=%t").strip
   end
 end
+
+def commit_id
+  tree_id= Dir.chdir(SOURCE_DIR) do
+    exec!("git log -1 --pretty=%H").strip
+  end
+end
+
+def deploy_info
+  { tree_id: tree_id,
+    commit_id: commit_id,
+    time: Time.now.utc.to_json }
+end
+
 
 def releases
   release = YAML.load_file("../config/releases.yml").
@@ -51,6 +65,7 @@ def prepare
   clean
   FileUtils.mkdir_p BUILD_DIR
   IO.write("#{BUILD_DIR}/tree_id",tree_id)
+  IO.write("#{SOURCE_DIR}/config/deploy-info.yml", deploy_info.as_json.to_yaml)
   print " prepared, ..."
 end
 
@@ -59,6 +74,7 @@ def build_config_dir
   FileUtils.mkdir_p BUILD_CONFIG_DIR
   FileUtils.cp "#{CONFIG_DIR}/config_default.yml", BUILD_CONFIG_DIR
   IO.write "#{BUILD_CONFIG_DIR}/releases.yml", releases.to_yaml
+  IO.write "#{BUILD_CONFIG_DIR}/deploy-info.yml", deploy_info.as_json.to_yaml
   print " config dir built, ..."
 end
 
@@ -99,6 +115,7 @@ def build_lein_service service_name
     unset JAVA_OPTS
     unset JAVA_ARCH
     export LEIN_ROOT=1
+    export LEIN_SNAPSHOTS_IN_RELEASE=yes
     set -eux
     cd #{service_source_dir}
     #{DEPLOY_DIR}/bin/lein do clean, uberjar
@@ -153,20 +170,24 @@ def archive_is_up_to_date
 end
 
 def main
-  build_archive = "#{APP_NAME}.tar.gz"
-  clean
-  if archive_is_up_to_date
-    print "existing archive #{build_archive} is up to date"
-  else
-    print "building #{build_archive} ..."
-    prepare
-    build_config_dir
-    build_documentation_dir
-    build_rails_services
-    build_lein_services
-    build_downloads
-    pack build_archive
-    puts " done "
+  begin
+    build_archive = "#{APP_NAME}.tar.gz"
+    clean
+    if archive_is_up_to_date
+      print "existing archive #{build_archive} is up to date"
+    else
+      print "building #{build_archive} ..."
+      prepare
+      build_config_dir
+      build_documentation_dir
+      build_rails_services
+      build_lein_services
+      build_downloads
+      pack build_archive
+      puts " done "
+    end
+  ensure
+    clean
   end
 end
 
