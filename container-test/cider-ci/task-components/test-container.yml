@@ -8,3 +8,4 @@ scripts:
       set -eux
       lxc exec ${CONTAINER_NAME} -- curl --fail http://test:secret@localhost/cider-ci/api/status
       lxc exec ${CONTAINER_NAME} -- curl --fail http://test:secret@localhost/cider-ci/ui/status
+      lxc exec ${CONTAINER_NAME} -- curl --fail http://test:secret@localhost/cider-ci/repositories/status
