@@ -1,5 +1,7 @@
 - include: prepare.yml
 
+- include: journald.yml
+
 - include: time.yml
 
 - include: ntp.yml
@@ -14,4 +16,5 @@
 - include: monit.yml
 
 - include: vmware.yml
+
 

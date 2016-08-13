@@ -1,0 +1,13 @@
+### journald and syslog #######################################################
+
+- name: configure journald ForwardToSyslog
+  lineinfile:
+    dest: /etc/systemd/journald.conf
+    line: ForwardToSyslog={{journald_forward_to_syslog}}
+    regexp: ForwardToSyslog
+  register: journald_config
+
+- name: reload systemd
+  shell: systemctl force-reload systemd-journald
+  when: journald_config.changed
+

@@ -33,6 +33,10 @@ ci_ntp_server: pool.ntp.org
 # https://www.postgresql.org/docs/current/static/datatype-datetime.html
 ci_server_trial_dispatch_timeout: 30 Minutes
 
+# reset Debian default and restore Systemd default: prevent system crashes by
+# overflowing disks due to excessive logging
+journald_forward_to_syslog: 'no'
+
 
 ### deploy specific config ####################################################
 
