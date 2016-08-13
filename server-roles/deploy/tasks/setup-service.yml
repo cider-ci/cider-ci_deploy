@@ -16,8 +16,3 @@
     dest: /etc/systemd/system/cider-ci_{{service.name}}.service
   when: service.type == 'rails'
 
-- name: setup logrotation {{service.name}} rails service
-  template:
-    src: rails.logrotate
-    dest: /etc/logrotate.d/cider-ci_{{service.name}}
-  when: service.type == 'rails'

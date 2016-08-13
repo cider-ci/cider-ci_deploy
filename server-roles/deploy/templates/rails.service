@@ -11,6 +11,7 @@ User=cider-ci
 Group=cider-ci
 Environment=JRUBY_HOME={{service_dir}}/vendor/jruby
 Environment=PATH={{service_dir}}/vendor/jruby/bin:/usr/local/bin:/usr/bin:/bin
+Environment=RAILS_LOG_LEVEL=WARN
 Environment=RAILS_ENV=production
 Environment=RAILS_TIME_ZONE={{ci_server_rails_timezone}}
 Environment=RAILS_RELATIVE_URL_ROOT={{ci_server_web_context}}{{service.context}}
