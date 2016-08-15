@@ -124,6 +124,9 @@ ci_server_services:
     max_memory_fraction: 0.40
     cache_store_size_fraction: 0.05
     monit_match: java.*user-interface.*puma.*config\.ru
+    monit_check_paths:
+    - /status
+    - /public
 
   api:
     name: api
@@ -133,6 +136,8 @@ ci_server_services:
     context: /api
     main: cider_ci.api.main
     monit_match: java.*cider_ci\.api\.main
+    monit_check_paths:
+    - /status
 
   builder:
     name: builder
@@ -142,6 +147,8 @@ ci_server_services:
     context: /builder
     main: cider_ci.builder.main
     monit_match: java.*cider_ci\.builder\.main
+    monit_check_paths:
+    - /status
 
   dispatcher:
     name: dispatcher
@@ -151,6 +158,8 @@ ci_server_services:
     context: /dispatcher
     main: cider_ci.dispatcher.main
     monit_match: java.*cider_ci\.dispatcher\.main
+    monit_check_paths:
+    - /status
 
   notifier:
     name: notifier
@@ -160,6 +169,8 @@ ci_server_services:
     context: /notifier
     main: cider_ci.notifier.main
     monit_match: java.*cider_ci\.notifier\.main
+    monit_check_paths:
+    - /status
 
   repository:
     name: repository
@@ -169,6 +180,8 @@ ci_server_services:
     context: /repositories
     main: cider_ci.repository.main
     monit_match: java.*cider_ci\.repository\.main
+    monit_check_paths:
+    - /status
 
   storage:
     name: storage
@@ -178,4 +191,5 @@ ci_server_services:
     http_port: 8886
     main: cider_ci.storage.main
     monit_match: java.*cider_ci\.storage\.main
-
+    monit_check_paths:
+    - /status
