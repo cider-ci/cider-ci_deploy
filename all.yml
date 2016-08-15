@@ -121,8 +121,7 @@ ci_server_services:
     path: /user-interface
     http_port: 8880
     context: /ui
-    max_memory_fraction: 0.40
-    cache_store_size_fraction: 0.05
+    xmx: 1024m
     monit_match: java.*user-interface.*puma.*config\.ru
     monit_check_paths:
     - /status
