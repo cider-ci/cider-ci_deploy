@@ -26,5 +26,5 @@
   wait_for:
     host: localhost
     port: '{{item.value.http_port}}'
-    timeout: 60
+    timeout: 180
   with_dict: '{{ci_server_services}}'
