@@ -7,7 +7,7 @@ require 'active_support/all'
 require 'fileutils'
 
 APP_NAME='cider-ci'
-LEIN_SERVICES= %w(api builder dispatcher executor notifier repository storage)
+LEIN_SERVICES= %w(api builder dispatcher executor repository storage)
 RAILS_SERVICES= %w(user-interface)
 
 DEPLOY_DIR= Pathname.new(File.dirname(File.absolute_path(__FILE__))).join("..").to_s

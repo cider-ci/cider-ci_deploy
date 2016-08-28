@@ -9,7 +9,6 @@ scripts:
       lxc exec ${CONTAINER_NAME} -- curl --fail http://test:secret@localhost/cider-ci/api/status
       lxc exec ${CONTAINER_NAME} -- curl --fail http://test:secret@localhost/cider-ci/builder/status
       lxc exec ${CONTAINER_NAME} -- curl --fail http://test:secret@localhost/cider-ci/dispatcher/status
-      lxc exec ${CONTAINER_NAME} -- curl --fail http://test:secret@localhost/cider-ci/notifier/status
       lxc exec ${CONTAINER_NAME} -- curl --fail http://test:secret@localhost/cider-ci/repositories/status
       lxc exec ${CONTAINER_NAME} -- curl --fail http://test:secret@localhost/cider-ci/storage/status
       lxc exec ${CONTAINER_NAME} -- curl --fail http://test:secret@localhost/cider-ci/ui/status

@@ -86,25 +86,6 @@ services:
     dispatch_interval: 0.25
 
 
-
-  notifier:
-
-    http:
-      host: localhost
-      port: 8887
-      context: /cider-ci
-      sub_context: /notifier
-      ssl: false
-
-    nrepl:
-      port: 7887
-      bind: localhost
-      enabled: true
-
-    database:
-      max_pool_size: 10
-
-
   repository:
 
     http:

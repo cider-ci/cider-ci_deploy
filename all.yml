@@ -160,17 +160,6 @@ ci_server_services:
     monit_check_paths:
     - /status
 
-  notifier:
-    name: notifier
-    type: java
-    path: /notifier
-    http_port: 8887
-    context: /notifier
-    main: cider_ci.notifier.main
-    monit_match: java.*cider_ci\.notifier\.main
-    monit_check_paths:
-    - /status
-
   repository:
     name: repository
     type: java
