@@ -167,6 +167,7 @@ ci_server_services:
     path: /repository
     http_port: 8881
     context: /repositories
+    ws_context: /ws
     main: cider_ci.repository.main
     monit_match: java.*cider_ci\.repository\.main
     monit_check_paths:
