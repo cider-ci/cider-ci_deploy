@@ -1,0 +1,24 @@
+- name: generating key now
+  debug:
+    msg: ""
+
+- name: filling the random pool
+  shell: |
+    rngd -r /dev/urandom
+    sleep 20
+    killall rngd
+  async: 60
+  poll: 0
+
+- name: template batch script
+  template:
+    src: gen-key-script
+    dest: ~/.gnupg/gen-key-script
+  become: yes
+  become_user: "{{ ci_executor_exec_user }}"
+
+- name: generate gpg key
+  shell: |
+    gpg --batch --gen-key ~/.gnupg/gen-key-script
+  become: yes
+  become_user: "{{ ci_executor_exec_user }}"

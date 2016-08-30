@@ -1,0 +1,14 @@
+- name: export key
+  shell: |
+    rm -f ~/{{ci_executor_trait_gpg_email}}.pub.asc
+    gpg --output ~/{{ci_executor_trait_gpg_email}}.pub.asc \
+      --export -a {{ci_executor_trait_gpg_email}}
+  become: yes
+  become_user: "{{ ci_executor_exec_user }}"
+
+- name: fetch key
+  become: yes
+  become_user: "{{ ci_executor_exec_user }}"
+  fetch:
+    src: ~/{{ci_executor_trait_gpg_email}}.pub.asc
+    dest: tmp

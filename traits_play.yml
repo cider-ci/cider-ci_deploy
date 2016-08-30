@@ -27,6 +27,10 @@
     when: ci_executor_trait_git_crypt
     tags: ci_executor_trait_git_crypt
 
+  - role: traits/gpg
+    when: ci_executor_trait_gpg
+    tags: ci_executor_trait_gpg
+
   - role: traits/firefox-esr
     when: ci_executor_trait_firefox_esr
     tags: ci_executor_trait_firefox_esr
@@ -78,3 +82,6 @@
   - role: traits/stress-ng
     when: ci_executor_trait_stress_ng
     tags: ci_executor_trait_stress_ng
+
+
+

@@ -1,0 +1,10 @@
+%echo Generating a default key
+Key-Type: RSA
+Key-Length: 2048
+Subkey-Type: RSA
+Subkey-Length: 2048
+Name-Real: {{ci_executor_trait_gpg_real_name}}
+Name-Email: {{ci_executor_trait_gpg_email}}
+Expire-Date: 0
+%commit
+%echo done

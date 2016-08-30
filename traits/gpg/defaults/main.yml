@@ -1,0 +1,5 @@
+ci_executor_trait_gpg_clean_slate: false
+ci_executor_trait_gpg_fetch_pub_key: true
+ci_executor_trait_gpg_email: '{{ci_executor_exec_user}}@{{inventory_hostname}}'
+ci_executor_trait_gpg_real_name: '{{ci_executor_trait_gpg_email}}'
+

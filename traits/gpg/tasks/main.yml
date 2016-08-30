@@ -1,0 +1,40 @@
+- name: install dependencies
+  apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
+  with_items:
+    - rng-tools
+    - gpgv2
+
+- name: clean the existing .gnupg dir
+  shell: rm -rf ~/.gnupg
+  become: yes
+  become_user: "{{ci_executor_exec_user}}"
+  when: ci_executor_trait_gpg_clean_slate
+
+- name: call gpg once to set-up dirs
+  shell: "gpg --list-secret-keys"
+  become: yes
+  become_user: "{{ci_executor_exec_user}}"
+  changed_when: false
+  failed_when: false
+
+- name: check existing secret key
+  shell: "gpg --list-secret-keys | grep '{{ ci_executor_trait_gpg_real_name }}'"
+  changed_when: false
+  failed_when: false
+  become: yes
+  become_user: "{{ci_executor_exec_user}}"
+  register: ci_executor_trait_gpg_keys
+
+- debug: {var: ci_executor_trait_gpg_keys}
+
+- include: generate_key.yml
+  when: ci_executor_trait_gpg_keys.stdout == ""
+
+- include: fetch_pubkey.yml
+  when: ci_executor_trait_gpg_fetch_pub_key
+
+- name: register gpg trait
+  register_traits:
+    traits:
+      - GPG
+    file: /cider-ci/executor/config/traits.yml
