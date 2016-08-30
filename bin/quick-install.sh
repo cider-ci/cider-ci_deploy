@@ -1,7 +1,7 @@
 #!/bin/bash
 set -eux
 
-ANSIBLE_VERSION=2.1.0.0
+ANSIBLE_VERSION=2.1.1.0
 CIDER_CI_DIR=/tmp/cider-ci
 
 ################################################################################
