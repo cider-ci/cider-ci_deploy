@@ -1,16 +1,6 @@
 #!/usr/bin/env bash
 set -eu
 
-mkdir -p tmp
-
-function cleanup {
-  rm -f tmp/cider-ci.secret.pem
-}
-trap cleanup EXIT
-cleanup
-
-gpg --output tmp/cider-ci.secret.pem --decrypt crypto/cider-ci.secret.pem.gpg
-
-cat cider-ci.tar.gz | openssl dgst -sha256 -sign tmp/cider-ci.secret.pem -out cider-ci.tar.gz.sig
+cat cider-ci.tar.gz | openssl dgst -sha256 -sign crypto/cider-ci.secret.pem -out cider-ci.tar.gz.sig
 
 bin/archive-verify

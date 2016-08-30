@@ -1,7 +1,9 @@
 tasks:
   build:
     traits:
-      ci-executor-madek: true
+      cider-ci_deploy-repo-decryption: yes
+      Leiningen: yes
+      git-crypt: yes
     tree_attachments:
       archive:
         content_type: application/gzip
@@ -13,6 +15,10 @@ tasks:
       submodules:
         include_match: ^.*$
     scripts:
+      unlock:
+        body: |
+          git crypt unlock
+          git submodule foreach 'git crypt unlock || exit 0'
       prepare:
         body: |
           set -eux
@@ -23,6 +29,8 @@ tasks:
         start_when:
           prepared:
             script_key: prepare
+          unlocked:
+            script_key: unlock
         body: |
           set -eux
           cd deploy
