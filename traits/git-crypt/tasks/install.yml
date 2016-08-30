@@ -4,6 +4,7 @@
   with_items:
     - build-essential
     - openssl
+    - libssl-dev
 
 - name: pre clean up
   shell: |
