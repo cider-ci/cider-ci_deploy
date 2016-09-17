@@ -37,6 +37,9 @@ ci_server_trial_dispatch_timeout: 30 Minutes
 # overflowing disks due to excessive logging
 journald_forward_to_syslog: 'no'
 
+# This value is NULL or a PostgreSQL interval
+# https://www.postgresql.org/docs/current/static/functions-datetime.html
+defective_trial_same_executor_redispatch_delay: NULL
 
 ### deploy specific config ####################################################
 
