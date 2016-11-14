@@ -41,6 +41,9 @@ journald_forward_to_syslog: 'no'
 # https://www.postgresql.org/docs/current/static/functions-datetime.html
 defective_trial_same_executor_redispatch_delay: NULL
 
+# customize the prefix of status pushes to remotes
+status_pushes_name_prefix: Cider-CI@{{ci_server_external_hostname}}
+
 ### deploy specific config ####################################################
 
 ci_clean_slate: no
