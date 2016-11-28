@@ -30,7 +30,8 @@ end
 @tree_id = exec!('cd .. && git log -n 1 --pretty=%T').strip
 
 def check_url! url
-  exec! " curl -sS --fail -I '#{url}'"
+  cmd = "curl -L -sS --fail -I '#{url}'"
+  exec! cmd
 end
 
 def check_and_build_urls base_url
