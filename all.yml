@@ -29,6 +29,9 @@ ci_master_secret: "{{ lookup('password', inventory_dir + '/' + 'master_secret.tx
 ci_ntp_setup: no
 ci_ntp_server: pool.ntp.org
 
+# a list of words which mark additional traits available on the corresponding executor
+ci_executor_custom_traits: []
+
 # the following value is a PG interval!
 # https://www.postgresql.org/docs/current/static/datatype-datetime.html
 ci_server_trial_dispatch_timeout: 30 Minutes

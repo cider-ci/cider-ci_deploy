@@ -1,6 +1,9 @@
 - hosts: cider-ci_executors
 
-  pre_tasks: []
+  pre_tasks:
+  - register_traits:
+      traits: '{{ci_executor_custom_traits}}'
+      file: /etc/cider-ci/traits.yml
 
   roles:
 
