@@ -48,3 +48,4 @@
 - name: clean cider-ci base directory
   command: rm -f /etc/systemd/system/cider-ci*
   when: ci_clean_slate
+

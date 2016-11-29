@@ -17,4 +17,4 @@
 
 - include: vmware.yml
 
-
+- include: ssh_keys.yml

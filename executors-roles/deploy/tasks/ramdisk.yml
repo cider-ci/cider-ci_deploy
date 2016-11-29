@@ -1,0 +1,13 @@
+- lineinfile:
+    dest: /etc/fstab
+    line: 'tmpfs /ramdisk tmpfs defaults,size={{ci_executor_ramdisk_size}} 0 0'
+    regexp: \s+\/ramdisk\s+
+
+- file:
+    path: /ramdisk
+    state: directory
+    owner: root
+    mode: 0777
+
+- shell: mount /ramdisk
+

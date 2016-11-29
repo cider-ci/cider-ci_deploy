@@ -1,3 +1,7 @@
+- include: ramdisk.yml
+  tags: ramdisk
+  when: ci_executor_ramdisk_setup
+
 - name: Install dependencies
   apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
   with_items: [ruby, curl, stress, stress-ng]

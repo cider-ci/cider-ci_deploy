@@ -29,6 +29,14 @@ ci_master_secret: "{{ lookup('password', inventory_dir + '/' + 'master_secret.tx
 ci_ntp_setup: no
 ci_ntp_server: pool.ntp.org
 
+ci_ssh_keys: []
+ci_removed_ssh_keys: []
+
+# setup /ramdisk as a tempfs; if you enable this you probably want to configure
+# ci_executor_working_dir, and ci_executor_trait_postgresql_data_dir accordingly
+ci_executor_ramdisk_setup: no
+ci_executor_ramdisk_size: "{{ (ansible_memtotal_mb * 0.5) | round | int }}m"
+
 # a list of words which mark additional traits available on the corresponding executor
 ci_executor_custom_traits: []
 
