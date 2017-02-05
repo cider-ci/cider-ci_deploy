@@ -1,0 +1,25 @@
+- name: clean file
+  file:
+    path: /tmp/key.gpg
+    state: absent
+
+- name: copy keyfile
+  copy:
+    src: '{{item}}'
+    dest: /tmp/key.gpg
+    mode: 0600
+    owner: "{{ ci_executor_exec_user }}"
+
+- name: import key
+  shell: |
+    gpg --import /tmp/key.gpg
+  become: yes
+  become_user: "{{ ci_executor_exec_user }}"
+  register: result
+  # exits with 2 if key already exists
+  failed_when: ( result.rc not in [ 0, 2] )
+
+- name: clean file
+  file:
+    path: /tmp/key.gpg
+    state: absent

@@ -33,62 +33,7 @@ server_base_url: {{ci_server_base_url}}
 
 services:
 
-  api:
-
-    http:
-      host: localhost
-      port: 8885
-      context: /cider-ci
-      sub_context: /api
-      ssl: false
-
-    nrepl:
-      port: 7885
-      bind: localhost
-      enabled: true
-
-    database:
-      max_pool_size: 10
-
-  builder:
-
-    http:
-      host: localhost
-      port: 8884
-      context: /cider-ci
-      sub_context: /builder
-      ssl: false
-
-    nrepl:
-      port: 7884
-      bind: localhost
-      enabled: true
-
-    database:
-      max_pool_size: 10
-
-
-  dispatcher:
-
-    http:
-      host: localhost
-      port: 8882
-      context: '/cider-ci'
-      sub_context: '/dispatcher'
-      ssl: false
-
-    nrepl:
-      port: 7882
-      bind: localhost
-      enabled: true
-
-    database:
-      max_pool_size: 30
-
-    dispatch_interval: 0.25
-
-
-  repository:
+  server:
 
     http:
       host: localhost
@@ -103,28 +48,11 @@ services:
       enabled: true
 
     database:
-      max_pool_size: 20
+      max_pool_size: 50
 
     repositories:
       path: /cider-ci/data/repositories
 
-
-  storage:
-
-    http:
-      host: localhost
-      port: 8886
-      context: /cider-ci
-      sub_context: /storage
-      ssl: false
-
-    nrepl:
-      port: 7886
-      bind: localhost
-      enabled: true
-
-    database:
-      max_pool_size: 10
 
     stores:
 

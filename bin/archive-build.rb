@@ -7,7 +7,7 @@ require 'active_support/all'
 require 'fileutils'
 
 APP_NAME='cider-ci'
-LEIN_SERVICES= %w(api builder dispatcher executor repository storage)
+LEIN_SERVICES= %w(executor server)
 RAILS_SERVICES= %w(user-interface)
 
 DEPLOY_DIR= Pathname.new(File.dirname(File.absolute_path(__FILE__))).join("..").to_s
@@ -52,7 +52,6 @@ def deploy_info
     commit_id: commit_id,
     time: Time.now.utc.to_json }
 end
-
 
 def releases
   release = YAML.load_file("../config/releases.yml").

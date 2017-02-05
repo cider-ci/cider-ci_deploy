@@ -145,58 +145,15 @@ ci_server_services:
     - /status
     - /public
 
-  api:
-    name: api
+  server:
+    name: server
     type: java
-    path: /api
-    http_port: 8885
-    context: /api
-    main: cider_ci.api.main
-    monit_match: java.*cider_ci\.api\.main
-    monit_check_paths:
-    - /status
-
-  builder:
-    name: builder
-    type: java
-    path: /builder
-    http_port: 8884
-    context: /builder
-    main: cider_ci.builder.main
-    monit_match: java.*cider_ci\.builder\.main
-    monit_check_paths:
-    - /status
-
-  dispatcher:
-    name: dispatcher
-    type: java
-    path: /dispatcher
-    http_port: 8882
-    context: /dispatcher
-    main: cider_ci.dispatcher.main
-    monit_match: java.*cider_ci\.dispatcher\.main
-    monit_check_paths:
-    - /status
-
-  repository:
-    name: repository
-    type: java
-    path: /repository
+    path: /server
     http_port: 8881
-    context: /repositories
+    xmx: 1024m
+    context: /server
     ws_context: /ws
-    main: cider_ci.repository.main
-    monit_match: java.*cider_ci\.repository\.main
-    monit_check_paths:
-    - /status
-
-  storage:
-    name: storage
-    type: java
-    path: /storage
-    context: /storage
-    http_port: 8886
-    main: cider_ci.storage.main
-    monit_match: java.*cider_ci\.storage\.main
+    main: cider_ci.main
+    monit_match: java.*cider_ci\.server\.main
     monit_check_paths:
     - /status

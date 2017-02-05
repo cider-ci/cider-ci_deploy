@@ -41,11 +41,11 @@
     regexp: 'allow (admin|cider-ci):.*'
     state: absent
 
-- name: reload monit
-  service:
-    name: monit
-    state: reloaded
-    enabled: true
-
-- name: call monit to awake it
-  command: monit
+#- name: reload monit
+#  service:
+#    name: monit
+#    state: reloaded
+#    enabled: true
+#
+#- name: call monit to awake it
+#  command: monit

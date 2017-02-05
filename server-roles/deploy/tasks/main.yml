@@ -7,6 +7,12 @@
 - include: setup-database.yml
   tags: [deploy-setup-database]
 
+- name: remove old systemd service
+  file:
+     path: /etc/systemd/system/cider-ci_{{item}}.service
+     state: absent
+  with_items: [api, builder, dispatcher, repository, storage]
+
 - include: setup-service.yml
   with_dict: '{{ci_server_services}}'
   tags: [deploy-setup-services]

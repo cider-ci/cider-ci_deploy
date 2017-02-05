@@ -16,7 +16,14 @@
 - include: monitor-service.yml
   with_dict: '{{ci_server_services}}'
 
+- name: enable and start monit
+  service:
+    name: monit
+    state: started
+    enabled: yes
+
 - name: reload monit
   service:
     name: monit
     state: reloaded
+    enabled: yes
