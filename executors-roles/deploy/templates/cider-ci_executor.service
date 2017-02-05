@@ -14,7 +14,7 @@ StartLimitBurst=5
 
 WorkingDirectory=/cider-ci/executor
 Environment=CLASSPATH=/cider-ci/executor/config:/cider-ci/executor/executor.jar
-ExecStart=/usr/lib/jvm/java-8-openjdk-amd64/bin/java "-Xmx200m" cider_ci.ex.main
+ExecStart=/usr/lib/jvm/java-8-openjdk-amd64/bin/java "-Xmx250m" cider_ci.executor.main
 
 [Install]
 WantedBy=multi-user.target
