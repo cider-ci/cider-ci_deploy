@@ -9,6 +9,7 @@ BindsTo=cider-ci_postgresql.service
 WorkingDirectory={{service_dir}}
 User=cider-ci
 Group=cider-ci
+Nice=19
 Environment=JRUBY_HOME={{service_dir}}/vendor/jruby
 Environment=PATH={{service_dir}}/vendor/jruby/bin:/usr/local/bin:/usr/bin:/bin
 Environment=RAILS_LOG_LEVEL=WARN
