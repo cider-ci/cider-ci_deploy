@@ -1,0 +1,39 @@
+- file:
+    path: ~/.ssh
+    owner: "{{ci_executor_exec_user}}"
+    group: "{{ci_executor_exec_user}}"
+    mode: 0700
+    state: directory
+  become: yes
+  become_user: "{{ci_executor_exec_user}}"
+  name: create ~/.ssh and set permissions
+
+- lineinfile:
+    dest: ~/.ssh/known_hosts
+    create: yes
+    line: '{{item}}'
+  become: yes
+  become_user: '{{ci_executor_exec_user}}'
+  name: add known_hosts line
+  with_items: '{{trait_ssh_add_authorized_host_keys}}'
+
+- file:
+    path: ~/.ssh/known_hosts
+    owner: "{{ci_executor_exec_user}}"
+    group: "{{ci_executor_exec_user}}"
+    mode: 0644
+  become: yes
+  become_user: "{{ci_executor_exec_user}}"
+  failed_when: false
+  name: create ~/.ssh/known_hosts and set permissions
+
+- copy:
+    src: "{{item.src}}"
+    dest: ~/.ssh/{{item.filename}}
+    owner: "{{ci_executor_exec_user}}"
+    group: "{{ci_executor_exec_user}}"
+    mode: 0600
+  become: yes
+  become_user: "{{ci_executor_exec_user}}"
+  with_items: "{{trait_ssh_key_files}}"
+  name: copy {{item.src}} to ~/.ssh/{{item.filename}}

@@ -82,6 +82,10 @@
     when: ci_executor_trait_sqlite
     tags: ci_executor_trait_sqlite
 
+  - role: traits/ssh-keys
+    when: ci_executor_trait_ssh_keys
+    tags: ci_executor_trait_ssh_keys
+
   - role: traits/stress-ng
     when: ci_executor_trait_stress_ng
     tags: ci_executor_trait_stress_ng
