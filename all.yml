@@ -75,13 +75,14 @@ ci_executor_nrepl_enabled: false
 ### traits ####################################################################
 # the default is not to install any of these traits
 
+
 ci_executor_trait_ansible: false
 ci_executor_trait_apache2: false
 ci_executor_trait_bower: false
 ci_executor_trait_chruby: false
 ci_executor_trait_firefox_esr: false
-ci_executor_trait_gpg: false
 ci_executor_trait_git_crypt: false
+ci_executor_trait_gpg: false
 ci_executor_trait_leiningen: false
 ci_executor_trait_lxd: false
 ci_executor_trait_misc: false
@@ -95,6 +96,9 @@ ci_executor_trait_ruby_install: false
 ci_executor_trait_sqlite: false
 ci_executor_trait_ssh_keys: false
 ci_executor_trait_stress_ng: true
+ci_executor_trait_wine: false
+ci_executor_trait_xorg: false
+
 
 ### Http Server specific config ###############################################
 

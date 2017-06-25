@@ -8,6 +8,7 @@
     - hunspell-en-us
     - hunspell-tools
     - imagemagick
+    - libgconf-2-4
     - libimage-exiftool-perl
     - xvfb
   tags: [internet]
@@ -24,4 +25,5 @@
     - ImageMagick
     - Xvfb
     - curl
+    - libgconf-2-4
     file: /etc/cider-ci/traits.yml

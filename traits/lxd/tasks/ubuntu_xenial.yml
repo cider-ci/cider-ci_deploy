@@ -1,6 +1,21 @@
-- name: install lxd
+- name: install ruby
   apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
-  with_items: [lxd, ruby]
+  with_items: [ruby]
+  tags: [internet]
+
+- name: install or upgrade lxd
+  apt:
+    pkg: '{{item}}'
+    state: latest
+    update_cache: yes
+    cache_valid_time: 3600
+    default_release: xenial-backports
+    install_recommends: yes
+  with_items:
+    - lxd
+    - lxd-client
+    - lxd-tools
+    - criu
   tags: [internet]
 
 - name: configure the lxc https interface

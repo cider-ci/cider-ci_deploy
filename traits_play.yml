@@ -90,5 +90,10 @@
     when: ci_executor_trait_stress_ng
     tags: ci_executor_trait_stress_ng
 
+  - role: traits/xorg
+    when: ci_executor_trait_xorg
+    tags: ci_executor_trait_xorg
 
-
+  - role: traits/wine
+    when: ci_executor_trait_wine
+    tags: ci_executor_trait_wine
