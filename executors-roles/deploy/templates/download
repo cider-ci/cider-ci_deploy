@@ -6,9 +6,9 @@ require 'digest'
 require 'fileutils'
 
 JAR_DIR = '/cider-ci/executor'.freeze
-JAR_PATH = "#{JAR_DIR}/executor.jar".freeze
-JAR_DL_PATH = '/cider-ci/downloads/executor/executor.jar'.freeze
-JAR_TMP_PATH = '/tmp/executor.jar'.freeze
+JAR_PATH = "#{JAR_DIR}/cider-ci.jar".freeze
+JAR_DL_PATH = '/cider-ci/downloads/cider-ci.jar'.freeze
+JAR_TMP_PATH = '/tmp/cider-ci.jar'.freeze
 
 def download
   config = YAML.load_file('/cider-ci/executor/config/config.yml')

@@ -11,11 +11,27 @@
   file:
      path: /etc/systemd/system/cider-ci_{{item}}.service
      state: absent
-  with_items: [api, builder, dispatcher, repository, storage]
+  with_items: [api, builder, dispatcher, repository, storage, server]
 
 - include: setup-service.yml
   with_dict: '{{ci_server_services}}'
   tags: [deploy-setup-services]
+
+- name: define server service
+  template:
+    src: server.service
+    dest: /etc/systemd/system/cider-ci_server.service
+
+- name: working dir for server service
+  file:
+    path: /cider-ci/server/server/log/
+    owner: cider-ci
+    state: directory
+
+- name: define server service
+  template:
+    src: server.service
+    dest: /etc/systemd/system/cider-ci_server.service
 
 - name: reload systemctl
   command: systemctl daemon-reload

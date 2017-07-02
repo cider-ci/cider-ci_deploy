@@ -5,7 +5,7 @@
   with_items: [monit, ruby]
   tags: [internet]
 
-- hmac_sha1_signature:
+- hmac_sha256_signature:
     message: monit
     secret: '{{ci_master_secret}}'
   register: monit_password_signature

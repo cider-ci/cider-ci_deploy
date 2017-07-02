@@ -7,7 +7,6 @@ require 'active_support/all'
 require 'fileutils'
 
 APP_NAME='cider-ci'
-LEIN_SERVICES= %w(executor server)
 RAILS_SERVICES= %w(user-interface)
 
 DEPLOY_DIR= Pathname.new(File.dirname(File.absolute_path(__FILE__))).join("..").to_s
@@ -104,31 +103,23 @@ def build_rails_services
   end
 end
 
-def build_lein_service service_name
-  print "building #{service_name} ... "
-  service_source_dir = "#{SOURCE_DIR}/#{service_name}"
-  service_target_dir = "#{BUILD_DIR}/#{service_name}"
-  FileUtils.mkdir_p service_target_dir
+def build_cider_ci
+  print "building cider-ci.jar ... "
   exec! <<-CMD.strip_heredoc
     #!/usr/bin/env bash
     unset JAVA_OPTS
     unset JAVA_ARCH
     export LEIN_ROOT=1
     export LEIN_SNAPSHOTS_IN_RELEASE=yes
-    set -eux
-    cd #{service_source_dir}
+    set -euxo
+    cd #{SOURCE_DIR}/server
     #{DEPLOY_DIR}/bin/lein do clean, uberjar
   CMD
- FileUtils.cp "#{service_source_dir}/target/#{service_name}.jar",
-   "#{service_target_dir}/#{service_name}.jar"
+  FileUtils.cp "#{SOURCE_DIR}/server/target/cider-ci.jar", "#{BUILD_DIR}/cider-ci.jar"
   print "done, "
 end
 
 def build_lein_services
-  exec! <<-CMD.strip_heredoc
-    cd #{SOURCE_DIR}/lein-dev-plugin
-    #{DEPLOY_DIR}/bin/lein install
-  CMD
   LEIN_SERVICES.each do |lein_service|
     build_lein_service lein_service
   end
@@ -141,7 +132,7 @@ def build_downloads
     #!/usr/bin/env bash
     set -eux
     cd #{BUILD_DIR}/downloads
-    ln  -s ../executor/ executor
+    ln -s ../cider-ci.jar cider-ci.jar
   CMD
   print "done, "
 end
@@ -177,10 +168,10 @@ def main
     else
       print "building #{build_archive} ..."
       prepare
+      build_cider_ci
       build_config_dir
       build_documentation_dir
       build_rails_services
-      build_lein_services
       build_downloads
       pack build_archive
       puts " done "

@@ -13,8 +13,7 @@ StartLimitInterval=300
 StartLimitBurst=5
 
 WorkingDirectory=/cider-ci/executor
-Environment=CLASSPATH=/cider-ci/executor/config:/cider-ci/executor/executor.jar
-ExecStart=/usr/lib/jvm/java-8-openjdk-amd64/bin/java "-Xmx250m" cider_ci.executor.main
+ExecStart=/usr/lib/jvm/java-8-openjdk-amd64/bin/java "-Xmx250m" -jar /cider-ci/executor/cider-ci.jar executor -c /cider-ci/executor/config/config.yml run
 
 [Install]
 WantedBy=multi-user.target

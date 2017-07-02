@@ -1,18 +1,39 @@
+- name: determine basic auth properties
+  hmac_sha256_signature:
+    message: '{{inventory_hostname}}'
+    secret: '{{ci_master_secret}}'
+  register: hmac_sha256_signature_executor_default_token
+
+- name: determine default id
+  uuid_tools:
+     message: '{{inventory_hostname}}'
+  register: uuid_tools_executor_default_id
+
+- name: set exectuor username and password
+  set_fact:
+    executor_default_name: '{{inventory_hostname}}'
+    executor_default_token: '{{hmac_sha256_signature_executor_default_token.signature}}'
+    executor_default_id: '{{uuid_tools_executor_default_id.uuid}}'
+
+- name: register executor on server
+  uri:
+    url: "{{ci_server_base_url}}/cider-ci/executors/{{executor_id | default(executor_default_id) }}"
+    method: PUT
+    force_basic_auth: yes
+    body_format: json
+    user: ansible
+    password: '{{ci_master_secret}}'
+    body:
+      name: "{{inventory_hostname}}"
+      token: "{{executor_token | default(executor_default_token) }}"
+    status_code: 201, 204
+  tags: register-executor
+
 - file:
     path: /cider-ci/executor/config
     state: directory
     mode: 0755
 
-- name: determine basic auth properties
-  hmac_sha1_signature:
-    message: '{{inventory_hostname}}'
-    secret: '{{ci_master_secret}}'
-  register: executor_auth
-
-- name: set exectuor username and password
-  set_fact:
-    executor_name: '{{inventory_hostname}}'
-    executor_password: '{{executor_auth.signature}}'
 
 - name: create or update config file
   template:

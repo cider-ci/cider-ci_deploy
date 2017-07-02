@@ -1,0 +1,16 @@
+[Unit]
+Description=Cider-CI Server Service
+After=syslog.target
+After=network.target
+
+BindsTo=cider-ci_postgresql.service
+
+[Service]
+WorkingDirectory={{ci_server_dir}}/server
+User=cider-ci
+Group=cider-ci
+Environment=CLASSPATH={{ci_server_dir}}/server/config:{{ci_server_dir}}/cider-ci.jar
+ExecStart=/usr/lib/jvm/java-8-openjdk-amd64/bin/java "-Xmx{{ ci_server_services.server.xmx }}" -jar {{ci_server_dir}}/cider-ci.jar server run
+
+[Install]
+WantedBy=multi-user.target

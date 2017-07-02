@@ -1,23 +1,59 @@
-server_base_url: {{ci_server_base_url}}
+# Cider-CI Executor Configuration
+#
+# Based on the Cider-CI 5.0.0-26 Default Executor Configuration
+# Managed with Ansible
+#
+
+accepted_repositories: {{executor_accepted_repositories | default(["^.*$"]) | to_json }}
+
+basic_auth:
+  username: {{executor_name | default(executor_default_name) }}
+  password: {{executor_token | default(executor_default_token) }}
+
+default_script_timeout: 3 Minutes
+
+exec_user:
+  name: '{{ci_executor_exec_user}}'
+
+# hostname: HOSTNAME
+
+http: {port: 8883, host: localhost, enabled: false}
 
 {% if ci_executor_max_load is defined %}
 max_load: {{ci_executor_max_load}}
+{% else %}
+# max_load: 2
 {% endif %}
 
-trial_retention_duration: {{ ci_executor_trial_retention_duration | default('30 Minutes')}}
+name: DemoExecutor
 
 nrepl:
   port: {{ci_executor_service_nrepl_port}}
   bind: "{{nrepl_bind_address | default('127.0.0.1')}}"
   enabled: {{ci_executor_nrepl_enabled}}
 
-basic_auth:
-  username: {{executor_name}}
-  password: {{executor_password}}
+reporter: {max-retries: 10, retry-factor-pause-duration: 3 Seconds}
+
+repositories_dir: /Users/thomas/Programming/CIDER-CI/cider-ci_v4/server/tmp/executor_repositories
+
+secret: master-secret
 
 self_update: {{ci_executor_self_update | default(true) }}
 
-exec_user:
-  name: '{{ci_executor_exec_user}}'
+server_base_url: {{ci_server_base_url}}
+
+services:
+  dispatcher:
+    http: {context: /cider-ci, sub_context: /dispatcher, ssl: false}
+
+sync_interval_pause_duration: 1 Second
+
+temporary_overload_factor: 1.99
+
+traits_files: ['/etc/cider-ci/traits.yml', '/cider-ci/executor/config/traits.yml']
+
+trial_retention_duration: {{ ci_executor_trial_retention_duration | default('30 Minutes')}}
+
+windows: {fsi_path: 'C:\Program Files (x86)\Microsoft SDKs\F#\4.0\Framework\v4.0\Fsi.exe'}
 
 working_dir: '{{ci_executor_working_dir}}'

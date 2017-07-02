@@ -4,12 +4,6 @@
 - set_fact:
     service_dir: "{{ci_server_dir}}{{service.path}}"
 
-- name: setup {{service.name}} java service
-  template:
-    src: java.service
-    dest: /etc/systemd/system/cider-ci_{{service.name}}.service
-  when: service.type == 'java'
-
 - name: setup {{service.name}} rails service
   template:
     src: rails.service

@@ -1,12 +1,12 @@
-server ansible_connection=ssh ansible_user=root ansible_host=cider-ci-server.local
-executor ansible_connection=ssh ansible_user=root ansible_host=cider-ci-executor.local
+vm-server ansible_connection=ssh ansible_user=root ansible_host=cider-ci-server.local
+vm-executor-01 ansible_connection=ssh ansible_user=root ansible_host=cider-ci-executor.local
 
 [cider-ci_hosts]
-server
-executor
+vm-server
+vm-executor-01
 
 [cider-ci_server]
-server
+vm-server
 
 [cider-ci_executors]
-executor
+vm-executor-01
