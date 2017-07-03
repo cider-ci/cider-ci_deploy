@@ -1,0 +1,16 @@
+- name: install ubuntu-desktop
+  apt:
+    pkg: '{{item}}'
+    state: latest
+    update_cache: yes
+    cache_valid_time: 3600
+    install_recommends: yes
+  with_items:
+    - ubuntu-desktop
+  tags: [internet]
+
+- name: register trait
+  register_traits:
+    traits:
+      - ubuntu-desktop
+    file: /etc/cider-ci/traits.yml

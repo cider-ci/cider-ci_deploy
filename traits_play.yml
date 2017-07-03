@@ -90,6 +90,10 @@
     when: ci_executor_trait_stress_ng
     tags: ci_executor_trait_stress_ng
 
+  - role: traits/ubuntu-desktop
+    when: ci_executor_trait_ubuntu_desktop
+    tags: ci_executor_trait_ubuntu_desktop
+
   - role: traits/xorg
     when: ci_executor_trait_xorg
     tags: ci_executor_trait_xorg

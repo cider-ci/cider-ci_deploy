@@ -96,6 +96,7 @@ ci_executor_trait_ruby_install: false
 ci_executor_trait_sqlite: false
 ci_executor_trait_ssh_keys: false
 ci_executor_trait_stress_ng: true
+ci_executor_trait_ubuntu_desktop: false
 ci_executor_trait_wine: false
 ci_executor_trait_xorg: false
 

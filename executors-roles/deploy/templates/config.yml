@@ -34,7 +34,7 @@ nrepl:
 
 reporter: {max-retries: 10, retry-factor-pause-duration: 3 Seconds}
 
-repositories_dir: /Users/thomas/Programming/CIDER-CI/cider-ci_v4/server/tmp/executor_repositories
+repositories_dir: /cider-ci/executor/tmp/repositories
 
 secret: master-secret
 
