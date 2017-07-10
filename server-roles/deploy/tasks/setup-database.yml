@@ -39,6 +39,8 @@
   shell: |
     #!/usr/bin/env bash
     set -eux
-    export PATH=/cider-ci/server/user-interface/vendor/jruby/bin:$PATH
-    cd /cider-ci/server/user-interface/
-    jruby --dev -S bundle exec rake db:create db:migrate db:seed
+    cd {{ci_server_dir}}
+    /usr/lib/jvm/java-8-openjdk-amd64/bin/java \
+      -jar {{ci_server_dir}}/cider-ci.jar \
+      server migrate \
+      -d "jdbc:postgresql://cider-ci:{{ci_server_database_secret}}@localhost:{{ci_server_postgres_port}}/cider-ci_v4"
