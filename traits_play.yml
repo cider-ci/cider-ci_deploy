@@ -86,5 +86,6 @@
     when: ci_executor_trait_stress_ng
     tags: ci_executor_trait_stress_ng
 
-
-
+  - role: traits/translation-tools
+    when: ci_executor_trait_translation_tools
+    tags: ci_executor_trait_translation_tools
