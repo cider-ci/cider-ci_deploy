@@ -1,0 +1,22 @@
+- name: install gettext; translate-toolkit dependencies
+  apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
+  with_items:
+  - python-pip
+  - gettext
+  tags: [internet]
+
+- name: upgrade pip
+  command: pip install -I --upgrade pip
+  tags: [internet]
+
+- name: install translate-toolkit via pip
+  command: pip install -I --upgrade translate-toolkit
+  tags: [internet]
+
+- name: register traits
+  register_traits:
+    traits:
+      - translation-tools
+      - gettext
+      - translate-toolkit
+    file: /etc/cider-ci/traits.yml
