@@ -21,7 +21,7 @@
     tags: [openjdk8_install]
 
   - role: executors-roles/prepare
-    tags: [executors_perpare]
+    tags: [executors_prepare]
 
   - role: executors-roles/exec-user
     tags: [executors_exec-user]
