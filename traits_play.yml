@@ -98,6 +98,14 @@
     when: ci_executor_trait_ubuntu_desktop
     tags: ci_executor_trait_ubuntu_desktop
 
+  - role: traits/vagrant
+    when: ci_executor_trait_vagrant
+    tags: ci_executor_trait_vagrant
+
+  - role: traits/virtualbox
+    when: ci_executor_trait_virtualbox
+    tags: ci_executor_trait_virtualbox
+
   - role: traits/xorg
     when: ci_executor_trait_xorg
     tags: ci_executor_trait_xorg
