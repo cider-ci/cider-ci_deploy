@@ -1,0 +1,57 @@
+- name: Configure APT keys for Virtualbox
+  loop:
+    - { id: '7B0FAB3A13B907435925D9C954422A4B98AB5139', url: 'http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc' }
+    - { id: 'B9F8D658297AF3EFC18D5CDFA2F683C52980AECF', url: 'http://download.virtualbox.org/virtualbox/debian/oracle_vbox_2016.asc' }
+  apt_key:
+    state: present
+    id: '{{ item.id }}'
+    url: '{{ item.url }}'
+  become_user: root
+  tags: [internet]
+
+- name: Configure APT sources for Virtualbox
+  apt_repository:
+    repo: deb http://download.virtualbox.org/virtualbox/debian {{ansible_distribution_release}} contrib non-free
+  register: trait_virtualbox_apt
+  tags: [internet]
+
+- name: Install Virtualbox packages
+  apt:
+    pkg:
+      - virtualbox
+      - virtualbox-dkms
+      - dkms
+      - build-essential
+      - 'linux-headers-{{ ansible_kernel }}'
+    state: latest
+    update_cache: yes
+    cache_valid_time: 3600
+  tags: [internet]
+
+# - name: Run vboxconfig
+#   command: vboxconfig
+
+- name: Ensure Virtualbox kernel modules are loaded
+  modprobe:
+    name: vboxdrv
+    state: present
+
+- name: Add ci-exec-user to group vboxusers
+  user:
+    name: ci-exec-user
+    groups: vboxusers
+    append: yes
+
+- name: set up config dir for ci-exec-user
+  file:
+    path: '/home/ci-exec-user/.config/VirtualBox'
+    state: directory
+    owner: ci-exec-user
+    group: ci-exec-user
+    recurse: yes
+
+- name: register Virtualbox trait
+  register_traits:
+    traits:
+      - virtualbox
+    file: /etc/cider-ci/traits.yml
