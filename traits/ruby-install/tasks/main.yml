@@ -6,13 +6,13 @@
     - libcurl4-openssl-dev
     - libffi-dev
     - libgdbm-dev
-    - libgdbm3
     - libncurses5-dev
     - libreadline-dev
     - libreadline6-dev
     - libssl-dev
     - libyaml-dev
     - zlib1g-dev
+    - libgdbm5 # when ansible_distribution = Ubuntu & ansible_distribution_major_version >=18
 
 - name: copy install dir
   synchronize:

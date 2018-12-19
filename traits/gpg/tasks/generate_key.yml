@@ -19,6 +19,6 @@
 
 - name: generate gpg key
   shell: |
-    gpg --batch --gen-key ~/.gnupg/gen-key-script
+    GPG_TTY=$(tty) gpg --batch --gen-key ~/.gnupg/gen-key-script
   become: yes
   become_user: "{{ ci_executor_exec_user }}"
