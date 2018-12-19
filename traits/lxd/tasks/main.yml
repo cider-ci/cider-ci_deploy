@@ -1,4 +1,9 @@
-- include: ubuntu_xenial.yml
+- include_tasks: ubuntu_xenial.yml
   when: >
     (ansible_distribution == "Ubuntu"
       and ansible_distribution_release == "xenial")
+
+- include_tasks: ubuntu_bionic.yml
+  when: >
+    (ansible_distribution == "Ubuntu"
+      and ansible_distribution_release == "bionic")
