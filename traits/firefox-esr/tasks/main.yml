@@ -1,6 +1,11 @@
-- apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
-  with_items:
-    - lbzip2
+- apt:
+    update_cache: yes
+    cache_valid_time: 3600
+    name: "{{ packages }}"
+  vars: 
+    packages: 
+      - lbzip2
+      - libgtk2.0-0
   tags: [internet]
 
 - stat: path={{ci_executor_trait_firefox_esr_bin_path}}

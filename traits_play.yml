@@ -39,13 +39,20 @@
     tags: ci_executor_trait_firefox_esr
 
   - role: traits/firefox-esr
-    when: ci_executor_trait_firefox_esr_60
-    tags: ci_executor_trait_firefox_esr_60
+    vars:
+      ci_executor_trait_firefox_esr_default: false
+      ci_executor_trait_firefox_esr_version_major: 45
+      ci_executor_trait_firefox_esr_version_minor: 9
+      ci_executor_trait_firefox_esr_version_patch: 0
+    tags: ci_executor_trait_firefox_esr_45
+
+  - role: traits/firefox-esr
     vars:
       ci_executor_trait_firefox_esr_default: false
       ci_executor_trait_firefox_esr_version_major: 60
       ci_executor_trait_firefox_esr_version_minor: 4
       ci_executor_trait_firefox_esr_version_patch: 0
+    tags: ci_executor_trait_firefox_esr_60
 
   - role: traits/leiningen
     when: ci_executor_trait_leiningen

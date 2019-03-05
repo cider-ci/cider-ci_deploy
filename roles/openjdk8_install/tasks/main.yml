@@ -9,4 +9,6 @@
   tags: [internet]
   when: >
     (ansible_distribution == "Ubuntu"
-      and ansible_distribution_release == "xenial")
+    and (ansible_distribution_release == "xenial"
+    or ansible_distribution_release == "bionic"))
+    

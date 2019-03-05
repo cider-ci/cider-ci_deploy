@@ -1,26 +1,19 @@
-- name: install ansible dependencies
-  apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
-  with_items:
-  - python-pip
-  - python-dev
+- apt_repository:
+    repo: 'ppa:ansible/ansible'
+
+- apt:
+    update_cache: yes
+    cache_valid_time: 3600
+    name: "{{ packages }}"
+  vars: 
+    packages: 
+      - python-pip
+      - ansible
+
   tags: [internet]
 
-- name: upgrade pip
+- name: remove previusly manually installed ansible
   shell: |
-    set -eux
-    pip install -I --upgrade pip
-
-- name: install ansible via pip
-  shell: |
-    set -eux
-    pip install -I --upgrade paramiko==1.17.0 ansible=={{ci_executor_trait_ansible_version}}
-
-- name: register ansible trait
-  register_traits:
-    remove_match: "^ansible.*"
-    traits:
-      - Ansible
-      - Ansible {{ci_executor_trait_ansible_version_major}}
-      - Ansible {{ci_executor_trait_ansible_version}}
-    file: /etc/cider-ci/traits.yml
+    set -euxo
+    pip uninstall -y ansible=={{ci_executor_trait_ansible_version}}
 

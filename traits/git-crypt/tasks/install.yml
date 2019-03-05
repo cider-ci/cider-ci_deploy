@@ -1,7 +1,8 @@
 - name: install dependencies
-  apt: name={{item}} state=latest update_cache=yes cache_valid_time=3600
+  apt: name={{packages}} state=latest update_cache=yes cache_valid_time=3600
   tags: [internet]
-  with_items:
+  vars:
+    packages:
     - build-essential
     - openssl
     - libssl-dev
