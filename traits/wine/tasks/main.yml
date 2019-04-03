@@ -6,7 +6,7 @@
     cache_valid_time: 3600
     install_recommends: yes
   with_items:
-    - wine
+    - wine-stable
   tags: [internet]
 
 - name: register trait
