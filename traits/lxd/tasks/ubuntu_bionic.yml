@@ -1,21 +1,31 @@
-- name: install ruby
-  apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
-  with_items: [ruby]
-  tags: [internet]
-
-- name: install or upgrade lxd
+- name: install or upgrade lxd and other packages
   apt:
-    pkg: '{{item}}'
+    name: '{{packages}}'
     state: latest
     update_cache: yes
     cache_valid_time: 3600
     install_recommends: yes
-  with_items:
+  vars:
+    packages:
+    - criu
+    - jq
     - lxd
     - lxd-client
     - lxd-tools
-    - criu
+    - ruby
   tags: [internet]
+
+- name: copy lxd init file
+  template:
+    src: lxd-init.yml
+    dest: /root/lxd-init.yml
+    force: yes
+
+- name: lxd init
+  shell: |
+    #! /usr/bin/env bash
+    set -euxo
+    cat /root/lxd-init.yml | lxd init --preseed
 
 - name: configure the lxc https interface
   include: api.yml

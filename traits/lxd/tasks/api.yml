@@ -10,7 +10,7 @@
 - file:
     path: ~{{ci_executor_exec_user}}/.config/lxc
     state: directory
-    mode: 0750
+    mode: 0770
     owner: root
     group: '{{ci_executor_exec_user}}'
 
