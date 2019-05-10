@@ -1,9 +1,14 @@
-- include_tasks: ubuntu_xenial.yml
-  when: >
-    (ansible_distribution == "Ubuntu"
-      and ansible_distribution_release == "xenial")
+- name: check if '/containers' exists
+  stat:
+    path: /containers
+  register: containers_dir
 
 - include_tasks: ubuntu_bionic.yml
   when: >
     (ansible_distribution == "Ubuntu"
       and ansible_distribution_release == "bionic")
+
+- include_tasks: remove.yml
+  when: >
+    not (ansible_distribution == "Ubuntu"
+    and ansible_distribution_release == "bionic")

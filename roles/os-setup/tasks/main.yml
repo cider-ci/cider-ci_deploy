@@ -1,3 +1,6 @@
+- name: install system python
+  raw: apt install python -y
+
 - include: prepare.yml
 
 - include: journald.yml

@@ -94,6 +94,10 @@
     when: ci_executor_trait_ruby_install
     tags: ci_executor_trait_ruby_install
 
+  - role: traits/s3-cache
+    when: ci_executor_trait_s3_cache
+    tags: ci_executor_trait_s3_cache
+
   - role: traits/sqlite
     when: ci_executor_trait_sqlite
     tags: ci_executor_trait_sqlite

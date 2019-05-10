@@ -93,6 +93,7 @@ ci_executor_trait_phantomjs: false
 ci_executor_trait_postgresql: false
 ci_executor_trait_rbenv: false
 ci_executor_trait_ruby_install: false
+ci_executor_trait_s3_cache: false
 ci_executor_trait_sqlite: false
 ci_executor_trait_ssh_keys: false
 ci_executor_trait_stress_ng: true

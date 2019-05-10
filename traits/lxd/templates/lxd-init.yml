@@ -9,7 +9,7 @@ networks:
   type: ""
 storage_pools:
 - config:
-    source: /var/lib/lxd/storage-pools/default
+    source: /containers
   description: ""
   name: default
   driver: btrfs

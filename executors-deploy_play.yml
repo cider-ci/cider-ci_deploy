@@ -1,3 +1,9 @@
+- hosts: cider-ci_executors
+  gather_facts: False
+  pre_tasks: 
+  - name: install system python
+    raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+
 - hosts: cider-ci_server
 
   roles:

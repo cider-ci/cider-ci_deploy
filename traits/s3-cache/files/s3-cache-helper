@@ -1,0 +1,130 @@
+#!/usr/bin/env ruby
+ 
+require 'bundler/inline'
+
+gemfile do
+  source 'https://rubygems.org'
+
+  gem 'activesupport', '= 5.2.3'
+  gem 'aws-sdk-s3', '= 1.36.1'
+  gem 'pry', '= 0.12.2'
+end
+
+require 'active_support/all'
+require 'optparse'
+require 'digest'
+
+def initialize_s3
+
+  if endpoint=ENV['S3_CI_ENDPOINT'].presence and
+      bucket=ENV['S3_CI_CACHE_BUCKET'].presence and
+      aws_key=ENV['AWS_ACCESS_KEY_ID'].presence and
+      aws_secret=ENV['AWS_SECRET_ACCESS_KEY'].presence
+
+    @credentials = Aws::Credentials.new(aws_key,aws_secret)
+
+    Aws.config.update(endpoint: endpoint,
+                      access_key_id: aws_key,
+                      secret_access_key: aws_secret,
+                      force_path_style: true,
+                      region: 'us-east-1')
+
+    @client = Aws::S3::Client.new(credentials: @credentials,
+                                 region: 'us-east-1',
+                                 endpoint: endpoint)
+
+    @s3 = Aws::S3::Resource.new(client: @client)
+
+  else
+    puts "WARN: S3 env vars are not defined; exiting immediatelly without error"
+    exit 0
+  end
+
+end
+
+
+
+
+
+def main
+
+  opts = {}.with_indifferent_access
+  OptionParser.new do |opts|
+    opts.banner = "s3-cache-helper COMMAND [OPTIONS]"
+    opts.on('-n NAME', "--name NAME", "s3 file name")
+    opts.on('-p PATH', "--path", "file system path")
+  end.parse!(ARGV, into: opts)
+
+  name, path = [opts[:name].presence, opts[:path].presence]
+
+  raise "ERROR: name is empty" unless name
+  raise "ERROR: path is empty"  unless path
+  command = ARGV.shift.try(:to_sym)
+  s3 = initialize_s3
+
+  bucket = s3.bucket(ENV['S3_CI_CACHE_BUCKET'].presence)
+  object = bucket.object(name) 
+  begin 
+    object_exists = object.exists?
+  rescue StandardError => e
+    puts e
+    puts "WARN: S3 object.exists? query failed; exiting immediatelly without error!"
+    exit 0
+  end
+
+
+  case command
+
+  when :download
+    if not object_exists
+      puts "INFO: object does not exist on S3, skipping download "
+    else
+      puts "INFO: downloading #{name} to #{path}"
+      begin 
+        goo = object.get()
+      rescue StandardError => e
+        puts e
+        puts "WARN: S3 download failed, exiting immediatelly without error"
+        exit 0
+      end
+
+      expected_content_digest = goo.metadata.with_indifferent_access[:sha1sum]
+      content = goo.body.binmode.read
+      actual_content_digest = Digest::SHA1.hexdigest content
+      unless expected_content_digest == actual_content_digest
+        raise "ERROR: sha1sum content digest missmatch expected: #{expected_content_digest}, actual: #{actual_content_digest} " 
+      end
+      IO.binwrite(path, content)
+      puts "INFO: downloaded #{name} to #{path}"
+    end
+
+  when :upload
+    name = opts[:name]
+    if object_exists
+      puts "INFO: object already exists on S3, skipping upload"
+    else
+      puts "INFO: uploading"
+      content = IO.binread(opts[:path])
+      content_digest = Digest::SHA1.hexdigest content
+      begin 
+        resp = @client.put_object({body: content,
+                                   bucket: ENV['S3_CI_CACHE_BUCKET'].presence,
+                                   key: name,
+                                   metadata: {sha1sum: content_digest}})
+        puts "INFO: uploaded #{resp}"
+      rescue StandardError => e
+        puts e
+        puts "WARN: S3 upload failed, exiting immediatelly without error"
+        exit 0
+      end
+    end
+
+  else
+    puts "COMMAND must be either 'upload' or 'download'"
+    exit 1
+  end
+
+end
+
+
+main

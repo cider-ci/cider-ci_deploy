@@ -1,0 +1,9 @@
+- include_tasks: setup.yml
+  when: >
+    (ansible_distribution == "Ubuntu"
+      and ansible_distribution_release == "bionic")
+
+- include_tasks: unregister.yml
+  when: >
+    not (ansible_distribution == "Ubuntu"
+      and ansible_distribution_release == "bionic")

@@ -1,0 +1,21 @@
+
+- name: install or upgrade lxd and other packages
+  apt:
+    name: '{{packages}}'
+    state: absent
+    purge: true
+    update_cache: yes
+    cache_valid_time: 3600
+    install_recommends: yes
+  vars:
+    packages:
+    - lxd
+    - lxd-client
+    - lxd-tools
+  tags: [internet]
+
+- name: unregister LXD trait
+  register_traits:
+    remove_match: "^LXD.*"
+    traits: []
+    file: /cider-ci/executor/config/traits.yml
