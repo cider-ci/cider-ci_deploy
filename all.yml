@@ -90,7 +90,8 @@ ci_executor_trait_mysql: false
 ci_executor_trait_nodejs: false
 ci_executor_trait_openjdk: false
 ci_executor_trait_phantomjs: false
-ci_executor_trait_postgresql: false
+ci_executor_trait_postgresql9: false
+ci_executor_trait_postgresql11: false
 ci_executor_trait_rbenv: false
 ci_executor_trait_ruby_install: false
 ci_executor_trait_s3_cache: false

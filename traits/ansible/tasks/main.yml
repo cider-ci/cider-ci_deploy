@@ -12,8 +12,3 @@
 
   tags: [internet]
 
-- name: remove previusly manually installed ansible
-  shell: |
-    set -euxo
-    pip uninstall -y ansible=={{ci_executor_trait_ansible_version}}
-

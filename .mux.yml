@@ -3,4 +3,4 @@ windows:
   2:
     name: ansible
     command: |
-      # ansible-playbook traits_play.yml -i ../../ZHdK/inventory/hosts_ci2 -t ci_executor_trait_s3_cache --ssh-common-args '-o ProxyCommand="ssh -W %h:%p -q root@ci.zhdk.ch"'
+      # ansible-playbook traits_play.yml -i ../../ZHdK/inventory/hosts_ci2 -t ci_executor_trait_s3_cache --ssh-common-args '-o ProxyCommand="ssh -W %h:%p -q root@ci-gw.zhdk.ch"'

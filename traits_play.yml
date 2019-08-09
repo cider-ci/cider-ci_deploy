@@ -82,9 +82,13 @@
     when: ci_executor_trait_phantomjs
     tags: ci_executor_trait_phantomjs
 
-  - role: traits/postgresql
-    when: ci_executor_trait_postgresql
-    tags: ci_executor_trait_postgresql
+  - role: traits/postgresql9
+    when: ci_executor_trait_postgresql9
+    tags: ci_executor_trait_postgresql9
+
+  - role: traits/postgresql11
+    when: ci_executor_trait_postgresql11
+    tags: ci_executor_trait_postgresql11
 
   - role: traits/rbenv
     when: ci_executor_trait_rbenv
