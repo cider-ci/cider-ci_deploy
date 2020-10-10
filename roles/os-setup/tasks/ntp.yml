@@ -1,7 +1,12 @@
 ### setup ntp #################################################################
 
-- apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
-  with_items: [ntpdate, ntp]
+- apt:
+    pkg:
+    - ntpdate
+    - ntp
+    state: latest
+    update_cache: yes
+    cache_valid_time: 3600
 
 - name: remove default pool settings
   lineinfile:

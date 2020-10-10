@@ -1,9 +1,12 @@
 - name: Install dependencies
-  apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
-  with_items:
+  apt:
+    pkg:
     - ruby
     - pandoc
     - nodejs
+    state: latests
+    update_cache: yes
+    cache_valid_time: 3600
   when: >
     (ansible_distribution == "Debian"
       or  ansible_distribution == "Ubuntu")

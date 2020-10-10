@@ -1,8 +1,11 @@
 ### install and configure monit ###############################################
 
 - name: install monit
-  apt: name={{item}} state=latest update_cache=yes cache_valid_time=3600
-  with_items: [monit]
+  apt:
+    pkg:  monit
+    state: latest
+    update_cache: yes
+    cache_valid_time: 3600
   tags: [internet]
 
 - name: configure monit service interval

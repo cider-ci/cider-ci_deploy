@@ -1,10 +1,18 @@
 - name: dist upgrade
-  apt: upgrade=dist update_cache=yes cache_valid_time=3600
+  apt:
+    upgrade: dist
+    update_cache: yes
+    cache_valid_time: 3600
   tags: [internet]
 
 - name: Install general stuff
-  apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
-  with_items: [ruby, python-passlib]
+  apt:
+    pkg:
+    - ruby
+    - python-passlib
+    state: latest
+    update_cache: yes
+    cache_valid_time: 3600
   tags: [internet]
 
 

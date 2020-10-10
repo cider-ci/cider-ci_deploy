@@ -1,6 +1,9 @@
 - name: Install dependencies
-  apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
-  with_items: [ruby]
+  apt:
+    pkg: ruby
+    state: latest
+    update_cache: yes
+    cache_valid_time: 3600
   tags: [internet]
   when: >
     (ansible_distribution == "Debian"

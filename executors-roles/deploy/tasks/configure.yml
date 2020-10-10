@@ -3,17 +3,20 @@
     message: '{{inventory_hostname}}'
     secret: '{{ci_master_secret}}'
   register: hmac_sha256_signature_executor_default_token
+  tags: register-executor
 
 - name: determine default id
   uuid_tools:
      message: '{{inventory_hostname}}'
   register: uuid_tools_executor_default_id
+  tags: register-executor
 
 - name: set exectuor username and password
   set_fact:
     executor_default_name: '{{inventory_hostname}}'
     executor_default_token: '{{hmac_sha256_signature_executor_default_token.signature}}'
     executor_default_id: '{{uuid_tools_executor_default_id.uuid}}'
+  tags: register-executor
 
 - name: register executor on server
   uri:

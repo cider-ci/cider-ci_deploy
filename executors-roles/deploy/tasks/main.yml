@@ -3,8 +3,15 @@
   when: ci_executor_ramdisk_setup
 
 - name: Install dependencies
-  apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
-  with_items: [ruby, curl, stress, stress-ng]
+  apt:
+    pkg:
+    - ruby
+    - curl
+    - stress
+    - stress-ng
+    state: latest
+    update_cache: yes
+    cache_valid_time: 3600
   tags: [internet]
 
 - file:
@@ -34,8 +41,8 @@
 - name: daily reboot
   cron:
     name: daily-reboot
-    hour: 5
-    minute: 43
+    hour: '5'
+    minute: '43'
     job: '/sbin/shutdown -r now'
     cron_file: daily-reboot
     user: 'root'
