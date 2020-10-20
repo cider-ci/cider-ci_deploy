@@ -1,0 +1,48 @@
+# {{ansible_managed}}
+- hosts: localhost
+  connection: local
+
+  tasks:
+
+  - name: wipe the database directory
+    file:
+      path: '{{ci_executor_trait_postgresql_data_dir}}'
+      state: absent
+
+  - name: initialize the database directory
+    become: yes
+    become_user: postgres
+    shell: >
+      {{ci_executor_trait_postgresql_bin_dir}}/initdb
+      -E UTF8
+      --auth-host=md5
+      --auth-local=peer
+      --username=postgres
+      {{ci_executor_trait_postgresql_data_dir}}
+
+  - name: configure postgresql port
+    lineinfile:
+      dest: '{{ci_executor_trait_postgresql_data_dir}}/postgresql.conf'
+      regexp: .*port\s*=\s*\d+.*
+      line: port = {{ci_executor_trait_postgresql_port}}
+      owner: postgres
+      group: postgres
+      mode: 0600
+
+  - name: configure max connections
+    lineinfile:
+      dest: '{{ci_executor_trait_postgresql_data_dir}}/postgresql.conf'
+      regexp: .*max_connections\s*=\s*\d+.*
+      line: max_connections = {{ci_executor_trait_postgresql_max_connections}}
+      owner: postgres
+      group: postgres
+      mode: 0600
+
+  - name: configure postgresql socket dir
+    lineinfile:
+      dest: '{{ci_executor_trait_postgresql_data_dir}}/postgresql.conf'
+      regexp: unix_socket_directories\s*=
+      line: unix_socket_directories = '/var/run/postgresql'
+      owner: postgres
+      group: postgres
+      mode: 0600

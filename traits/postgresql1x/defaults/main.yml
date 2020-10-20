@@ -1,0 +1,18 @@
+ci_executor_trait_postgresql_exec_user: '{{ci_executor_exec_user}}'
+ci_executor_trait_postgresql_exec_user_password: '{{ci_executor_trait_postgresql_exec_user}}'
+
+ci_executor_trait_postgresql_version_major: 10
+
+ci_executor_trait_postgresql_port: 54{{ci_executor_trait_postgresql_version_major}}
+ci_executor_trait_postgresql_max_connections: 500
+ci_executor_trait_postgresql_version: '{{ci_executor_trait_postgresql_version_major}}'
+
+ci_executor_trait_postgresql_data_dir: /tmp/cider-ci_executor_trait_postgresql-{{ci_executor_trait_postgresql_version}}_data
+ci_executor_trait_postgresql_config_dir: /cider-ci/executor/traits/postgresql-{{ci_executor_trait_postgresql_version}}
+
+ci_executor_trait_postgresql_bin_dir: /usr/lib/postgresql/{{ci_executor_trait_postgresql_version}}/bin
+ci_executor_trait_postgresql_service_name: cider-ci_trait-postgresql-{{ci_executor_trait_postgresql_version}}
+ci_executor_trait_postgresql_init_play_path: '{{ci_executor_trait_postgresql_config_dir}}/postgresql-{{ci_executor_trait_postgresql_version}}_init_play.yml'
+ci_executor_trait_postgresql_post_play_path: '{{ci_executor_trait_postgresql_config_dir}}/postgresql-{{ci_executor_trait_postgresql_version}}_post_play.yml'
+
+
