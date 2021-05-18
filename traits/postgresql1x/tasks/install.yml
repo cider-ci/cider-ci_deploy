@@ -9,6 +9,7 @@
     repo: deb http://apt.postgresql.org/pub/repos/apt/ {{ansible_distribution_release}}-pgdg main
   tags: [internet]
 
+
 - name: Install postgresql
   apt:
     pkg:
@@ -17,9 +18,28 @@
     - postgresql-client-{{ci_executor_trait_postgresql_version_major}}
     - postgresql-contrib-{{ci_executor_trait_postgresql_version_major}}
     - postgresql-{{ci_executor_trait_postgresql_version_major}}
-    - python3-psycopg2
     state: present
     update_cache: yes
     cache_valid_time: 3600
   tags: [internet]
+
+- name: Install psycopg2
+  apt:
+    pkg: python-psycopg2
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
+  when: >
+    not (ansible_distribution == "Ubuntu"
+    and ansible_distribution_release == "focal")
+
+- name: Install psycopg2
+  apt:
+    pkg: python3-psycopg2
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
+  when: >
+    (ansible_distribution == "Ubuntu"
+    and ansible_distribution_release == "focal")
 

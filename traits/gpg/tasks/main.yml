@@ -1,9 +1,11 @@
 - name: install dependencies
-  apt: pkg={{packages}} state=latest update_cache=yes cache_valid_time=3600
-  vars:
-    packages:
-    - rng-tools
-    - gpgv2
+  apt:
+    pkg:
+      - rng-tools
+      - gpgv2
+    state: latest
+    update_cache: yes
+    cache_valid_time: 3600
 
 - name: clean the existing .gnupg dir
   shell: rm -rf ~/.gnupg

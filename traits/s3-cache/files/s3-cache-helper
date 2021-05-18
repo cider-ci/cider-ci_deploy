@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
- 
+
 require 'bundler/inline'
 
 gemfile do
@@ -63,8 +63,8 @@ def main
   s3 = initialize_s3
 
   bucket = s3.bucket(ENV['S3_CI_CACHE_BUCKET'].presence)
-  object = bucket.object(name) 
-  begin 
+  object = bucket.object(name)
+  begin
     object_exists = object.exists?
   rescue StandardError => e
     puts e
@@ -80,7 +80,7 @@ def main
       puts "INFO: object does not exist on S3, skipping download "
     else
       puts "INFO: downloading #{name} to #{path}"
-      begin 
+      begin
         goo = object.get()
       rescue StandardError => e
         puts e
@@ -92,7 +92,7 @@ def main
       content = goo.body.binmode.read
       actual_content_digest = Digest::SHA1.hexdigest content
       unless expected_content_digest == actual_content_digest
-        raise "ERROR: sha1sum content digest missmatch expected: #{expected_content_digest}, actual: #{actual_content_digest} " 
+        raise "ERROR: sha1sum content digest missmatch expected: #{expected_content_digest}, actual: #{actual_content_digest} "
       end
       IO.binwrite(path, content)
       puts "INFO: downloaded #{name} to #{path}"
@@ -106,7 +106,7 @@ def main
       puts "INFO: uploading"
       content = IO.binread(opts[:path])
       content_digest = Digest::SHA1.hexdigest content
-      begin 
+      begin
         resp = @client.put_object({body: content,
                                    bucket: ENV['S3_CI_CACHE_BUCKET'].presence,
                                    key: name,

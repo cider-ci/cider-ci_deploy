@@ -4,6 +4,7 @@
   - register_traits:
       traits: '{{ci_executor_custom_traits}}'
       file: /etc/cider-ci/traits.yml
+      tags: [custrom_traits]
 
   roles:
 
@@ -83,9 +84,9 @@
     when: ci_executor_trait_misc
     tags: ci_executor_trait_misc
 
-  - role: traits/mysql
-    when: ci_executor_trait_mysql
-    tags: ci_executor_trait_mysql
+#  - role: traits/mysql
+#    when: ci_executor_trait_mysql
+#    tags: ci_executor_trait_mysql
 
   - role: traits/nodejs
     when: ci_executor_trait_nodejs
@@ -103,9 +104,21 @@
     when: ci_executor_trait_postgresql9
     tags: ci_executor_trait_postgresql9
 
-  - role: traits/postgresql11
+  - role: traits/postgresql1x
+    vars:
+      ci_executor_trait_postgresql_version_major: 10
+    when: ci_executor_trait_postgresql10
+    tags: ci_executor_trait_postgresql10
+
+  - role: traits/postgresql1x
+    vars:
+      ci_executor_trait_postgresql_version_major: 11
     when: ci_executor_trait_postgresql11
     tags: ci_executor_trait_postgresql11
+
+  - role: traits/python3.8
+    when: ci_executor_trait_python38
+    tags: ci_executor_trait_python38
 
   - role: traits/rbenv
     when: ci_executor_trait_rbenv

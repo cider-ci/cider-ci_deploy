@@ -1,5 +1,5 @@
-- apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
-  with_items:
+- apt:
+    pkg:
     - curl
     - graphviz
     - hunspell
@@ -11,6 +11,9 @@
     - libgconf-2-4
     - libimage-exiftool-perl
     - xvfb
+    state: latest
+    update_cache: yes
+    cache_valid_time: 3600
   tags: [internet]
 
 - name: register traits

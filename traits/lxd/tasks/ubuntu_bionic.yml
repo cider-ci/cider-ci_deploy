@@ -1,18 +1,16 @@
 - name: install or upgrade lxd and other packages
   apt:
-    name: '{{packages}}'
-    state: latest
-    update_cache: yes
-    cache_valid_time: 3600
-    install_recommends: yes
-  vars:
-    packages:
+    pkg:
     - criu
     - jq
     - lxd
     - lxd-client
     - lxd-tools
     - ruby
+    state: latest
+    update_cache: yes
+    cache_valid_time: 3600
+    install_recommends: yes
   tags: [internet]
 
 - name: copy lxd init file

@@ -1,14 +1,6 @@
-- apt_repository:
-    repo: 'ppa:ansible/ansible'
-
 - apt:
+    pkg: ansible
     update_cache: yes
     cache_valid_time: 3600
-    name: "{{ packages }}"
-  vars: 
-    packages: 
-      - python-pip
-      - ansible
-
   tags: [internet]
 

@@ -1,11 +1,13 @@
 - name: install dependencies
-  apt: name={{packages}} state=latest update_cache=yes cache_valid_time=3600
+  apt:
+    pkg:
+      - build-essential
+      - openssl
+      - libssl-dev
+    state: latest
+    update_cache: yes
+    cache_valid_time: 3600
   tags: [internet]
-  vars:
-    packages:
-    - build-essential
-    - openssl
-    - libssl-dev
 
 - name: pre clean up
   shell: |

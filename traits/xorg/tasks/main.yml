@@ -1,12 +1,10 @@
 - name: install xorg
   apt:
-    pkg: '{{item}}'
+    pkg: xserver-xorg-core
     state: latest
     update_cache: yes
     cache_valid_time: 3600
     install_recommends: yes
-  with_items:
-    - xserver-xorg-core
   tags: [internet]
 
 - name: register trait

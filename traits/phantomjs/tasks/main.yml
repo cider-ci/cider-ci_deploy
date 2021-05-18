@@ -1,8 +1,9 @@
-- apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
-  with_items:
-    - lbzip2
+- apt:
+    pkg: lbzip2
+    state: latest
+    update_cache: yes
+    cache_valid_time: 3600
   tags: [internet]
-
 - stat: path={{ci_executor_trait_phantomjs_bin_path}}
   register: ci_executor_trait_phantomjs_bin_path_stats
 

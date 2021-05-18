@@ -1,18 +1,18 @@
 - name: install apache2
-  apt: pkg={{packages}} state=latest update_cache=yes cache_valid_time=3600
-  vars:
-    packages:
-      - apache2
-      - libapache2-mod-xsendfile
+  apt:
+    pkg:
+    - apache2
+    - libapache2-mod-xsendfile
+    state: latest
+    update_cache: yes
+    cache_valid_time: 3600
   tags: [internet]
 
-
 - name: Enable modules
-  shell:  a2enmod {{item}}
-  register: result
+  apache2_module:
+    state: present
+    name: '{{item}}'
   with_items: '{{trait_apache2_modules}}'
-  changed_when: result.stdout | search("Enabling module")
-
 
 - name: register trait
   register_traits:

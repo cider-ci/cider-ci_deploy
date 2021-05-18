@@ -1,16 +1,16 @@
 - name: install aws cli
   apt:
-    name: awscli
-    state: latest 
-    update_cache: yes 
+    pkg: awscli
+    state: latest
+    update_cache: yes
     cache_valid_time: 3600
 
 - name: clean old config file
-  file: 
+  file:
     path: ~ci-exec-user/.bash_login.d/s3_ci_cache.sh
     state: absent
 
-- name: copy s3 env 
+- name: copy s3 env
   template:
     src: s3_cache.sh
     dest: ~ci-exec-user/.bash_login.d/s3_cache.sh

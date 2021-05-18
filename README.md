@@ -34,7 +34,7 @@ See the [traits/postgresql/README](traits/postgresql/README.md).
 python3 -m venv py-venv
 source py-venv/bin/activate
 pip install -r requirements.txt
-ansible-playbook -i ../../ZHdK/inventory/hosts_ci2 traits_play.yml -t ci_executor_trait_firefox_esr_78
+ansible-playbook -i ../../ZHdK/inventory/hosts_ci2.yml traits_play.yml -t ci_executor_trait_firefox_esr_78
 ```
 
 ### Registering an executor

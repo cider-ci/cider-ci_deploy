@@ -1,3 +1,11 @@
+- name: install dependencies
+  apt:
+    pkg:
+      - autoconf
+      - bison
+      - build-essential
+    update_cache: yes
+    cache_valid_time: 3600
 
 - name: copy install dir
   synchronize:

@@ -10,4 +10,5 @@ trait_apache2_modules:
   - rewrite
   - socache_shmcb
   - ssl
+  - unique_id
   - xsendfile

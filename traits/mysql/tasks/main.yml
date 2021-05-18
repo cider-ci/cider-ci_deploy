@@ -1,13 +1,16 @@
 ### MySQL
 
 - name: install mysql packages
-  apt: pkg={{item}} state=latest update_cache=yes cache_valid_time=3600
-  with_items:
+  apt:
+    pkg:
     - libmysqlclient-dev
     - '{{ci_executor_trait_mysql_variant}}-client'
     - '{{ci_executor_trait_mysql_variant}}-server'
     - python-configparser
-    - python-mysqldb
+    - python3-pymysql
+    state: latest
+    update_cache: yes
+    cache_valid_time: 3600
   tags: [internet]
 
 - name: setup user
@@ -16,6 +19,8 @@
     password: '{{ci_executor_exec_user}}'
     priv: '*.*:ALL'
     state: present
+    login_user: root
+    login_password: ''
 
 - name: setup env
   template:

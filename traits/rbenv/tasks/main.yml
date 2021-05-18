@@ -1,7 +1,6 @@
 - name: install dependencies
-  apt: name={{item}} state=latest update_cache=yes cache_valid_time=3600
-  tags: [internet]
-  with_items:
+  apt:
+    pkg:
     - autoconf
     - bison
     - build-essential
@@ -14,6 +13,10 @@
     - libssl-dev
     - libyaml-dev
     - zlib1g-dev
+    state: latest
+    update_cache: yes
+    cache_valid_time: 3600
+  tags: [internet]
 
 - name: run the rbenv_installer
   become: yes

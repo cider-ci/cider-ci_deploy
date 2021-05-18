@@ -1,5 +1,5 @@
-- apt: pkg={{item}} state=present update_cache=yes cache_valid_time=3600
-  with_items:
+- apt:
+    pkg:
     - build-essential
     - bison
     - zlib1g-dev
@@ -9,15 +9,26 @@
     - libreadline-dev
     - libncurses5-dev
     - libffi-dev
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
 
 - name: Install libgdbm version according to distribution
-  apt: pkg=libgdbm3 state=present update_cache=yes cache_valid_time=3600
+  apt:
+    pkg: libgdbm3
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
   when: >
     (ansible_distribution == "Debian"
       and ansible_distribution_release == "stretch")
 
 - name: Install libgdbm version according to distribution
-  apt: pkg=libgdbm5 state=present update_cache=yes cache_valid_time=3600
+  apt:
+    pkg: libgdbm5
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
   when: >
     (ansible_distribution == "Ubuntu"
       and ansible_distribution_release == "bionic")

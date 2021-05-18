@@ -31,6 +31,7 @@
       password: '{{ci_executor_trait_postgresql_exec_user_password}}'
       role_attr_flags: CREATEDB,SUPERUSER,LOGIN
       port: '{{ci_executor_trait_postgresql_port}}'
+      encrypted: yes
 
   - name: Create database for {{ci_executor_trait_postgresql_exec_user}}
     postgresql_db:
