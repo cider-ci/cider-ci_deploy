@@ -8,6 +8,9 @@
 
   roles:
 
+  - role: os-setup
+    tags: [os-setup]
+
   - role: debug
     tags: [debug]
 

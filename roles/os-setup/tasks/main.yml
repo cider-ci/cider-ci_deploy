@@ -23,4 +23,10 @@
 
 - include: vmware.yml
 
-- include: ssh_keys.yml
+- include_tasks:
+    file: ssh_keys.yml
+    apply:
+      tags:
+        - ssh-keys
+  tags:
+    - always
