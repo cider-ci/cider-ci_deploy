@@ -35,16 +35,15 @@
 
 - name: copy and unpack install dir
   unarchive:
-    src: files/ruby-install-0.7.0.tar.gz
-    dest: /tmp/
-    creates: /tmp/ruby-install-0.7.0
+    src: https://github.com/postmodern/ruby-install/archive/v0.8.4.tar.gz
+    remote_src: yes
+    dest: /tmp
 
 - name: install ruby-install
   shell: |
     set -eux
-    cd /tmp/ruby-install-0.7.0 || { ls -la /tmp; exit 1; }
+    cd /tmp/ruby-install-0.8.4 || { ls -la /tmp; exit 1; }
     make install
-    chmod a+x /usr/local/bin/ruby-install
 
 - name: register trait
   register_traits:
