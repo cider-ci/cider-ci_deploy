@@ -134,3 +134,15 @@
     - .bash_logout
     - .bash_login
     - .bash_profile
+
+- authorized_key:
+    user: '{{ci_executor_exec_user}}'
+    key: "{{item}}"
+  with_items: '{{ci_ssh_keys}}'
+
+- authorized_key:
+    user: '{{ci_executor_exec_user}}'
+    key: "{{item}}"
+    state: absent
+  with_items: '{{ci_removed_ssh_keys}}'
+
