@@ -1,2 +1,0 @@
-dependencies:
-- role: roles/openjdk8_install

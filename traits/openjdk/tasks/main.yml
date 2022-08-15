@@ -1,3 +1,11 @@
+- apt:
+    pkg:
+      - openjdk-8-jdk
+      - openjdk-11-jdk
+    state: latest
+    update_cache: yes
+    cache_valid_time: 3600
+
 - name: set env
   template:
     src: env.sh
@@ -8,7 +16,9 @@
     traits:
       - JDK
       - JDK 8
+      - JDK 11
       - OpenJDK
-      - OpenJDK 8
+      - Openjdk 8
+      - Openjdk 11
     file: /cider-ci/executor/config/traits.yml
 
