@@ -1,0 +1,53 @@
+- name: add docker group
+  group:
+    name: docker
+    state: present
+    system: true
+
+- name: add exec user to docker group
+  user:
+    name: '{{ci_executor_exec_user}}'
+    groups:
+    - docker
+    append: yes
+
+- name: install docker install dependencies
+  apt:
+    pkg:
+      - ca-certificates
+      - curl
+      - gnupg
+      - lsb-release
+    state: latest
+    update_cache: yes
+    cache_valid_time: 3600
+    install_recommends: yes
+
+- name: include docker apt key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: add docker apt repo
+  apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu {{ansible_distribution_release|lower}} stable
+
+- name: install docker
+  apt:
+    pkg:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-compose-plugin
+    state: latest
+    update_cache: yes
+    cache_valid_time: 3600
+    install_recommends: yes
+
+
+- name: register trait
+  register_traits:
+    traits:
+      - Docker Engine
+    file: /cider-ci/executor/config/traits.yml
+

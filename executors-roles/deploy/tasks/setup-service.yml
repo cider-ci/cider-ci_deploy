@@ -1,3 +1,14 @@
+- name: install jdk11
+  apt:
+    pkg:
+      - openjdk-11-jdk
+      - openjdk-11-jre
+    state: latest
+    update_cache: yes
+    cache_valid_time: 3600
+  tags: [internet]
+
+
 - name: install monit
   apt:
     pkg: monit

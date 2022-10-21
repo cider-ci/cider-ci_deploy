@@ -4,7 +4,8 @@
   - register_traits:
       traits: '{{ci_executor_custom_traits}}'
       file: /etc/cider-ci/traits.yml
-      tags: [custrom_traits]
+      tags:
+        - custom_traits
 
   roles:
 
@@ -29,6 +30,10 @@
   - role: traits/chruby
     when: ci_executor_trait_chruby
     tags: ci_executor_trait_chruby
+
+  - role: traits/docker
+    when: ci_executor_trait_docker
+    tags: ci_executor_trait_docker
 
   - role: traits/git-crypt
     when: ci_executor_trait_git_crypt

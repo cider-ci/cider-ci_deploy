@@ -18,7 +18,7 @@
       - JDK 8
       - JDK 11
       - OpenJDK
-      - Openjdk 8
-      - Openjdk 11
+      - OpenJDK 8
+      - OpenJDK 11
     file: /cider-ci/executor/config/traits.yml
 

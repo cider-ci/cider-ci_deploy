@@ -2,7 +2,6 @@
   apt:
     pkg:
     - open-vm-tools
-    - open-vm-tools-dkms
     state: latest
     update_cache: yes
     cache_valid_time: 3600

@@ -82,6 +82,8 @@ ci_executor_trait_ansible: false
 ci_executor_trait_apache2: false
 ci_executor_trait_bower: false
 ci_executor_trait_chruby: false
+ci_executor_trait_docker: false
+ci_executor_trait_doker: false
 ci_executor_trait_firefox_esr: false
 ci_executor_trait_git_crypt: false
 ci_executor_trait_gpg: false
