@@ -92,6 +92,7 @@ ci_executor_trait_lxd: false
 ci_executor_trait_misc: false
 ci_executor_trait_mysql: false
 ci_executor_trait_nodejs: false
+ci_executor_trait_nvm: false
 ci_executor_trait_openjdk: false
 ci_executor_trait_phantomjs: false
 ci_executor_trait_postgresql10: false

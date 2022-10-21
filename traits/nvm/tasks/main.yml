@@ -1,0 +1,47 @@
+- apt:
+    pkg:
+      - build-essential
+      - libssl-dev
+    state: latest
+    update_cache: yes
+    cache_valid_time: 3600
+
+
+- name: get nvm install script
+  get_url:
+    url: "https://raw.githubusercontent.com/nvm-sh/nvm/v{{ci_executor_trait_nvn_version}}/install.sh"
+    dest: '/tmp/nvm-install.sh'
+    force: yes
+    owner: '{{ci_executor_exec_user}}'
+    mode: 'u=rwx'
+
+- name: run the nvm install script
+  become: yes
+  become_user: '{{ci_executor_exec_user}}'
+  shell: '/tmp/nvm-install.sh'
+
+
+- name: setup ENV for NVM
+  template:
+    src: nvm.sh
+    dest: ~{{ci_executor_exec_user}}/.bash_login.d/nvm.sh
+    owner: root
+    group: '{{ci_executor_exec_user}}'
+    mode: 'go=rx'
+
+- name: install node lts
+  become: yes
+  become_user: '{{ci_executor_exec_user}}'
+  shell: |
+    #!/usr/bin/env bash
+    source ~{{ci_executor_exec_user}}/.bash_login.d/nvm.sh
+    nvm install --lts
+  args:
+    executable: /bin/bash
+
+- name: register trait
+  register_traits:
+    traits:
+      - NVM
+      - nodejs
+    file: /cider-ci/executor/config/traits.yml

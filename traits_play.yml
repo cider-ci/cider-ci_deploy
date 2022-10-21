@@ -96,6 +96,10 @@
 #    when: ci_executor_trait_mysql
 #    tags: ci_executor_trait_mysql
 
+  - role: traits/nvm
+    when: ci_executor_trait_nvm
+    tags: ci_executor_trait_nvm
+
   - role: traits/nodejs
     when: ci_executor_trait_nodejs
     tags: ci_executor_trait_nodejs
