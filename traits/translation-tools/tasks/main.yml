@@ -1,19 +1,11 @@
-- name: install gettext; translate-toolkit dependencies
+- name: install gettext; translate-toolkit
   apt:
     pkg:
-    - python3-pip
     - gettext
+    - translate-toolkit
     state: latest
     update_cache: yes
     cache_valid_time: 3600
-  tags: [internet]
-
-- name: upgrade pip
-  command: pip install -I --upgrade pip
-  tags: [internet]
-
-- name: install translate-toolkit via pip
-  command: pip install -I --upgrade translate-toolkit
   tags: [internet]
 
 - name: register traits
