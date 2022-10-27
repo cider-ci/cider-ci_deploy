@@ -23,6 +23,14 @@
     when: ci_executor_trait_apache2
     tags: ci_executor_trait_apache2
 
+  - role: traits/asdf-nodejs
+    when: ci_executor_trait_asdf_nodejs
+    tags: ci_executor_trait_asdf_nodejs
+
+  - role: traits/asdf
+    when: ci_executor_trait_asdf
+    tags: ci_executor_trait_asdf
+
   - role: traits/bower
     when: ci_executor_trait_bower
     tags: ci_executor_trait_bower

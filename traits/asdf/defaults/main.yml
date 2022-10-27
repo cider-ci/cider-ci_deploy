@@ -1,0 +1,2 @@
+ci_executor_trait_asdf_version: 0.10.2
+ci_executor_trait_asdf_dir: /home/{{ci_executor_exec_user}}/.asdf/asdf-{{ci_executor_trait_asdf_version}}

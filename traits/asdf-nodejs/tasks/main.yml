@@ -1,0 +1,34 @@
+- name: install asdf nodejs plugin
+  become: yes
+  become_user: "{{ ci_executor_exec_user }}"
+  shell: |
+    #!/bin/bash
+    set -eux
+    source ~/.bash_login.d/asdf.sh
+    if [[ -d ~/.asdf/plugins/nodejs ]]; then
+      asdf plugin update nodejs
+    else
+      asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
+    fi
+  args:
+    executable: /bin/bash
+
+- name: install asdf nodejs latest lts
+  become: yes
+  become_user: "{{ ci_executor_exec_user }}"
+  shell: |
+    #!/bin/bash
+    source ~/.bash_login.d/asdf.sh
+    asdf install nodejs lts
+    asdf global nodejs lts
+  args:
+    executable: /bin/bash
+
+- name: register trait
+  register_traits:
+    traits:
+      - asdf-nodejs
+      - nodejs
+    file: /cider-ci/executor/config/traits.yml
+
+
