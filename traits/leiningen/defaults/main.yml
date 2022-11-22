@@ -1,3 +1,4 @@
+ci_executor_trait_leiningen: false
 ci_executor_trait_leiningen_version_major: 2
 ci_executor_trait_leiningen_version_minor: 6
 ci_executor_trait_leiningen_version_patch: 1

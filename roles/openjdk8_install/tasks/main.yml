@@ -1,8 +1,3 @@
-- include: jessie.yml
-  when:
-    - ansible_distribution == "Debian"
-    - ansible_distribution_release == "jessie"
-
 - apt:
     pkg: openjdk-8-jdk
     state: latest

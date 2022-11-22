@@ -1,27 +1,27 @@
 - name: install system python
   raw: apt install python -y
 
-- include: prepare.yml
+- include_tasks: prepare.yml
 
-- include: journald.yml
+- include_tasks: journald.yml
   when: >
     (ansible_distribution == "Debian"
       and ansible_distribution_release == "jessie")
 
-- include: time.yml
+- include_tasks: time.yml
 
-- include: ntp.yml
+- include_tasks: ntp.yml
   when: ci_ntp_setup
   tags: [ntp]
 
-- include: vim.yml
+- include_tasks: vim.yml
   when: ci_vim_mode
 
-- include: etckeeper.yml
+- include_tasks: etckeeper.yml
 
-- include: monit.yml
+- include_tasks: monit.yml
 
-- include: vmware.yml
+- include_tasks: vmware.yml
 
 - include_tasks:
     file: ssh_keys.yml

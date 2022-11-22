@@ -1,5 +1,5 @@
-- include: monitor-services.yml
+- include_tasks: monitor-services.yml
   tags: [server_monitor-services]
 
-- include: setup-munin.yml
+- include_tasks: setup-munin.yml
   tags: [server_setup-munin]

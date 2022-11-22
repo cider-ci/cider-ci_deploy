@@ -20,6 +20,15 @@
     #!/bin/bash
     source ~/.bash_login.d/asdf.sh
     asdf install nodejs lts
+  args:
+    executable: /bin/bash
+
+- name: set nodejs latest lts as global
+  become: yes
+  become_user: "{{ ci_executor_exec_user }}"
+  shell: |
+    #!/bin/bash
+    source ~/.bash_login.d/asdf.sh
     asdf global nodejs lts
   args:
     executable: /bin/bash

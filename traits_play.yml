@@ -12,6 +12,9 @@
   - role: os-setup
     tags: [os-setup]
 
+  - role: traits/basics
+    tags: [basics]
+
   - role: debug
     tags: [debug]
 
@@ -23,21 +26,17 @@
     when: ci_executor_trait_apache2
     tags: ci_executor_trait_apache2
 
-  - role: traits/asdf-nodejs
-    when: ci_executor_trait_asdf_nodejs
-    tags: ci_executor_trait_asdf_nodejs
-
   - role: traits/asdf
     when: ci_executor_trait_asdf
     tags: ci_executor_trait_asdf
 
-  - role: traits/bower
-    when: ci_executor_trait_bower
-    tags: ci_executor_trait_bower
+  - role: traits/asdf-nodejs
+    when: ci_executor_trait_asdf_nodejs
+    tags: ci_executor_trait_asdf_nodejs
 
-  - role: traits/chruby
-    when: ci_executor_trait_chruby
-    tags: ci_executor_trait_chruby
+  - role: traits/asdf-ruby
+    when: ci_executor_trait_asdf_ruby
+    tags: ci_executor_trait_asdf_ruby
 
   - role: traits/docker
     when: ci_executor_trait_docker
@@ -62,6 +61,7 @@
       ci_executor_trait_firefox_esr_version_minor: 9
       ci_executor_trait_firefox_esr_version_patch: 0
     tags: ci_executor_trait_firefox_esr_45
+    when: ci_executor_trait_firefox_esr
 
   - role: traits/firefox-esr
     vars:
@@ -70,6 +70,7 @@
       ci_executor_trait_firefox_esr_version_minor: 4
       ci_executor_trait_firefox_esr_version_patch: 0
     tags: ci_executor_trait_firefox_esr_60
+    when: ci_executor_trait_firefox_esr
 
   - role: traits/firefox-esr
     vars:
@@ -78,14 +79,16 @@
       ci_executor_trait_firefox_esr_version_minor: 12
       ci_executor_trait_firefox_esr_version_patch: 0
     tags: ci_executor_trait_firefox_esr_68
+    when: ci_executor_trait_firefox_esr
 
   - role: traits/firefox-esr
     vars:
       ci_executor_trait_firefox_esr_default: false
       ci_executor_trait_firefox_esr_version_major: 78
-      ci_executor_trait_firefox_esr_version_minor: 3
-      ci_executor_trait_firefox_esr_version_patch: 1
+      ci_executor_trait_firefox_esr_version_minor: 15
+      ci_executor_trait_firefox_esr_version_patch: 0
     tags: ci_executor_trait_firefox_esr_78
+    when: ci_executor_trait_firefox_esr
 
 
   - role: traits/leiningen
@@ -100,13 +103,6 @@
     when: ci_executor_trait_misc
     tags: ci_executor_trait_misc
 
-#  - role: traits/mysql
-#    when: ci_executor_trait_mysql
-#    tags: ci_executor_trait_mysql
-
-  - role: traits/nvm
-    when: ci_executor_trait_nvm
-    tags: ci_executor_trait_nvm
 
   - role: traits/nodejs
     when: ci_executor_trait_nodejs
@@ -116,13 +112,6 @@
     when: ci_executor_trait_openjdk
     tags: ci_executor_trait_openjdk
 
-  - role: traits/phantomjs
-    when: ci_executor_trait_phantomjs
-    tags: ci_executor_trait_phantomjs
-
-  - role: traits/postgresql9
-    when: ci_executor_trait_postgresql9
-    tags: ci_executor_trait_postgresql9
 
   - role: traits/postgresql1x
     vars:
@@ -136,9 +125,9 @@
     when: ci_executor_trait_postgresql11
     tags: ci_executor_trait_postgresql11
 
-  - role: traits/python3.8
-    when: ci_executor_trait_python38
-    tags: ci_executor_trait_python38
+  - role: traits/python3
+    when: ci_executor_trait_python3
+    tags: ci_executor_trait_python3
 
   - role: traits/rbenv
     when: ci_executor_trait_rbenv

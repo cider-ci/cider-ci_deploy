@@ -1,0 +1,46 @@
+- name: install or upgrade lxd and other packages
+  apt:
+    pkg:
+    - jq
+    - lxd
+    - lxd-client
+    - lxd-tools
+    state: latest
+    update_cache: yes
+    cache_valid_time: 3600
+    install_recommends: yes
+  tags: [internet]
+
+- name: copy lxd init file
+  template:
+    src: lxd-init.yml
+    dest: /root/lxd-init.yml
+    force: yes
+
+- name: lxd init
+  shell: |
+    #! /usr/bin/env bash
+    set -euxo
+    cat /root/lxd-init.yml | lxd init --preseed
+
+- name: configure the lxc https interface
+  include: api.yml
+  when: ci_executor_trait_lxd_api
+
+- name: Add the Cider-CI exec user to the lxd group
+  user:
+    name: '{{ci_executor_exec_user}}'
+    groups: lxd
+    append: yes
+
+- name: get the LXD version
+  shell: ruby -e 'puts `lxd --version`.strip'
+  register: lxd_version
+
+- name: register LXD trait
+  register_traits:
+    remove_match: "^LXD.*"
+    traits:
+      - LXD
+      - LXD {{lxd_version.stdout}}
+    file: /cider-ci/executor/config/traits.yml

@@ -28,13 +28,13 @@
   become_user: "{{ci_executor_exec_user}}"
   register: ci_executor_trait_gpg_keys
 
-- include: generate_key.yml
+- include_tasks: generate_key.yml
   when: ci_executor_trait_gpg_keys.stdout == ""
 
-- include: fetch_pubkey.yml
+- include_tasks: fetch_pubkey.yml
   when: ci_executor_trait_gpg_fetch_pub_key
 
-- include: import_key.yml
+- include_tasks: import_key.yml
   with_items: '{{gpg_import_keys}}'
   tags: [gpg_import_keys]
 

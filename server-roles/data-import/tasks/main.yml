@@ -3,5 +3,5 @@
   delegate_to: localhost
   register: data_file
 
-- include: import.yml
+- include_tasks: import.yml
   when: data_file.stat.exists

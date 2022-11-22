@@ -1,10 +1,10 @@
-- include: install.yml
+- include_tasks: install.yml
   tags: [deploy-install]
 
-- include: configure.yml
+- include_tasks: configure.yml
   tags: [configure]
 
-- include: setup-database.yml
+- include_tasks: setup-database.yml
   tags: [deploy-setup-database]
 
 - name: remove old systemd service
@@ -13,7 +13,7 @@
      state: absent
   with_items: [api, builder, dispatcher, repository, storage, server]
 
-- include: setup-service.yml
+- include_tasks: setup-service.yml
   with_dict: '{{ci_server_services}}'
   tags: [deploy-setup-services]
 

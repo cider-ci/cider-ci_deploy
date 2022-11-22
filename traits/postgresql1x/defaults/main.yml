@@ -1,3 +1,6 @@
+ci_executor_trait_postgresql10: false
+ci_executor_trait_postgresql11: false
+
 ci_executor_trait_postgresql_exec_user: '{{ci_executor_exec_user}}'
 ci_executor_trait_postgresql_exec_user_password: '{{ci_executor_trait_postgresql_exec_user}}'
 

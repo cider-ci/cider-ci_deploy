@@ -1,4 +1,4 @@
-- include: ramdisk.yml
+- include_tasks: ramdisk.yml
   tags: ramdisk
   when: ci_executor_ramdisk_setup
 
@@ -19,13 +19,13 @@
     state: absent
   when: ci_clean_slate
 
-- include: configure.yml
+- include_tasks: configure.yml
   tags: [configure]
 
-- include: setup-downloader.yml
+- include_tasks: setup-downloader.yml
   tags: [executors_deploy_setup-downloader]
 
-- include: setup-service.yml
+- include_tasks: setup-service.yml
   tags: [executors_deploy_setup-service]
 
 - update_system_traits: {}

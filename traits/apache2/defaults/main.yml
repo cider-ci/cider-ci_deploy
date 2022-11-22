@@ -1,3 +1,4 @@
+ci_executor_trait_apache2: false
 trait_apache2_modules:
   - cache
   - cache_disk

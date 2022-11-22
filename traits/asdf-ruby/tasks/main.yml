@@ -1,0 +1,45 @@
+- name: install dependencies
+  apt:
+    pkg:
+      - autoconf
+      - bison
+      - build-essential
+      - libdb-dev
+      - libffi-dev
+      - libgdbm-dev
+      - libgdbm6
+      - libgmp-dev
+      - libncurses5-dev
+      - libreadline6-dev
+      - libssl-dev
+      - libyaml-dev
+      - patch
+      - rustc
+      - uuid-dev
+      - zlib1g-dev
+    update_cache: yes
+    cache_valid_time: 3600
+  tags: [internet]
+
+- name: install asdf ruby plugin
+  become: yes
+  become_user: "{{ ci_executor_exec_user }}"
+  shell: |
+    #!/bin/bash
+    set -eux
+    source ~/.bash_login.d/asdf.sh
+    if [[ -d ~/.asdf/plugins/ruby ]]; then
+      asdf plugin update ruby
+    else
+      asdf plugin add ruby https://github.com/asdf-vm/asdf-ruby.git
+    fi
+  args:
+    executable: /bin/bash
+
+- name: register trait
+  register_traits:
+    traits:
+      - asdf-ruby
+    file: /cider-ci/executor/config/traits.yml
+
+

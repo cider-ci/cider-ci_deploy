@@ -5,6 +5,7 @@
     - lxd
     - lxd-client
     - lxd-tools
+    - snapd
     state: absent
     purge: true
     update_cache: yes

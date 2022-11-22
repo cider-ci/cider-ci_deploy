@@ -12,7 +12,7 @@
   register: ci_executor_trait_firefox_esr_bin_path_stats
 
 - get_url:
-    url: http://ftp.mozilla.org/pub/mozilla.org/firefox/releases/{{ci_executor_trait_firefox_dl_sub_path}}/linux-x86_{{ ansible_userspace_bits }}/en-US/firefox-{{ci_executor_trait_firefox_dl_sub_path}}.tar.bz2
+    url: https://ftp.mozilla.org/pub/firefox/releases/{{ci_executor_trait_firefox_dl_sub_path}}/linux-x86_{{ ansible_userspace_bits }}/en-US/firefox-{{ci_executor_trait_firefox_dl_sub_path}}.tar.bz2
     dest: '{{ci_executor_trait_firefox_esr_dl_path}}'
   when: not ci_executor_trait_firefox_esr_bin_path_stats.stat.exists
 

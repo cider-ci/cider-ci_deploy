@@ -1,2 +1,3 @@
+ci_executor_trait_lxd: false
 ci_executor_trait_lxd_api: yes
 ci_executor_trait_lxd_api_https_address: localhost:7443

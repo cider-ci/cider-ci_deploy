@@ -1,6 +1,6 @@
-- include: install.yml
+- include_tasks: install.yml
 
-- include: configure.yml
+- include_tasks: configure.yml
   tags: [ci_executor_trait_postgresql_configure]
 
 - name: Env for the user

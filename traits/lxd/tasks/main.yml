@@ -3,12 +3,10 @@
     path: /containers
   register: containers_dir
 
-- include_tasks: ubuntu_bionic.yml
+- include_tasks: ubuntu.yml
   when: >
-    (ansible_distribution == "Ubuntu"
-      and ansible_distribution_release == "bionic")
+    (ansible_distribution == "Ubuntu")
 
 - include_tasks: remove.yml
   when: >
-    not (ansible_distribution == "Ubuntu"
-    and ansible_distribution_release == "bionic")
+    not (ansible_distribution == "Ubuntu")

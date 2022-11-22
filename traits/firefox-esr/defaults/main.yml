@@ -1,3 +1,4 @@
+ci_executor_trait_firefox_esr: false
 ci_executor_trait_firefox_esr_default: true
 ci_executor_trait_firefox_esr_version_major: 52
 ci_executor_trait_firefox_esr_version_minor: 2

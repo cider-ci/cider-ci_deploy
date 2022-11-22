@@ -4,7 +4,6 @@
 
 ci_executor_trait_ansible: true
 ci_executor_trait_apache2: true
-ci_executor_trait_bower: false
 ci_executor_trait_chruby: false
 ci_executor_trait_firefox_esr: true
 ci_executor_trait_git_crypt: true

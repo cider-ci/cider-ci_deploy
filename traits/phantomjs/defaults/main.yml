@@ -1,7 +1,0 @@
-ci_executor_trait_phantomjs_default: true
-ci_executor_trait_phantomjs_version_major: 2
-ci_executor_trait_phantomjs_version_minor: 1
-ci_executor_trait_phantomjs_version_patch: 1
-ci_executor_trait_phantomjs_version: '{{ci_executor_trait_phantomjs_version_major}}.{{ci_executor_trait_phantomjs_version_minor}}.{{ci_executor_trait_phantomjs_version_patch}}'
-ci_executor_trait_phantomjs_bin_path: ~{{ci_executor_exec_user}}/bin/phantomjs-{{ci_executor_trait_phantomjs_version}}
-ci_executor_trait_phantomjs_dl_path: "/tmp/phantomjs_{{ci_executor_trait_phantomjs_version}}.tar.bz2"

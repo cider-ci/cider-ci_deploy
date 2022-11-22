@@ -1,9 +1,0 @@
-- name: install bower globally
-  shell: npm install --global bower
-
-- name: register npm trait
-  register_traits:
-    remove_match: "^Bower.*"
-    traits:
-      - Bower
-    file: /etc/cider-ci/traits.yml

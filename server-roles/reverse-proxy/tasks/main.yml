@@ -1,4 +1,4 @@
-- include: setup-apache2.yml
+- include_tasks: setup-apache2.yml
 
 - name: disable all cider-ci sites
   shell: rm /etc/apache2/sites-enabled/cider-ci_*
@@ -21,7 +21,7 @@
     dest: /etc/apache2/cider-ci/shared.conf
     mode: 0644
 
-- include: virtual-host.yml
+- include_tasks: virtual-host.yml
   with_indexed_items: '{{ci_server_virtual_hosts}}'
 
 - htpasswd:

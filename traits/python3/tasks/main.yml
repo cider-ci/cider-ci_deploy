@@ -1,0 +1,20 @@
+- apt:
+    pkg:
+    - python3
+    - python3-venv
+    update_cache: yes
+    cache_valid_time: 3600
+  tags: [internet]
+
+- name: python3 version
+  shell: python3 --version | cut -d ' ' -f 2
+  register: ci_executor_trait_python3_version
+  changed_when: false
+
+- name: register python3 trait
+  register_traits:
+    remove_match: "^python3.*"
+    traits:
+      - python3
+      - python{{ci_executor_trait_python3_version.stdout}}
+    file: /cider-ci/executor/config/traits.yml

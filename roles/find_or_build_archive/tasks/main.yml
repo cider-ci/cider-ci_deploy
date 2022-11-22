@@ -10,7 +10,7 @@
     (ansible_distribution == "Debian"
       or  ansible_distribution == "Ubuntu")
 
-- include: search_download_archive.yml
+- include_tasks: search_download_archive.yml
 
-- include: build.yml
+- include_tasks: build.yml
   when: download_urls is not defined

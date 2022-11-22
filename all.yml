@@ -76,29 +76,29 @@ ci_executor_nrepl_enabled: false
 
 ### traits ####################################################################
 # the default is not to install any of these traits
+#
+# NOTE: These defaulfs are now set within the role since the ansible precedence
+# rules value groups/all.yml higher than the inventory. This is unfortunate and
+# opaque. Ansible reads these values even if the role include is disabled.
 
 
-ci_executor_trait_ansible: false
-ci_executor_trait_apache2: false
-ci_executor_trait_bower: false
-ci_executor_trait_chruby: false
-ci_executor_trait_docker: false
-ci_executor_trait_doker: false
-ci_executor_trait_firefox_esr: false
-ci_executor_trait_git_crypt: false
-ci_executor_trait_gpg: false
-ci_executor_trait_leiningen: false
-ci_executor_trait_lxd: false
-ci_executor_trait_misc: false
-ci_executor_trait_mysql: false
-ci_executor_trait_nodejs: false
-ci_executor_trait_nvm: false
-ci_executor_trait_openjdk: false
-ci_executor_trait_phantomjs: false
-ci_executor_trait_postgresql10: false
-ci_executor_trait_postgresql11: false
-ci_executor_trait_postgresql9: false
-ci_executor_trait_python38: false
+# ci_executor_trait_ansible: false
+# ci_executor_trait_apache2: false
+# ci_executor_trait_asdf: false
+# ci_executor_trait_asdf_nodejs: false
+# ci_executor_trait_asdf_ruby: false
+# ci_executor_trait_docker: false
+# ci_executor_trait_firefox_esr: false
+# ci_executor_trait_git_crypt: false
+# ci_executor_trait_gpg: false
+# ci_executor_trait_leiningen: false
+# ci_executor_trait_lxd: false
+# ci_executor_trait_misc: false
+# ci_executor_trait_nodejs: false
+# ci_executor_trait_openjdk: false
+# ci_executor_trait_postgresql10: false
+# ci_executor_trait_postgresql11: false
+# ci_executor_trait_python3: false
 ci_executor_trait_rbenv: false
 ci_executor_trait_ruby_install: false
 ci_executor_trait_s3_cache: false

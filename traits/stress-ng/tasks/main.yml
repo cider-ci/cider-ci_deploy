@@ -9,5 +9,5 @@
   register: installed_stress_ng_version
   ignore_errors: yes
 
-- include: install.yml
+- include_tasks: install.yml
   when: installed_stress_ng_version.stdout != 'stress-ng, version {{ci_trait_stress_ng_version}}'
