@@ -1,5 +1,5 @@
 - name: install system python
-  raw: apt install python -y
+  raw: apt install python3 -y
 
 - include_tasks: prepare.yml
 

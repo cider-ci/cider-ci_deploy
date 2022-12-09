@@ -1,0 +1,21 @@
+- name: install or upgrade snap and other packages
+  apt:
+    pkg:
+    - jq
+    - snapd
+    state: latest
+    update_cache: yes
+    cache_valid_time: 3600
+    install_recommends: yes
+  tags: [internet]
+
+- name: install lxd via snap
+  snap:
+    name:
+      - lxd
+
+- name: copy lxd init file
+  template:
+    src: lxd-init.yml
+    dest: /root/lxd-init.yml
+    force: yes

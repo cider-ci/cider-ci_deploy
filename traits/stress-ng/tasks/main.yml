@@ -10,4 +10,4 @@
   ignore_errors: yes
 
 - include_tasks: install.yml
-  when: installed_stress_ng_version.stdout != 'stress-ng, version {{ci_trait_stress_ng_version}}'
+  when: installed_stress_ng_version.stdout != 'stress-ng, version {ci_trait_stress_ng_version}'

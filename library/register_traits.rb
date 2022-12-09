@@ -1,4 +1,4 @@
-#!/usr/bin/ruby
+#!/usr/bin/env ruby
 # WANT_JSON
 
 require 'json'
@@ -23,8 +23,9 @@ if (remove_match = args['remove_match'])
   traits.reject!{|t| regex =~ t}
 end
 
+traits_argv = [].push *args['traits']
 
-traits.push *args['traits']
+traits.concat traits_argv
 
 traits.sort!.uniq!
 
@@ -32,6 +33,7 @@ IO.write file, traits.to_yaml
 
 print JSON.dump(
   "file" => file,
+  "traits_argv" => traits_argv,
   "changed" => origial_traits != traits,
   "origial_traits" => origial_traits,
   "traits" => traits,

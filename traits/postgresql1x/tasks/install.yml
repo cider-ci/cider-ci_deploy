@@ -25,21 +25,7 @@
 
 - name: Install psycopg2
   apt:
-    pkg: python-psycopg2
-    state: present
-    update_cache: yes
-    cache_valid_time: 3600
-  when: >
-    not (ansible_distribution == "Ubuntu"
-    and ansible_distribution_release == "focal")
-
-- name: Install psycopg2
-  apt:
     pkg: python3-psycopg2
     state: present
     update_cache: yes
     cache_valid_time: 3600
-  when: >
-    (ansible_distribution == "Ubuntu"
-    and ansible_distribution_release == "focal")
-

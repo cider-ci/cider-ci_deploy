@@ -1,2 +1,3 @@
+ci_executor_trait_ssh_keys: false
 trait_ssh_add_authorized_host_keys: []
 trait_ssh_key_files: []

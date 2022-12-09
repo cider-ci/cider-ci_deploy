@@ -2,7 +2,7 @@
   gather_facts: False
   pre_tasks:
   - name: install system python
-    raw: test -e /usr/bin/python3 || (apt -y update && apt install -y python3 python-is-python3)
+    raw: test -e /usr/bin/python3 || (apt -y update && apt install -y python3)
 
 - hosts: cider-ci_server
 
