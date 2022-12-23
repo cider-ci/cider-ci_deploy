@@ -1,3 +1,26 @@
+- name: install build dependencies for various asdf plugins
+  apt:
+    pkg:
+      - autoconf
+      - bison
+      - build-essential
+      - libdb-dev
+      - libffi-dev
+      - libgdbm-dev
+      - libgdbm6
+      - libgmp-dev
+      - libncurses5-dev
+      - libreadline6-dev
+      - libssl-dev
+      - libyaml-dev
+      - patch
+      - rustc
+      - uuid-dev
+      - zlib1g-dev
+    update_cache: yes
+    cache_valid_time: 3600
+  tags: [internet]
+
 - name: create the asdf data directory
   file:
     path: '/home/{{ci_executor_exec_user}}/.asdf'

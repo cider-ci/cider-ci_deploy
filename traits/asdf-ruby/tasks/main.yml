@@ -1,4 +1,4 @@
-- name: install dependencies
+- name: install build dependencies
   apt:
     pkg:
       - autoconf

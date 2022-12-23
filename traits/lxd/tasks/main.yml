@@ -3,10 +3,21 @@
     path: /containers
   register: containers_dir
 
-- include_tasks: ubuntu.yml
+- include_tasks: ubuntu_focal.yml
   when: >
-    (ansible_distribution == "Ubuntu")
+    (ansible_distribution == "Ubuntu"
+    and ansible_distribution_release == "focal")
 
-- include_tasks: remove.yml
+- include_tasks: ubuntu_jammy.yml
   when: >
-    not (ansible_distribution == "Ubuntu")
+    (ansible_distribution == "Ubuntu"
+    and ansible_distribution_release == "jammy")
+
+- include_tasks: debian_bullseye.yml
+  when: >
+    (ansible_distribution == "Debian"
+    and ansible_distribution_release == "bullseye")
+
+
+
+

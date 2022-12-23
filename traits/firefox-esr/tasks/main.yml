@@ -1,47 +1,26 @@
-- apt:
+#- name: remove firefox snap package
+#  snap:
+#    name: firefox
+#    state: absent
+
+#- name: add firefox ppa
+#  apt_repository:
+#    repo: 'ppa:mozillateam/ppa'
+#    state: present
+#
+- name: install firefox-esr
+  apt:
+    pkg:
+      - firefox-esr
+      - xauth
+      - libgtk-3-0
+      # - firefox-esr-geckodriver
+    install_recommends: true
     update_cache: yes
     cache_valid_time: 3600
-    pkg:
-     - firefox
-     - firefox-geckodriver
-    install_recommends: yes
-
-  tags: [internet]
-
-- stat: path={{ci_executor_trait_firefox_esr_bin_path}}
-  register: ci_executor_trait_firefox_esr_bin_path_stats
-
-- get_url:
-    url: https://ftp.mozilla.org/pub/firefox/releases/{{ci_executor_trait_firefox_dl_sub_path}}/linux-x86_{{ ansible_userspace_bits }}/en-US/firefox-{{ci_executor_trait_firefox_dl_sub_path}}.tar.bz2
-    dest: '{{ci_executor_trait_firefox_esr_dl_path}}'
-  when: not ci_executor_trait_firefox_esr_bin_path_stats.stat.exists
-
-- shell: cd /tmp && tar xf {{ci_executor_trait_firefox_esr_dl_path}}
-  when: not ci_executor_trait_firefox_esr_bin_path_stats.stat.exists
-
-- shell: mv /tmp/firefox {{ci_executor_trait_firefox_esr_dir}}
-  when: not ci_executor_trait_firefox_esr_bin_path_stats.stat.exists
-
-- name: set env
-  template:
-    src: env.sh
-    dest: ~{{ci_executor_exec_user}}/.bash_login.d/firefox_esr.sh
-  when: ci_executor_trait_firefox_esr_default
-
-- name: set versioned env
-  template:
-    src: env_versioned.sh
-    dest: ~{{ci_executor_exec_user}}/.bash_login.d/firefox_esr_{{ci_executor_trait_firefox_esr_version_major}}.sh
 
 - name: register trait
   register_traits:
     traits:
-      - Firefox ESR
-      - Firefox ESR {{ci_executor_trait_firefox_esr_version_major}}
+      - 'Firefox-ESR'
     file: /cider-ci/executor/config/traits.yml
-
-
-
-
-
-

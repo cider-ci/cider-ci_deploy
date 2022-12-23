@@ -1,10 +1,1 @@
 ci_executor_trait_firefox_esr: false
-ci_executor_trait_firefox_esr_default: true
-ci_executor_trait_firefox_esr_version_major: 52
-ci_executor_trait_firefox_esr_version_minor: 2
-ci_executor_trait_firefox_esr_version_patch: 1
-ci_executor_trait_firefox_esr_version: '{{ci_executor_trait_firefox_esr_version_major}}.{{ci_executor_trait_firefox_esr_version_minor}}.{{ci_executor_trait_firefox_esr_version_patch}}'
-ci_executor_trait_firefox_dl_sub_path: '{{ci_executor_trait_firefox_esr_version}}esr'
-ci_executor_trait_firefox_esr_dir: "/opt/firefox_{{ci_executor_trait_firefox_esr_version}}"
-ci_executor_trait_firefox_esr_dl_path: "/tmp/firefox_{{ci_executor_trait_firefox_esr_version}}.tar.bz2"
-ci_executor_trait_firefox_esr_bin_path: "{{ci_executor_trait_firefox_esr_dir}}/firefox"
