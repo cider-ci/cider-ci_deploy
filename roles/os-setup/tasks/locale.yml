@@ -1,0 +1,29 @@
+- name: install locales-all
+  apt:
+    pkg:
+      - locales
+      - locales-all
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: adjust /etc/locale.gen
+  lineinfile:
+    dest: /etc/locale.gen
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: "{{ item.state }}"
+  with_items:
+    - { regexp: '^#? ?C.UTF-8 UTF-8', line: 'C.UTF-8 UTF-8', state: present }
+
+- name: rebuild locales database
+  command: "{{ item }}"
+  with_items:
+    - dpkg-reconfigure locales -f noninteractive
+    - /usr/sbin/locale-gen
+
+- name: select default locale
+  debconf:
+    name: locales
+    question: locales/default_environment_locale
+    value: C.UTF-8
+    vtype: select

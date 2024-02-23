@@ -3,6 +3,8 @@
 
 - include_tasks: prepare.yml
 
+- include_tasks: locale.yml
+
 - include_tasks: journald.yml
   when: >
     (ansible_distribution == "Debian"

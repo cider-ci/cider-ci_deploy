@@ -9,15 +9,15 @@
     repo: deb http://apt.postgresql.org/pub/repos/apt/ {{ansible_distribution_release}}-pgdg main
   tags: [internet]
 
-
 - name: Install postgresql
   apt:
     pkg:
-    - sudo
+    - jq
     - libpq-dev
     - postgresql-client-{{ci_executor_trait_postgresql_version_major}}
     - postgresql-contrib-{{ci_executor_trait_postgresql_version_major}}
     - postgresql-{{ci_executor_trait_postgresql_version_major}}
+    - sudo
     state: present
     update_cache: yes
     cache_valid_time: 3600
