@@ -1,6 +1,6 @@
 - apt:
     pkg:
-      - openjdk-11-jdk
+      - openjdk-17-jdk
     state: latest
     update_cache: yes
     cache_valid_time: 3600
@@ -14,8 +14,8 @@
   register_traits:
     traits:
       - JDK
-      - JDK 11
+      - JDK 17
       - OpenJDK
-      - OpenJDK 11
+      - OpenJDK 17
     file: /cider-ci/executor/config/traits.yml
 

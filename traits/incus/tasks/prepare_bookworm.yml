@@ -1,0 +1,13 @@
+- name: enable backports
+  apt_repository:
+    repo: deb http://deb.debian.org/debian bookworm-backports main contrib non-free-firmware
+    state: present
+    update_cache: yes
+    filename: /etc/apt/sources.list.d/backports.list
+    mode: 0644
+
+- name: dist update
+  apt:
+    upgrade: dist
+    update_cache: yes
+    cache_valid_time: 0

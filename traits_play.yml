@@ -54,6 +54,10 @@
     when: ci_executor_trait_firefox_esr
     tags: ci_executor_trait_firefox_esr
 
+  - role: traits/incus
+    when: ci_executor_trait_incus
+    tags: [ci_executor_trait_incus]
+
   - role: traits/leiningen
     when: ci_executor_trait_leiningen
     tags: ci_executor_trait_leiningen

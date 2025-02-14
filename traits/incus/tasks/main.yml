@@ -1,0 +1,43 @@
+- include_tasks: prepare_bookworm.yml
+  when: >
+    (ansible_distribution == "Debian"
+    and ansible_distribution_release == "bookworm")
+
+- name: install incus
+  apt:
+    pkg:
+      - incus
+      - incus-tools
+      - jq
+    state: latest
+    update_cache: yes
+    cache_valid_time: 3600
+    install_recommends: yes
+
+- name: copy init configuration
+  template:
+    src: incus-init.yml
+    dest: /root/incus-init.yml
+    force: yes
+
+- name: incus init
+  shell: |
+    #!/usr/bin/env bash
+    source /etc/profile
+    set -euo pipefail
+    cat /root/incus-init.yml | incus admin init --preseed
+  args:
+    executable: /bin/bash
+
+- name: add ci-exec-user to the incus admin group
+  user:
+    name: '{{ci_executor_exec_user}}'
+    groups: incus-admin
+    append: yes
+
+- name: register the incus trait
+  register_traits:
+    remove_match: "^incus.*"
+    traits:
+      - incus
+    file: /etc/cider-ci/traits.yml
