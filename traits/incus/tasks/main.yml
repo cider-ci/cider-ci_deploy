@@ -3,12 +3,25 @@
     (ansible_distribution == "Debian"
     and ansible_distribution_release == "bookworm")
 
-- name: install incus
+
+# we need to uninstall the incuse main package beforehand because it depends on qemu
+# https://discuss.linuxcontainers.org/t/incus-deinstalled-after-upgrade-in-debian-bookworm-with-backports/23209/2
+
+- name: remove incus main package (depens on qemu)
   apt:
     pkg:
       - incus
+    state: absent
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: install incus
+  apt:
+    pkg:
+      - incus-base
       - incus-tools
       - jq
+      - dnsmasq-base
     state: latest
     update_cache: yes
     cache_valid_time: 3600
